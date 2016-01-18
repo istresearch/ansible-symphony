@@ -7,7 +7,6 @@ Ansible Symphony allows developer and production level `Ansible <http://ansible.
     :hidden:
     :maxdepth: 2
 
-    topics/requirements
     topics/quickstart
     topics/customization
     topics/roles/index
@@ -16,9 +15,6 @@ Ansible Symphony allows developer and production level `Ansible <http://ansible.
 
 Getting Started
 ===============
-
-:doc:`topics/requirements`
-    Requirements to run this code.
 
 :doc:`topics/quickstart`
     The quickstart Guide
