@@ -1,0 +1,41 @@
+---
+- name: Check if Miniconda Environment is set up already
+  stat: path={{ miniconda_install_dir }}
+  register: minicondaCheck
+  tags: miniconda
+
+- name: download miniconda
+  get_url:
+    url="{{ repository_infrastructure }}/Miniconda-{{ miniconda_version }}-Linux-x86_64.sh"
+    dest="/tmp/Miniconda-{{ miniconda_version }}-Linux-x86_64.sh"
+    mode=0755
+    validate_certs=no
+  when: minicondaCheck.stat.exists == false
+  tags: miniconda
+
+- name: Setup Miniconda
+  when: minicondaCheck.stat.exists == false
+  command: "/tmp/Miniconda-{{ miniconda_version }}-Linux-x86_64.sh -b -p {{ miniconda_install_dir }}"
+  tags: miniconda
+
+
+- name: delete temporary miniconda file
+  file:
+    path: "/tmp/Miniconda-{{ miniconda_version }}-Linux-x86_64.sh"
+    state: absent
+  ignore_errors: yes
+  tags: miniconda
+
+- name: prepend miniconda to path
+  lineinfile:
+    dest=/root/.bashrc
+    insertafter=EOF
+    line={{item}}
+    state=present
+  with_items:
+    - PATH={{ miniconda_install_dir }}/bin:$PATH
+  tags: miniconda
+
+- name: Set fact miniconda_has_run
+  set_fact:
+    miniconda_has_run: true

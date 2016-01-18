@@ -1,0 +1,88 @@
+---
+- name: restart hdfs namenode
+  supervisorctl:
+    name=hadoop-hdfs-namenode
+    state=restarted
+  when: hdfs_namenode_enabled
+
+- name: wait for hdfs namenode port
+  wait_for:
+    port={{ dfs_namenode_http_address_port }}
+    state=started
+  when: hdfs_namenode_enabled
+
+- name: restart hdfs secondary namenode
+  supervisorctl:
+    name=hadoop-hdfs-secondary-namenode
+    state=restarted
+  when: hdfs_secondary_namenode_enabled
+
+- name: wait for hdfs secondary namenode port
+  wait_for:
+    port={{ dfs_namenode_secondary_http_address_port }}
+    state=started
+  when: hdfs_secondary_namenode_enabled
+
+- name: restart hdfs datanode
+  supervisorctl:
+    name=hadoop-hdfs-datanode
+    state=restarted
+  when: hdfs_datanode_enabled
+
+- name: wait for hdfs datanode port
+  wait_for:
+    port={{ dfs_datanode_http_address_port }}
+    state=started
+  when: hdfs_datanode_enabled
+
+- name: restart yarn resourcemanager
+  supervisorctl:
+    name=hadoop-yarn-resourcemanager
+    state=restarted
+  when: yarn_resourcemanager_enabled
+
+- name: wait for yarn resource manager port
+  wait_for:
+    host={{ yarn_resourcemanager_hostname }}
+    port={{ yarn_resourcemanager_webapp_address_port }}
+    state=started
+  when: yarn_resourcemanager_enabled
+
+- name: restart yarn node manager
+  supervisorctl:
+    name=hadoop-yarn-nodemanager
+    state=restarted
+  when: yarn_nodemanager_enabled
+
+- name: wait for yarn node manager port
+  wait_for:
+    port={{ yarn_nodemanager_webapp_address_port }}
+    state=started
+  when: yarn_nodemanager_enabled
+
+- name: restart yarn historyserver
+  supervisorctl:
+    name=hadoop-yarn-historyserver
+    state=restarted
+  when: yarn_historyserver_enabled
+
+- name: wait for yarn history server port
+  wait_for:
+    host={{ yarn_historyserver_hostname }}
+    port={{ mapreduce_jobhistory_webapp_address_port }}
+    state=started
+  when: yarn_historyserver_enabled
+
+- name: restart mapreduce historyserver
+  supervisorctl:
+    name=hadoop-mapreduce-historyserver
+    state=restarted
+  when: mapreduce_historyserver_enabled
+
+- name: wait for mapreduce history server port
+  wait_for:
+    host={{ yarn_historyserver_hostname }}
+    port={{ mapreduce_jobhistory_webapp_address_port }}
+    state=started
+  when: mapreduce_historyserver_enabled
+

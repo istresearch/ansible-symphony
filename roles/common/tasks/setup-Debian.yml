@@ -1,0 +1,17 @@
+---
+
+- name: update apt-get cache
+  apt: update-cache=yes
+  tags: common
+
+- name: install baseline packages
+  apt:
+    name={{ item }}
+    state=latest
+  with_items:
+   - bash
+   - openssh-server
+   - wget
+   - zip
+   - unzip
+  tags: common

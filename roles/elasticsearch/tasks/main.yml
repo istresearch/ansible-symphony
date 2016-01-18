@@ -1,0 +1,202 @@
+---
+- name: Configuring group
+  group:
+    name: "{{ elasticsearch_group }}"
+  tags:
+    - elasticsearch
+
+- name: Configuring user
+  user:
+    name: "{{ elasticsearch_user }}"
+    group: "{{ elasticsearch_group }}"
+    createhome: no
+  tags:
+    - elasticsearch
+
+- name: create elasticsearch install directory
+  file:
+    path: "{{ elasticsearch_install_dir }}/"
+    state: directory
+    mode: 0744
+    owner: "{{ elasticsearch_user }}"
+    group: "{{ elasticsearch_group }}"
+  tags: elasticsearch
+
+- name: create elasticsearch log directory
+  file:
+    path: "{{ elasticsearch_log_dir }}/"
+    state: directory
+    mode: 0755
+    owner: "{{ elasticsearch_user }}"
+    group: "{{ elasticsearch_group }}"
+  tags: elasticsearch
+
+# - name: create elasticsearch work directory
+#   file:
+#     path: {{ elasticsearch_work_dir }}/
+#     state: directory
+#     mode: 0744
+#     owner: {{ elasticsearch_user }}
+#     group: {{ elasticsearch_group }}
+#   tags: elasticsearch
+
+- name: create elasticsearch data directory
+  file:
+    path: "{{ elasticsearch_data_dir }}/"
+    state: directory
+    mode: 0744
+    owner: "{{ elasticsearch_user }}"
+    group: "{{ elasticsearch_group }}"
+  tags: elasticsearch
+
+- name: check for existing elasticsearch install
+  stat:
+    path: "{{ elasticsearch_install_dir }}/elasticsearch-{{ elasticsearch_version }}"
+  register: elasticsearch
+  tags: elasticsearch
+
+- name: download elasticsearch
+  get_url:
+    url: "{{ repository_infrastructure }}/elasticsearch-{{ elasticsearch_version }}.tar.gz"
+    dest: "/tmp/elasticsearch-{{ elasticsearch_version }}.tar.gz"
+    mode: 0644
+    owner: "{{ elasticsearch_user }}"
+    group: "{{ elasticsearch_group }}"
+    validate_certs: no
+  when: elasticsearch.stat.isdir is not defined
+  tags: elasticsearch
+
+- name: extract elasticsearch
+  unarchive:
+    src: "/tmp/elasticsearch-{{ elasticsearch_version }}.tar.gz"
+    dest: "{{ elasticsearch_install_dir }}/"
+    copy: no
+    owner: "{{ elasticsearch_user }}"
+    group: "{{ elasticsearch_group }}"
+  when: elasticsearch.stat.isdir is not defined
+  tags: elasticsearch
+
+- name: delete temporary elasticsearch file
+  file:
+    path: "/tmp/elasticsearch-{{ elasticsearch_version }}.tar.gz"
+    state: absent
+  ignore_errors: yes
+  tags: elasticsearch
+
+- name: Change elasticsearch file permissions
+  file:
+    path: "{{ elasticsearch_install_dir }}/"
+    recurse: yes
+    owner: "{{ elasticsearch_user }}"
+    group: "{{ elasticsearch_group }}"
+  tags: elasticsearch
+
+- name: create elasticsearch symlink
+  file:
+    path: "{{ elasticsearch_install_dir }}/default"
+    state: link
+    src: "{{ elasticsearch_install_dir }}/elasticsearch-{{ elasticsearch_version }}"
+    owner: "{{ elasticsearch_user }}"
+    group: "{{ elasticsearch_group }}"
+  tags: elasticsearch
+
+# - name: create elasticsearch conf directory
+#   file:
+#     path: {{ elasticsearch_conf_dir }}/
+#     state: directory
+#     mode: 0744
+#     owner: {{ elasticsearch_user }}
+#     group: {{ elasticsearch_group }}
+#   tags: elasticsearch
+
+# - name: create elasticsearch plugin directory
+#   file:
+#     path: {{ elasticsearch_plugin_dir }}/
+#     state: directory
+#     mode: 0744
+#     owner: {{ elasticsearch_user }}
+#     group: {{ elasticsearch_group }}
+#   tags: elasticsearch
+
+# - name: Configuring open file limits (1/5)
+#   lineinfile:
+#     dest: /etc/security/limits.conf
+#     regexp: '^{{ elasticsearch_user }}     -    nofile    {{ elasticsearch_max_open_files }}'
+#     insertafter: EOF
+#     line: '{{ elasticsearch_user }}     -    nofile    {{ elasticsearch_max_open_files }}'
+#   tags:
+#     - elasticsearch
+
+# - name: Configuring open file limits (2/5)
+#   lineinfile:
+#     dest: /etc/security/limits.conf
+#     regexp: '^{{ elasticsearch_user }}     -    memlock   {{ elasticsearch_max_locked_memory }}'
+#     insertafter: EOF
+#     line: '{{ elasticsearch_user }}     -    memlock   {{ elasticsearch_max_locked_memory }}'
+#   tags:
+#     - elasticsearch
+
+# - name: Configuring open file limits (3/5)
+#   lineinfile:
+#     dest: /etc/pam.d/su
+#     regexp: '^session    required   pam_limits.so'
+#     insertafter: EOF
+#     line: 'session    required   pam_limits.so'
+#   tags:
+#     - elasticsearch
+
+# - name: Configuring open file limits (4/5)
+#   lineinfile:
+#     dest: /etc/pam.d/system-auth
+#     regexp: '^session    required   pam_limits.so'
+#     insertafter: EOF
+#     line: 'session    required   pam_limits.so'
+#   tags:
+#     - elasticsearch
+#   when: ansible_os_family == 'RedHat'
+
+
+# - name: Configuring open file limits (5/5)
+#   lineinfile:
+#     dest: /etc/pam.d/sudo
+#     regexp: '^session    required   pam_limits.so'
+#     insertafter: EOF
+#     line: 'session    required   pam_limits.so'
+#   tags:
+#     - elasticsearch
+#   when: ansible_os_family == 'RedHat'
+
+- name: Copy elasticsearch.yml
+  template:
+    src: elasticsearch.yml.j2
+    dest: "{{ elasticsearch_conf_dir }}/elasticsearch.yml"
+    owner: "{{ elasticsearch_user }}"
+    group: "{{ elasticsearch_group }}"
+    mode: 0644
+  notify:
+    - restart elasticsearch
+  tags:
+    - elasticsearch
+
+- name: copy supervisord config
+  template:
+    src: elasticsearch-supervisord.conf.j2
+    dest: "{{ supervisord_programs_dir }}/elasticsearch-supervisord.conf"
+    mode: 0644
+  notify:
+    - reread supervisord
+  tags: 
+    - elasticsearch
+
+- name: check for existing kopf plugin install
+  stat:
+    path: "{{ elasticsearch_plugin_dir }}/kopf"
+  register: elasticsearchkopf
+  tags: elasticsearch
+
+- name: install kopf plugin
+  shell: "{{ elasticsearch_bin_dir }}/plugin install lmenezes/elasticsearch-kopf"
+  when: elasticsearchkopf.stat.isdir is not defined
+  tags: 
+    - elasticsearch
+    - kopf

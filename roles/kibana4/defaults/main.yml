@@ -1,0 +1,10 @@
+---
+kibana4_install_dir: /opt/kibana4
+kibana4_version: 4.3.1-linux-x64
+kibana4_port: 5601
+kibana4_index: ".kibana"
+kibana4_request_timeout: 300000
+kibana4_verify_ssl: false
+kibana4_stderr_logfile_maxbytes: 50MB
+
+repository_infrastructure: "https://download.elastic.co/kibana/kibana"

@@ -1,0 +1,16 @@
+---
+
+- name: install script
+  template:
+    src=diskbot.sh.j2
+    dest={{ diskbot_install_dir }}/{{ diskbot_name }}
+    mode=0755
+  tags: diskbot
+
+- name: install cronjob
+  cron:
+    name="diskbot"
+    minute="15"
+    job="{{ diskbot_install_dir }}/{{ diskbot_name }} 
+    >> {{ diskbot_log_dir }}/{{ diskbot_log_name }} 2>&1"
+  tags: diskbot

@@ -1,0 +1,40 @@
+---
+storm_install_dir: /opt/storm
+storm_user: storm
+storm_group: storm
+storm_version: 0.10.0
+
+nimbus_thrift_port: 6627
+storm_drpc_port: 3772
+storm_drpc_invocations_port: 3773
+storm_drpc_http_port: 3774
+storm_drpc_extra_config:
+storm_local_dir: /var/storm
+storm_logviewer_enabled: false
+storm_logviewer_port: 8000
+storm_logviewer_extra_config:
+storm_nimbus_enabled: false
+storm_nimbus_extra_config:
+    nimbus.childopts: "-Xmx1024m"
+storm_supervisor_enabled: false
+storm_supervisor_extra_config:
+    supervisor.childopts: "-Xmx1024m"
+storm_topology_extra_config:
+    topology.acker.executors: 1
+    topology.debug: false
+storm_transactional_extra_config:
+    transactional.zookeeper.root: "/storm-transactional"
+storm_ui_enabled: false
+storm_ui_port: 8087
+storm_ui_extra_config:
+    ui.childopts: "-Xmx768m"
+storm_worker_extra_config:
+    worker.childopts: "-Xmx1280m -XX:PermSize=128m -XX:MaxPermSize=256m -Xms256m -XX:+UseConcMarkSweepGC -Dcom.sun.management.jmxremote"
+storm_worker_ports: [6701, 6702, 6703, 6704]
+storm_zookeeper_extra_config:
+    storm.zookeeper.retry.interval: 5000
+    storm.zookeeper.retry.times: 60
+    storm.zookeeper.root: "/storm"
+    storm.zookeeper.session.timeout: 3000
+
+repository_infrastructure: "http://ftp.wayne.edu/apache/storm/apache-storm-{{ storm_version }}"

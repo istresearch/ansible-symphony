@@ -1,22 +1,42 @@
-.. Ansible Symphony documentation master file, created by
-   sphinx-quickstart on Fri Jan 15 09:33:13 2016.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 Welcome to Ansible Symphony's documentation!
 ============================================
 
-Contents:
+Ansible Symphony allows developer and production level `Ansible <http://ansible.com>`_ deployments with all roles working in concert together.
 
 .. toctree::
-   :maxdepth: 2
+    :hidden:
+    :maxdepth: 2
 
+    topics/requirements
+    topics/quickstart
+    topics/customization
+    topics/roles/index
+    topics/tipsandtricks
+    topics/production
 
+Getting Started
+===============
 
-Indices and tables
-==================
+:doc:`topics/requirements`
+    Requirements to run this code.
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+:doc:`topics/quickstart`
+    The quickstart Guide
 
+:doc:`topics/customization`
+    How to customize your ansible install
+
+Roles
+=====
+
+:doc:`topics/roles/index`
+    Explains the individual ansible roles
+
+Advanced Topics
+===============
+
+:doc:`topics/tipsandtricks`
+    Tips for successful delpoyments
+
+:doc:`topics/production`
+    Running Ansible Symphony in Production

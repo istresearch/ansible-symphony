@@ -1,0 +1,69 @@
+---
+- name: create kibana4 install directory
+  file:
+    path={{ kibana4_install_dir }}/
+    state=directory
+    mode=0744
+  tags: kibana4
+
+- name: check for existing kibana4 install
+  stat: path={{ kibana4_install_dir }}/kibana-{{ kibana4_version }}
+  register: kibana4
+  tags: kibana4
+
+- name: download kibana4
+  get_url:
+    validate_certs=no
+    url={{ repository_infrastructure }}/kibana-{{ kibana4_version }}.tar.gz
+    dest=/tmp/kibana-{{ kibana4_version }}.tar.gz
+    mode=0644
+  when: kibana4.stat.isdir is not defined
+  tags: kibana4
+
+- name: extract kibana4
+  unarchive:
+    src=/tmp/kibana-{{ kibana4_version }}.tar.gz
+    dest={{ kibana4_install_dir }}/
+    copy=no
+  when: kibana4.stat.isdir is not defined
+  tags: kibana4
+
+- name: delete temporary kibana4 file
+  file:
+    path=/tmp/kibana-{{ kibana4_version }}.tar.gz
+    state=absent
+  ignore_errors: yes
+  tags: kibana4
+
+- name: Change kibana permissions
+  file:
+    path={{ kibana4_install_dir }}
+    mode=0755
+  tags: kibana4
+
+- name: Copy kibana configuration
+  template:
+    src=kibana.yml.j2
+    dest={{ kibana4_install_dir }}/kibana-{{ kibana4_version}}/config/kibana.yml
+    mode=0644
+  tags: kibana4
+
+- name: create default symlink
+  file:
+    path={{ kibana4_install_dir }}/default
+    state=link
+    src={{ kibana4_install_dir }}/kibana-{{ kibana4_version }}
+  tags: kibana4
+
+- name: copy supervisord config
+  template:
+    src=kibana4-supervisord.conf.j2
+    dest={{ supervisord_programs_dir }}/kibana4-supervisord.conf
+    mode=0644
+  notify:
+    - reread supervisord
+  tags:
+    - kibana4
+    - supervisord
+
+

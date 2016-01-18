@@ -1,0 +1,157 @@
+---
+- name: Configuring group
+  group:
+    name: "{{ hdfs_group }}"
+  tags:
+    - hadoop
+
+- name: Configuring user
+  user:
+    name: "{{ hdfs_user }}"
+    group: "{{ hdfs_group }}"
+    createhome: no
+  tags:
+    - elasticsearch
+
+- name: create hadoop install directory
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0744
+    owner: "{{ hdfs_user }}"
+    group: "{{ hdfs_group }}"
+  with_items:
+    - "{{ hdfs_install_dir }}"
+  tags: hadoop
+
+- name: check for existing install
+  stat: path="{{ hdfs_install_dir }}/hadoop-{{ hdfs_version }}"
+  register: hadoop
+  tags: hadoop
+
+- name: download hadoop
+  get_url:
+    url: "{{ repository_infrastructure }}/hadoop-{{ hdfs_version }}.tar.gz"
+    dest: /tmp/hadoop-{{ hdfs_version }}.tgz
+    mode: 0644
+    validate_certs: no
+  when: hadoop.stat.isdir is not defined
+  tags: hadoop
+
+- name: extract hadoop
+  unarchive:
+    src: /tmp/hadoop-{{ hdfs_version }}.tgz
+    dest: "{{ hdfs_install_dir }}"
+    copy: no
+    owner: "{{ hdfs_user }}"
+    group: "{{ hdfs_group }}"
+  when: hadoop.stat.isdir is not defined
+  tags: hadoop
+
+- name: delete temporary hadoop file
+  file:
+    path: /tmp/hadoop-{{ hdfs_version }}.tgz
+    state: absent
+  ignore_errors: yes
+  tags: hadoop
+
+- name: create hadoop symlink
+  file:
+    path: "{{ hdfs_install_dir }}/default"
+    state: link
+    src: "{{ hdfs_install_dir }}/hadoop-{{ hdfs_version }}"
+  tags: hadoop
+
+# - name: create configuration copy
+#   shell: cp -r conf.empty conf.{{ hadoop_cluster_name }}
+#   args:
+#     chdir: {{ hdfs_conf_dir }}
+#     creates: conf.{{ hadoop_cluster_name }}
+#   tags: hadoop
+
+# - name: check current alternatives
+#   shell: "alternatives --display hadoop-conf | grep best"
+#   register: current_conf
+#   tags: hadoop
+
+# - name: create alternatives entry
+#   shell: alternatives --install /etc/hadoop/conf hadoop-conf /etc/hadoop/conf.{{ hadoop_cluster_name }} 50
+#   when: current_conf.stdout.find('conf.{{ hadoop_cluster_name }}') == -1
+#   tags: hadoop
+
+# - name: set alternatives
+#   shell: alternatives --set hadoop-conf /etc/hadoop/conf.{{ hadoop_cluster_name }}
+#   when: current_conf.stdout.find('conf.{{ hadoop_cluster_name }}') == -1
+#   tags: hadoop
+
+- name: java system environment configuration
+  lineinfile:
+    dest=/etc/environment
+    line="export HADOOP_PREFIX={{ hdfs_install_dir }}/default"
+  tags: hadoop
+
+- name: configure *-site.xml files
+  template:
+    src={{ item }}
+    dest="{{ hdfs_conf_dir }}/{{ item | regex_replace('.j2', '') }}"
+    mode=0644
+  with_items:
+    - core-site.xml.j2
+    - hdfs-site.xml.j2
+    - yarn-site.xml.j2
+    - mapred-site.xml.j2
+  notify:
+    - restart hdfs namenode
+    - wait for hdfs namenode port
+    - restart hdfs datanode
+    - wait for hdfs datanode port
+    - restart yarn resource manager
+    - wait for yarn resource manager port
+    - restart yarn node manager
+    - wait for yarn node manager port
+    - restart yarn history server
+    - wait for yarn history server port
+  tags: hadoop
+
+- include: hdfs-namenode.yml
+  when: hdfs_namenode_enabled
+  tags:
+    - hadoop
+    - hdfs_namenode
+
+- include: hdfs-secondary-namenode.yml
+  when: hdfs_secondary_namenode_enabled
+  tags:
+    - hadoop
+    - hdfs_secondary_namenode
+
+- include: hdfs-datanode.yml
+  when: hdfs_datanode_enabled
+  tags:
+    - hadoop
+    - hdfs_datanode
+
+- include: yarn-resourcemanager.yml
+  when: yarn_resourcemanager_enabled
+  tags:
+    - hadoop
+    - yarn_resourcemanager
+
+- include: yarn-nodemanager.yml
+  when: yarn_nodemanager_enabled
+  tags:
+    - hadoop
+    - yarn_nodemanager
+
+- include: yarn-historyserver.yml
+  when: yarn_historyserver_enabled
+  tags:
+    - hadoop
+    - yarn_historyserver
+
+- include: mapreduce-historyserver.yml
+  when: mapreduce_historyserver_enabled
+  tags:
+    - hadoop
+    - mapreduce_historyserver
+

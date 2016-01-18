@@ -1,0 +1,89 @@
+---
+- name: create spark install directory
+  file:
+    path={{ spark_install_dir }}/{{ spark_pkg_name }}
+    state=directory
+    mode=0744
+  tags: spark
+
+- name: check for existing spark install
+  stat: path={{ spark_install_dir }}/{{ spark_pkg_name }}
+  register: spark
+  tags: spark
+
+- name: download spark
+  get_url:
+    url={{ repository_infrastructure }}/{{ spark_pkg_name }}.tgz
+    dest=/tmp/{{ spark_pkg_name }}.tgz
+    mode=0644
+    validate_certs=no
+    timeout=1000
+  when: spark.stat.isdir is not defined
+  tags: spark
+
+- name: extract spark
+  unarchive:
+    src=/tmp/{{ spark_pkg_name }}.tgz
+    dest={{ spark_install_dir }}/
+    copy=no
+  when: spark.stat.isdir is not defined
+  tags: spark
+
+- name: delete temporary spark file
+  file:
+    path=/tmp/{{ spark_pkg_name}}.tgz
+    state=absent
+  ignore_errors: yes
+  tags: spark
+
+- name: Change spark permissions
+  file:
+    path={{ spark_install_dir }}
+    mode=0755
+  tags: spark
+
+- name: create data directories
+  file:
+    path={{ item }}
+    state=directory
+    mode=0755
+  with_items:
+    - "{{ spark_log_dir }}"
+    - "{{ spark_pid_dir }}"
+    - "{{ spark_conf_dir }}"
+  tags:
+    - spark
+
+- name: copy configs over
+  template:
+    src={{ item }}.j2
+    dest=/etc/spark/conf/{{ item }}
+  with_items:
+    - "spark-env.sh"
+    - "spark-defaults.conf"
+  tags:
+    - spark
+
+- name: delete spark conf templates
+  file:
+    path=/{{ spark_install_dir }}/{{ spark_pkg_name }}/conf
+    state=absent
+  ignore_errors: yes
+  tags: spark
+
+- name: create default symlink for conf files
+  file:
+    path={{ spark_install_dir }}/{{ spark_pkg_name }}/conf
+    state=link
+    src=/etc/spark/conf
+  tags: spark
+
+- include: spark-master.yml
+  when: spark_master_enabled
+  tags:
+    - spark
+
+- include: spark-worker.yml
+  when: spark_worker_enabled
+  tags:
+    - spark

@@ -1,0 +1,4 @@
+---
+# The specific version of Oracle Java that can be found in YUM
+java_version: 1.7.0_71
+java_home: "/usr/java/default"

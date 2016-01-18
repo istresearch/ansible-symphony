@@ -1,3 +1,7 @@
+.vagrant
+id_rsa.pub
+vault.passwd
+
 # docs
-docs/_build
-docs/_build_html
+_build
+_build_html

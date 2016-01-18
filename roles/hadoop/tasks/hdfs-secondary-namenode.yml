@@ -1,0 +1,12 @@
+---
+
+- name: copy supervisord config
+  template:
+    src: hadoop-secondary-namenode-supervisord.conf.j2
+    dest: "{{ supervisord_programs_dir }}/hadoop-namenode-supervisord.conf"
+    mode: 0644
+  notify:
+    - reread supervisord
+    - restart hdfs secondary namenode
+    - wait for hdfs secondary namenode port
+  tags: hadoop

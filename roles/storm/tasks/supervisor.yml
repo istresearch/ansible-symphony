@@ -1,0 +1,15 @@
+# Configure and start the storm supervisor
+
+- name: setup storm supervisor supervisord config
+  template:
+    src=storm-supervisor-supervisord.conf.j2
+    dest={{ supervisord_programs_dir }}/storm-supervisor-supervisord.conf
+    mode=0644
+    owner=root
+    group=root
+  notify:
+    - reread supervisord
+    - restart storm supervisor
+  tags:
+    - storm
+    - storm_supervisor

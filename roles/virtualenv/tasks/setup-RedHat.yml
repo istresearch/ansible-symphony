@@ -1,0 +1,142 @@
+---
+
+- name: create python2.7 directories
+  file:
+    path={{ python_install_dir }}
+    state=directory
+    mode=0744
+  tags: python27 
+
+- name: check for existing python2.7 install
+  stat: path=/usr/local/bin/python2.7
+  register: python
+  tags: python27
+
+- name: Install extra stuff for streamparse
+  yum: name={{ item }} state=present
+  with_items:
+    - zlib-devel
+    - bzip2-devel
+    - openssl-devel
+    - ncurses-devel
+    - sqlite-devel
+    - readline-devel
+    - tk-devel
+    - gdbm-devel
+    - db4-devel
+    - libpcap
+    - xz-devel
+  when: python.stat.isdir is not defined
+  tags: python27
+
+- name: download python source
+  get_url:
+    url="{{ repository_infrastructure }}/{{ python_version }}.tar.xz"
+    dest=/tmp/{{ python_version }}.tar.xz
+    mode=0644
+    validate_certs=no
+  when: python.stat.isdir is not defined
+  tags: python27
+
+- name: create python version directory
+  file:
+    path={{ python_install_dir }}
+    state=directory
+    mode=0744
+  when: python.stat.isdir is not defined
+  tags: python27
+
+- name: extract python source
+  unarchive:
+    src=/tmp/{{ python_version }}.tar.xz
+    dest={{ python_install_dir }}
+    copy=no
+  when: python.stat.isdir is not defined
+  tags: python27
+
+- name: delete temporary python file
+  file:
+    path=/tmp/{{ python_version }}.tar.xz
+    state=absent
+  ignore_errors: yes
+  tags: python27
+
+- name: Configure Python
+  shell: ./configure --prefix=/usr/local --enable-unicode=ucs4 --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib" chdir={{ python_install_dir }}/{{ python_version }}
+  when: python.stat.isdir is not defined
+  tags: python27
+
+- name: Build Python
+  shell: make && make altinstall chdir={{ python_install_dir }}/{{ python_version }}
+  when: python.stat.isdir is not defined
+  tags: python27
+
+- name: Add new Python path to .bashrc
+  lineinfile: dest="/root/.bashrc" line="export PATH=/usr/local/bin:$PATH"
+  when: python.stat.isdir is not defined
+  tags: python27
+
+- name: copy over ez_setup.py script
+  copy: src=ez_setup.py dest={{ python_install_dir }}/{{ python_version }}
+  when: python.stat.isdir is not defined
+  tags: python27
+
+- name: run ez setup
+  shell: "/usr/local/bin/python2.7 ez_setup.py chdir={{ python_install_dir }}/{{ python_version }}"
+  when: python.stat.isdir is not defined
+  tags: python27
+
+- name: check for existing pip install
+  stat: path=/usr/local/bin/pip2.7
+  register: pip
+  tags: python27
+
+- name: Install pip
+  shell: "/usr/local/bin/easy_install-2.7 pip"
+  when: pip.stat.isfile is not defined
+  tags: python27
+
+- name: check for existing virtualenv root dir
+  stat: path={{ virtualenv_install_dir }}/{{ virtualenv_root }}
+  register: virtualenv_dir
+  tags:
+    - python27
+    - virtualenv
+
+- name: Install virtualenv
+  shell: "/usr/local/bin/pip2.7 install virtualenv"
+  tags:
+    - python27
+    - virtualenv
+  when: virtualenv_dir.stat.isdir is not defined
+
+- name: Create virtualenv install directory
+  file:
+    path={{ virtualenv_install_dir  }}
+    state=directory
+    mode=0744
+  tags:
+    - python27
+    - virtualenv
+  when: virtualenv_dir.stat.isdir is not defined
+
+- name: Create virtualenv for streamparse
+  shell: "/usr/local/bin/virtualenv {{ virtualenv_root }} chdir={{ virtualenv_install_dir }}"
+  tags:
+    - python27
+    - virtualenv
+  when: virtualenv_dir.stat.isdir is not defined
+
+- name: Open up permissions on virtualenv dir
+  file:
+    path={{ virtualenv_install_dir }}
+    state=directory
+    mode=0777
+    recurse=yes
+  tags:
+    - python27
+    - virtualenv
+
+- name: Set fact virtualenv_has_run
+  set_fact:
+    virtualenv_has_run: true

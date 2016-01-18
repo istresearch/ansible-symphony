@@ -1,0 +1,4 @@
+---
+
+tor_repo:  'deb http://deb.torproject.org/torproject.org trusty main'
+tor_source:  'deb-src http://deb.torproject.org/torproject.org trusty main'

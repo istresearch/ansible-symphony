@@ -1,0 +1,9 @@
+[program:storm-logviewer]
+command={{ storm_install_dir }}/default/bin/storm logviewer
+autostart=true
+autorestart=true
+user={{ storm_user }}
+startsecs=5
+startretries=999
+redirect_stderr=true
+

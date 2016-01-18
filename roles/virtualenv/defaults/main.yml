@@ -1,0 +1,7 @@
+---
+
+python_version: Python-2.7.10
+python_install_dir: /tmp/python2.7
+
+virtualenv_install_dir: /tmp/virtualenv
+virtualenv_root: virtualenv_root

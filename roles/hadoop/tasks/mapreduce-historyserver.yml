@@ -1,0 +1,20 @@
+---
+
+- name: copy supervisord config
+  template:
+    src: hadoop-mapreduce-historyserver-supervisord.conf.j2
+    dest: "{{ supervisord_programs_dir }}/hadoop-mapreduce-historyserver-supervisord.conf"
+    mode: 0644
+  notify:
+    - reread supervisord
+    - restart mapreduce historyserver
+    - wait for mapreduce historyserver port
+  tags: hadoop
+
+- name: add historyserver to supervisord
+  supervisorctl:
+    name: hadoop-mapreduce-historyserver
+    state: present
+  notify:
+    - wait for mapreduce history server port
+  tags: hadoop

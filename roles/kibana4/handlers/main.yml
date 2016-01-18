@@ -1,0 +1,5 @@
+---
+- name: restart kibana4
+  supervisorctl:
+    name=kibana4
+    state=restarted

@@ -1,0 +1,40 @@
+---
+- name: restart storm nimbus
+  supervisorctl:
+    name=storm-nimbus
+    state=restarted
+  when: storm_nimbus_enabled
+
+- name: restart storm supervisor
+  supervisorctl: 
+    name=storm-supervisor 
+    state=restarted
+  when: storm_supervisor_enabled
+
+- name: restart storm ui
+  supervisorctl: 
+    name=storm-ui 
+    state=restarted
+  when: storm_ui_enabled
+
+- name: restart storm logviewer
+  supervisorctl:
+    name=storm-logviewer
+    state=restarted
+  when: storm_logviewer_enabled
+
+- name: wait for nimbus port
+  wait_for: 
+    port={{ nimbus_thrift_port }}
+    state=started
+
+- name: wait for ui port
+  wait_for: 
+    port={{ storm_ui_port }}
+    state=started
+
+- name: wait for logviewer port
+  wait_for:
+    port={{ storm_logviewer_port }}
+    state=started
+

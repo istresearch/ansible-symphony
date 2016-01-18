@@ -1,0 +1,69 @@
+---
+- name: create data directories
+  file:
+    path={{ item }}
+    state=directory
+    mode=0755
+    owner={{ hdfs_user }}
+    group={{ hdfs_group }}
+  with_items:
+    - "{{ dfs_namenode_name_dir }}"
+  tags:
+    - hadoop
+    - hdfs_namenode
+
+- name: format the namenode
+  shell: "echo 'N' | {{ hdfs_exe_dir }}/hdfs namenode -format"
+  args:
+    creates: "{{ dfs_namenode_name_dir }}/current"
+  tags:
+    - hadoop
+    - hdfs_namenode
+
+- name: mod namenode permissions
+  file:
+    path="{{ dfs_namenode_name_dir }}/current"
+    state=directory
+    mode=0755
+    owner={{ hdfs_user }}
+    group={{ hdfs_group }}
+    recurse=yes
+  tags:
+    - hadoop
+    - hdfs_namenode
+
+- name: copy supervisord config
+  template:
+    src: hadoop-namenode-supervisord.conf.j2
+    dest: "{{ supervisord_programs_dir }}/hadoop-namenode-supervisord.conf"
+    mode: 0644
+  notify:
+    - reread supervisord
+    - restart hdfs namenode
+    - wait for hdfs namenode port
+  tags: hadoop
+
+- name: add namenode to supervisord
+  supervisorctl:
+    name: hadoop-hdfs-namenode
+    state: present
+  tags: hadoop
+
+- name: ensure namenode is started
+  supervisorctl:
+    name: hadoop-hdfs-namenode
+    state: started
+  notify:
+    - wait for hdfs namenode port
+  tags: hadoop
+
+- name: wait for namenode port
+  wait_for:
+    port: "{{ dfs_namenode_http_address_port }}"
+  tags: hadoop
+
+- name: ensure tmp directory in hdfs is created with correct permissions
+  shell: "{{ hdfs_exe_dir }}/hadoop fs -mkdir /tmp; {{ hdfs_exe_dir }}/hadoop fs -chmod 1777 /tmp"
+  become: yes
+  become_user: hadoop
+  tags: hadoop

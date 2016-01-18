@@ -1,0 +1,80 @@
+---
+
+#Required...
+#hadoop_cluster_name:
+#dfs_namenode_host:
+#yarn_resourcemanager_hostname:
+#yarn_historyserver_hostname:
+
+# Defaults...
+hdfs_version: 2.6.3
+hdfs_install_dir: /opt/hadoop
+hdfs_exe_dir: "JAVA_HOME={{ java_home }} {{ hdfs_install_dir }}/default/bin"
+hdfs_conf_dir: "{{ hdfs_install_dir }}/default/etc/hadoop"
+hdfs_user: hadoop
+hdfs_group: hadoop
+hadoop_cluster_name: default_cluster
+hdfs_start_secs: 10
+hdfs_start_retries: 3
+hdfs_stdout_logfile_maxbytes: 50MB
+hdfs_stderr_logfile_maxbytes: 50MB
+#hdfs_env_vars: JAVA_HOME="/usr", HADOOP_HOME="/opt/hadoop/default", HADOOP_COMMON_HOME="/opt/hadoop/default/share/hadoop/common", HADOOP_HDFS_HOME="/opt/hadoop/default/share/hadoop/hdfs", HADOOP_YARN_HOME="/opt/hadoop/default/share/hadoop/yarn", HADOOP_PREFIX="/opt/hadoop/default"
+#hdfs_env_vars: JAVA_HOME="/usr", HADOOP_HDFS_HOME="/opt/hadoop/default/share/hadoop/hdfs", HADOOP_YARN_HOME="/opt/hadoop/default/share/hadoop/yarn", HADOOP_PREFIX="/opt/hadoop/default"
+#hdfs_env_vars: 'JAVA_HOME="{{ java_home }}", HADOOP_HOME="{{ hdfs_install_dir }}/default", YARN_HOME="{{ hdfs_install_dir }}/default", HADOOP_CONF_DIR="{{ hdfs_install_dir }}/etc/hadoop", HADOOP_COMMON_HOME="{{ hdfs_install_dir }}/default/share/hadoop/common", HADOOP_HDFS_HOME="{{ hdfs_install_dir }}/default/share/hadoop/hdfs", HADOOP_YARN_HOME="{{ hdfs_install_dir }}/default/share/hadoop/yarn"'
+hdfs_env_vars: 'JAVA_HOME="{{ java_home }}", HADOOP_HOME="{{ hdfs_install_dir }}/default", YARN_HOME="{{ hdfs_install_dir }}/default", HADOOP_PREFIX="/opt/hadoop/default"'
+
+hdfs_datanode_enabled: false
+hdfs_namenode_enabled: false
+hdfs_secondary_namenode_enabled: false
+yarn_resourcemanager_enabled: false
+yarn_nodemanager_enabled: false
+yarn_historyserver_enabled: false
+mapreduce_historyserver_enabled: false
+
+dfs_datanode_address_port: 50010
+dfs_datanode_http_address_port: 50075
+dfs_datanode_https_address_port: 50475
+dfs_datanode_ipc_address_port: 50020
+dfs_journalnode_rpc_address_port: 8485
+dfs_journalnode_http_address_port: 8480
+dfs_journalnode_https_address_port: 8481
+dfs_namenode_backup_address_port: 50100
+dfs_namenode_backup_http_address_port: 50105
+dfs_namenode_http_address_port: 50070
+dfs_namenode_https_address_port: 50470
+dfs_namenode_port: 8020
+dfs_namenode_secondary_http_address_port: 50090
+dfs_namenode_secondary_https_address_port: 50091
+
+dfs_namenode_name_dir: /data/dfs/nn
+dfs_datanode_data_dir: /data/dfs/dn
+dfs_replication: 3
+dfs_datanode_max_transfer_threads: 8192
+
+mapreduce_jobhistory_address_port: 10020
+mapreduce_jobhistory_webapp_address_port: 19888
+mapreduce_jobhistory_admin_address_port: 10033
+
+mapreduce_jobhistory_intermediate_done_dir: ${yarn.app.mapreduce.am.staging-dir}/history/done_intermediate
+mapreduce_jobhistory_done_dir: ${yarn.app.mapreduce.am.staging-dir}/history/done
+
+mapreduce_shuffle_port: 13562
+
+yarn_app_mapreduce_am_staging_dir: /data/yarn/user
+yarn_app_mapreduce_am_job_client_port_range: 47000-48000
+yarn_nodemanager_address_port: 8041
+yarn_nodemanager_localizer_address: 8040
+yarn_nodemanager_webapp_address_port: 8042
+
+yarn_nodemanager_local_dirs: /data/yarn/local
+yarn_nodemanager_log_dirs: /data/yarn/logs
+yarn_nodemanager_remote_app_log_dir: /var/log/hadoop-yarn/apps
+
+yarn_resourcemanager_address_port: 8032
+yarn_resourcemanager_admin_address_port: 8033
+yarn_resourcemanager_resource_tracker_address_port: 8031
+yarn_resourcemanager_scheduler_address_port: 8030
+yarn_resourcemanager_webapp_address_port: 8088
+yarn_resourcemanager_webapp_https_address_port: 8090
+
+repository_infrastructure:  "http://shinyfeather.com/hadoop/common/hadoop-{{ hdfs_version }}"

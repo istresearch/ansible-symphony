@@ -1,0 +1,8 @@
+[program:kibana4]
+command={{ kibana4_install_dir }}/kibana-{{ kibana4_version }}/bin/kibana
+autostart=true
+autorestart=true
+stopsignal=KILL
+redirect_stderr=true
+stderr_logfile=AUTO
+stderr_logfile_maxbytes={{ kibana4_stderr_logfile_maxbytes }}

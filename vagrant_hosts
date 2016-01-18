@@ -1,0 +1,3 @@
+127.0.0.1        localhost
+192.168.33.101   vagrant-as-01  vas01  ubuntu
+192.168.33.102   vagrant-as-02  vas02  ubuntu

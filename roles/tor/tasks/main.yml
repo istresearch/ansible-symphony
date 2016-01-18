@@ -1,0 +1,58 @@
+---
+
+# Include variables and define needed variables.
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+
+# Setup/install tasks.
+- include: setup-RedHat.yml
+  when: ansible_os_family == 'RedHat'
+
+- include: setup-Debian.yml
+  when: ansible_os_family == 'Debian'
+
+# Configure tor and polipo
+- name: copy tor settings
+  template:
+    src=torrc.j2
+    dest=/etc/tor/torrc
+    mode=0644
+  tags: tor
+
+- name: copy polipo settings
+  template:
+    src=config.j2
+    dest=/etc/polipo/config
+    mode=0644
+  tags: polipo
+
+# Run in supervisord
+- name: don't let tor system service start
+  service: name=tor state=stopped enabled=no
+  tags: tor
+
+- name: don't let polipo system service start
+  service: name=polipo state=stopped enabled=no
+  tags: polipo
+
+- name: copy tor supervisord config
+  template: 
+    src=tor-supervisord.conf.j2
+    dest={{ supervisord_programs_dir }}/tor-supervisord.conf
+    mode=0644
+  notify:
+    - reread supervisord
+  tags:
+    - tor
+    - supervisord
+
+- name: copy polipo supervisord config
+  template:
+    src=polipo-supervisord.conf.j2
+    dest={{ supervisord_programs_dir }}/polipo-supervisord.conf
+    mode=0644
+  notify:
+    - reread supervisord
+  tags:
+    - polipo
+    - supervisord

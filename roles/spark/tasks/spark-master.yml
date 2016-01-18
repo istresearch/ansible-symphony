@@ -1,0 +1,37 @@
+---
+# set up spark history
+- name: set up spark history (1/4)
+  shell: "/usr/bin/hadoop fs -mkdir -p {{ spark_hdfs_dir }}"
+  tags:
+    - spark
+
+# set up spark history
+- name: set up spark history (2/4)
+  shell: "/usr/bin/hadoop fs -mkdir -p {{ spark_hdfs_dir }}/{{ spark_history_dir }}"
+  tags:
+    - spark
+
+# set up spark history
+- name: set up spark history (3/4)
+  shell: "/usr/bin/hadoop fs -chown -R spark:spark {{ spark_hdfs_dir }}"
+
+   hdfs
+  tags:
+    - spark
+
+# set up spark history
+- name: set up spark history (4/4)
+  shell: "/usr/bin/hadoop fs -chmod 1777 {{ spark_hdfs_dir }}/{{ spark_history_dir }}"
+
+   hdfs
+  tags:
+    - spark
+
+- name: copy supervisord config
+  template:
+    src=spark-master-supervisord.conf.j2
+    dest={{ supervisord_programs_dir }}/spark-master-supervisord.conf
+    mode=0644
+  notify:
+    - reread supervisord
+  tags: spark

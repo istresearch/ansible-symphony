@@ -1,0 +1,9 @@
+---
+
+diskbot_install_dir: /usr/local/bin
+diskbot_log_dir: /var/log
+diskbot_name: diskbot.sh
+diskbot_log_name: diskbot.log
+diskbot_exclude_list: rootfs|tmpfs
+diskbot_threshold: 90
+diskbot_slack_ch: service-monitoring

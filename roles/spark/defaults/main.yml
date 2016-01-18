@@ -1,0 +1,29 @@
+---
+
+spark_driver_memory: 512m
+spark_log_dir: "/var/log/spark"
+spark_pid_dir: "/var/run/spark"
+spark_conf_dir: "/etc/spark/conf"
+spark_default_hadoop_home: "/usr/lib/hadoop"
+spark_hdfs_dir: "/user/spark"
+
+spark_history_dir: "applicationHistory"
+spark_history_enabled: true
+spark_history_ui_port: 18079
+
+spark_executor_instances: 1
+spark_executor_cores: 1
+
+spark_master_webui_port: 18080
+spark_master_port: 7077
+
+spark_worker_port: 7078
+spark_worker_webui_port: 18081
+spark_worker_memory: 2g
+spark_worker_dir: "/var/run/spark/work"
+spark_worker_instances: 1
+spark_worker_cores: 2
+
+spark_pkg_name: spark-1.6.0-bin-hadoop2.6
+spark_install_dir: /opt/spark
+spark_stderr_logfile_maxbytes: 50MB

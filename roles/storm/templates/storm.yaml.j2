@@ -1,0 +1,87 @@
+### base
+java.library.path: "{{ storm_java_library_path }}"
+storm.local.dir: "{{ storm_local_dir }}"
+
+### zookeeper.*
+storm.zookeeper.servers:
+{% for host in zookeeper_host_list %}
+  - "{{ host }}"
+{% endfor %}
+storm.zookeeper.port: {{ zookeeper_client_port|default(2181) }}
+{% if storm_zookeeper_extra_config.items is defined %}
+{% for key, value in storm_zookeeper_extra_config|dictsort %}
+{{ key }}: {{ value }}
+{% endfor %}
+{% endif %}
+
+### supervisor.* configs are for node supervisors
+supervisor.slots.ports:
+{% for port in storm_worker_ports %}
+  - {{ port }}
+{% endfor %}
+{% if storm_supervisor_extra_config.items is defined %}
+{% for key, value in storm_supervisor_extra_config|dictsort %}
+{{ key }}: {{ value }}
+{% endfor %}
+{% endif %}
+
+### worker.* configs are for task workers
+{% if storm_worker_extra_config.items is defined %}
+{% for key, value in storm_worker_extra_config|dictsort %}
+{{ key }}: {{ value }}
+{% endfor %}
+{% endif %}
+
+### nimbus.* configs are for the master
+nimbus.host: "{{ nimbus_host }}"
+nimbus.thrift.port: {{ nimbus_thrift_port }}
+{% if storm_nimbus_extra_config.items is defined %}
+{% for key, value in storm_nimbus_extra_config|dictsort %}
+{{ key }}: {{ value }}
+{% endfor %}
+{% endif %}
+
+### ui.* configs are for the master
+ui.port: {{ storm_ui_port }}
+{% if storm_ui_extra_config.items is defined %}
+{% for key, value in storm_ui_extra_config|dictsort %}
+{{ key }}: {{ value }}
+{% endfor %}
+{% endif %}
+
+### ui.* configs are for the master
+logviewer.port: {{ storm_logviewer_port }}
+{% if storm_logviewer_extra_config.items is defined %}
+{% for key, value in storm_logviewer_extra_config|dictsort %}
+{{ key }}: {{ value }}
+{% endfor %}
+{% endif %}
+
+### drpc.* configs
+drpc.port: {{ storm_drpc_port }}
+drpc.invocations.port: {{ storm_drpc_invocations_port }}
+drpc.http.port: {{ storm_drpc_http_port }}
+{% if storm_drpc_extra_config.items is defined %}
+{% for key, value in storm_drpc_extra_config|dictsort %}
+{{ key }}: {{ value }}
+{% endfor %}
+{% endif %}
+
+### transactional.* configs
+transactional.zookeeper.servers:
+{% for host in zookeeper_host_list %}
+  - "{{ host }}"
+{% endfor %}
+transactional.zookeeper.port: {{ zookeeper_client_port|default(2181) }}
+{% if storm_transactional_extra_config.items is defined %}
+{% for key, value in storm_transactional_extra_config|dictsort %}
+{{ key }}: {{ value }}
+{% endfor %}
+{% endif %}
+
+### topology.* configs are for specific executing storms
+{% if storm_topology_extra_config.items is defined %}
+{% for key, value in storm_topology_extra_config|dictsort %}
+{{ key }}: {{ value }}
+{% endfor %}
+{% endif %}

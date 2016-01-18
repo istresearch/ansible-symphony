@@ -1,0 +1,7 @@
+[program:elasticsearch]
+command={{ elasticsearch_install_dir }}/elasticsearch-{{ elasticsearch_version}}/bin/elasticsearch
+autostart=true
+autorestart=true
+user={{ elasticsearch_user }}
+startsecs=10
+startretries=3

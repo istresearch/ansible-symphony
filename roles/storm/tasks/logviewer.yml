@@ -1,0 +1,16 @@
+# Configure and start the log viewer UI
+
+- name: setup the storm log viewer ui supervisord config
+  template:
+    src=storm-logviewer-supervisord.conf.j2
+    dest={{ supervisord_programs_dir }}/storm-logviewer-supervisord.conf
+    mode=0644
+    owner=root
+    group=root
+  notify:
+    - reread supervisord
+    - restart storm logviewer
+    - wait for logviewer port
+  tags:
+    - storm
+    - storm_logviewer

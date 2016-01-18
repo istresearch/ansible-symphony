@@ -1,0 +1,81 @@
+---
+
+elasticsearch_install_dir: /opt/elasticsearch
+elasticsearch_user: elasticsearch
+elasticsearch_group: elasticsearch
+elasticsearch_version: 2.1.1
+elasticsearch_max_open_files: 65535
+elasticsearch_max_locked_memory: 1000000000
+elasticsearch_cluster_name: elasticsearch
+
+elasticsearch_plugin_kopf_version: 2.1.1
+elasticsearch_plugin_icu_version: 2.4.2
+
+elasticsearch_plugin_dir: "{{ elasticsearch_install_dir }}/elasticsearch-{{ elasticsearch_version }}/plugins"
+elasticsearch_bin_dir: "{{ elasticsearch_install_dir }}/elasticsearch-{{ elasticsearch_version }}/bin"
+elasticsearch_log_dir: /var/log/elasticsearch
+elasticsearch_data_dir: /var/lib/elasticsearch
+elasticsearch_work_dir: /tmp/elasticsearch
+elasticsearch_conf_dir: "{{ elasticsearch_install_dir }}/elasticsearch-{{ elasticsearch_version }}/config"
+
+elasticsearch_all_master: "true"
+elasticsearch_all_data: "true"
+elasticsearch_node_max_local_storage_nodes: 1
+elasticsearch_index_mapper_dynamic: true
+elasticsearch_misc_query_bool_max_clause_count: 4096
+elasticsearch_memory_bootstrap_mlockall: "true"
+
+elasticsearch_gateway_type: local
+elasticsearch_gateway_recover_after_nodes: 1
+elasticsearch_gateway_recover_after_time: 2m
+elasticsearch_gateway_expected_nodes: 1
+
+elasticsearch_discovery_zen_minimum_master_nodes: 1
+elasticsearch_discovery_zen_ping_timeout: 30s
+elasticsearch_discovery_zen_ping_multicast_port: 54328
+elasticsearch_discovery_zen_ping_multicast_enabled: "false"
+
+elasticsearch_discovery_zen_fd_ping_interval: 1s
+elasticsearch_discovery_zen_fd_ping_timeout: 30s
+elasticsearch_discovery_zen_fd_ping_retries: 3
+
+elasticsearch_misc_auto_create_index: "true"
+elasticsearch_misc_disable_delete_all_indices: "true"
+elasticsearch_java_opts: "-XX:-UseSuperWord"
+elasticsearch_script_disable_dynamic: "true"
+elasticsearch_allow_origin: "/.*/"
+elasticsearch_http_cors_enabled: "true"
+
+elasticsearch_recovery_node_initial_primaries_recoveries: 4
+elasticsearch_recovery_node_concurrent_recoveries: 2
+elasticsearch_recovery_max_size_per_sec: 0
+elasticsearch_recovery_concurrent_streams: 5
+
+elasticsearch_network_transport_tcp_port_min: 9300
+elasticsearch_network_transport_tcp_port_max: 9399
+elasticsearch_network_transport_tcp_compress: "false"
+elasticsearch_network_http_port: 9200
+elasticsearch_network_http_max_content_length: 100mb
+elasticsearch_network_http_enabled: "true"
+
+# all of these logs are disabled
+elasticsearch_slowlog_threshold_query_warn: -1
+elasticsearch_slowlog_threshold_query_info: -1
+elasticsearch_slowlog_threshold_query_debug: -1
+elasticsearch_slowlog_threshold_query_trace: -1
+elasticsearch_slowlog_threshold_fetch_warn: -1
+elasticsearch_slowlog_threshold_fetch_info: -1
+elasticsearch_slowlog_threshold_fetch_debug: -1
+elasticsearch_slowlog_threshold_fetch_trace: -1
+elasticsearch_slowlog_threshold_index_warn: -1
+elasticsearch_slowlog_threshold_index_info: -1
+elasticsearch_slowlog_threshold_index_debug: -1
+elasticsearch_slowlog_threshold_index_trace: -1
+elasticsearch_gc_par_new_warn: -1
+elasticsearch_gc_par_new_info: -1
+elasticsearch_gc_par_new_debug: -1
+elasticsearch_gc_soncurrent_mark_sweep_warn: -1
+elasticsearch_gc_soncurrent_mark_sweep_info: -1
+elasticsearch_gc_soncurrent_mark_sweep_debug: -1
+
+repository_infrastructure: "https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/{{ elasticsearch_version }}"

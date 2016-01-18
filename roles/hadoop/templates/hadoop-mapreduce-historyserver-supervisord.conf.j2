@@ -1,0 +1,9 @@
+[program:hadoop-mapreduce-historyserver]
+command={{ hdfs_install_dir }}/hadoop-{{ hdfs_version}}/bin/mapred historyserver
+autostart=true
+autorestart=true
+user={{ hdfs_user }}
+startsecs={{ hdfs_start_secs }}
+startretries={{ hdfs_start_retries }}
+stopsignal=KILL
+environment = {{ hdfs_env_vars }}

@@ -1,0 +1,20 @@
+---
+
+- name: copy supervisord config
+  template:
+    src: hadoop-yarn-historyserver-supervisord.conf.j2
+    dest: "{{ supervisord_programs_dir }}/hadoop-yarn-historyserver-supervisord.conf"
+    mode: 0644
+  notify:
+    - reread supervisord
+    - restart yarn historyserver
+    - wait for yarn historyserver port
+  tags: hadoop
+
+- name: add historyserver to supervisord
+  supervisorctl:
+    name: hadoop-yarn-historyserver
+    state: present
+  notify:
+    - wait for yarn history server port
+  tags: hadoop

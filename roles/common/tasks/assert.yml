@@ -1,0 +1,4 @@
+---
+- fail:
+    msg="A single host must be specified in the 'ntp-server-node' group of your inventory."
+  when: groups['ntp-server-node']|length != 1

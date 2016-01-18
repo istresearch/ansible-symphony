@@ -1,0 +1,139 @@
+---
+
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: setup group
+  group:
+    name={{ storm_group }}
+  tags: storm
+
+- name: setup user
+  user:
+    name={{ storm_user }}
+    group={{ storm_group }}
+  tags: storm
+
+- name: create storm installation directory
+  file:
+    path={{ storm_install_dir }}
+    state=directory
+    owner={{ storm_user }}
+    group={{ storm_group }}
+    mode=755
+  tags: storm
+
+- name: check for existing install
+  stat: path={{ storm_install_dir }}/apache-storm-{{ storm_version }}
+  register: storm
+  tags: storm
+
+- name: download storm package
+  get_url:
+    url="{{ repository_infrastructure }}/apache-storm-{{ storm_version }}.tar.gz"
+    dest=/tmp/apache-storm-{{ storm_version }}.tar.gz
+    validate_certs=no
+  when: storm.stat.isdir is not defined
+  tags: storm
+
+- name: uncompress the storm tar
+  unarchive:
+    src=/tmp/apache-storm-{{ storm_version }}.tar.gz
+    dest={{ storm_install_dir}}
+    copy=no
+    creates={{ storm_install_dir }}/apache-storm-{{ storm_version }}
+  when: storm.stat.isdir is not defined
+  tags: storm
+
+- name: delete temporary storm file
+  file:
+    path=/tmp/apache-storm-{{ storm_version }}.tar.gz
+    state=absent
+  ignore_errors: yes
+  tags: storm
+
+- name: create symlink
+  file:
+    path={{ storm_install_dir }}/default
+    state=link
+    src={{ storm_install_dir }}/apache-storm-{{ storm_version }}
+  tags: storm
+
+- name: create storm directories
+  file:
+    path={{ item }}
+    state=directory
+    owner={{ storm_user }}
+    group={{ storm_group }}
+    mode=775
+  with_items:
+    - "{{ storm_local_dir }}"
+    - "/var/log/storm"
+  tags: storm
+
+- name: check if storm log directory already exists
+  stat:
+    path={{ storm_install_dir }}/default/logs
+    get_md5=False
+  register: storm_logs_dir
+  tags: storm
+
+- name: create storm log symlink to /var/log/storm if directory doesn't exist
+  file:
+    path={{ storm_install_dir }}/default/logs
+    state=link
+    src=/var/log/storm
+  when: not storm_logs_dir.stat.exists
+  tags: storm
+
+- name: configure storm.yaml
+  template:
+    src=storm.yaml.j2
+    dest="{{ storm_install_dir }}/apache-storm-{{ storm_version }}/conf/storm.yaml"
+    owner={{ storm_user }}
+    group={{ storm_group }}
+    mode=644
+  notify:
+    - restart storm nimbus
+    - restart storm supervisor
+    - restart storm ui
+  tags: storm
+
+- name: set storm file permissions
+  file:
+    path={{ storm_install_dir }}
+    owner={{ storm_user }}
+    group={{ storm_group }}
+    recurse=yes
+  tags: storm
+
+- name: add storm to path
+  lineinfile:
+    dest: "/root/.bashrc"
+    line: "export PATH='{{ storm_install_dir }}/default/bin':$PATH"
+  tags: storm
+
+- include: nimbus.yml
+  when: storm_nimbus_enabled
+  tags:
+    - storm
+    - storm_nimbus
+
+- include: ui.yml
+  when: storm_ui_enabled
+  tags:
+    - storm
+    - storm_ui
+
+- include: supervisor.yml
+  when: storm_supervisor_enabled
+  tags:
+    - storm
+    - storm_supervisor
+
+- include: logviewer.yml
+  when: storm_logviewer_enabled
+  tags:
+    - storm
+    - storm_logviewer
+

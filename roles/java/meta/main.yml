@@ -1,0 +1,3 @@
+---
+dependencies:
+  - { role: prerequisites, when: "package_update_has_run is not defined"}

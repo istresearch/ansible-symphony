@@ -1,0 +1,52 @@
+#!/bin/bash
+
+###############################################################################
+# This script monitors all partitions on a linux machine
+# except for anything that matches $EXCLUDE_LIST. It sends
+# an alert to $SLACK_CH when the disk usage is above the $THRESHOLD value.
+#
+# It is recommended that this script be run as a cronjob.  For example,
+# the cronjob below runs it every hour and logs stdout and stderr to /var/log.
+#
+#* */1 * * * /usr/local/bin/diskbot.sh >> /var/log/diskbot.log 2>&1
+#  
+###############################################################################
+
+# Edit your partition exclusion list here
+EXCLUDE_LIST="{{ diskbot_exclude_list }}"
+# Threshold for disk space alert
+THRESHOLD={{ diskbot_threshold }}
+# Slack channel for reporting
+SLACK_CH="{{ diskbot_slack_ch }}"
+SLACK_BOT="{{ slackbot }}"
+
+
+PARTITIONS=$(df | grep -vE "^Filesystem|${EXCLUDE_LIST}" | awk '{print $NF}')
+
+function check_status() {
+	if [ $CURRENT -gt "$THRESHOLD" ] ; then
+		NOTIFY="The *${item}* partition on *`hostname`* is almost full!  Usage: *${CURRENT}%*"
+		echo $NOTIFY
+		# Notify the Slack  channel
+		curl --data "${NOTIFY}" \
+	 	$"${SLACK_BOT}${SLACK_CH}"
+		printf "\n"
+	else
+		echo "${item} partition on `hostname` usage: ${CURRENT}%"
+	fi
+}
+
+echo "-----------------------------`date`--------------------------------"
+
+for item in ${PARTITIONS[@]}; 
+do
+	CURRENT=$(df $item | grep -v Filesystem | awk '{ print $5}' | sed 's/%//g')
+	DETAILS=`df -h $item | grep -v Filesystem | awk '{print $2,$3,$4;}'`
+	SIZE=`df -h $item | grep -v Filesystem | awk '{print $2}'`
+	USED=`df -h $item | grep -v Filesystem | awk '{print $3}'`
+	AVAIL=`df -h $item | grep -v Filesystem | awk '{print $4}'`
+	PERCENT=`df -h $item | grep -v Filesystem | awk '{print $5}'`
+	FILESYSTEM=`df -h $item | grep -v Filesystem | awk '{print $1}'`
+
+	check_status 
+done

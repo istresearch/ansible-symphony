@@ -1,0 +1,8 @@
+[program:storm-nimbus]
+command={{ storm_install_dir }}/default/bin/storm nimbus
+autostart=true
+autorestart=true
+user={{ storm_user }}
+startsecs=10
+startretries=999
+redirect_stderr=true

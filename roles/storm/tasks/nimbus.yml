@@ -1,0 +1,16 @@
+# Configure and start nimbus
+
+- name: setup nimbus supervisord config
+  template:
+    src=storm-nimbus-supervisord.conf.j2
+    dest={{ supervisord_programs_dir }}/storm-nimbus-supervisord.conf
+    mode=0644
+    owner=root
+    group=root
+  notify:
+    - reread supervisord
+    - restart storm nimbus
+    - wait for nimbus port
+  tags:
+    - storm
+    - storm_nimbus

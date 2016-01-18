@@ -1,0 +1,9 @@
+---
+- name: restart ntp
+  service:
+    name={{ ntp_daemon }}
+    state=restarted
+
+- name: synchronize clock
+  shell: "service {{ ntp_daemon }} stop; ntpdate {{ ntp_server_host }}; service {{ ntp_daemon }} start"
+  when: inventory_hostname != ntp_server_host

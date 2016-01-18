@@ -1,0 +1,62 @@
+---
+- name: ensure proper permissions on hdfs directories for staging
+  shell: "{{ hdfs_exe_dir }}/hadoop fs -mkdir -p {{ item }}; {{ hdfs_exe_dir }}/hadoop fs -chmod -R 1777 {{ item }}"
+  with_items:
+    - "{{ yarn_app_mapreduce_am_staging_dir }}"
+  become: yes
+  become_user: hadoop
+  tags:
+    - hadoop
+    - yarn_resourcemanager
+
+- name: ensure history directory on hdfs is created
+  shell: "{{ hdfs_exe_dir }}/hadoop fs -mkdir -p {{ yarn_app_mapreduce_am_staging_dir }}/history"
+  tags:
+    - hadoop
+    - yarn_resourcemanager
+
+- name: ensure proper permissions on hdfs directories for history
+  shell: "{{ hdfs_exe_dir }}/hadoop fs -chmod -R 1777 {{ yarn_app_mapreduce_am_staging_dir }}/history"
+  become: yes
+  become_user: hadoop
+  tags:
+    - hadoop
+    - yarn_resourcemanager
+
+- name: ensure proper onwership on hdfs directories for history
+  shell: "{{ hdfs_exe_dir }}/hadoop fs -chown -R mapred:hadoop {{ yarn_app_mapreduce_am_staging_dir }}/history"
+  become: yes
+  become_user: hadoop
+  tags:
+    - hadoop
+    - yarn_resourcemanager
+
+- name: ensure proper permissions on hdfs directories for logs
+  shell: "{{ hdfs_exe_dir }}/hadoop fs -mkdir -p {{ item }}; {{ hdfs_exe_dir }}/hadoop fs -chown -R yarn:hadoop {{ item }}/..; {{ hdfs_exe_dir }}/hadoop fs -chmod -R 1777 {{ item }}/.."
+  with_items:
+    - "{{ yarn_nodemanager_remote_app_log_dir }}"
+  become: yes
+  become_user: hadoop
+  tags:
+    - hadoop
+    - yarn_resourcemanager
+
+- name: copy supervisord config
+  template:
+    src: hadoop-yarn-resourcemanager-supervisord.conf.j2
+    dest: "{{ supervisord_programs_dir }}/hadoop-yarn-resourcemanager-supervisord.conf"
+    mode: 0644
+  notify:
+    - reread supervisord
+    - restart yarn resourcemanager
+    - wait for yarn resource manager port
+  tags: hadoop
+
+- name: add resource manager to supervisord
+  supervisorctl:
+    name: hadoop-yarn-resourcemanager
+    state: present
+  notify:
+    - wait for yarn resource manager port
+  tags: hadoop
+

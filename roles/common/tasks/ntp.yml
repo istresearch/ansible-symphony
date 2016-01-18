@@ -1,0 +1,44 @@
+---
+
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: install ntp CentOS
+  yum: name=ntp state=present
+  tags: ntp
+  when: ansible_os_family == 'RedHat'
+
+- name: install ntp Ubuntu
+  apt: name=ntp state=present
+  tags: ntp
+  when: ansible_os_family == 'Debian'
+
+- name: configure ntp as client
+  template:
+    src: ntp.conf.client.j2
+    dest: /etc/ntp.conf
+    mode: 0644
+  notify:
+    - restart ntp
+  tags: ntp
+
+- block: 
+  - name: stop ntp
+    service:
+      name: "{{ ntp_daemon }}"
+      state: stopped
+  - name: syncronize clock
+    command: "ntpdate {{ ntp_server_host }}"
+  - name: start ntp
+    service:
+      name: "{{ ntp_daemon }}"
+      state: started
+  when: inventory_hostname != ntp_server_host
+  tags: ntp
+
+- name: enable ntp service
+  service:
+    name: "{{ ntp_daemon }}"
+    state: started
+    enabled: yes
+  tags: ntp

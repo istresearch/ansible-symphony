@@ -1,0 +1,7 @@
+---
+
+miniconda_install_dir: /opt/miniconda
+user_home: /root
+miniconda_version: latest
+
+repository_infrastructure:  "https://repo.continuum.io/miniconda"

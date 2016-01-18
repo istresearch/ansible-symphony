@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+
+  <property>
+    <name>dfs.datanode.data.dir</name>
+    <value>file://{{ dfs_datanode_data_dir }}</value>
+  </property>
+
+  <property>
+    <name>dfs.datanode.address</name>
+    <value>0.0.0.0:{{ dfs_datanode_address_port|default(50010) }}</value>
+  </property>
+
+  <property>
+    <name>dfs.datanode.http.address</name>
+    <value>0.0.0.0:{{ dfs_datanode_http_address_port|default(50075) }}</value>
+  </property>
+
+  <property>
+    <name>dfs.datanode.https.address</name>
+    <value>0.0.0.0:{{ dfs_datanode_https_address_port|default(50475) }}</value>
+  </property>
+
+  <property>
+    <name>dfs.datanode.ipc.address</name>
+    <value>0.0.0.0:{{ dfs_datanode_ipc_address_port|default(50020) }}</value>
+  </property>
+
+  <property>
+    <name>dfs.datanode.max.transfer.threads</name>
+    <value>{{ dfs_datanode_max_transfer_threads|default(4096) }}</value>
+  </property>
+
+  <property>
+    <name>dfs.journalnode.rpc-address</name>
+    <value>0.0.0.0:{{ dfs_journalnode_rpc_address_port|default(8485) }}</value>
+  </property>
+
+  <property>
+    <name>dfs.journalnode.http-address</name>
+    <value>0.0.0.0:{{ dfs_journalnode_http_address_port|default(8480) }}</value>
+  </property>
+
+  <property>
+    <name>dfs.journalnode.https-address</name>
+    <value>0.0.0.0:{{ dfs_journalnode_https_address_port|default(8481) }}</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.name.dir</name>
+    <value>file://{{ dfs_namenode_name_dir }}</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.backup.address</name>
+    <value>0.0.0.0:{{ dfs_namenode_backup_address_port|default(50100) }}</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.backup.http-address</name>
+    <value>0.0.0.0:{{ dfs_namenode_backup_http_address_port|default(50105) }}</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.http-address</name>
+    <value>0.0.0.0:{{ dfs_namenode_http_address_port|default(50070) }}</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.https-address</name>
+    <value>0.0.0.0:{{ dfs_namenode_https_address_port|default(50470) }}</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.secondary.http-address</name>
+    <value>0.0.0.0:{{ dfs_namenode_secondary_http_address_port|default(50090) }}</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.secondary.https-address</name>
+    <value>0.0.0.0:{{ dfs_namenode_secondary_https_address_port|default(50091) }}</value>
+  </property>
+
+  <property>
+    <name>dfs.permissions.superusergroup</name>
+    <value>hadoop</value>
+  </property>
+
+  <property>
+    <name>dfs.replication</name>
+    <value>{{ dfs_replication|default(3) }}</value>
+  </property>
+
+  <property>
+    <name>dfs.web.ugi</name>
+    <value>hdfs</value>
+  </property>
+
+</configuration>

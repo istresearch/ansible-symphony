@@ -1,0 +1,19 @@
+---
+- name: create data directories
+  file:
+    path={{ item }}
+    state=directory
+    mode=0755
+  with_items:
+    - "{{ spark_worker_dir }}"
+  tags:
+    - spark
+
+- name: copy supervisord config
+  template:
+    src=spark-slave-supervisord.conf.j2
+    dest={{ supervisord_programs_dir }}/spark-slave-supervisord.conf
+    mode=0644
+  notify:
+    - reread supervisord
+  tags: spark

@@ -1,0 +1,15 @@
+---
+
+- name: apt install java 
+  apt: 
+    name: default-jdk
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
+  tags: java
+
+- name: java system environment configuration
+  lineinfile:
+    dest=/etc/environment
+    line="export JAVA_HOME={{ java_home }}"
+  tags: java

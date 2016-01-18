@@ -1,0 +1,16 @@
+---
+# file: roles/common/tasks/main.yml
+
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+
+# Setup/install tasks.
+- include: setup-RedHat.yml
+  when: ansible_os_family == 'RedHat'
+
+- include: setup-Debian.yml
+  when: ansible_os_family == 'Debian'
+
+- name: Set fact java_has_run
+  set_fact:
+    java_has_run: true

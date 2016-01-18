@@ -1,0 +1,8 @@
+[program:storm-ui]
+command={{ storm_install_dir }}/default/bin/storm ui
+autostart=true
+autorestart=true
+user={{ storm_user }}
+startsecs=10
+startretries=999
+redirect_stderr=true

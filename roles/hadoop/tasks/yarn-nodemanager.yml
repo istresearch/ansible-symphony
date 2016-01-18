@@ -1,0 +1,33 @@
+---
+- name: create data directories
+  file:
+    path="{{ item }}"
+    state=directory
+    mode=0755
+    owner={{ hdfs_user }}
+    group={{ hdfs_group }}
+  with_items:
+    - "{{ yarn_nodemanager_local_dirs }}"
+    - "{{ yarn_nodemanager_log_dirs }}"
+  tags:
+    - hadoop
+    - yarn_nodemanager
+
+- name: copy supervisord config
+  template:
+    src: hadoop-yarn-nodemanager-supervisord.conf.j2
+    dest: "{{ supervisord_programs_dir }}/hadoop-yarn-nodemanager-supervisord.conf"
+    mode: 0644
+  notify:
+    - reread supervisord
+    - restart yarn nodemanager
+    - wait for yarn node manager port
+  tags: hadoop
+
+- name: add nodemanager to supervisord
+  supervisorctl:
+    name: hadoop-yarn-nodemanager
+    state: present
+  notify:
+    - wait for yarn node manager port
+  tags: hadoop

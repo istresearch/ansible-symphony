@@ -1,0 +1,41 @@
+---
+
+# Install tor
+- name:  Add tor repos
+  apt_repository:
+    repo: "{{ item }}"
+    state: present
+  with_items:
+    - "{{ tor_repo }}"
+    - "{{ tor_source }}"
+  tags: tor
+
+# - name: Get gpg signing key
+#   command: "gpg --keyserver keys.gnupg.net --recv 886DDD89"
+#   tags: tor
+
+# - name: Add gpg signing key
+#   shell: "gpg --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | sudo apt-key add -"
+#   tags: tor
+
+- name: Update apt-get cache
+  apt: 
+    update_cache: yes
+    cache_valid_time: 3600
+  tags: tor
+
+- name: Install tor from proper repo
+  apt:
+    name: "{{ item }}"
+    state: present
+    force: yes
+  with_items:
+    - tor
+    - deb.torproject.org-keyring
+  tags: tor
+
+# Install polipo
+- name: Install polipo
+  apt:
+    name: polipo
+    state: present

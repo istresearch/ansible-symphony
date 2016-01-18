@@ -1,0 +1,9 @@
+# Point to our network's master time server
+server {{ ntp_server_host }}
+
+restrict default kod nomodify notrap nopeer noquery
+restrict -6 default kod nomodify notrap nopeer noquery
+restrict 127.0.0.1
+restrict -6 ::1
+
+driftfile /var/lib/ntp/drift

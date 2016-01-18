@@ -1,0 +1,10 @@
+---
+- name: restart tor
+  supervisorctl:
+    name=tor
+    state=restarted
+
+- name: restart polipo
+  supervisorctl:
+    name=polipo
+    state=restarted

@@ -1,0 +1,37 @@
+---
+
+- name: install yum utils
+  yum: name=yum-utils state=present
+  tags:
+    - common
+
+- name: enable existing centos yum repositories
+  shell: "yum-config-manager --enable {{ item }}"
+  with_items:
+   - base
+   - extras
+   - updates
+   - epel
+   - epel-testing
+  tags:
+    - yum
+    - common
+
+- name: install baseline packages
+  yum:
+    name={{ item }}
+    state=latest
+  with_items:
+   - bash
+   - libselinux-python
+   - openssh-clients
+   - wget
+#   - gcc
+   - unzip
+  tags:
+    - common
+
+- name: disable selinux
+  selinux: state=disabled
+  tags:
+    - common

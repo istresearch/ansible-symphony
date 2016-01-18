@@ -1,0 +1,29 @@
+---
+# A role for doing anything prior to an application-level deployment
+- name: Clean yum repo
+  command: yum clean all
+  tags:
+    - prerequisites
+  when: ansible_os_family == 'RedHat'
+
+- name: Update yum repo
+  command: yum update
+  tags:
+    - prerequisites
+  when: ansible_os_family == 'RedHat'
+
+- name: Clean apt repo
+  command: apt-get clean all
+  tags:
+    - prerequisites
+  when: ansible_os_family == 'Debian'
+
+- name: Update apt repo
+  command: apt-get update
+  tags:
+    - prerequisites
+  when: ansible_os_family == 'Debian'
+
+- name: Set fact package-Update_has_run
+  set_fact:
+    package_update_has_run: true

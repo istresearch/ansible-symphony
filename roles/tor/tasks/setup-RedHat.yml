@@ -1,0 +1,28 @@
+---
+
+- name: copy over tor repo
+  copy:
+    src=torproject.repo
+    dest=/etc/yum.repos.d/torproject.repo
+    mode=0644
+  tags: tor
+
+- name: install epel repo
+  yum: name=epel-release state=latest
+  tags: tor
+
+- name: enable repositories
+  shell: "yum-config-manager --enable {{ item }}"
+  with_items:
+   - epel
+   - epel-testing
+   - tor
+  tags: tor
+
+- name: install tor
+  yum: name=tor state=latest
+  tags: tor
+
+- name: install polipo
+  yum: name=polipo state=latest
+  tags: polipo

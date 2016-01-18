@@ -1,0 +1,32 @@
+---
+# file: roles/pip/tasks/main.yml
+
+- name: yum install python-pip 
+  yum:
+    name=python-pip
+    state=present
+  tags: pip
+  when: ansible_os_family == "RedHat"
+
+- name: apt install python-pip 
+  apt:
+    name=python-pip
+    state=present
+  tags: pip
+  when: ansible_os_family == "Debian"
+
+# - name: create pip configuration directory
+#   file:
+#     state=directory
+#     dest=~/.pip
+#     mode=0755
+
+# - name: configure pip to use the local repository
+#   template:
+#     src=pip.conf.j2
+#     dest=~/.pip/pip.conf
+#   tags: pip
+
+- name: Set fact pip_has_run
+  set_fact:
+    pip_has_run: true

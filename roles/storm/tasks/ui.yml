@@ -1,0 +1,16 @@
+# Configure and start the UI
+
+- name: setup the storm ui supervisord config
+  template:
+    src=storm-ui-supervisord.conf.j2
+    dest={{ supervisord_programs_dir }}/storm-ui-supervisord.conf
+    mode=0644
+    owner=root
+    group=root
+  notify:
+    - reread supervisord
+    - restart storm ui
+    - wait for ui port
+  tags:
+    - storm
+    - storm_ui

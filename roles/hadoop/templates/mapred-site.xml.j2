@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+
+  <property>
+    <name>mapreduce.framework.name</name>
+    <value>yarn</value>
+  </property>
+
+  <property> 
+    <name>mapreduce.jobhistory.address</name>
+    <value>{{ yarn_historyserver_hostname|default('0.0.0.0') }}:{{ mapreduce_jobhistory_address_port|default(10020) }}</value> 
+  </property>
+  
+  <property> 
+    <name>mapreduce.jobhistory.webapp.address</name>
+    <value>{{ yarn_historyserver_hostname|default('0.0.0.0') }}:{{ mapreduce_jobhistory_webapp_address_port|default(19888) }}</value> 
+  </property>
+
+  <property>
+    <name>mapreduce.jobhistory.admin.address</name>
+    <value>{{ yarn_historyserver_hostname|default('0.0.0.0') }}:{{ mapreduce_jobhistory_admin_address_port|default(10033) }}</value>
+  </property>
+
+  <property>
+    <name>mapreduce.shuffle.port</name>
+    <value>{{ mapreduce_shuffle_port }}</value>
+  </property>
+
+  <property>
+    <name>yarn.app.mapreduce.am.job.client.port-range</name>
+    <value>{{ yarn_app_mapreduce_am_job_client_port_range }}</value>
+  </property>
+
+  <property>
+    <name>yarn.app.mapreduce.am.staging-dir</name>
+    <value>{{ yarn_app_mapreduce_am_staging_dir }}</value>
+  </property>
+
+  <property>
+    <name>mapreduce.jobhistory.intermediate-done-dir</name>
+    <value>{{ mapreduce_jobhistory_intermediate_done_dir }}</value>
+  </property>
+
+  <property>
+    <name>mapreduce.jobhistory.done-dir</name>
+    <value>{{ mapreduce_jobhistory_done_dir }}</value>
+  </property>
+
+</configuration>
