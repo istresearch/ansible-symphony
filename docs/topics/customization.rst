@@ -3,11 +3,36 @@ Customization
 
 This section explains how to customize your testing environment by:
 
+- Forking this repository
 - Adding more machines
 - Editing the inventory file
 - Running specific roles
 - Overriding the defaults
 - Writing custom playbooks
+
+Forking this repository
+-----------------------
+
+This repository serves as a base to get you started setting up the environment for your project.  All of the roles and tasks are meant to be agnostic and use default settings that should apply to most projects.  To customize the plays and add private roles for your own project, follow these steps first:
+
+#. Create a new repository with your project name such as **ansible-masterblaster**.
+#. ``git clone git@github.com:you/ansible-masterblaster``
+#. ``cd ansible-masterblaster``
+#. ``git remote add upstream git@github.com:istresearch/ansible-symphony``
+#. ``git fetch upstream``
+#. ``git merge upstream/master``
+
+Now you should have the master code in your private repo.  Run ``git remote -v`` to make sure that the origin is your private repo and the upstream is **ansible-symphony** like this::
+    
+    origin  git@github.com:you/ansible-masterblaster (fetch)
+    origin  git@github.com:you/ansible-masterblaster (push)
+    upstream    git@github.com:istresearch/ansible-symphony (fetch)
+    upstream    git@github.com:istresearch/ansible-symphony (push)
+
+#. ``mkdir private_roles`` to house your project specific roles.  If you are adding a role that can apply to other projects, please submit a pull request to the upstream repository.
+#. In the **ansible.cfg** file, add a line under [defaults], ``roles_path = private_roles/``
+#. Modify the repository at the top of the **staging** and **production** inventories if you are using a private repository.
+#. ``touch site-applications.yml`` to create your custom applications playbook.
 
 Adding more machines
 --------------------
