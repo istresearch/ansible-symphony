@@ -1,5 +1,10 @@
 ---
 
+spark_hadoop_version: 2.6
+spark_version: 1.6.0
+spark_pkg_name: spark-{{ spark_version }}-bin-hadoop{{ spark_hadoop_version }}
+spark_install_dir: /opt/spark
+
 spark_driver_memory: 512m
 spark_log_dir: "/var/log/spark"
 spark_pid_dir: "/var/run/spark"
@@ -24,6 +29,6 @@ spark_worker_dir: "/var/run/spark/work"
 spark_worker_instances: 1
 spark_worker_cores: 2
 
-spark_pkg_name: spark-1.6.0-bin-hadoop2.6
-spark_install_dir: /opt/spark
 spark_stderr_logfile_maxbytes: 50MB
+
+repository_infrastructure: "http://download.nextag.com/apache/spark/spark-{{ spark_version }}"
