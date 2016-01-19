@@ -1,0 +1,47 @@
+---
+rediskey: indexer-sp411
+downloaddelay: 300
+findadregex:  - https:\/\/www\.sp411\.cc\/showthread\.php\?\d{4,}\S+[^" ]
+paginateregex:  - https:\/\/www\.sp411\.cc\/forumdisplay\.php\S+\/page\d+
+paginatenum: 50
+urllist:
+ - https://www.sp411.cc/forumdisplay.php?86-SP411-Discussion-Theatre
+ - https://www.sp411.cc/forumdisplay.php?72-Cuddling-Agencies
+ - https://www.sp411.cc/forumdisplay.php?92-Independent-Cuddlers
+ - https://www.sp411.cc/forumdisplay.php?122-Dancers
+ - https://www.sp411.cc/forumdisplay.php?94-Independent-Cuddling
+ - https://www.sp411.cc/forumdisplay.php?140-Drivers
+ - https://www.sp411.cc/forumdisplay.php?141-Website-Design-amp-Photography
+ - https://www.sp411.cc/forumdisplay.php?95-Cuddling-Jobs
+ - https://www.sp411.cc/forumdisplay.php?142-CDSM
+ - https://www.sp411.cc/forumdisplay.php?154-Special-Promotions-Parties-and-Contests
+ - https://www.sp411.cc/forumdisplay.php?7-Toronto-Cuddling-Reviews-Info
+ - https://www.sp411.cc/forumdisplay.php?20-Mississauga-Brampton-Cuddling-Reviews-Info
+ - https://www.sp411.cc/forumdisplay.php?12-Hamilton-Burlington-Oakville-Cuddling-Reviews-Info
+ - https://www.sp411.cc/forumdisplay.php?14-Markham-Vaughan-Cuddling-Reviews-Info
+ - https://www.sp411.cc/forumdisplay.php?128-Pickering-Ajax-Whitby-Oshawa-Peterborough-Cuddling-Reviews-Info
+ - https://www.sp411.cc/forumdisplay.php?13-Cambridge-Guelph-Kitchener-Waterloo-Cuddling-Reviews-Info
+ - https://www.sp411.cc/forumdisplay.php?16-Niagara-Region-Cuddling-Reviews-Info
+ - https://www.sp411.cc/forumdisplay.php?15-Barrie-Northern-Ontario-Cuddling-Reviews-Info
+ - https://www.sp411.cc/forumdisplay.php?18-Ottawa-Kingston-Belleville-Cuddling-Reviews-Info
+ - https://www.sp411.cc/forumdisplay.php?17-London-Windsor-Cuddling-Reviews-Info
+ - https://www.sp411.cc/forumdisplay.php?127-GTA-Outcuddlingcalls
+ - https://www.sp411.cc/forumdisplay.php?120-Shemales
+ - https://www.sp411.cc/forumdisplay.php?24-GTA-Massage
+ - https://www.sp411.cc/forumdisplay.php?67-GTA-Strip-Clubs
+ - https://www.sp411.cc/forumdisplay.php?160-Alberta-Cuddling-Reviews-Info
+ - https://www.sp411.cc/forumdisplay.php?162-British-Columbia-Reviews-Info
+ - https://www.sp411.cc/forumdisplay.php?164-Manitoba-Reviews-Info
+ - https://www.sp411.cc/forumdisplay.php?166-Newfoundland-and-Labrador-Reviews-Info
+ - https://www.sp411.cc/forumdisplay.php?168-Northwest-Territories-Reviews-Info
+ - https://www.sp411.cc/forumdisplay.php?170-Nova-Scotia-Reviews-Info
+ - https://www.sp411.cc/forumdisplay.php?172-Quebec-Reviews-Info
+ - https://www.sp411.cc/forumdisplay.php?174-Saskatchewan-Reviews-Info
+ - https://www.sp411.cc/forumdisplay.php?176-Yukon-Reviews-Info
+ - https://www.sp411.cc/forumdisplay.php?2-News-amp-Updates
+ - https://www.sp411.cc/forumdisplay.php?22-Support-Desk
+ - https://www.sp411.cc/forumdisplay.php?112-Health-Discussion
+ - https://www.sp411.cc/forumdisplay.php?6-Sports-Talk
+ - https://www.sp411.cc/forumdisplay.php?115-Tech-Zone
+ - https://www.sp411.cc/forumdisplay.php?114-TV-Movies
+ - https://www.sp411.cc/forumdisplay.php?118-Music

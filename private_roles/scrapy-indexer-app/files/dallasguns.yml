@@ -1,0 +1,7 @@
+---
+rediskey: indexer-dallasguns 
+downloaddelay: 30
+urllist:
+ - http://www.dallasguns.com/
+findadregex:
+ - \/guns_for_sale\/.*/\d+

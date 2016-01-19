@@ -1,0 +1,13 @@
+[program:{{ elastalert_supervisor_name }}]
+command=/opt/miniconda/bin/python -m elastalert.elastalert --verbose
+directory={{ elastalert_install_dir }}/default
+process_name=%(program_name)s
+numprocs={{ elastalert_num_procs }}
+autostart={{ elastalert_autostart }}
+autorestart=true
+startsecs={{ elastalert_start_secs }}
+startretries={{ elastalert_start_retries }}
+stopsignal=KILL
+redirect_stderr=true
+stderr_logfile=AUTO
+stderr_logfile_maxbytes={{ elastalert_stderr_logfile_maxbytes }}

@@ -1,0 +1,165 @@
+{
+    "settings": {
+        "number_of_shards": {{ groups['elasticsearch-nodes']|length }},
+        "analysis": {
+            "filter": {
+                "nGram_filter": {
+                   "type": "nGram",
+                   "min_gram": 2,
+                   "max_gram": 20,
+                   "token_chars": [
+                      "letter",
+                      "digit",
+                      "punctuation",
+                      "symbol"
+                   ]
+                }
+             },
+             "analyzer": {
+                "nGram_analyzer": {
+                   "type": "custom",
+                   "tokenizer": "icu_tokenizer",
+                   "filter": [
+                      "lowercase",
+                      "icu_folding",
+                      "nGram_filter"
+                   ]
+                },
+                "whitespace_analyzer": {
+                   "type": "custom",
+                   "tokenizer": "icu_tokenizer",
+                   "filter": [
+                      "lowercase",
+                      "icu_folding"
+                   ]
+                }
+            }
+        }
+    },
+     "mappings" : {
+        "ad" : {
+            "dynamic":                  false,
+            "_all": {
+                "index_analyzer":       "nGram_analyzer",
+                "search_analyzer":      "whitespace_analyzer"
+             },
+            "properties": {
+                "url": {
+                    "type":             "string",
+                    "index":            "not_analyzed",
+                    "include_in_all":   false
+                },
+                "domain": {
+                    "type":             "multi_field",
+                    "include_in_all":   false,
+                    "fields" : {
+                        "raw":   {
+                            "type":     "string",
+                            "index":    "not_analyzed"
+                        }
+                    }
+                },
+                "crawlId": {
+                    "type":             "string",
+                    "index":            "not_analyzed"
+                },
+                "crawlTime": {
+                    "type":             "date",
+                    "index":            "not_analyzed",
+                    "include_in_all":   false
+                },
+                "applicationId": {
+                    "type":             "string",
+                    "index":            "not_analyzed",
+                    "include_in_all":   false
+                },
+                "postingId": {
+                    "type":             "string",
+                    "index":            "not_analyzed"
+                },
+                "postingDate": {
+                    "type":             "date",
+                    "index":            "not_analyzed",
+                    "include_in_all":   false
+                },
+                "namePoster": {
+                    "type":             "string"
+                },
+                "nameAdvertised": {
+                    "type":             "string"
+                },
+                "pageTitle": {
+                    "type":             "string"
+                },
+                "adBody": {
+                    "type":             "string"
+                },
+                "locationStated": {
+                    "type":             "string"
+                },
+                "locationWebsite": {
+                    "type":             "multi_field",
+                    "fields" : {
+                        "raw":   {
+                            "type":     "string",
+                            "index":    "not_analyzed"
+                        }
+                    }
+                },
+                "ageStated": {
+                    "type":             "integer",
+                    "index":            "not_analyzed"
+                },
+                "phoneNumbers": {
+                    "type":             "string"
+                },
+                "socialAccounts": {
+                    "type":             "string"
+                },
+                "categories": {
+                    "type":             "string",
+                    "index":            "no",
+                    "include_in_all":   false
+                },
+                "status": {
+                    "type":             "string",
+                    "include_in_all":   false
+                },
+                "imageRendered": {
+                    "type":             "string",
+                    "index":            "no",
+                    "include_in_all":   false
+                },
+                "imagesLinked": {
+                    "type":             "string",
+                    "index":            "no",
+                    "include_in_all":   false
+                },
+                "userTracked": {
+                    "type":             "string",
+                    "index":            "no",
+                    "include_in_all":   false
+                },
+                "comments": {
+                    "type":             "nested",
+                    "properties": {
+                        "userId": {
+                            "type":             "string",
+                            "index":            "no",
+                            "include_in_all":   false
+                        },
+                        "comment": {
+                            "type":             "string"
+                        },
+                        "timestamp": {
+                            "type":             "long",
+                            "index":            "no",
+                            "include_in_all":   false
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+

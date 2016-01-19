@@ -1,0 +1,7 @@
+---
+# file: host_vars/vagrant-cl02
+# Override group_vars for local vagrant testing
+
+traptor_es_port: 9200
+crawler_es_port: 9200
+monitis: false

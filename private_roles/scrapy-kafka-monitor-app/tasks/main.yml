@@ -1,0 +1,78 @@
+---
+- name: Install Miniconda packages
+  shell: "{{ miniconda_install_dir|default('/opt/miniconda') }}/bin/conda install pip --yes"
+  tags: kafka-monitor
+
+- name: Miniconda pip install crawling packages
+  shell: "{{ miniconda_install_dir|default('/opt/miniconda') }}/bin/pip install {{ item }}"
+  with_items:
+    - redis
+    - kafka-python
+    - jsonschema
+    - docopt
+    - python-json-logger
+    - tldextract
+    - ConcurrentLogHandler
+  tags: kafka-monitor
+
+- name: Miniconda pip install scrapy-crawler
+  shell: "{{ miniconda_install_dir|default('/opt/miniconda') }}/bin/pip install --extra-index-url {{ repository_pip }} scrapy-kafka-monitor -U"
+  notify:
+    - restart scrapy-kafka-monitor
+  tags: kafka-monitor
+
+- name: create kafka monitor log directory
+  file:
+    path={{ kafka_monitor_log_dir }}/
+    state=directory
+    mode=0755
+  tags: kafka-monitor
+
+- name: create kafka-monitor symlink
+  file:
+    src={{ kafka_monitor_miniconda_path }}
+    path={{ kafka_monitor_install_dir }}
+    state=link
+    mode=0744
+  tags: kafka-monitor
+
+- name: copy settings
+  template:
+    src={{ item }}.j2
+    dest={{ kafka_monitor_install_dir }}/{{ item }}
+    mode=0744
+  with_items:
+    - "settings_crawling.py"
+    - "settings_actions.py"
+  notify:
+    - restart scrapy-kafka-monitor
+  tags: kafka-monitor
+
+- name: copy files
+  copy:
+    src={{ item }}
+    dest={{ kafka_monitor_install_dir }}/{{ item }}
+    mode=0644
+  with_items:
+    - tld_names.dat
+    - scraper_schema.json
+    - action_schema.json
+  tags: kafka-monitor
+
+- name: copy supervisord config
+  template:
+    src={{ kafka_monitor_name }}-supervisord.conf.j2
+    dest={{ supervisord_programs_dir|default('/etc/supervisor/conf.d') }}/{{ kafka_monitor_name }}-supervisord.conf
+    mode=0644
+  notify:
+    - reread supervisord
+  tags: kafka-monitor
+
+- name: copy logstash config
+  template:
+    src={{ kafka_monitor_name }}-logstash.conf.j2
+    dest={{ logstash_conf_dir|default('/etc/logstash.d') }}/{{ kafka_monitor_name }}-logstash.conf
+    mode=0644
+  notify:
+    - restart logstash
+  tags: kafka-monitor

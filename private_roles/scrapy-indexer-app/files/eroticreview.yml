@@ -1,0 +1,7 @@
+---
+urllist:
+ - http://www.theeroticreview.com/reviews/newreviewsList.asp?Valid=1&mp=0&page=1
+findadregex:
+ - \/reviews\/\S*id\=\d+$
+downloaddelay: 180
+rediskey: indexer-eroticreview

@@ -1,0 +1,9 @@
+---
+urllist:
+ - http://manpowervacancy.com/index.php?page=job
+ - http://manpowervacancy.com/index.php?page=directory
+findadregex:
+ - index\.php\?page=job\_detail\S*id=\d+$
+ - index\.php\?page=directory\S*id=\d+$
+downloaddelay: 10
+rediskey: indexer-manpowervacancy

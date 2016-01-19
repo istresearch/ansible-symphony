@@ -1,0 +1,7 @@
+---
+rediskey: indexer-montanagunclassifieds
+downloaddelay: 30
+urllist:
+ - http://www.montanagunclassifieds.com/
+findadregex:
+ - .*\/posts\/[^"]+

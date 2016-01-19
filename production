@@ -6,23 +6,41 @@
 
 
 [all:vars]
-repository_host=default
+repository_host=repo.istresearch.com
+# repository_port=443
+# repository_pip_env=dev
 
 [inventory-name:children]
-ansible-symphony
+memex
 
 #
-# Infrastructure and software topology
+# Memex infrastructure and software topology
 #
 
 [zookeeper-nodes]
-prod-as-01
+memex-zookeeper01.istresearch.com
+memex-zookeeper02.istresearch.com
+memex-zookeeper03.istresearch.com
 
 [kafka-nodes]
-prod-as-01
+memex-kafka01.istresearch.com
+memex-kafka02.istresearch.com
+memex-kafka03.istresearch.com
+
+[internap-zookeeper-nodes]
+in-slave06.nj.istresearch.com
+in-slave07.nj.istresearch.com
+in-slave08.nj.istresearch.com
+
+[internap-kafka-nodes]
+in-slave01.nj.istresearch.com
+in-slave02.nj.istresearch.com
+in-slave03.nj.istresearch.com
+in-slave04.nj.istresearch.com
+in-slave05.nj.istresearch.com
 
 [redis-master-node]
-prod-as-01
+memex-services.istresearch.com
 
 [redis-slave-nodes]
 #leave empty
@@ -36,14 +54,8 @@ redis-slave-nodes
 redis-sentinel-nodes
 
 [hadoop-namenode-node]
-prod-as-01
-
-[hadoop-secondary-namenode-node]
-prod-as-02
 
 [hadoop-datanode-nodes]
-prod-as-01
-prod-as-02
 
 [hadoop-nodes:children]
 hadoop-namenode-node
@@ -58,73 +70,90 @@ hbase-master-node
 hbase-regionserver-nodes
 
 [spark-master-node]
-prod-as-01
 
 [spark-worker-nodes]
-prod-as-01
 
 [spark-nodes:children]
 spark-master-node
 spark-worker-nodes
 
 [storm-nimbus-node]
-prod-as-01
+in-namenode02.nj.istresearch.com
 
 [storm-ui-node]
-prod-as-01
+in-namenode02.nj.istresearch.com
 
 [storm-supervisor-nodes]
-prod-as-01
+in-slave01.nj.istresearch.com
+in-slave02.nj.istresearch.com
+in-slave03.nj.istresearch.com
+in-slave04.nj.istresearch.com
+in-slave05.nj.istresearch.com
+in-slave06.nj.istresearch.com
+in-slave07.nj.istresearch.com
+in-slave08.nj.istresearch.com
 
 [storm-nodes:children]
 storm-nimbus-node
 storm-ui-node
 storm-supervisor-nodes
 
-[elasticsearch-nodes]
-prod-as-01
-
-[kibana-node]
-prod-as-01
-
-[tor-proxy]
-prod-as-01
-
 [scrapy-kafka-monitor-node]
-prod-as-01
+memex-services.istresearch.com
 
 [scrapy-redis-monitor-node]
-prod-as-01
-
-#
-# Applications topology
-#
+memex-services.istresearch.com
 
 [scrapy-crawler-nodes]
-prod-as-02
+memex-crawler01.istresearch.com
+memex-crawler02.istresearch.com
+memex-crawler03.istresearch.com
+memex-crawler04.istresearch.com
+memex-crawler05.istresearch.com
+memex-crawler06.istresearch.com
 
 [scrapy-indexer-nodes]
-prod-as-02
+memex-crawler01.istresearch.com
+memex-crawler02.istresearch.com
+memex-crawler03.istresearch.com
+memex-crawler04.istresearch.com
+memex-crawler05.istresearch.com
+memex-crawler06.istresearch.com
+
+[elasticsearch-nodes]
+in-namenode02.nj.istresearch.com
+
+[kibana-node]
+memex-hclient.istresearch.com
 
 [gnip-monitor-node]
-prod-as-02
+memex-hclient.istresearch.com
 
 [gdelt-monitor-node]
-prod-as-02
+memex-hclient.istresearch.com
+
+[tor-proxy]
+memex-services.istresearch.com
 
 [elastalert-nodes]
-prod-as-01
+memex-hclient.istresearch.com
 
 [traptor-follow-nodes]
-prod-as-02
+memex-crawler01.istresearch.com
+memex-crawler02.istresearch.com
+memex-crawler03.istresearch.com
+memex-crawler04.istresearch.com
 
 [traptor-track-nodes]
+memex-crawler05.istresearch.com
+memex-crawler06.istresearch.com
 
 [traptor-nodes:children]
 traptor-follow-nodes
 traptor-track-nodes
 
-[ansible-symphony:children]
+
+[memex:children]
 zookeeper-nodes
 kafka-nodes
 redis-nodes
@@ -144,3 +173,14 @@ kibana-node
 [titan-node]
 
 [other]
+in-namenode01.nj.istresearch.com
+memexdev.istresearch.com
+memex-auth-va.istresearch.com
+cyto-backend.istresearch.com
+dockerva.istresearch.com
+nypd-kibana.istresearch.com
+opendata.istresearch.com
+opendata-worker01.istresearch.com
+phoenix-backend.istresearch.com
+pulse-hack01.istresearch.com
+qcr-dev.istresearch.com

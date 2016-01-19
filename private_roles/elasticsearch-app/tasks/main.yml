@@ -1,0 +1,35 @@
+---
+- name: move regular files over to tmp
+  copy:
+    src={{ item }}
+    dest=/tmp/
+  with_items:
+    - "single_insert_update.groovy"
+    - "single_delete.groovy"
+    - "multi_insert_update.groovy"
+    - "multi_delete.groovy"
+  when: inventory_hostname == groups['elasticsearch-nodes'][0]
+  tags: elasticsearch
+
+# this will error silently if the index already exists
+- name: create elastic search indexes
+  command: /usr/bin/curl -XPUT {{ groups['elasticsearch-nodes'][0] }}:{{ elasticsearch_network_http_port|default(9200) }}/{{ item.indexname }} -T {{ item.filename }}
+  with_items:
+    - { indexname: "_scripts/groovy/single_insert_update", filename: "/tmp/single_insert_update.groovy" }
+    - { indexname: "_scripts/groovy/single_delete", filename: "/tmp/single_delete.groovy" }
+    - { indexname: "_scripts/groovy/multi_insert_update", filename: "/tmp/multi_insert_update.groovy" }
+    - { indexname: "_scripts/groovy/multi_delete", filename: "/tmp/multi_delete.groovy" }
+  when: inventory_hostname == groups['elasticsearch-nodes'][0]
+  tags: elasticsearch
+
+- name: remove tmp files
+  file:
+    path=/tmp/{{ item }}
+    state=absent
+  with_items:
+    - "single_insert_update.groovy"
+    - "single_delete.groovy"
+    - "multi_insert_update.groovy"
+    - "multi_delete.groovy"
+  when: inventory_hostname == groups['elasticsearch-nodes'][0]
+  tags: elasticsearch

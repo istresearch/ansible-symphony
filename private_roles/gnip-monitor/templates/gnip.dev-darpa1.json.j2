@@ -1,0 +1,60 @@
+{
+  "template" : "{{gnip_monitor_dev_name}}-*",
+  "order" : 0,
+  "settings" : {
+    "index.refresh_interval" : "30s"
+  },
+  "mappings" : {
+    "gnip_tweet": {
+      "dynamic_templates" : [ {
+        "message_field" : {
+          "mapping" : {
+            "index" : "not_analyzed",
+            "omit_norms" : true,
+            "type" : "string"
+          },
+          "match_mapping_type" : "string",
+          "match" : "message"
+        }
+      }, {
+        "string_fields" : {
+          "mapping" : {
+            "index" : "not_analyzed",
+            "omit_norms" : true,
+            "type" : "string"
+          },
+          "match_mapping_type" : "string",
+          "match" : "*"
+        }
+      } ],
+      "properties" : {
+        "d_coordinates" : {
+          "type" : "geo_point"
+        },
+        "body" : {
+          "type" : "string"
+        },
+        "d_mentions" : {
+          "type" : "string"
+        },
+        "d_hashtags" : {
+          "type" : "string"
+        },
+        "actor" : {
+          "properties" : {
+            "summary" : {
+              "type" : "string"
+            }
+          }
+        },
+        "object" : {
+          "properties" : {
+            "summary" : {
+              "type" : "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

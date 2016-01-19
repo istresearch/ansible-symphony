@@ -1,0 +1,5 @@
+---
+# file: group_vars/storm-nodes
+
+# Only for production cluster.  For vagrant testing, host_vars is used
+storm_worker_ports: [6701, 6702, 6703, 6704, 6705, 6706, 6707, 6708]

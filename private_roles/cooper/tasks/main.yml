@@ -1,0 +1,114 @@
+---
+- name: Install Miniconda packages
+  shell: "{{ miniconda_install_dir|default('/opt/miniconda') }}/bin/conda install {{ item }} --yes"
+  with_items:
+    - pip
+  tags:
+    - cooper
+    - miniconda
+
+- name: Miniconda pip install cooper
+  shell: "{{ miniconda_install_dir|default('/opt/miniconda') }}/bin/pip install --extra-index-url {{ repository_pip }} cooper -U"
+  # notify:
+  #   - restart scrapy-crawling
+  tags:
+    - cooper
+    - miniconda
+
+- name: Install yum dependencies
+  shell: "yum install {{ item }}"
+  with_items:
+    - python-devel
+    - mysql-devel
+    - libffi-devel
+    - gcc-c++
+
+- name: create cooper symlink
+  file:
+    src={{ cooper_miniconda_path }}
+    path={{ cooper_install_dir }}
+    state=link
+    mode=0744
+  tags: cooper
+
+- name: Miniconda pip install packages
+  shell: "{{ miniconda_install_dir|default('/opt/miniconda') }}/bin/pip install {{ item }}"
+  with_items:
+    - elasticsearch
+    - flask
+    - flask-mysqldb
+    - flask-mysql
+    - flask-login
+    - flask-admin
+    - flask-bcrypt
+    - flask-security
+    - flask-sqlalchemy
+    - sqlalchemy
+    - chromium-compact-language-detector
+    - twython
+    - wtforms
+    - kafka-python
+    - xmltodict
+  tags:
+    - cooper
+    - miniconda
+
+- name: create cooper log directory
+  file:
+    path={{ cooper_log_dir }}/
+    state=directory
+    mode=0755
+  tags: cooper
+
+- name: copy supervisord config
+  template:
+    src={{ cooper_name }}-supervisord.conf.j2
+    dest={{ supervisord_programs_dir }}/{{ cooper_name }}-supervisord.conf
+    mode=0644
+  notify:
+    - reread supervisord
+  tags: cooper
+
+- name: copy cooper settings
+  template:
+    src=localsettings.py.j2
+    dest={{ cooper_install_dir }}/localsettings.py
+    mode=0644
+  notify:
+    - restart cooper
+  tags: cooper
+
+- name: copy local settings.json file to remote server
+  template: 
+      src={{ local_settings_dir }}/settings.json 
+      dest={{ cooper_install_dir }}/settings.json
+      mode=0644
+
+- name: copy local config.py file to remote server
+  template: 
+    src={{ local_settings_dir }}/config.py 
+    dest={{ cooper_install_dir }}/config.py
+    mode=0644
+
+- name: copy logstash templates
+  template:
+    src="{{item}}.j2"
+    dest="{{logstash_template_dir}}/{{item}}"
+    mode=0644
+  with_items:
+    - "{{ cooper_name }}.json"
+  tags: cooper
+
+- name: copy logstash configs
+  template:
+    src="{{ item }}.conf.j2"
+    dest="{{ logstash_conf_dir }}/{{ item }}.conf"
+    mode=0644
+  with_items:
+    - "{{ cooper_name}}-logstash"
+  notify:
+    - restart logstash
+  tags:
+    - cooper
+    - logstash
+

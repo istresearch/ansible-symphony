@@ -1,0 +1,29 @@
+---
+# Installation config
+cooper_name: cooper
+cooper_install_dir: "/opt/{{ cooper_name }}"
+cooper_miniconda_path: "{{ miniconda_install_dir|default('/opt/miniconda') }}/lib/python2.7/site-packages/{{ cooper_name }}"
+
+# Supervisor config
+cooper_num_procs: 1
+cooper_start_secs: 5
+cooper_start_retries: 100
+cooper_stderr_logfile_maxbytes: 50MB
+
+cooper_logger_name: "{{ cooper_name }}"
+cooper_log_dir: /var/log
+cooper_log_file: "{{ cooper_name }}.log"
+cooper_log_max_bytes: 25000000
+cooper_log_backups: 5
+
+# Logstash config
+# should be the same as kafka_num_partitions
+cooper_consumer_threads: 3
+cooper_doc_type: cooper
+cooper_es_port: 9200
+cooper_es_user: changeme
+cooper_es_password: changeme
+cooper_ssl: "false"
+
+local_settings_dir: /vagrant
+cooper_kafka_topic: crawled_cooper_dev

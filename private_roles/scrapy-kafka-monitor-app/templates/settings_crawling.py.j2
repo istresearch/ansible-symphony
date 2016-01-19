@@ -1,0 +1,19 @@
+# Specify the host and port to use when connecting to Redis (optional).
+REDIS_HOST = "{{ groups['redis-master-node'][0] }}"
+REDIS_PORT = {{ redis_port|default(6379) }}
+
+# Kafka server information
+KAFKA_HOSTS = "{% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}"
+KAFKA_INCOMING_TOPIC = "{{ kafka_monitor_kafka_topic_prefix }}.{{ kafka_monitor_crawling_topic_main }}"
+KAFKA_GROUP = "{{ kafka_monitor_kafka_group }}-crawling"
+
+LOGGER_NAME = '{{ kafka_monitor_logger_name }}-crawling'
+LOG_DIR = '{{ kafka_monitor_log_dir }}'
+LOG_FILE = '{{ kafka_monitor_log_file }}'
+LOG_MAX_BYTES = {{ kafka_monitor_log_max_bytes }}
+LOG_BACKUPS = {{ kafka_monitor_log_backups }}
+
+TLD_PATH = "file://{{ kafka_monitor_install_dir }}/tld_names.dat"
+
+SCHEMA = "scraper_schema.json"
+SCHEMA_METHOD = "handle_crawl_request"

@@ -1,0 +1,14 @@
+[program:{{ traptor_name }}]
+command={{ miniconda_install_dir|default('/opt/miniconda') }}/bin/python {{ traptor_install_dir }}/traptor.py --info --delay=60
+directory={{ traptor_install_dir }}
+process_name=%(program_name)s
+numprocs={{ traptor_num_procs }}
+autostart=true
+autorestart=true
+exitcodes=0,2,3
+startsecs={{ traptor_start_secs }}
+startretries={{ traptor_start_retries }}
+stopsignal=KILL
+redirect_stderr=true
+stderr_logfile=AUTO
+stderr_logfile_maxbytes={{ traptor_stderr_logfile_maxbytes }}

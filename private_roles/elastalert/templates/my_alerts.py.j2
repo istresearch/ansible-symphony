@@ -1,0 +1,88 @@
+from elastalert.alerts import Alerter, basic_match_string
+import requests
+import json
+
+class SlackAlerter(Alerter):
+
+    # By setting required_options to a set of strings
+    # You can ensure that the rule config file specifies all
+    # of the options. Otherwise, ElastAlert will throw an exception
+    # when trying to load the rule.
+    required_options = set(['slack_hook', 'slack_channel'])
+
+    # Alert is called
+    def alert(self, matches):
+
+        url = "{}{}".format(self.rule['slack_hook'], self.rule['slack_channel'])
+
+        # Matches is a list of match dictionaries.
+        # It contains more than one match when the alert has
+        # the aggregation option set
+        for match in matches:
+
+            # Config options can be accessed with self.rule
+            # with open(self.rule['slack_hook'], "a") as output_file:
+
+                # basic_match_string will transform the match into the default
+                # human readable string format
+            match_string = basic_match_string(self.rule, match)
+
+            r = requests.post(url, data=match_string)
+            # output_file.write(match_string)
+
+    # Get info is called after an alert is sent to get data that is written back
+    # to Elasticsearch in the field "alert_info"
+    # It should return a dict of information relevant to what the alert does
+    def get_info(self):
+        return {'type': 'SlackAlerter',
+                'slack_hook': self.rule['slack_hook'],
+                'slack_channel': self.rule['slack_channel']
+                }
+
+class PagerDutyAlerter(Alerter):
+
+    endpoint = "https://events.pagerduty.com/generic/2010-04-15/create_event.json"
+    service_key = '98c5fa66460041d5bc9fbeca64bd1e3c'
+
+    required_options = set([
+                           'incident_key',
+                           'event_type',
+                           'description',
+                           # 'client',
+                           'client_url',
+                           # 'details',
+                           # 'context'
+                           ])
+
+    def alert(self, matches):
+        """ 
+        Use the PagerDuty Trigger API to send out an alert.  Details on the
+        PagerDuty API can be found here:
+        https://developer.pagerduty.com/documentation/integration/events/trigger
+        """
+
+        json_req = {
+            'service_key': PagerDutyAlerter.service_key,
+            'incident_key': self.rule['incident_key'],
+            'event_type': self.rule['event_type'],
+            'description': self.rule['description'],
+            'client': self.rule['name'],
+            'client_url': self.rule['client_url'],
+            'details': self.rule.get('details'),
+            'context': self.rule.get('context')
+        }
+
+        json_str = json.dumps(json_req)
+
+        for match in matches:
+            match_string = basic_match_string(self.rule, match)
+
+            r = requests.post(PagerDutyAlerter.endpoint, data=json_str)
+
+    def get_info(self):
+        return {
+            'type': 'PagerDutyAlerter',
+            'incident_key': self.rule['incident_key'],
+            'event_type': self.rule['event_type']
+        }
+

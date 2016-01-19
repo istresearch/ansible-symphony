@@ -1,0 +1,260 @@
+---
+indexer_name: scrapy-indexer
+indexer_install_dir: "/opt/{{ indexer_name }}"
+indexer_miniconda_path: "{{ miniconda_install_dir|default('/opt/miniconda') }}/lib/python2.7/site-packages/{{ indexer_name }}"
+
+indexer_incoming_topic: "memex.incoming_urls"
+
+indexer_bot_name: crawling
+indexer_spider_folder: spiders
+indexer_commands_folder: commands
+indexer_pipeline_file: pipelines
+indexer_scrapy_logging_enabled: "False"
+
+indexer_default_priority: 70
+indexer_redis_uurl: "uurl"
+indexer_redis_refresh: "refreshs"
+
+indexer_idle_before_close: 0
+indexer_kafka_pipeline_rank: 100
+indexer_default_parallelism: 1
+indexer_parallelism: 12
+indexer_retry_times: 0
+
+indexer_start_secs: 5
+indexer_start_retries: 100
+indexer_stdout_logfile_maxbytes: 50MB
+indexer_stderr_logfile_maxbytes: 50MB
+
+indexer_logger_name: "{{ indexer_name }}"
+indexer_log_dir: /var/log
+indexer_log_file: "{{ indexer_name }}.log"
+indexer_log_max_bytes: 25000000
+indexer_log_backups: 5
+indexer_logstash_tag: "{{ indexer_name }}"
+indexer_logging_pipeline_rank: 10
+
+zookeeper_assign_path: /indexers/
+
+indexer_logstash_template: scrapy_cluster.json
+indexer_logstash_template_name: scrapy-cluster
+
+# Add new sites to index here.  There are {{ indexer_parallelism }} number
+# of process id's per {{ groups['indexer-nodes'] }}
+indexer_site_dict:
+  armslist:
+    yml: armslist.yml
+    id: 100
+  alibaba:
+    yml: alibaba.yml
+    id: 101
+  anunico:
+    yml: anunico.yml
+    id: 102
+  backpage:
+    yml: backpage.yml
+    id: 103
+  cityvibe:
+    yml: cityvibe.yml
+    id: 104
+  cityxguideforum:
+    yml: cityxguideforum.yml
+    id: 105
+  cityxguide:
+    yml: cityxguide.yml
+    id: 106
+  classivox:
+    yml: classivox.yml
+    id: 107
+  craigslist:
+    yml: craigslist.yml
+    id: 108
+  ec21:
+    yml: ec21.yml
+    id: 109
+  windplum:
+    yml: windplum.yml
+    id: 110
+  jieshaowang:
+    yml: jieshaowang.yml
+    id: 111
+  escortsincollege:
+    yml: escortsincollege.yml
+    id: 200
+  escortsintheus:
+    yml: escortsintheus.yml
+    id: 201
+  gmdu:
+    yml: gmdu.yml
+    id: 202
+  gulfjobsbank:
+    yml: gulfjobsbank.yml
+    id: 203
+  happymassage:
+    yml: happymassage.yml
+    id: 204
+  justlanded:
+    yml: justlanded.yml
+    id: 205
+  liveescortreviews:
+    yml: liveescortreviews.yml
+    id: 206
+  manpowervacancy:
+    yml: manpowervacancy.yml
+    id: 207
+  massagetroll:
+    yml: massagetroll.yml
+    id: 208
+  missingkids:
+    yml: missingkids.yml
+    id: 209
+  uszj:
+    yml: uszj.yml
+    id: 210
+  singtao:
+    yml: singtao.yml
+    id: 211
+  rubads:
+    yml: rubads.yml
+    id: 300
+  sipsap:
+    yml: sipsap.yml
+    id: 301
+  tradekey:
+    yml: tradekey.yml
+    id: 302
+  usasexguide:
+    yml: usasexguide.yml
+    id: 303
+  utopiaguide:
+    yml: utopiaguide.yml
+    id: 304
+  adultsearch1:
+    yml: adultsearch1.yml
+    id: 305
+  adultsearch2:
+    yml: adultsearch2.yml
+    id: 306
+  adultsearch3:
+    yml: adultsearch3.yml
+    id: 307
+  adultsearch4:
+    yml: adultsearch4.yml
+    id: 308
+  adultsearch5:
+    yml: adultsearch5.yml
+    id: 309
+  dadi360:
+    yml: dadi360.yml
+    id: 310
+  usalifeonline:
+    yml: usalifeonline.yml
+    id: 311
+  eroticmugshots:
+    yml: eroticmugshots.yml
+    id: 400
+  eroticreview:
+    yml: eroticreview.yml
+    id: 401
+  escortadsxxx:
+    yml: escortadsxxx.yml
+    id: 402
+  escortphonelist:
+    yml: escortphonelist.yml
+    id: 403
+  escortsinca:
+    yml: escortsinca.yml
+    id: 404
+  carolinabargaintrader:
+    yml: carolinabargaintrader.yml
+    id: 405
+  classifiednc:
+    yml: classifiednc.yml
+    id: 406
+  justia:
+    yml: justia.yml
+    id: 407
+  eccie:
+    yml: eccie.yml
+    id: 408
+  meimin:
+    yml: meimin.yml
+    id: 409
+  asexyservice:
+    yml: asexyservice.yml
+    id: 410
+  ny475:
+    yml: ny475.yml
+    id: 411
+  myproviderguideforum:
+    yml: myproviderguideforum.yml
+    id: 500
+  myproviderguide:
+    yml: myproviderguide.yml
+    id: 501
+  naughtyreviews:
+    yml: naughtyreviews.yml
+    id: 502
+  dallasguns:
+    yml: dallasguns.yml 
+    id: 503
+  midwestguntrader:
+    yml: midwestguntrader.yml
+    id: 504
+  floridaguntrader:
+    yml: floridaguntrader.yml
+    id: 505
+  freeclassifieds:
+    yml: freeclassifieds.yml
+    id: 506
+  reedtech:
+    yml: reedtech.yml
+    id: 507
+  sp411:
+    yml: sp411.yml
+    id: 508
+  asexyservice:
+    yml: asexyservice.yml
+    id: 509
+  rubmaps:
+    yml: rubmaps.yml
+    id: 510
+  go8po:
+    yml: go8po.yml
+    id: 511
+  elpasoguntrader:
+    yml: elpasoguntrader.yml
+    id: 600
+  montanagunclassifieds:
+    yml: montanagunclassifieds.yml
+    id: 601
+  tennesseegunexchange:
+    yml: tennesseegunexchange.yml
+    id: 602
+  theoutdoorstrader:
+    yml: theoutdoorstrader.yml
+    id: 603
+  floridagunclassifieds:
+    yml: floridagunclassifieds.yml
+    id: 604
+  kyclassifieds:
+    yml: kyclassifieds.yml
+    id: 605
+  montananewspapers:
+    yml: montananewspapers.yml
+    id: 606
+  electronics:
+    yml: electronics.yml
+    id: 607
+  jiatx999:
+    yml: jiatx999.yml
+    id: 608
+  meiguo58:
+    yml: meiguo8.yml
+    id: 609
+  chinaren: 
+    yml: chinaren.yml
+    id: 610
+  chinadaily:
+    yml: chinadaily.yml
+    id: 611

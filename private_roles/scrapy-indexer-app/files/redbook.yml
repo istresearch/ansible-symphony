@@ -1,0 +1,54 @@
+---
+urllist:
+ - http://classifieds.myredbook.com/classified.php?catid=16&subcatid=18
+ - http://classifieds.myredbook.com/classified.php?catid=16&subcatid=19
+ - http://classifieds.myredbook.com/classified.php?catid=16&subcatid=20
+ - http://classifieds.myredbook.com/classified.php?catid=16&subcatid=21
+ - http://classifieds.myredbook.com/classified.php?catid=16&subcatid=22
+ - http://classifieds.myredbook.com/classified.php?catid=16&subcatid=23
+ - http://classifieds.myredbook.com/classified.php?catid=17&subcatid=30
+ - http://classifieds.myredbook.com/classified.php?catid=17&subcatid=31
+ - http://classifieds.myredbook.com/classified.php?catid=17&subcatid=33
+ - http://classifieds.myredbook.com/classified.php?catid=17&subcatid=34
+ - http://classifieds.myredbook.com/classified.php?catid=17&subcatid=35
+ - http://classifieds.myredbook.com/classified.php?catid=18&subcatid=36
+ - http://classifieds.myredbook.com/classified.php?catid=18&subcatid=37
+ - http://classifieds.myredbook.com/classified.php?catid=18&subcatid=39
+ - http://classifieds.myredbook.com/classified.php?catid=18&subcatid=40
+ - http://classifieds.myredbook.com/classified.php?catid=18&subcatid=41
+ - http://classifieds.myredbook.com/classified.php?catid=19&subcatid=42
+ - http://classifieds.myredbook.com/classified.php?catid=19&subcatid=43
+ - http://classifieds.myredbook.com/classified.php?catid=19&subcatid=45
+ - http://classifieds.myredbook.com/classified.php?catid=19&subcatid=46
+ - http://classifieds.myredbook.com/classified.php?catid=19&subcatid=47
+ - http://classifieds.myredbook.com/classified.php?catid=20&subcatid=48
+ - http://classifieds.myredbook.com/classified.php?catid=20&subcatid=49
+ - http://classifieds.myredbook.com/classified.php?catid=20&subcatid=51
+ - http://classifieds.myredbook.com/classified.php?catid=20&subcatid=52
+ - http://classifieds.myredbook.com/classified.php?catid=20&subcatid=53
+ - http://classifieds.myredbook.com/classified.php?catid=22&subcatid=60
+ - http://classifieds.myredbook.com/classified.php?catid=22&subcatid=61
+ - http://classifieds.myredbook.com/classified.php?catid=22&subcatid=63
+ - http://classifieds.myredbook.com/classified.php?catid=22&subcatid=64
+ - http://classifieds.myredbook.com/classified.php?catid=22&subcatid=65
+ - http://classifieds.myredbook.com/classified.php?catid=23&subcatid=66
+ - http://classifieds.myredbook.com/classified.php?catid=23&subcatid=67
+ - http://classifieds.myredbook.com/classified.php?catid=23&subcatid=69
+ - http://classifieds.myredbook.com/classified.php?catid=23&subcatid=70
+ - http://classifieds.myredbook.com/classified.php?catid=23&subcatid=71
+ - http://classifieds.myredbook.com/classified.php?catid=24&subcatid=72
+ - http://classifieds.myredbook.com/classified.php?catid=24&subcatid=73
+ - http://classifieds.myredbook.com/classified.php?catid=24&subcatid=75
+ - http://classifieds.myredbook.com/classified.php?catid=24&subcatid=76
+ - http://classifieds.myredbook.com/classified.php?catid=24&subcatid=77
+ - http://classifieds.myredbook.com/classified.php?catid=14&subcatid=10
+ - http://classifieds.myredbook.com/classified.php?catid=14&subcatid=11
+ - http://classifieds.myredbook.com/classified.php?catid=14&subcatid=13
+ - http://classifieds.myredbook.com/classified.php?catid=14&subcatid=14
+ - http://classifieds.myredbook.com/classified.php?catid=14&subcatid=15
+ - http://classifieds.myredbook.com/classified.php?catid=14&subcatid=78
+findadregex:
+ - \/classified\.php\?adid\=\d+
+ - \/\w+\/photos\/\d+
+downloaddelay: 10
+rediskey: indexer-redbook

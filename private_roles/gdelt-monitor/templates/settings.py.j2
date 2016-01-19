@@ -1,0 +1,6 @@
+KAFKA_HOST = "{{ groups['kafka-nodes'][0] }}:{{ kafka_port|default(9092) }}"
+APPID = "{{ gdelt_monitor_appid }}"
+DATA_DIR = "{{ gdelt_monitor_data_dir }}"
+
+# ISIL releated keywords to look for
+KEYWORDS = [{% for item in gdelt_monitor_keywords %}'{{ item }}'{% if not loop.last %},{% endif %}{% endfor %}]

@@ -1,0 +1,36 @@
+---
+
+elastalert_name: elastalert
+elastalert_install_dir: "/opt/{{ elastalert_name }}"
+elastalert_version: 0.0.35
+elastalert_module_dir: elastalert_modules
+elastalert_rules_dir: elastalert_rules
+
+elastalert_supervisor_name: "{{ elastalert_name }}"
+elastalert_num_procs: 1
+elastalert_start_secs: 5
+elastalert_start_retries: 100
+elastalert_stderr_logfile_maxbytes: 50MB
+elastalert_logger_name: "{{ elastalert_name }}"
+elastalert_log_dir: /var/log
+elastalert_log_file: "{{ elastalert_name }}.log"
+elastalert_log_max_bytes: 25000000
+elastalert_log_backups: 5
+elastalert_autostart: true
+
+elastalert_es_host: "{{ groups['elasticsearch-nodes'][0] }}"
+elastalert_es_port: 9200
+elastalert_rules_folder: elastalert_rules
+elastalert_run_every_min: 5
+elastalert_buffer_time_min: 45
+elastalert_writeback_index: elastalert_status
+elastalert_time_limit_days: 2
+
+# Slack alerter
+elastalert_slack_alerter: elastalert_modules.my_alerts.SlackAlerter
+elastalert_slack_channel: qcr-alerts
+elastalert_service_monitoring_channel: service-monitoring
+elastalert_local_time: True
+
+# Pagerduty alerter
+elastalert_pg_alerter: elastalert_modules.my_alerts.PagerDutyAlerter

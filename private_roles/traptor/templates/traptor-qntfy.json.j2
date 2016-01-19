@@ -1,0 +1,47 @@
+{
+  "template" : "{{ traptor_name }}-*",
+  "order" : 0,
+  "settings" : {
+    "index.refresh_interval" : "30s"
+  },
+  "mappings" : {
+    "tweet": {
+      "dynamic_templates" : [ {
+        "message_field" : {
+          "mapping" : {
+            "index" : "not_analyzed",
+            "omit_norms" : true,
+            "type" : "string"
+          },
+          "match_mapping_type" : "string",
+          "match" : "message"
+        }
+      }, {
+        "string_fields" : {
+          "mapping" : {
+            "index" : "not_analyzed",
+            "omit_norms" : true,
+            "type" : "string"
+          },
+          "match_mapping_type" : "string",
+          "match" : "*"
+        }
+      } ],
+      "properties" : {
+        "text" : {
+          "type" : "string"
+        },
+        "coordinates" : {
+          "properties": {
+            "coordinates": {
+              "type": "geo_point"
+              },
+            "type": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

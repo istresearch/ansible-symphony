@@ -1,0 +1,41 @@
+---
+gdelt_monitor_name: gdelt-monitor
+
+gdelt_monitor_install_dir: "/opt/{{ gdelt_monitor_name }}"
+
+gdelt_monitor_version: mem_0.2-c049b7
+
+gdelt_monitor_supervisor_name: "{{ gdelt_monitor_name }}"
+gdelt_monitor_logstash_name: "{{ gdelt_monitor_supervisor_name }}-logstash"
+
+gdelt_monitor_num_procs: 1
+gdelt_monitor_start_secs: 5
+gdelt_monitor_start_retries: 100
+gdelt_monitor_stderr_logfile_maxbytes: 50MB
+
+gdelt_monitor_logger_name: "{{ gdelt_monitor_name }}"
+gdelt_monitor_log_dir: /var/log
+gdelt_monitor_log_file: "{{ gdelt_monitor_name }}.log"
+gdelt_monitor_log_max_bytes: 25000000
+gdelt_monitor_log_backups: 5
+gdelt_monitor_logstash_tag: "{{ gdelt_monitor_name }}"
+
+gdelt_monitor_logstash_template: gdelt.json
+gdelt_monitor_logstash_template_name: gdelt
+
+gdelt_monitor_kafka_topic: gdelt.prod-darpa
+
+gdelt_monitor_consumer_threads: 3
+
+gdelt_monitor_data_dir: /tmp
+gdelt_monitor_kafka_host: "{{ groups['kafka-nodes'][0] }}:{{ kafka_port|default(9092) }}"
+gdelt_monitor_appid: 'gdelt'
+gdelt_monitor_keywords:
+  - 'SYR'
+  - 'syria'
+  - 'islam'
+  - 'isil'
+  - 'jihad'
+  - 'iraq'
+  - 'infidel'
+  - 'Allah'

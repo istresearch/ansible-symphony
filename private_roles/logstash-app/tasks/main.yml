@@ -1,0 +1,23 @@
+---
+- include_vars: roles/logstash/defaults/main.yml
+  tags: logstash
+
+# - name: move elasticsearch template over
+#   copy:
+#     src=elasticsearch-template-crawling.json
+#     dest={{ logstash_install_dir|default('/opt/logstash') }}/default/lib/logstash/outputs/elasticsearch
+#     mode=0644
+#   tags: logstash
+
+- name: move scrapy cluster template over
+  template:
+    src={{ crawling_logstash_template }}.j2
+    dest={{ logstash_template_dir }}/{{ crawling_logstash_template }}
+    mode=0644
+  tags:
+    - logstash
+    - crawling
+
+- name: Set fact logstash_app_has_run
+  set_fact:
+    logstash_app_has_run: true

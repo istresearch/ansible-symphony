@@ -1,0 +1,23 @@
+---
+redis_monitor_name: scrapy-redis-monitor
+
+redis_monitor_install_dir: "/opt/{{ redis_monitor_name }}"
+redis_monitor_miniconda_path: "{{ miniconda_install_dir|default('/opt/miniconda') }}/lib/python2.7/site-packages/{{ redis_monitor_name }}"
+
+redis_monitor_poll_interval: 10.0
+
+redis_monitor_start_secs: 5
+redis_monitor_start_retries: 60
+
+redis_monitor_logger_name: "{{ redis_monitor_name }}"
+redis_monitor_log_dir: /var/log
+redis_monitor_log_file: "{{ redis_monitor_name }}.log"
+redis_monitor_log_max_bytes: 25000000
+redis_monitor_log_backups: 5
+redis_monitor_logstash_tag: "{{ redis_monitor_name }}"
+
+redis_monitor_supervisor_name: "{{ redis_monitor_name }}"
+redis_monitor_kafka_prefix: "mem"
+
+redis_monitor_logstash_template: scrapy_cluster.json
+redis_monitor_logstash_template_name: scrapy-cluster

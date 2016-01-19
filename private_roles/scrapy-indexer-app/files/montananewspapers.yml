@@ -1,0 +1,8 @@
+---
+rediskey: indexer-montananewspapers
+downloaddelay: 30
+urllist:
+ - http://missoulian.com/ads/sale/sport/hunting/
+ - http://mtstandard.com/ads/sale/sport/hunting/
+findadregex:
+ - \/ads/.+\/ad_[a-z0-9-]+.html

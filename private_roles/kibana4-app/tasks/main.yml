@@ -1,0 +1,82 @@
+---
+- include_vars: roles/scrapy-crawler-app/defaults/main.yml
+  tags: kibana4-app
+
+- name: Copy over Kibana4 backup folder
+  unarchive:
+    src=backup.tar
+    dest=/tmp/
+  tags: kibana4-app
+
+- name: Copy over Kibana Templates to tmp
+  template:
+    src={{ item }}.j2
+    dest=/tmp/backup/.kibana/visualization/{{ item }}
+  with_items:
+    - "Crawler-Machine-Load"
+    - "Crawls-by-Machine"
+  tags: kibana4-app
+
+- name: re-archive backup file with new templates
+  shell: "tar cvf backup.tar backup"
+  args:
+    chdir: "/tmp/"
+  tags: kibana4-app
+
+- name: remove old directory
+  file:
+    path: "/tmp/backup"
+    state: absent
+  tags: kibana4-app
+
+- name: Copy over Kibana4 restore script
+  copy:
+    src=restore_kibana_index.sh
+    dest=/tmp/
+    mode=755
+  tags: kibana4-app
+
+- name: restore Kibana4 visualizations
+  shell: "./restore_kibana_index.sh {{ groups['elasticsearch-nodes'][0] }} {{ elasticsearch_network_http_port|default(9200) }} backup.tar"
+  args:
+    chdir: "/tmp/"
+  tags: kibana4-app
+
+- name: Remove Kibana tmp files
+  file:
+    path=/tmp/{{ item }}
+    state=absent
+  with_items:
+    - "restore_kibana_index.sh"
+    - "backup.tar"
+  tags: kibana4-app
+
+- name: Move main.css over for dark theme
+  copy:
+    src=main.css
+    dest=/opt/kibana4/default/src/public/styles
+    mode=755
+  when: kibana4_dark_theme
+  tags:
+   - kibana4-app
+   - kibana4-dark-theme
+
+- name: Move index.js over for dark theme
+  copy:
+    src=index.js
+    dest=/opt/kibana4/default/src/public/
+    mode=755
+  when: kibana4_dark_theme
+  tags:
+   - kibana4-app
+   - kibana4-dark-theme
+
+- name: Move inverted loading gif over for dark theme
+  copy:
+    src=initial_load.gif
+    dest=/opt/kibana4/default/src/public/images
+    mode=755
+  when: kibana4_dark_theme
+  tags:
+   - kibana4-app
+   - kibana4-dark-theme

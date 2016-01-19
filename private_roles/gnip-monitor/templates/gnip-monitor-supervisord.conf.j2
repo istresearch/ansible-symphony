@@ -1,0 +1,30 @@
+[program:{{ gnip_monitor_prod_name}}]
+command={{ miniconda_install_dir|default('/opt/miniconda') }}/bin/python {{ gnip_monitor_install_dir }}/default/power_track.py --prod --file {{ gnip_monitor_data_dir }}/{{ gnip_monitor_prod_name }}
+directory={{ gnip_monitor_install_dir }}/default
+process_name=%(program_name)s
+numprocs={{ gnip_monitor_num_procs }}
+autostart={{ gnip_monitor_autostart }}
+autorestart=true
+startsecs={{ gnip_monitor_start_secs }}
+startretries={{ gnip_monitor_start_retries }}
+stopsignal=KILL
+redirect_stderr=true
+stderr_logfile=AUTO
+stderr_logfile_maxbytes={{ gnip_monitor_stderr_logfile_maxbytes }}
+
+[program:{{ gnip_monitor_dev_name}}]
+command=/opt/miniconda/bin/python {{ gnip_monitor_install_dir }}/default/power_track.py --dev --file {{ gnip_monitor_data_dir }}/{{gnip_monitor_dev_name}}
+directory={{ gnip_monitor_install_dir }}/default
+process_name=%(program_name)s
+numprocs={{ gnip_monitor_num_procs }}
+autostart={{ gnip_monitor_autostart }}
+autorestart=true
+startsecs={{ gnip_monitor_start_secs }}
+startretries={{ gnip_monitor_start_retries }}
+stopsignal=KILL
+redirect_stderr=true
+stderr_logfile=AUTO
+stderr_logfile_maxbytes={{ gnip_monitor_stderr_logfile_maxbytes }}
+
+[group:{{ gnip_monitor_name }}]
+programs={{ gnip_monitor_prod_name}}, {{ gnip_monitor_dev_name}}

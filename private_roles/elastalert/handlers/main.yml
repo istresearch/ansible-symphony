@@ -1,0 +1,5 @@
+---
+- name: restart elastalert
+  supervisorctl:
+    name={{ elastalert_supervisor_name }}
+    state=restarted

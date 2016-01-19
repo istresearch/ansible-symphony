@@ -1,0 +1,28 @@
+input {
+  kafka {
+    topic_id => "{{ cooper_kafka_topic }}"
+    consumer_threads => {{ cooper_consumer_threads }}
+    zk_connect => "{% for host in groups['zookeeper-nodes'] %}{{ host }}:{{ zookeeper_port|default(2181) }}{% if not loop.last %},{% endif %}{% endfor %}"
+    group_id => "{{ cooper_name }}-logstash"
+    tags => ["{{ cooper_name }}"]
+  }
+}
+
+output {
+  if "{{ cooper_name }}" in [tags] {
+    elasticsearch {
+      host => "{{ groups['elasticsearch-nodes'][0] }}"
+      port => {{ cooper_es_port }}
+      protocol => http
+      ssl => {{ cooper_ssl }}
+      user => "{{ cooper_es_user }}"
+      password => "{{ cooper_es_password }}"
+      template => "{{ logstash_template_dir }}/{{ cooper_name }}.json"
+      template_name => "{{ cooper_name}}-logstash.conf"
+      template_overwrite => true
+      index => "{{ cooper_name }}-%{+YYYY.MM}"
+      index_type => "{{ cooper_doc_type }}"
+      document_id => "%{[crawlid]}"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+---
+# file: host_vars/vagrant-services
+# Override group_vars for local vagrant testing
+
+gnip_monitor_autostart: "false"
+gnip_monitor_data_dir: /tmp
+gnip_monitor_es_port: 9200
+kafka_data_log_dir:
+  - "/opt/kafka/topic-logs"
+crawler_es_port: 9200
+monitis: false
+elastalert_autostart: false
+elastalert_es1_port: 9200
+elastalert_es2_port: 9200
+elastalert_es3_port: 9200
+elastalert_es4_port: 9200
+elastalert_es5_port: 9200
+storm_worker_ports: [ 6701 ]

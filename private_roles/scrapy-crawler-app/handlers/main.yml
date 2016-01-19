@@ -1,0 +1,3 @@
+---
+- name: restart scrapy-crawling
+  shell: "supervisorctl restart {{ crawling_name }}:*"

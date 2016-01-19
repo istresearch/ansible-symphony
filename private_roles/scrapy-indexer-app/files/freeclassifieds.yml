@@ -1,0 +1,8 @@
+---
+rediskey: indexer-freeclassifieds
+downloaddelay: 30
+urllist:
+ - http://usa.freeclassifieds.com/classified_ads/For_Sale/Firearms
+ - http://usa.freeclassifieds.com/classified_ads/For_Sale/Outdoor_Sporting
+findadregex:
+ - http:\/\/.*.freeclassifieds.com\/classified_ads\/[^/"]+\/[^/"]+\/[^"]+

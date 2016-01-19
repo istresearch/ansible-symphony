@@ -1,0 +1,8 @@
+---
+rediskey: indexer-carolinabargaintrader
+downloaddelay: 30
+urllist:
+ - http://www.carolinabargaintrader.net/category/225/GunsandHunting.html
+ - http://www.carolinabargaintrader.net/category/168/Sporting-Goods.html
+findadregex:
+ - category\/\d+\/.*\/listings/\d+\/.*\.html

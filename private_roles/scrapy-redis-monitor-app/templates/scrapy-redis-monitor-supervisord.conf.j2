@@ -1,0 +1,8 @@
+[program:{{ redis_monitor_supervisor_name }}]
+command={{ miniconda_install_dir|default('/opt/miniconda') }}/bin/python {{ redis_monitor_name }}.py
+directory={{ redis_monitor_install_dir }}
+autostart=true
+autorestart=true
+startsecs={{ redis_monitor_start_secs }}
+startretries={{ redis_monitor_start_retries }}
+stopsignal=KILL

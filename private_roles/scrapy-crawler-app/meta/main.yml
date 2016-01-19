@@ -1,0 +1,4 @@
+---
+dependencies:
+  - { role: logstash, when: "logstash_has_run is not defined" }
+  - { role: logstash-app, when: "logstash_app_has_run is not defined" }

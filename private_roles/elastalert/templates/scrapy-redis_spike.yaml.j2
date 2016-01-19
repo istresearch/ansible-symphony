@@ -1,0 +1,35 @@
+es_host: {{elastalert_es_host}}
+es_port: {{elastalert_es4_port}}
+
+name: Scrapy Redis Spike
+type: any
+index: crawler-*
+filter:
+- query:
+    range:
+      "@timestamp":
+        gte: "now-5m"
+- query:
+    range:
+      requests:
+        gte: 50000
+alert:
+- {{ elastalert_pg_alerter }}
+
+# PagerDuty required options
+incident_key: 'scrapy-redis_spike'
+event_type: 'trigger'
+description: 'Scrapy Redis queue has spiked above 50,000 URLs'
+client_url: "http://dev-kibana.istresearch.com"
+
+# PagerDuty optional fields
+details:
+  es_host: {{ elastalert_es_host }}
+  es_port: {{ elastalert_es4_port }}
+  index: "crawler-*"
+  query1: "gte: now-5m"
+  query2: "gte: 50000"
+
+# context: 
+
+use_local_time: {{elastalert_local_time}}

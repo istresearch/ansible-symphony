@@ -1,0 +1,5 @@
+---
+# - name: restart gdelt-monitor
+#   supervisorctl:
+#     name={{ gdelt_monitor_supervisor_name }}
+#     state=restarted

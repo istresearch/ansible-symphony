@@ -1,0 +1,80 @@
+---
+
+# ------------------------------- Elastalert ---------------------------------
+- name: Run Elastalert role
+  hosts: elastalert-nodes
+  roles: [ elastalert ]
+  tags: site-elastalert
+
+# -------------------------------- Cooper ------------------------------------
+- name: Run Cooper role
+  hosts: cooper-node
+  roles: [ cooper ]
+  tags: site-cooper
+
+# ------------------------------- Gdelt Monitor ------------------------------
+- name: Run Gdelt monitor role
+  hosts: gdelt-monitor-node
+  roles: [ gdelt-monitor ]
+  tags: site-gdelt-monitor
+
+# ------------------------------- GNIP Monitor ------------------------------
+- name: Run GNIP monitor role
+  hosts: gnip-monitor-node
+  roles: [ gnip-monitor ]
+  tags: site-gnip-monitor
+
+# -------------------------------- Traptor ----------------------------------
+- name: Run Traptor role
+  hosts: traptor-nodes
+  roles: [ traptor ]
+  tags: site-traptor
+
+# -------------------------------- Elasticsearch App -------------------------
+- name: Run Elasticsearch app role
+  hosts: elasticsearch-nodes
+  roles: [ elasticsearch-app ]
+  tags: site-elasticsearch-app
+
+# -------------------------------- Kibana App --------------------------------
+- name: Run Kibana4 app role
+  hosts: kibana-node
+  roles: [ kibana4-app ]
+  tags: site-kibana4-app
+
+# -------------------------------- Scrapy Crawler App ------------------------
+- name: Run Scrapy Crawler App role
+  hosts: scrapy-crawler-nodes
+  handlers:
+    - include: roles/supervisord/handlers/main.yml
+    - include: roles/logstash/handlers/main.yml
+  roles: [ scrapy-crawler-app ]
+  tags: site-scrapy-crawler-app
+
+# -------------------------------- Scrapy Indexer App ------------------------
+- name: Run Scrapy Indexer App role
+  hosts: scrapy-indexer-nodes
+  handlers:
+    - include: roles/supervisord/handlers/main.yml
+    - include: roles/logstash/handlers/main.yml
+  roles: [ scrapy-indexer-app ]
+  tags: site-scrapy-indexer-app
+
+# --------------------------------- Kafka Monitor App ------------------------
+- name: Run Kafka Monitor App role
+  hosts: scrapy-kafka-monitor-node
+  handlers:
+    - include: roles/supervisord/handlers/main.yml
+    - include: roles/logstash/handlers/main.yml
+    - include: roles/iptables/handlers/main.yml
+  roles: [ scrapy-kafka-monitor-app ]
+  tags: site-kafka-monitor-app
+
+# -------------------------------- Scrapy Redis App ---------------------------
+- name: Run Redis Monitor App role
+  hosts: scrapy-redis-monitor-node
+  handlers:
+    - include: roles/supervisord/handlers/main.yml
+    - include: roles/logstash/handlers/main.yml
+  roles: [ scrapy-redis-monitor-app ]
+  tags: site-scrapy-redis-app

@@ -1,0 +1,5 @@
+---
+- name: restart gnip-monitor
+  supervisorctl:
+    name={{ gnip_monitor_supervisor_name }}
+    state=restarted
