@@ -12,5 +12,5 @@ install:
 script:
   # - ansible-playbook -i roles/zookeeper/tests/inventory roles/zookeeper/tests/main.yml --syntax-check
   # - ansible-playbook -i roles/zookeeper/tests/inventory roles/zookeeper/tests/main.yml --connection=local --become
-  - ansible-playbook -i testing site-infrastructure.yml --tags site-zookeeer,site-kafka --syntax-check
-  - ansible-playbook -i testing site-infrastructure.yml --tags site-zookeeer,site-kafka --connection=local --become
+  - ansible-playbook -i testing site-infrastructure.yml --tags site-zookeeper,site-kafka --syntax-check
+  - ansible-playbook -i testing site-infrastructure.yml --tags site-zookeeper,site-kafka --connection=local --become
