@@ -47,6 +47,7 @@ vagrant-as-02
 
 [hadoop-nodes:children]
 hadoop-namenode-node
+hadoop-secondary-namenode-node
 hadoop-datanode-nodes
 
 [hbase-master-node]

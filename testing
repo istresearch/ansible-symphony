@@ -51,12 +51,13 @@ localhost
 
 [hadoop-nodes:children]
 hadoop-namenode-node
+hadoop-secondary-namenode-node
 hadoop-datanode-nodes
 
-[hbase-master-node:children]
+[hbase-master-node]
 localhost
 
-[hbase-regionserver-nodes:children]
+[hbase-regionserver-nodes]
 localhost
 
 [hbase-nodes:children]
