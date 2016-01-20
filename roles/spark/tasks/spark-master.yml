@@ -1,31 +1,20 @@
 ---
-# set up spark history
-- name: set up spark history (1/4)
-  shell: "/usr/bin/hadoop fs -mkdir -p {{ spark_hdfs_dir }}"
-  tags:
-    - spark
+- block:
+  - name: set up spark history (1/4)
+    shell: "{{ hdfs_exe_dir }}/hadoop fs -mkdir -p {{ spark_hdfs_dir }}"
 
-# set up spark history
-- name: set up spark history (2/4)
-  shell: "/usr/bin/hadoop fs -mkdir -p {{ spark_hdfs_dir }}/{{ spark_history_dir }}"
-  tags:
-    - spark
+  - name: set up spark history (2/4)
+    shell: "{{ hdfs_exe_dir }}/hadoop fs -mkdir -p {{ spark_hdfs_dir }}/{{ spark_history_dir }}"
 
-# set up spark history
-- name: set up spark history (3/4)
-  shell: "/usr/bin/hadoop fs -chown -R spark:spark {{ spark_hdfs_dir }}"
+  - name: set up spark history (3/4)
+    shell: "{{ hdfs_exe_dir }}/hadoop fs -chown -R spark:spark {{ spark_hdfs_dir }}"
 
-   hdfs
-  tags:
-    - spark
+  - name: set up spark history (4/4)
+    shell: "{{ hdfs_exe_dir }}/hadoop fs -chmod 1777 {{ spark_hdfs_dir }}/{{ spark_history_dir }}"
 
-# set up spark history
-- name: set up spark history (4/4)
-  shell: "/usr/bin/hadoop fs -chmod 1777 {{ spark_hdfs_dir }}/{{ spark_history_dir }}"
-
-   hdfs
-  tags:
-    - spark
+  become: yes
+  become_user: "{{ hdfs_user }}"
+  tags: spark
 
 - name: copy supervisord config
   template:
@@ -34,4 +23,5 @@
     mode=0644
   notify:
     - reread supervisord
+    - restart spark master
   tags: spark

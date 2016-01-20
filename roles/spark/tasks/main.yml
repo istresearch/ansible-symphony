@@ -1,7 +1,8 @@
 ---
+
 - name: create spark install directory
   file:
-    path={{ spark_install_dir }}/{{ spark_pkg_name }}
+    path={{ spark_install_dir }}
     state=directory
     mode=0744
   tags: spark
@@ -13,7 +14,7 @@
 
 - name: download spark
   get_url:
-    url={{ repository_infrastructure }}/{{ spark_pkg_name }}.tgz
+    url="{{ repository_infrastructure }}/{{ spark_pkg_name }}.tgz"
     dest=/tmp/{{ spark_pkg_name }}.tgz
     mode=0644
     validate_certs=no
@@ -34,6 +35,13 @@
     path=/tmp/{{ spark_pkg_name}}.tgz
     state=absent
   ignore_errors: yes
+  tags: spark
+
+- name: create spark symlink
+  file:
+    path: "{{ spark_install_dir }}/default"
+    state: link
+    src: "{{ spark_install_dir }}/{{ spark_pkg_name }}"
   tags: spark
 
 - name: Change spark permissions
@@ -61,8 +69,8 @@
   with_items:
     - "spark-env.sh"
     - "spark-defaults.conf"
-  tags:
-    - spark
+  notify: reread supervisord
+  tags: spark
 
 - name: delete spark conf templates
   file:
@@ -80,10 +88,8 @@
 
 - include: spark-master.yml
   when: spark_master_enabled
-  tags:
-    - spark
+  tags: spark
 
 - include: spark-worker.yml
   when: spark_worker_enabled
-  tags:
-    - spark
+  tags: spark

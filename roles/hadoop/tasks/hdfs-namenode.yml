@@ -65,5 +65,5 @@
 - name: ensure tmp directory in hdfs is created with correct permissions
   shell: "{{ hdfs_exe_dir }}/hadoop fs -mkdir /tmp; {{ hdfs_exe_dir }}/hadoop fs -chmod 1777 /tmp"
   become: yes
-  become_user: hadoop
+  become_user: "{{ hdfs_user }}"
   tags: hadoop

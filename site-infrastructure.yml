@@ -186,25 +186,31 @@
 # --------------------------------- Spark ------------------------------------
 # Requires Hadoop and HDFS
 
-# - name: Spark Master Nodes
-#   hosts: spark-master-node
-#   vars:
-#     - spark_master_enabled: true
-#     - spark_worker_enabled: false
-#     - dfs_namenode_host: "{{ groups['hadoop-namenode-node'][0] }}"
-#     - yarn_historyserver_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
-#   roles: [ spark ]
-#   tags: site-spark
+- name: Spark Master Nodes
+  hosts: spark-master-node
+  vars:
+    - spark_master_enabled: true
+    - spark_worker_enabled: false
+    - dfs_namenode_host: "{{ groups['hadoop-namenode-node'][0] }}"
+    - yarn_historyserver_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
+    - hdfs_user: hadoop
+    - hdfs_install_dir: "/opt/hadoop"
+    - hdfs_exe_dir: "JAVA_HOME={{ java_home }} {{ hdfs_install_dir }}/default/bin"
+  roles: [ spark ]
+  tags: site-spark
 
-# - name: Spark Workers
-#   hosts: spark-worker-nodes
-#   vars:
-#     - spark_master_enabled: false
-#     - spark_worker_enabled: true
-#     - dfs_namenode_host: "{{ groups['hadoop-namenode-node'][0] }}"
-#     - yarn_historyserver_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
-#   roles: [ spark ]
-#   tags: site-spark
+- name: Spark Workers
+  hosts: spark-worker-nodes
+  vars:
+    - spark_master_enabled: false
+    - spark_worker_enabled: true
+    - dfs_namenode_host: "{{ groups['hadoop-namenode-node'][0] }}"
+    - yarn_historyserver_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
+    - hdfs_user: hadoop
+    - hdfs_install_dir: "/opt/hadoop"
+    - hdfs_exe_dir: "JAVA_HOME={{ java_home }} {{ hdfs_install_dir }}/default/bin"
+  roles: [ spark ]
+  tags: site-spark
 
 
 
