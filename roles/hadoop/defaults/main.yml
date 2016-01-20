@@ -74,4 +74,4 @@ yarn_resourcemanager_scheduler_address_port: 8030
 yarn_resourcemanager_webapp_address_port: 8088
 yarn_resourcemanager_webapp_https_address_port: 8090
 
-repository_infrastructure:  "http://shinyfeather.com/hadoop/common/hadoop-{{ hdfs_version }}"
+repository_infrastructure:  "{{ apache_mirror }}/hadoop/common/hadoop-{{ hdfs_version }}"

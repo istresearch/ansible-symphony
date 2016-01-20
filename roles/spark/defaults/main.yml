@@ -31,4 +31,4 @@ spark_worker_cores: 2
 
 spark_stderr_logfile_maxbytes: 50MB
 
-repository_infrastructure: "http://download.nextag.com/apache/spark/spark-{{ spark_version }}"
+repository_infrastructure: "{{ apache_mirror }}/spark/spark-{{ spark_version }}"

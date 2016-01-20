@@ -38,4 +38,4 @@ hbase_rest_port: 60050
 hbase_rest_info_port: 8086
 hbase_jmx_remote_port: 10102
 
-repository_infrastructure: http://apachemirror.ovidiudan.com/hbase/stable/
+repository_infrastructure: "{{ apache_mirror }}/hbase/stable/"
