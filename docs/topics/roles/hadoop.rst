@@ -6,10 +6,10 @@ Deploys `HDFS <http://hadoop.apache.org>`_
 Ansible Keys
 ------------
 
-* **[hadoop-namenode-node]** - The machine to deploy Namenodes to.
+* **[hadoop-namenode-node]** - The machine to deploy Namenode to.
 
 
-* **[hadoop-secondary-namenode-node]** - The machines to deploy Secondary Namenodes to.
+* **[hadoop-secondary-namenode-node]** - The machines to deploy Secondary Namenode to.
 
 * **[hadoop-datanode-nodes]** - - The machines to deploy Datanodes to.
 
