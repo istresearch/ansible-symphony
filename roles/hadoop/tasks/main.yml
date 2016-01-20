@@ -17,7 +17,7 @@
   file:
     path: "{{ item }}"
     state: directory
-    mode: 0744
+    mode: 0754
     owner: "{{ hdfs_user }}"
     group: "{{ hdfs_group }}"
   with_items:
