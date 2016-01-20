@@ -1,0 +1,33 @@
+---
+- name: copy supervisord config
+  template:
+    src: hbase-rest-supervisord.conf.j2
+    dest: "{{ supervisord_programs_dir }}/hbase-rest-supervisord.conf"
+    mode: 0644
+  notify:
+    - reread supervisord
+    - restart hbase rest
+    - wait for hbase rest port
+  tags:
+    - hbase
+    - hbase_rest
+
+- name: add hbase rest to supervisord
+  supervisorctl:
+    name: hbase-rest
+    state: present
+  tags: hadoop
+
+- name: ensure hbase-rest is started
+  supervisorctl:
+    name: hbase-rest
+    state: started
+  notify:
+    - wait for hbase rest port
+  tags: hadoop
+
+- name: wait for hbase rest port
+  wait_for:
+    port: "{{ hbase_rest_info_port }}"
+    host: "{{ inventory_hostname }}"
+  tags: hadoop

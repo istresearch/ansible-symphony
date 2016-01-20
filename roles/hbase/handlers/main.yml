@@ -1,0 +1,38 @@
+---
+- name: restart hbase master
+  supervisorctl:
+    name=hbase-master
+    state=restarted
+  when: hbase_master_enabled
+
+- name: wait for hbase master port
+  wait_for:
+    host={{ hbase_master_host }}
+    port={{ hbase_master_info_port }}
+    state=started
+  when: hbase_master_enabled
+
+- name: restart hbase region server
+  supervisorctl:
+    name=hbase-regionserver
+    state=restarted
+  when: hbase_regionserver_enabled
+
+- name: wait for hbase region server port
+  wait_for:
+    port={{ hbase_regionserver_info_port }}
+    state=started
+  when: hbase_regionserver_enabled
+
+- name: restart hbase rest
+  supervisorctl:
+    name=hbase-rest
+    state=restarted
+  when: hbase_rest_enabled
+
+- name: wait for hbase rest port
+  wait_for:
+    port={{ hbase_rest_port }}
+    state=started
+  when: hbase_rest_enabled
+

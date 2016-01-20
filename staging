@@ -49,9 +49,12 @@ vagrant-as-02
 hadoop-namenode-node
 hadoop-datanode-nodes
 
-[hbase-master-node:children]
+[hbase-master-node]
+vagrant-as-01
 
-[hbase-regionserver-nodes:children]
+[hbase-regionserver-nodes]
+vagrant-as-01
+vagrant-as-02
 
 [hbase-nodes:children]
 hbase-master-node
