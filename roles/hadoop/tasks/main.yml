@@ -11,7 +11,7 @@
     group: "{{ hdfs_group }}"
     createhome: no
   tags:
-    - elasticsearch
+    - hadoop
 
 - name: create hadoop install directory
   file:
