@@ -4,6 +4,11 @@
 #   - You can enter hostnames or ip addresses
 #   - A hostname/ip can be a member of multiple groups
 
+# ----------------------------
+# This inventory file is for Travis CI testing only. Please
+# do not alter this file unless making updates to the Travis
+# build process.
+# ----------------------------
 
 [all:vars]
 repository_host=default
@@ -43,15 +48,16 @@ localhost
 
 [hadoop-datanode-nodes]
 localhost
-localhost
 
 [hadoop-nodes:children]
 hadoop-namenode-node
 hadoop-datanode-nodes
 
 [hbase-master-node:children]
+localhost
 
 [hbase-regionserver-nodes:children]
+localhost
 
 [hbase-nodes:children]
 hbase-master-node
