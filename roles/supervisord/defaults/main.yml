@@ -3,3 +3,4 @@
 supervisord_log_dir: /var/log/supervisor
 supervisord_programs_dir: /etc/supervisor/conf.d
 supervisord_sock: /var/run/supervisor.sock
+supervisord_minfds: 64000
