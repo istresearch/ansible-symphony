@@ -11,8 +11,8 @@
 
 - name: copy supervisord config
   template:
-    src=spark-slave-supervisord.conf.j2
-    dest={{ supervisord_programs_dir }}/spark-slave-supervisord.conf
+    src=spark-worker-supervisord.conf.j2
+    dest={{ supervisord_programs_dir }}/spark-worker-supervisord.conf
     mode=0644
   notify:
     - reread supervisord

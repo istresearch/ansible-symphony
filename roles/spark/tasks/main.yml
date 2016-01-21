@@ -1,6 +1,6 @@
 ---
 
-- include_vars: hadoop/vars/main.yml
+- include_vars: roles/hadoop/vars/main.yml
 
 - name: create spark install directory
   file:
