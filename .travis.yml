@@ -13,7 +13,7 @@ install:
 
 env:
   - TAGS='site-common'
-  - TAGS='site-zookeeper
+  - TAGS='site-zookeeper'
   - TAGS='ELK'
   - TAGS='scrapy-services'
   - TAGS='scrapy-cluster'
