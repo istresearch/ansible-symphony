@@ -13,21 +13,18 @@
 [all:vars]
 repository_host=default
 
-[inventory-name:children]
-ansible-symphony
-
 #
 # Infrastructure and software topology
 #
 
 [zookeeper-nodes]
-127.0.0.1
+localhost
 
 [kafka-nodes]
-127.0.0.1
+localhost
 
 [redis-master-node]
-127.0.0.1
+localhost
 
 [redis-slave-nodes]
 #leave empty
@@ -41,13 +38,13 @@ redis-slave-nodes
 redis-sentinel-nodes
 
 [hadoop-namenode-node]
-127.0.0.1
+localhost
 
 [hadoop-secondary-namenode-node]
-127.0.0.1
+localhost
 
 [hadoop-datanode-nodes]
-127.0.0.1
+localhost
 
 [hadoop-nodes:children]
 hadoop-namenode-node
@@ -55,33 +52,33 @@ hadoop-secondary-namenode-node
 hadoop-datanode-nodes
 
 [hbase-master-node]
-127.0.0.1
+localhost
 
 [hbase-regionserver-nodes]
-127.0.0.1
+localhost
 
 [hbase-nodes:children]
 hbase-master-node
 hbase-regionserver-nodes
 
 [spark-master-node]
-127.0.0.1
+localhost
 
 [spark-worker-nodes]
-127.0.0.1
+localhost
 
 [spark-nodes:children]
 spark-master-node
 spark-worker-nodes
 
 [storm-nimbus-node]
-127.0.0.1
+localhost
 
 [storm-ui-node]
-127.0.0.1
+localhost
 
 [storm-supervisor-nodes]
-127.0.0.1
+localhost
 
 [storm-nodes:children]
 storm-nimbus-node
@@ -89,44 +86,44 @@ storm-ui-node
 storm-supervisor-nodes
 
 [elasticsearch-nodes]
-127.0.0.1
+localhost
 
 [logstash-nodes]
-127.0.0.1
+localhost
 
 [kibana-node]
-127.0.0.1
+localhost
 
 [tor-proxy]
-127.0.0.1
+localhost
 
 [scrapy-kafka-monitor-node]
-127.0.0.1
+localhost
 
 [scrapy-redis-monitor-node]
-127.0.0.1
+localhost
 
 #
 # Applications topology
 #
 
 [scrapy-crawler-nodes]
-127.0.0.1
+localhost
 
 [scrapy-indexer-nodes]
-127.0.0.1
+localhost
 
 [gnip-monitor-node]
-127.0.0.1
+localhost
 
 [gdelt-monitor-node]
-127.0.0.1
+localhost
 
 [elastalert-nodes]
-127.0.0.1
+localhost
 
 [traptor-follow-nodes]
-127.0.0.1
+localhost
 
 [traptor-track-nodes]
 
