@@ -1,3 +1,7 @@
+.. image:: https://travis-ci.org/istresearch/ansible-symphony.svg?branch=master
+    :target: https://travis-ci.org/istresearch/ansible-symphony
+
+
 Quickstart
 ==========
 
