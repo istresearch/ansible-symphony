@@ -91,6 +91,9 @@ storm-supervisor-nodes
 [elasticsearch-nodes]
 localhost
 
+[logstash-nodes]
+localhost
+
 [kibana-node]
 localhost
 
