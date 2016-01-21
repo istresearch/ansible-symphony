@@ -193,9 +193,6 @@
     - spark_worker_enabled: false
     - dfs_namenode_host: "{{ groups['hadoop-namenode-node'][0] }}"
     - yarn_historyserver_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
-    - hdfs_user: hadoop
-    - hdfs_install_dir: "/opt/hadoop"
-    - hdfs_exe_dir: "JAVA_HOME={{ java_home }} {{ hdfs_install_dir }}/default/bin"
   roles: [ spark ]
   tags: site-spark
 
@@ -206,9 +203,6 @@
     - spark_worker_enabled: true
     - dfs_namenode_host: "{{ groups['hadoop-namenode-node'][0] }}"
     - yarn_historyserver_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
-    - hdfs_user: hadoop
-    - hdfs_install_dir: "/opt/hadoop"
-    - hdfs_exe_dir: "JAVA_HOME={{ java_home }} {{ hdfs_install_dir }}/default/bin"
   roles: [ spark ]
   tags: site-spark
 
