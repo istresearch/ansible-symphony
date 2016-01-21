@@ -19,8 +19,8 @@ env:
   - TAGS='scrapy-cluster'
   - TAGS='site-storm'
   - TAGS='site-hadoop'
-  - TAGS='site-hbase'
-  - TAGS='site-spark'
+  # - TAGS='site-hbase'
+  # - TAGS='site-spark'
 
 matrix:
   fast_finish: true
