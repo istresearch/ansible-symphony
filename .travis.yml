@@ -13,11 +13,17 @@ install:
 
 env:
   - TAGS='site-common'
-  - TAGS='site-zookeeper,site-kafka'
+  - TAGS='site-zookeeper
   - TAGS='ELK'
+  - TAGS='scrapy-services'
   - TAGS='scrapy-cluster'
-  - TAGS='site-zookeeper,site-storm'
+  - TAGS='site-storm'
+  - TAGS='site-hadoop'
+  - TAGS='site-hbase'
+  - TAGS='site-spark'
 
+matrix:
+  fast_finish: true
 
 script:
   - ansible-playbook -i testing site-infrastructure.yml --tags $TAGS --syntax-check
