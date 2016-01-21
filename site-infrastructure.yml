@@ -22,7 +22,13 @@
   vars:
    - zookeeper_host_list: "{{ groups['zookeeper-nodes'] }}"
   roles: [ zookeeper ]
-  tags: site-zookeeper
+  tags:
+    - site-zookeeper
+    - site-kafka
+    - site-storm
+    - site-hadoop
+    - site-hbase
+    - site-spark
 
 - name: Run kafka role
   hosts: kafka-nodes
@@ -30,7 +36,8 @@
    - kafka_host_list: "{{ groups['kafka-nodes'] }}"
    - zookeeper_host_list: "{{ groups['zookeeper-nodes'] }}"
   roles: [ kafka ]
-  tags: site-kafka
+  tags:
+    - site-kafka
 
 # ------------------------------ ELK stack ------------------------------------
 - name: Run elasticsearch role
@@ -60,12 +67,16 @@
 - name: Run redis role
   hosts: redis-nodes
   roles: [ redis ]
-  tags: site-redis
+  tags:
+    - site-redis
+    - scrapy-services
 
 - name: Run tor role
   hosts: tor-proxy
   roles: [ tor ]
-  tags: site-tor
+  tags:
+    - site-tor
+    - scrapy-services
 
 # --------------------------- Scrapy Cluster ---------------------------------
 - name: Run scrapy-crawler role (infrastructure)
@@ -138,7 +149,10 @@
     - yarn_resourcemanager_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
     - yarn_historyserver_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
   roles: [ hadoop ]
-  tags: site-hadoop
+  tags: 
+    - site-hadoop
+    - site-hbase
+    - site-spark
 
 - name: HDFS Datanodes
   hosts: hadoop-datanode-nodes
@@ -149,7 +163,10 @@
     - yarn_resourcemanager_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
     - yarn_historyserver_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
   roles: [ hadoop ]
-  tags: site-hadoop
+  tags:
+    - site-hadoop
+    - site-hbase
+    - site-spark
 
 - name: HDFS Secondary Namenode
   hosts: hadoop-secondary-namenode-node
@@ -159,7 +176,10 @@
     - yarn_resourcemanager_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
     - yarn_historyserver_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
   roles: [ hadoop ]
-  tags: site-hadoop
+  tags:
+    - site-hadoop
+    - site-hbase
+    - site-spark
 
 # --------------------------------- HBase ------------------------------------
 - name: HBase Master Node
