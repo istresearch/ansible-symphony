@@ -8,9 +8,6 @@
 [all:vars]
 repository_host=default
 
-[inventory-name:children]
-ansible-symphony
-
 #
 # Infrastructure and software topology
 #
@@ -128,23 +125,3 @@ vagrant-as-02
 traptor-follow-nodes
 traptor-track-nodes
 
-[ansible-symphony:children]
-zookeeper-nodes
-kafka-nodes
-redis-nodes
-hadoop-nodes
-hbase-nodes
-spark-nodes
-storm-nodes
-scrapy-kafka-monitor-node
-scrapy-redis-monitor-node
-scrapy-crawler-nodes
-scrapy-indexer-nodes
-elasticsearch-nodes
-kibana-node
-
-[tangelo-node]
-
-[titan-node]
-
-[other]
