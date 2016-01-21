@@ -41,13 +41,13 @@ redis-slave-nodes
 redis-sentinel-nodes
 
 [hadoop-namenode-node]
-localhost
+127.0.0.1
 
 [hadoop-secondary-namenode-node]
-localhost
+127.0.0.1
 
 [hadoop-datanode-nodes]
-localhost
+127.0.0.1
 
 [hadoop-nodes:children]
 hadoop-namenode-node
@@ -55,20 +55,20 @@ hadoop-secondary-namenode-node
 hadoop-datanode-nodes
 
 [hbase-master-node]
-localhost
+127.0.0.1
 
 [hbase-regionserver-nodes]
-localhost
+127.0.0.1
 
 [hbase-nodes:children]
 hbase-master-node
 hbase-regionserver-nodes
 
 [spark-master-node]
-localhost
+127.0.0.1
 
 [spark-worker-nodes]
-localhost
+127.0.0.1
 
 [spark-nodes:children]
 spark-master-node
