@@ -21,13 +21,13 @@ ansible-symphony
 #
 
 [zookeeper-nodes]
-localhost
+127.0.0.1
 
 [kafka-nodes]
-localhost
+127.0.0.1
 
 [redis-master-node]
-localhost
+127.0.0.1
 
 [redis-slave-nodes]
 #leave empty
@@ -75,13 +75,13 @@ spark-master-node
 spark-worker-nodes
 
 [storm-nimbus-node]
-localhost
+127.0.0.1
 
 [storm-ui-node]
-localhost
+127.0.0.1
 
 [storm-supervisor-nodes]
-localhost
+127.0.0.1
 
 [storm-nodes:children]
 storm-nimbus-node
@@ -89,68 +89,47 @@ storm-ui-node
 storm-supervisor-nodes
 
 [elasticsearch-nodes]
-localhost
+127.0.0.1
 
 [logstash-nodes]
-localhost
+127.0.0.1
 
 [kibana-node]
-localhost
+127.0.0.1
 
 [tor-proxy]
-localhost
+127.0.0.1
 
 [scrapy-kafka-monitor-node]
-localhost
+127.0.0.1
 
 [scrapy-redis-monitor-node]
-localhost
+127.0.0.1
 
 #
 # Applications topology
 #
 
 [scrapy-crawler-nodes]
-localhost
+127.0.0.1
 
 [scrapy-indexer-nodes]
-localhost
+127.0.0.1
 
 [gnip-monitor-node]
-localhost
+127.0.0.1
 
 [gdelt-monitor-node]
-localhost
+127.0.0.1
 
 [elastalert-nodes]
-localhost
+127.0.0.1
 
 [traptor-follow-nodes]
-localhost
+127.0.0.1
 
 [traptor-track-nodes]
 
 [traptor-nodes:children]
 traptor-follow-nodes
 traptor-track-nodes
-
-[ansible-symphony:children]
-zookeeper-nodes
-kafka-nodes
-redis-nodes
-hadoop-nodes
-hbase-nodes
-spark-nodes
-storm-nodes
-scrapy-kafka-monitor-node
-scrapy-redis-monitor-node
-scrapy-crawler-nodes
-scrapy-indexer-nodes
-elasticsearch-nodes
-kibana-node
-
-[tangelo-node]
-
-[titan-node]
-
-[other]
