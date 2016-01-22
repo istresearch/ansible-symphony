@@ -40,10 +40,31 @@
     - site-kafka
 
 # ------------------------------ ELK stack ------------------------------------
-- name: Run elasticsearch role
-  hosts: elasticsearch-nodes
+- name: Run elasticsearch master role
+  hosts: elasticsearch-master-nodes
   vars:
    - elasticsearch_host_list: "{{ groups['elasticsearch-nodes'] }}"
+   - elasticsearch_is_master: "true"
+  roles: [ elasticsearch ]
+  tags:
+    - site-elasticsearch
+    - ELK
+
+- name: Run elasticsearch data role
+  hosts: elasticsearch-data-nodes
+  vars:
+   - elasticsearch_host_list: "{{ groups['elasticsearch-nodes'] }}"
+   - elasticsearch_is_data: "true"
+  roles: [ elasticsearch ]
+  tags:
+    - site-elasticsearch
+    - ELK
+
+- name: Run elasticsearch client role
+  hosts: elasticsearch-client-nodes
+  vars:
+   - elasticsearch_host_list: "{{ groups['elasticsearch-nodes'] }}"
+   - elasticsearch_is_client: "true"
   roles: [ elasticsearch ]
   tags:
     - site-elasticsearch
@@ -149,7 +170,7 @@
     - yarn_resourcemanager_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
     - yarn_historyserver_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
   roles: [ hadoop ]
-  tags: 
+  tags:
     - site-hadoop
     - site-hbase
     - site-spark

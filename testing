@@ -85,8 +85,18 @@ storm-nimbus-node
 storm-ui-node
 storm-supervisor-nodes
 
-[elasticsearch-nodes]
+[elasticsearch-master-nodes]
+localhost elasticsearch_is_data="true"
+
+[elasticsearch-data-nodes]
+
+[elasticsearch-client-nodes]
 localhost
+
+[elasticsearch-nodes:children]
+elasticsearch-master-nodes
+elasticsearch-data-nodes
+elasticsearch-client-nodes
 
 [logstash-nodes]
 localhost

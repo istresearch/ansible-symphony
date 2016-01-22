@@ -1,3 +1,5 @@
+# THIS FILE IS DEPRECATED AND MAY BE REMOVED IN THE FUTURE OF ANSIBLE-SYMPHONY
+
 ##################### ElasticSearch Configuration Example #####################
 
 # This file contains an overview of various configuration settings,
@@ -43,13 +45,13 @@ cluster.name: {{ elasticsearch_cluster_name }}
 # Allow this node to be eligible as a master node (enabled by default):
 #
 # node.master: true
-node.master: {{ elasticsearch_all_master }}
+node.master: {{ elasticsearch_is_master }}
 
 #
 # Allow this node to store data (enabled by default):
 #
 # node.data: true
-node.data: {{ elasticsearch_all_data }}
+node.data: {{ elasticsearch_is_data }}
 
 # You can exploit these settings to design advanced cluster topologies.
 #

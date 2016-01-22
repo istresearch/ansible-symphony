@@ -82,8 +82,22 @@ storm-nimbus-node
 storm-ui-node
 storm-supervisor-nodes
 
-[elasticsearch-nodes]
-vagrant-as-01
+[elasticsearch-master-data-nodes]
+
+
+[elasticsearch-master-nodes]
+# data node serves as master also
+
+[elasticsearch-data-nodes]
+vagrant-as-01 elasticsearch_is_master=true
+
+[elasticsearch-client-nodes]
+vagrant-as-02
+
+[elasticsearch-nodes:children]
+elasticsearch-master-nodes
+elasticsearch-data-nodes
+elasticsearch-client-nodes
 
 [kibana-node]
 vagrant-as-01
