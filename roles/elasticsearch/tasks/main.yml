@@ -174,7 +174,7 @@
 
 - name: install kopf plugin
   shell: "{{ elasticsearch_bin_dir }}/plugin install lmenezes/elasticsearch-kopf"
-  when: elasticsearchkopf.stat.isdir is not defined and elasticsearch_install_kopf
+  when: elasticsearch_install_kopf and elasticsearchkopf.stat.isdir is not defined
   tags:
     - elasticsearch
     - kopf
@@ -188,7 +188,7 @@
 
 - name: install analysis icu plugin
   shell: "{{ elasticsearch_bin_dir }}/plugin install analysis-icu"
-  when: elasticsearchicu.stat.isdir is not defined and elasticsearch_install_icu_analysis
+  when: elasticsearch_install_icu_analysis and elasticsearchicu.stat.isdir is not defined
   notify: "restart elasticsearch {{ conf_name }}"
   tags:
     - elasticsearch

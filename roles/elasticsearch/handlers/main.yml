@@ -17,8 +17,8 @@
     state=restarted
   when: elasticsearch_is_client
 
-- name: restart elasticsearch master-data
+- name: restart elasticsearch master_data
   supervisorctl:
-    name=elasticsearch-master-data
+    name=elasticsearch-master_data
     state=restarted
   when: (elasticsearch_is_data=="true" and elasticsearch_is_master=="true")
