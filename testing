@@ -91,7 +91,6 @@ localhost elasticsearch_is_data="true"
 [elasticsearch-data-nodes]
 
 [elasticsearch-client-nodes]
-localhost
 
 [elasticsearch-nodes:children]
 elasticsearch-master-nodes
