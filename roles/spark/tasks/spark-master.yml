@@ -13,7 +13,9 @@
     shell: "{{ hdfs_exe_dir }}/hadoop fs -chmod 1777 {{ spark_hdfs_dir }}/{{ spark_history_dir }}"
 
   become: yes
-  become_user: "{{ hdfs_user }}"
+  become_user: "{{ hdfs_user|default('hadoop') }}"
+  delegate_to: "{{ groups['hadoop-namenode-node'][0] }}"
+  run_once: true
   tags: spark
 
 - name: copy supervisord config
