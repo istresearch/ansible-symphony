@@ -1,7 +1,5 @@
 ---
 
-- include_vars: roles/hadoop/vars/main.yml
-
 - name: create spark install directory
   file:
     path={{ spark_install_dir }}
