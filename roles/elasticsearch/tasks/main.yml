@@ -1,4 +1,24 @@
 ---
+- name: set config name (1/4)
+  set_fact: conf_name="data"
+  when: elasticsearch_is_data
+  tags: elasticsearch
+
+- name: set config name (2/4)
+  set_fact: conf_name="master"
+  when: elasticsearch_is_master
+  tags: elasticsearch
+
+- name: set config name (3/4)
+  set_fact: conf_name="client"
+  when: elasticsearch_is_client
+  tags: elasticsearch
+
+- name: set config name (4/4)
+  set_fact: conf_name="master_data"
+  when: (elasticsearch_is_data=="true" and elasticsearch_is_master=="true")
+  tags: elasticsearch
+
 - name: Configuring group
   group:
     name: "{{ elasticsearch_group }}"
@@ -24,25 +44,16 @@
 
 - name: create elasticsearch log directory
   file:
-    path: "{{ elasticsearch_log_dir }}/"
+    path: "{{ elasticsearch_log_dir }}_{{ conf_name }}/"
     state: directory
     mode: 0755
     owner: "{{ elasticsearch_user }}"
     group: "{{ elasticsearch_group }}"
   tags: elasticsearch
 
-# - name: create elasticsearch work directory
-#   file:
-#     path: {{ elasticsearch_work_dir }}/
-#     state: directory
-#     mode: 0744
-#     owner: {{ elasticsearch_user }}
-#     group: {{ elasticsearch_group }}
-#   tags: elasticsearch
-
 - name: create elasticsearch data directory
   file:
-    path: "{{ elasticsearch_data_dir }}/"
+    path: "{{ elasticsearch_data_dir }}_{{ conf_name }}/"
     state: directory
     mode: 0744
     owner: "{{ elasticsearch_user }}"
@@ -100,103 +111,84 @@
     group: "{{ elasticsearch_group }}"
   tags: elasticsearch
 
-# - name: create elasticsearch conf directory
-#   file:
-#     path: {{ elasticsearch_conf_dir }}/
-#     state: directory
-#     mode: 0744
-#     owner: {{ elasticsearch_user }}
-#     group: {{ elasticsearch_group }}
-#   tags: elasticsearch
-
-# - name: create elasticsearch plugin directory
-#   file:
-#     path: {{ elasticsearch_plugin_dir }}/
-#     state: directory
-#     mode: 0744
-#     owner: {{ elasticsearch_user }}
-#     group: {{ elasticsearch_group }}
-#   tags: elasticsearch
-
-# - name: Configuring open file limits (1/5)
-#   lineinfile:
-#     dest: /etc/security/limits.conf
-#     regexp: '^{{ elasticsearch_user }}     -    nofile    {{ elasticsearch_max_open_files }}'
-#     insertafter: EOF
-#     line: '{{ elasticsearch_user }}     -    nofile    {{ elasticsearch_max_open_files }}'
-#   tags:
-#     - elasticsearch
-
-# - name: Configuring open file limits (2/5)
-#   lineinfile:
-#     dest: /etc/security/limits.conf
-#     regexp: '^{{ elasticsearch_user }}     -    memlock   {{ elasticsearch_max_locked_memory }}'
-#     insertafter: EOF
-#     line: '{{ elasticsearch_user }}     -    memlock   {{ elasticsearch_max_locked_memory }}'
-#   tags:
-#     - elasticsearch
-
-# - name: Configuring open file limits (3/5)
-#   lineinfile:
-#     dest: /etc/pam.d/su
-#     regexp: '^session    required   pam_limits.so'
-#     insertafter: EOF
-#     line: 'session    required   pam_limits.so'
-#   tags:
-#     - elasticsearch
-
-# - name: Configuring open file limits (4/5)
-#   lineinfile:
-#     dest: /etc/pam.d/system-auth
-#     regexp: '^session    required   pam_limits.so'
-#     insertafter: EOF
-#     line: 'session    required   pam_limits.so'
-#   tags:
-#     - elasticsearch
-#   when: ansible_os_family == 'RedHat'
-
-
-# - name: Configuring open file limits (5/5)
-#   lineinfile:
-#     dest: /etc/pam.d/sudo
-#     regexp: '^session    required   pam_limits.so'
-#     insertafter: EOF
-#     line: 'session    required   pam_limits.so'
-#   tags:
-#     - elasticsearch
-#   when: ansible_os_family == 'RedHat'
-
-- name: Copy elasticsearch.yml
+- name: set elasticsearch limits configuration
   template:
-    src: elasticsearch.yml.j2
-    dest: "{{ elasticsearch_conf_dir }}/elasticsearch.yml"
+    src: elasticsearch-limits.conf.j2
+    dest: /etc/security/limits.d/elasticsearch-limits.conf
+    mode: 0755
+  tags: elasticsearch
+
+- name: Configuring open file limits
+  lineinfile:
+    dest: /etc/pam.d/common-session
+    regexp: '^session    required   pam_limits.so'
+    insertafter: EOF
+    line: 'session    required   pam_limits.so'
+  tags:
+    - elasticsearch
+
+- name: stat config
+  stat:
+    path: "{{ elasticsearch_conf_dir }}_{{ conf_name }}"
+  register: elasticsearchconf
+  tags: elasticsearch
+
+- name: Clone default config
+  shell: "cp -R {{ elasticsearch_conf_dir }} {{ elasticsearch_conf_dir }}_{{ conf_name }}"
+  become: yes
+  become_user: "{{ elasticsearch_user }}"
+  when: elasticsearchconf.stat.isdir is not defined
+  tags: elasticsearch
+
+- name: Copy config files
+  template:
+    src: "{{ item }}.j2"
+    dest: "{{ elasticsearch_conf_dir }}_{{ conf_name }}/{{ item }}"
     owner: "{{ elasticsearch_user }}"
     group: "{{ elasticsearch_group }}"
     mode: 0644
+  with_items:
+    - logging.yml
+    - elasticsearch.yml
   notify:
-    - restart elasticsearch
+    - "restart elasticsearch {{ conf_name }}"
   tags:
     - elasticsearch
 
 - name: copy supervisord config
   template:
     src: elasticsearch-supervisord.conf.j2
-    dest: "{{ supervisord_programs_dir }}/elasticsearch-supervisord.conf"
+    dest: "{{ supervisord_programs_dir }}/elasticsearch-{{ conf_name }}-supervisord.conf"
     mode: 0644
   notify:
     - reread supervisord
-  tags: 
+  tags:
     - elasticsearch
 
 - name: check for existing kopf plugin install
   stat:
     path: "{{ elasticsearch_plugin_dir }}/kopf"
   register: elasticsearchkopf
+  when: elasticsearch_install_kopf
   tags: elasticsearch
 
 - name: install kopf plugin
   shell: "{{ elasticsearch_bin_dir }}/plugin install lmenezes/elasticsearch-kopf"
-  when: elasticsearchkopf.stat.isdir is not defined
-  tags: 
+  when: elasticsearch_install_kopf and elasticsearchkopf.stat.isdir is not defined
+  tags:
     - elasticsearch
     - kopf
+
+- name: check for existing analysis icu plugin install
+  stat:
+    path: "{{ elasticsearch_plugin_dir }}/analysis-icu"
+  register: elasticsearchicu
+  when: elasticsearch_install_icu_analysis
+  tags: elasticsearch
+
+- name: install analysis icu plugin
+  shell: "{{ elasticsearch_bin_dir }}/plugin install analysis-icu"
+  when: elasticsearch_install_icu_analysis and elasticsearchicu.stat.isdir is not defined
+  notify: "restart elasticsearch {{ conf_name }}"
+  tags:
+    - elasticsearch

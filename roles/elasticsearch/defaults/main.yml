@@ -5,11 +5,16 @@ elasticsearch_user: elasticsearch
 elasticsearch_group: elasticsearch
 elasticsearch_version: 2.1.1
 elasticsearch_max_open_files: 65535
-elasticsearch_max_locked_memory: 1000000000
+elasticsearch_max_locked_memory: 100000
+elasticsearch_max_num_procs: 32000
 elasticsearch_cluster_name: elasticsearch
+elasticsearch_heap_size: 1g
 
-elasticsearch_plugin_kopf_version: 2.1.1
-elasticsearch_plugin_icu_version: 2.4.2
+elasticsearch_start_secs: 10
+elasticsearch_start_retries: 3
+
+elasticsearch_install_kopf: true
+elasticsearch_install_icu_analysis: false
 
 elasticsearch_plugin_dir: "{{ elasticsearch_install_dir }}/elasticsearch-{{ elasticsearch_version }}/plugins"
 elasticsearch_bin_dir: "{{ elasticsearch_install_dir }}/elasticsearch-{{ elasticsearch_version }}/bin"
@@ -18,12 +23,14 @@ elasticsearch_data_dir: /var/lib/elasticsearch
 elasticsearch_work_dir: /tmp/elasticsearch
 elasticsearch_conf_dir: "{{ elasticsearch_install_dir }}/elasticsearch-{{ elasticsearch_version }}/config"
 
-elasticsearch_all_master: "true"
-elasticsearch_all_data: "true"
+elasticsearch_is_master: "false"
+elasticsearch_is_data: "false"
+elasticsearch_is_client: "false"
 elasticsearch_node_max_local_storage_nodes: 1
 elasticsearch_index_mapper_dynamic: true
 elasticsearch_misc_query_bool_max_clause_count: 4096
 elasticsearch_memory_bootstrap_mlockall: "true"
+elasticsearch_base_node_name: esnode
 
 elasticsearch_gateway_type: local
 elasticsearch_gateway_recover_after_nodes: 1
@@ -58,7 +65,7 @@ elasticsearch_network_http_port: 9200
 elasticsearch_network_http_max_content_length: 100mb
 elasticsearch_network_http_enabled: "true"
 
-# all of these logs are disabled
+# all of these logs are disabled 1.x only
 elasticsearch_slowlog_threshold_query_warn: -1
 elasticsearch_slowlog_threshold_query_info: -1
 elasticsearch_slowlog_threshold_query_debug: -1
@@ -77,5 +84,20 @@ elasticsearch_gc_par_new_debug: -1
 elasticsearch_gc_soncurrent_mark_sweep_warn: -1
 elasticsearch_gc_soncurrent_mark_sweep_info: -1
 elasticsearch_gc_soncurrent_mark_sweep_debug: -1
+
+# logging.yml config
+elasticsearch_log_debug: DEBUG
+elasticsearch_log_warn: WARN
+elasticsearch_log_trace: TRACE
+elasticsearch_log_info: INFO
+
+elasticsearch_logger_level: "{{ elasticsearch_log_info }}"
+elasticsearch_logger_action: "{{ elasticsearch_log_warn }}"
+elasticsearch_logger_aws: "{{ elasticsearch_log_info }}"
+
+elasticsearch_logger_search: "{{ elasticsearch_log_trace }}"
+elasticsearch_logger_indexing: "{{ elasticsearch_log_trace }}"
+elasticsearch_additivity_search: "false"
+elasticsearch_additivity_indexing: "false"
 
 repository_infrastructure: "https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/{{ elasticsearch_version }}"

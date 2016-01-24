@@ -1,4 +1,4 @@
-[program:spark-slave]
+[program:spark-worker]
 command={{ spark_install_dir }}/{{ spark_pkg_name }}/bin/spark-class org.apache.spark.deploy.worker.Worker spark://{{ groups['spark-master-node'][0] }}:{{ spark_master_port }} --work-dir {{ spark_worker_dir }}
 autostart=true
 autorestart=true

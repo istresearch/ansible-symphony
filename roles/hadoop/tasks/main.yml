@@ -11,13 +11,13 @@
     group: "{{ hdfs_group }}"
     createhome: no
   tags:
-    - elasticsearch
+    - hadoop
 
 - name: create hadoop install directory
   file:
     path: "{{ item }}"
     state: directory
-    mode: 0744
+    mode: 0754
     owner: "{{ hdfs_user }}"
     group: "{{ hdfs_group }}"
   with_items:

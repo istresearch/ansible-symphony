@@ -1,0 +1,45 @@
+---
+- name: ensure hdfs directory for hbase root is created
+  shell: "{{ hadoop_install_dir | default('/opt/hadoop') }}/default/bin/hadoop fs -mkdir -p {{ item }}; {{ hadoop_install_dir | default('/opt/hadoop') }}/default/bin/hadoop fs -chown hbase {{ item }}; {{ hadoop_install_dir | default('/opt/hadoop') }}/default/bin/hadoop fs -chmod 1777 {{ item }}"
+  environment:
+    JAVA_HOME: "{{ java_home }}"
+  with_items:
+    - "{{ hbase_root_dir }}"
+  become: yes
+  become_user: "{{ hdfs_user | default('hadoop') }}"
+  tags:
+    - hbase
+    - hbase_master
+
+- name: copy supervisord config
+  template:
+    src: hbase-master-supervisord.conf.j2
+    dest: "{{ supervisord_programs_dir }}/hbase-master-supervisord.conf"
+    mode: 0644
+  notify:
+    - reread supervisord
+    - restart hbase master
+    - wait for hbase master port
+  tags:
+    - hbase
+    - hbase_master
+
+- name: add hbase master to supervisord
+  supervisorctl:
+    name: hbase-master
+    state: present
+  tags: hadoop
+
+- name: ensure hbase-master is started
+  supervisorctl:
+    name: hbase-master
+    state: started
+  notify:
+    - wait for hbase master port
+  tags: hadoop
+
+- name: wait for hbase master port
+  wait_for:
+    port: "{{ hbase_master_info_port }}"
+    host: "{{ inventory_hostname }}"
+  tags: hadoop

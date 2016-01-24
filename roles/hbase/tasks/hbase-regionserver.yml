@@ -1,0 +1,33 @@
+---
+- name: copy supervisord config
+  template:
+    src: hbase-regionserver-supervisord.conf.j2
+    dest: "{{ supervisord_programs_dir }}/hbase-regionserver-supervisord.conf"
+    mode: 0644
+  notify:
+    - reread supervisord
+    - restart hbase regionserver
+    - wait for hbase regionserver port
+  tags:
+    - hbase
+    - hbase_regionserver
+
+- name: add hbase regionserver to supervisord
+  supervisorctl:
+    name: hbase-regionserver
+    state: present
+  tags: hadoop
+
+- name: ensure hbase-regionserver is started
+  supervisorctl:
+    name: hbase-regionserver
+    state: started
+  notify:
+    - wait for hbase regionserver port
+  tags: hadoop
+
+- name: wait for hbase regionserver port
+  wait_for:
+    port: "{{ hbase_regionserver_info_port }}"
+    host: "{{ inventory_hostname }}"
+  tags: hadoop

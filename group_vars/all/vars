@@ -1,6 +1,8 @@
 ---
 # file: group_vars/all
 
+apache_mirror: http://apache.arvixe.com
+
 slackbot: "{{ vault_slackbot }}"
 repository_un: "{{ vault_repository_un }}"
 repository_pwd: "{{ vault_repository_pwd }}"

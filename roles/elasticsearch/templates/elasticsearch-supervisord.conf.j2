@@ -1,7 +1,9 @@
-[program:elasticsearch]
-command={{ elasticsearch_install_dir }}/elasticsearch-{{ elasticsearch_version}}/bin/elasticsearch
+[program:elasticsearch-{{ conf_name }}]
+command={{ elasticsearch_install_dir }}/elasticsearch-{{ elasticsearch_version}}/bin/elasticsearch --Xmx {{ elasticsearch_heap_size }} --Xms {{ elasticsearch_heap_size }} --path.conf={{ elasticsearch_conf_dir }}_{{ conf_name }}
 autostart=true
 autorestart=true
 user={{ elasticsearch_user }}
 startsecs=10
 startretries=3
+startsecs={{ elasticsearch_start_secs }}
+startretries={{ elasticsearch_start_retries }}

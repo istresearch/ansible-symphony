@@ -1,0 +1,41 @@
+---
+#Required...
+#dfs_namenode_host:
+#zookeeper_group:
+#hbase_master_host:
+
+# Defaults...
+hbase_version: 1.1.2
+hbase_install_dir: /opt/hbase
+hbase_exe_dir: "JAVA_HOME={{ java_home }} {{ hbase_install_dir }}/default/bin"
+hbase_conf_dir: "{{ hbase_install_dir }}/default/conf"
+hbase_user: hbase
+hbase_group: hbase
+hbase_start_secs: 10
+hbase_start_retries: 3
+hbase_stdout_logfile_maxbytes: 50MB
+hbase_stderr_logfile_maxbytes: 50MB
+
+# runtime opts
+hbase_heap_size: 1000
+hbase_opts: -XX:+UseConcMarkSweepGC
+
+hbase_master_enabled: false
+hbase_regionserver_enabled: false
+hbase_rest_enabled: false
+
+hbase_cluster_name: hbasecluster
+hbase_env_vars: 'CLASSPATH="{{ hbase_install_dir }}/default/conf:/usr/lib/tools.jar:{{ hbase_install_dir }}/default:{{ hbase_install_dir }}/default/lib/*", JAVA_HOME="{{ java_home }}", LD_LIBRARY_PATH={{ hdfs_install_dir|default("/opt/hadoop") }}/default/lib/native'
+
+hbase_root_dir: /hbase
+hbase_tmp_dir: /data/hbase
+
+hbase_master_port: 60000
+hbase_master_info_port: 60010
+hbase_regionserver_port: 60020
+hbase_regionserver_info_port: 60030
+hbase_rest_port: 60050
+hbase_rest_info_port: 8086
+hbase_jmx_remote_port: 10102
+
+repository_infrastructure: "{{ apache_mirror }}/hbase/stable/"

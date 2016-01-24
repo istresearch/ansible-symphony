@@ -1,8 +1,8 @@
 ---
 - name: restart spark master
-  service:
-    name=spark-master
-    state=restarted
+  supervisorctl:
+    name: spark-master
+    state: restarted
   when: spark_master_enabled
 
 - name: wait for spark master port
@@ -12,9 +12,9 @@
   when: spark_master_enabled
 
 - name: restart spark worker
-  service:
-    name=spark-worker
-    state=restarted
+  supervisorctl:
+    name: spark-worker
+    state: restarted
   when: spark_worker_enabled
 
 - name: wait for spark worker port

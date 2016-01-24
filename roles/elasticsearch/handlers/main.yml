@@ -1,5 +1,24 @@
 ---
-- name: restart elasticsearch
+- name: restart elasticsearch master
   supervisorctl:
-    name=elasticsearch
+    name=elasticsearch-master
     state=restarted
+  when: elasticsearch_is_master
+
+- name: restart elasticsearch data
+  supervisorctl:
+    name=elasticsearch-data
+    state=restarted
+  when: elasticsearch_is_data
+
+- name: restart elasticsearch client
+  supervisorctl:
+    name=elasticsearch-client
+    state=restarted
+  when: elasticsearch_is_client
+
+- name: restart elasticsearch master_data
+  supervisorctl:
+    name=elasticsearch-master_data
+    state=restarted
+  when: (elasticsearch_is_data=="true" and elasticsearch_is_master=="true")

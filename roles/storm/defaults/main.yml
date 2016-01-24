@@ -37,4 +37,4 @@ storm_zookeeper_extra_config:
     storm.zookeeper.root: "/storm"
     storm.zookeeper.session.timeout: 3000
 
-repository_infrastructure: "http://ftp.wayne.edu/apache/storm/apache-storm-{{ storm_version }}"
+repository_infrastructure: "{{ apache_mirror }}/storm/apache-storm-{{ storm_version }}"

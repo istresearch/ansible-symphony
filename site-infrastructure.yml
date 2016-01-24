@@ -22,7 +22,13 @@
   vars:
    - zookeeper_host_list: "{{ groups['zookeeper-nodes'] }}"
   roles: [ zookeeper ]
-  tags: site-zookeeper
+  tags:
+    - site-zookeeper
+    - site-kafka
+    - site-storm
+    - site-hadoop
+    - site-hbase
+    - site-spark
 
 - name: Run kafka role
   hosts: kafka-nodes
@@ -30,13 +36,35 @@
    - kafka_host_list: "{{ groups['kafka-nodes'] }}"
    - zookeeper_host_list: "{{ groups['zookeeper-nodes'] }}"
   roles: [ kafka ]
-  tags: site-kafka
+  tags:
+    - site-kafka
 
 # ------------------------------ ELK stack ------------------------------------
-- name: Run elasticsearch role
-  hosts: elasticsearch-nodes
+- name: Run elasticsearch master role
+  hosts: elasticsearch-master-nodes
   vars:
    - elasticsearch_host_list: "{{ groups['elasticsearch-nodes'] }}"
+   - elasticsearch_is_master: "true"
+  roles: [ elasticsearch ]
+  tags:
+    - site-elasticsearch
+    - ELK
+
+- name: Run elasticsearch data role
+  hosts: elasticsearch-data-nodes
+  vars:
+   - elasticsearch_host_list: "{{ groups['elasticsearch-nodes'] }}"
+   - elasticsearch_is_data: "true"
+  roles: [ elasticsearch ]
+  tags:
+    - site-elasticsearch
+    - ELK
+
+- name: Run elasticsearch client role
+  hosts: elasticsearch-client-nodes
+  vars:
+   - elasticsearch_host_list: "{{ groups['elasticsearch-nodes'] }}"
+   - elasticsearch_is_client: "true"
   roles: [ elasticsearch ]
   tags:
     - site-elasticsearch
@@ -60,12 +88,16 @@
 - name: Run redis role
   hosts: redis-nodes
   roles: [ redis ]
-  tags: site-redis
+  tags:
+    - site-redis
+    - scrapy-services
 
 - name: Run tor role
   hosts: tor-proxy
   roles: [ tor ]
-  tags: site-tor
+  tags:
+    - site-tor
+    - scrapy-services
 
 # --------------------------- Scrapy Cluster ---------------------------------
 - name: Run scrapy-crawler role (infrastructure)
@@ -138,7 +170,10 @@
     - yarn_resourcemanager_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
     - yarn_historyserver_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
   roles: [ hadoop ]
-  tags: site-hadoop
+  tags:
+    - site-hadoop
+    - site-hbase
+    - site-spark
 
 - name: HDFS Datanodes
   hosts: hadoop-datanode-nodes
@@ -149,7 +184,10 @@
     - yarn_resourcemanager_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
     - yarn_historyserver_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
   roles: [ hadoop ]
-  tags: site-hadoop
+  tags:
+    - site-hadoop
+    - site-hbase
+    - site-spark
 
 - name: HDFS Secondary Namenode
   hosts: hadoop-secondary-namenode-node
@@ -159,30 +197,55 @@
     - yarn_resourcemanager_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
     - yarn_historyserver_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
   roles: [ hadoop ]
-  tags: site-hadoop
+  tags:
+    - site-hadoop
+    - site-hbase
+    - site-spark
+
+# --------------------------------- HBase ------------------------------------
+- name: HBase Master Node
+  hosts: hbase-master-node
+  vars:
+    - hbase_master_enabled: true
+    - hbase_rest_enabled: true
+    - hbase_master_host: "{{ groups['hbase-master-node'][0] }}"
+    - dfs_namenode_host: "{{ groups['hadoop-namenode-node'][0] }}"
+    - zookeeper_host_list: "{{ groups['zookeeper-nodes'] }}"
+  roles: [ hbase ]
+  tags: site-hbase
+
+- name: HBase Region Servers
+  hosts: hbase-regionserver-nodes
+  vars:
+    - hbase_regionserver_enabled: true
+    - hbase_master_host: "{{ groups['hbase-master-node'][0] }}"
+    - dfs_namenode_host: "{{ groups['hadoop-namenode-node'][0] }}"
+    - zookeeper_host_list: "{{ groups['zookeeper-nodes'] }}"
+  roles: [ hbase ]
+  tags: site-hbase
 
 # --------------------------------- Spark ------------------------------------
 # Requires Hadoop and HDFS
 
-# - name: Spark Master Nodes
-#   hosts: spark-master-node
-#   vars:
-#     - spark_master_enabled: true
-#     - spark_worker_enabled: false
-#     - dfs_namenode_host: "{{ groups['hadoop-namenode-node'][0] }}"
-#     - yarn_historyserver_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
-#   roles: [ spark ]
-#   tags: site-spark
+- name: Spark Master Nodes
+  hosts: spark-master-node
+  vars:
+    - spark_master_enabled: true
+    - spark_worker_enabled: false
+    - dfs_namenode_host: "{{ groups['hadoop-namenode-node'][0] }}"
+    - yarn_historyserver_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
+  roles: [ spark ]
+  tags: site-spark
 
-# - name: Spark Workers
-#   hosts: spark-worker-nodes
-#   vars:
-#     - spark_master_enabled: false
-#     - spark_worker_enabled: true
-#     - dfs_namenode_host: "{{ groups['hadoop-namenode-node'][0] }}"
-#     - yarn_historyserver_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
-#   roles: [ spark ]
-#   tags: site-spark
+- name: Spark Workers
+  hosts: spark-worker-nodes
+  vars:
+    - spark_master_enabled: false
+    - spark_worker_enabled: true
+    - dfs_namenode_host: "{{ groups['hadoop-namenode-node'][0] }}"
+    - yarn_historyserver_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
+  roles: [ spark ]
+  tags: site-spark
 
 
 

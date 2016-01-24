@@ -4,22 +4,27 @@
 #   - You can enter hostnames or ip addresses
 #   - A hostname/ip can be a member of multiple groups
 
+# ----------------------------
+# This inventory file is for Travis CI testing only. Please
+# do not alter this file unless making updates to the Travis
+# build process.
+# ----------------------------
 
 [all:vars]
-repository_host=repo.istresearch.com
+repository_host=default
 
 #
 # Infrastructure and software topology
 #
 
 [zookeeper-nodes]
-vagrant-as-01
+localhost
 
 [kafka-nodes]
-vagrant-as-01
+localhost
 
 [redis-master-node]
-vagrant-as-01
+localhost
 
 [redis-slave-nodes]
 #leave empty
@@ -33,14 +38,13 @@ redis-slave-nodes
 redis-sentinel-nodes
 
 [hadoop-namenode-node]
-vagrant-as-01
+localhost
 
 [hadoop-secondary-namenode-node]
-vagrant-as-02
+localhost
 
 [hadoop-datanode-nodes]
-vagrant-as-01
-vagrant-as-02
+localhost
 
 [hadoop-nodes:children]
 hadoop-namenode-node
@@ -48,94 +52,90 @@ hadoop-secondary-namenode-node
 hadoop-datanode-nodes
 
 [hbase-master-node]
-vagrant-as-01
+localhost
 
 [hbase-regionserver-nodes]
-vagrant-as-01
-vagrant-as-02
+localhost
 
 [hbase-nodes:children]
 hbase-master-node
 hbase-regionserver-nodes
 
 [spark-master-node]
-vagrant-as-01
+localhost
 
 [spark-worker-nodes]
-vagrant-as-01
+localhost
 
 [spark-nodes:children]
 spark-master-node
 spark-worker-nodes
 
 [storm-nimbus-node]
-vagrant-as-01
+localhost
 
 [storm-ui-node]
-vagrant-as-01
+localhost
 
 [storm-supervisor-nodes]
-vagrant-as-01
+localhost
 
 [storm-nodes:children]
 storm-nimbus-node
 storm-ui-node
 storm-supervisor-nodes
 
-[elasticsearch-master-data-nodes]
-
-
 [elasticsearch-master-nodes]
-# data node serves as master also
+localhost elasticsearch_is_data="true"
 
 [elasticsearch-data-nodes]
-vagrant-as-01 elasticsearch_is_master=true
 
 [elasticsearch-client-nodes]
-vagrant-as-02
 
 [elasticsearch-nodes:children]
 elasticsearch-master-nodes
 elasticsearch-data-nodes
 elasticsearch-client-nodes
 
+[logstash-nodes]
+localhost
+
 [kibana-node]
-vagrant-as-01
+localhost
 
 [tor-proxy]
-vagrant-as-01
+localhost
 
 [scrapy-kafka-monitor-node]
-vagrant-as-01
+localhost
 
 [scrapy-redis-monitor-node]
-vagrant-as-01
+localhost
 
 #
 # Applications topology
 #
 
 [scrapy-crawler-nodes]
-vagrant-as-02
+localhost
 
 [scrapy-indexer-nodes]
-vagrant-as-02
+localhost
 
 [gnip-monitor-node]
-vagrant-as-02
+localhost
 
 [gdelt-monitor-node]
-vagrant-as-02
+localhost
 
 [elastalert-nodes]
-vagrant-as-01
+localhost
 
 [traptor-follow-nodes]
-vagrant-as-02
+localhost
 
 [traptor-track-nodes]
 
 [traptor-nodes:children]
 traptor-follow-nodes
 traptor-track-nodes
-

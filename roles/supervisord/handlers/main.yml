@@ -1,3 +1,5 @@
 ---
   - name: reread supervisord
     shell: supervisorctl reread && supervisorctl update
+    become: yes
+    become_user: root
