@@ -16,11 +16,12 @@ repository_host=repo.istresearch.com
 zookeeper-nodes
 kafka-nodes
 hadoop-nodes
+hbase-nodes
 spark-nodes
 storm-nodes
 elasticsearch-nodes
 
-[aws:childen]
+[aws:children]
 redis-nodes
 scrapy-cluster
 kibana-node
@@ -28,18 +29,21 @@ gnip-monitor-node
 gdelt-monitor-node
 traptor-nodes
 elastalert-nodes
-tor-node
+tor-proxy
+
+# Replacement1 - 74.201.215.29
+# Replacement2 - 74.201.215.30
+# Replacement3 - 63.251.114.50
+# Replacement4 - 63.251.114.51
 
 
 [zookeeper-nodes]
-memex-zookeeper01.istresearch.com
-memex-zookeeper02.istresearch.com
-memex-zookeeper03.istresearch.com
+74.201.215.29
+74.201.215.30
+63.251.114.50
 
 [kafka-nodes]
-memex-kafka01.istresearch.com
-memex-kafka02.istresearch.com
-memex-kafka03.istresearch.com
+63.251.114.51
 
 [redis-master-node]
 memex-services.istresearch.com
@@ -56,49 +60,78 @@ redis-slave-nodes
 redis-sentinel-nodes
 
 [hadoop-namenode-node]
+74.201.215.29
+
+[hadoop-secondary-namenode-node]
+
 
 [hadoop-datanode-nodes]
+74.201.215.30
+63.251.114.50
+63.251.114.51
 
 [hadoop-nodes:children]
 hadoop-namenode-node
 hadoop-datanode-nodes
 
-[hbase-master-node:children]
+[hbase-master-node]
+74.201.215.29
 
-[hbase-regionserver-nodes:children]
+[hbase-regionserver-nodes]
+74.201.215.30
+63.251.114.50
+63.251.114.51
 
 [hbase-nodes:children]
 hbase-master-node
 hbase-regionserver-nodes
 
 [spark-master-node]
+74.201.215.29
 
 [spark-worker-nodes]
+74.201.215.30
+63.251.114.50
+63.251.114.51
 
 [spark-nodes:children]
 spark-master-node
 spark-worker-nodes
 
 [storm-nimbus-node]
-in-namenode02.nj.istresearch.com
+74.201.215.29
 
 [storm-ui-node]
-in-namenode02.nj.istresearch.com
+74.201.215.29
 
 [storm-supervisor-nodes]
-in-slave01.nj.istresearch.com
-in-slave02.nj.istresearch.com
-in-slave03.nj.istresearch.com
-in-slave04.nj.istresearch.com
-in-slave05.nj.istresearch.com
-in-slave06.nj.istresearch.com
-in-slave07.nj.istresearch.com
-in-slave08.nj.istresearch.com
+74.201.215.30
+63.251.114.50
+63.251.114.51
 
 [storm-nodes:children]
 storm-nimbus-node
 storm-ui-node
 storm-supervisor-nodes
+
+[elasticsearch-master-data-nodes]
+
+
+[elasticsearch-master-nodes]
+74.201.215.29
+
+[elasticsearch-data-nodes]
+74.201.215.30
+63.251.114.50
+63.251.114.51
+
+[elasticsearch-client-nodes]
+74.201.215.29
+
+[elasticsearch-nodes:children]
+elasticsearch-master-nodes
+elasticsearch-data-nodes
+elasticsearch-client-nodes
 
 [scrapy-kafka-monitor-node]
 memex-services.istresearch.com
@@ -122,14 +155,11 @@ memex-crawler04.istresearch.com
 memex-crawler05.istresearch.com
 memex-crawler06.istresearch.com
 
-[scrapy-cluster:childen]
+[scrapy-cluster:children]
 scrapy-kafka-monitor-node
 scrapy-redis-monitor-node
 scrapy-crawler-nodes
 scrapy-indexer-nodes
-
-[elasticsearch-nodes]
-in-namenode02.nj.istresearch.com
 
 [kibana-node]
 memex-hclient.istresearch.com
