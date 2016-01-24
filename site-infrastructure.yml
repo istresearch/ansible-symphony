@@ -12,7 +12,7 @@
   roles:
     - common
     # - extras
-    # - add-users
+    - add-users
   tags: site-common
   strategy: free
 
