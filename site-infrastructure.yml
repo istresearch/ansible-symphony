@@ -14,7 +14,7 @@
     # - extras
     - add-users
   tags: site-common
-  strategy: free
+  # strategy: free
 
 # -------------------------- Zookeeper and Kafka -----------------------------
 - name: Run zookeeper role

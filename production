@@ -38,12 +38,12 @@ tor-proxy
 
 
 [zookeeper-nodes]
-74.201.215.29
-74.201.215.30
-63.251.114.50
+replacement1.nj.istresearch.com
+replacement2.nj.istresearch.com
+replacement3.nj.istresearch.com
 
 [kafka-nodes]
-63.251.114.51
+replacement4.nj.istresearch.com
 
 [redis-master-node]
 memex-services.istresearch.com
@@ -60,54 +60,54 @@ redis-slave-nodes
 redis-sentinel-nodes
 
 [hadoop-namenode-node]
-74.201.215.29
+replacement1.nj.istresearch.com
 
 [hadoop-secondary-namenode-node]
 
 
 [hadoop-datanode-nodes]
-74.201.215.30
-63.251.114.50
-63.251.114.51
+replacement2.nj.istresearch.com
+replacement3.nj.istresearch.com
+replacement4.nj.istresearch.com
 
 [hadoop-nodes:children]
 hadoop-namenode-node
 hadoop-datanode-nodes
 
 [hbase-master-node]
-74.201.215.29
+replacement1.nj.istresearch.com
 
 [hbase-regionserver-nodes]
-74.201.215.30
-63.251.114.50
-63.251.114.51
+replacement2.nj.istresearch.com
+replacement3.nj.istresearch.com
+replacement4.nj.istresearch.com
 
 [hbase-nodes:children]
 hbase-master-node
 hbase-regionserver-nodes
 
 [spark-master-node]
-74.201.215.29
+replacement1.nj.istresearch.com
 
 [spark-worker-nodes]
-74.201.215.30
-63.251.114.50
-63.251.114.51
+replacement2.nj.istresearch.com
+replacement3.nj.istresearch.com
+replacement4.nj.istresearch.com
 
 [spark-nodes:children]
 spark-master-node
 spark-worker-nodes
 
 [storm-nimbus-node]
-74.201.215.29
+replacement1.nj.istresearch.com
 
 [storm-ui-node]
-74.201.215.29
+replacement1.nj.istresearch.com
 
 [storm-supervisor-nodes]
-74.201.215.30
-63.251.114.50
-63.251.114.51
+replacement2.nj.istresearch.com
+replacement3.nj.istresearch.com
+replacement4.nj.istresearch.com
 
 [storm-nodes:children]
 storm-nimbus-node
@@ -118,15 +118,14 @@ storm-supervisor-nodes
 
 
 [elasticsearch-master-nodes]
-74.201.215.29
 
 [elasticsearch-data-nodes]
-74.201.215.30
-63.251.114.50
-63.251.114.51
+replacement2.nj.istresearch.com elasticsearch_is_master=true
+replacement3.nj.istresearch.com elasticsearch_is_master=true
+replacement4.nj.istresearch.com
 
 [elasticsearch-client-nodes]
-74.201.215.29
+replacement1.nj.istresearch.com
 
 [elasticsearch-nodes:children]
 elasticsearch-master-nodes

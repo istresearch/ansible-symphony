@@ -9,3 +9,9 @@ repository_host=default
 
 [servers]
 #127.0.0.1 host_alias=localhost
+
+# Replacement Internap Servers
+74.201.215.29 host_alias=replacement1.nj.istresearch.com
+74.201.215.30 host_alias=replacement2.nj.istresearch.com
+63.251.114.50 host_alias=replacement3.nj.istresearch.com
+63.251.114.51 host_alias=replacement4.nj.istresearch.com
