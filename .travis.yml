@@ -1,5 +1,8 @@
 sudo: required
 dist: trusty
+addons:
+  hosts:
+    - travis-trusty
 language: python
 python: '2.7'
 before_install:
@@ -15,6 +18,7 @@ env:
 - TAGS='scrapy-cluster'
 - TAGS='site-storm'
 - TAGS='site-hadoop'
+- TAGS='site-hbase'
 matrix:
   fast_finish: true
 script:

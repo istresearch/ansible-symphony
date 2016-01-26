@@ -82,9 +82,6 @@ storm-nimbus-node
 storm-ui-node
 storm-supervisor-nodes
 
-[elasticsearch-master-data-nodes]
-
-
 [elasticsearch-master-nodes]
 # data node serves as master also
 

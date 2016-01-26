@@ -18,13 +18,13 @@ repository_host=default
 #
 
 [zookeeper-nodes]
-localhost
+travis-trusty
 
 [kafka-nodes]
-localhost
+travis-trusty
 
 [redis-master-node]
-localhost
+travis-trusty
 
 [redis-slave-nodes]
 #leave empty
@@ -38,13 +38,13 @@ redis-slave-nodes
 redis-sentinel-nodes
 
 [hadoop-namenode-node]
-localhost
+travis-trusty
 
 [hadoop-secondary-namenode-node]
-localhost
+# Cannot test this on a single VM
 
 [hadoop-datanode-nodes]
-localhost
+travis-trusty
 
 [hadoop-nodes:children]
 hadoop-namenode-node
@@ -52,33 +52,33 @@ hadoop-secondary-namenode-node
 hadoop-datanode-nodes
 
 [hbase-master-node]
-localhost
+travis-trusty
 
 [hbase-regionserver-nodes]
-localhost
+travis-trusty
 
 [hbase-nodes:children]
 hbase-master-node
 hbase-regionserver-nodes
 
 [spark-master-node]
-localhost
+travis-trusty
 
 [spark-worker-nodes]
-localhost
+travis-trusty
 
 [spark-nodes:children]
 spark-master-node
 spark-worker-nodes
 
 [storm-nimbus-node]
-localhost
+travis-trusty
 
 [storm-ui-node]
-localhost
+travis-trusty
 
 [storm-supervisor-nodes]
-localhost
+travis-trusty
 
 [storm-nodes:children]
 storm-nimbus-node
@@ -86,7 +86,7 @@ storm-ui-node
 storm-supervisor-nodes
 
 [elasticsearch-master-nodes]
-localhost elasticsearch_is_data="true"
+travis-trusty elasticsearch_is_data="true"
 
 [elasticsearch-data-nodes]
 
@@ -98,41 +98,41 @@ elasticsearch-data-nodes
 elasticsearch-client-nodes
 
 [logstash-nodes]
-localhost
+travis-trusty
 
 [kibana-node]
-localhost
+travis-trusty
 
 [tor-proxy]
-localhost
+travis-trusty
 
 [scrapy-kafka-monitor-node]
-localhost
+travis-trusty
 
 [scrapy-redis-monitor-node]
-localhost
+travis-trusty
 
 #
 # Applications topology
 #
 
 [scrapy-crawler-nodes]
-localhost
+travis-trusty
 
 [scrapy-indexer-nodes]
-localhost
+travis-trusty
 
 [gnip-monitor-node]
-localhost
+travis-trusty
 
 [gdelt-monitor-node]
-localhost
+travis-trusty
 
 [elastalert-nodes]
-localhost
+travis-trusty
 
 [traptor-follow-nodes]
-localhost
+travis-trusty
 
 [traptor-track-nodes]
 
