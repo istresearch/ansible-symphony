@@ -41,7 +41,7 @@ redis-sentinel-nodes
 travis-trusty
 
 [hadoop-secondary-namenode-node]
-travis-trusty
+# Cannot test this on a single VM
 
 [hadoop-datanode-nodes]
 travis-trusty
