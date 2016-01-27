@@ -15,3 +15,11 @@
    - zip
    - unzip
   tags: common
+
+- name: remove hostname loopback
+  lineinfile:
+    dest=/etc/hosts
+    regexp="^127\.0\.1\.1\s+{{ inventory_hostname }}.*$"
+    state=absent
+  tags: common
+  when: remove_hostname_loopback

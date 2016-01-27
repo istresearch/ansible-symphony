@@ -1,16 +1,15 @@
 sudo: required
 dist: trusty
-
+addons:
+  hosts:
+    - travis-trusty
 language: python
-python: "2.7"
-
+python: '2.7'
 before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -qq python-apt
-
 install:
   - pip install ansible
-
 env:
   - TAGS='site-common'
   - TAGS='site-zookeeper'
@@ -19,13 +18,22 @@ env:
   - TAGS='scrapy-cluster'
   - TAGS='site-storm'
   - TAGS='site-hadoop'
+  # Hbase and Spark not working with Travis VM
+  # See https://github.com/istresearch/ansible-symphony/issues/1
   # - TAGS='site-hbase'
   # - TAGS='site-spark'
   - TAGS='site-docker-engine'
 
 matrix:
   fast_finish: true
-
 script:
   - ansible-playbook -i testing site-infrastructure.yml --tags $TAGS --syntax-check
   - ansible-playbook -i testing site-infrastructure.yml --tags $TAGS --connection=local --become
+
+notifications:
+  slack:
+    rooms:
+      - secure: FCOSGS93r8Zkbn/lIEleYE74xcGRXGPPujiAmheCdNlBO/QRzt64vL824rT0x3yauTgZfDOLt8sWvW7+h2MTp7LLlSY+ANArimsBnw4Bo2otwgrSxGa0fBIfsyXAEjFPwaPa81kQqzlN5hVHSSI3H9w5y75SKqqvPuIO72zSGqAvnp+NLpBJeRjmIcDOQIpm6FNCgCEWfI092NPkY1usYvBVaDNKP22tAVVESFb+q3gs/Mx3DOFFWtmodAzIs1ScB1oa6XnO0anfVlXJN1+NpQljfXj+Bz1xOe0xZUc/KVRjRpaE4EaStoayFEkhNA/4pv5JVROklJRXbCXS6cn69V3Vt2n1eI6yj/oOyk22PshLplvPEvYRqqaBsFWiLMSQsWVBKy4EejBRBgjquHDKJjbS6FwjELpj3pO0iexVEzm+PSlMeEKKS+rn257rpLuQTrS62gX5KRM5m9Zl89sqbQ+GMDFmd5e6ifoQBYkYCTSmN+146kou7HU17sARwtgecP9x8NYWFK52rLZBMt2WblYoQCQhZCaV0aB2xfkiQtlvTdbF8nbAFevHEk/Ow4Oal1l+Dg9dWxtMEk1W/OF9oznADEYj0T7SyRGHfw2h6GRCy2oK/DOxso9spNMy+lZO2bAT0WgYwg//+buURc+S1oM+QLJaTaUOgoQw/hR6U5o=
+    on_success: always
+    on_failure: always
+    on_start: always
