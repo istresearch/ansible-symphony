@@ -1,4 +1,7 @@
 ---
+- include_vars: private_roles/scrapy-crawler-app/defaults/main.yml
+  tags: crawling
+
 - name: yum install prereqs for pillow
   yum: name={{ item }} state=installed
   with_items:
