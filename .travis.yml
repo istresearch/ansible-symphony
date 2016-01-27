@@ -21,6 +21,7 @@ env:
   - TAGS='site-hadoop'
   # - TAGS='site-hbase'
   # - TAGS='site-spark'
+  - TAGS='site-docker-engine'
 
 matrix:
   fast_finish: true

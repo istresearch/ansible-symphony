@@ -247,5 +247,9 @@
   roles: [ spark ]
   tags: site-spark
 
+# ---------------------------------- Docker Engine ---------------------------
 
-
+- name: Docker Engine
+  hosts: docker-engine
+  roles: [ docker-engine ]
+  tags: site-docker-engine

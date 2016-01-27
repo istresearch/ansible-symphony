@@ -139,3 +139,6 @@ localhost
 [traptor-nodes:children]
 traptor-follow-nodes
 traptor-track-nodes
+
+[docker-engine]
+localhost

@@ -139,3 +139,7 @@ vagrant-as-02
 traptor-follow-nodes
 traptor-track-nodes
 
+[docker-engine]
+vagrant-as-01
+
+

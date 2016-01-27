@@ -1,0 +1,9 @@
+[program:docker-engine]
+command={{ docker_pidproxy_install_dir }}/pidproxy.py --daemon {{ docker_pid_file }} /usr/bin/docker daemon -p {{ docker_pid_file }}
+autostart=true
+autorestart=true
+startsecs=10
+startretries=3
+startsecs={{ docker_start_secs }}
+startretries={{ docker_start_retries }}
+stopsignal={{ docker_stop_signal }}
