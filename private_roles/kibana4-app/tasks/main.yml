@@ -1,5 +1,5 @@
 ---
-- include_vars: roles/scrapy-crawler-app/defaults/main.yml
+- include_vars: private_roles/scrapy-crawler-app/defaults/main.yml
   tags: kibana4-app
 
 - name: Copy over Kibana4 backup folder
