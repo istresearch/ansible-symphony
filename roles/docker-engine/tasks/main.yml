@@ -1,0 +1,96 @@
+---
+- name: Configuring group
+  group:
+    name: "{{ docker_group }}"
+
+- name: Configuring user
+  user:
+    name: "{{ docker_user }}"
+    group: "{{ docker_user }}"
+    createhome: no
+
+- name: Add Docker repository key
+  apt_key:
+    id: "{{ docker_apt_key_sig }}"
+    url: "{{ docker_apt_key_url }}"
+    state: present
+  register: add_repository_key
+  ignore_errors: true
+
+- name: Alternative | Add Docker repository key
+  shell: curl -sSL https://get.docker.com/gpg | sudo apt-key add -
+  when: add_repository_key|failed
+
+- name: Add Docker repository and update apt cache
+  apt_repository:
+    repo: "{{ docker_apt_repository }}"
+    update_cache: yes
+    state: present
+
+- name: Install latest kernel
+  apt:
+    pkg: "{{ item }}"
+    state: "{{ docker_kernel_pkg_state }}"
+    update_cache: yes
+    cache_valid_time: 600
+  with_items:
+    - "linux-image-extra-{{ ansible_kernel }}"
+    - linux-image-extra-virtual
+
+- name: Install (or update) docker package
+  apt:
+    name: "{{ docker_pkg_name }}"
+    state: "{{ 'latest' if docker_update_package else 'present' }}"
+    update_cache: yes
+    cache_valid_time: "{{ docker_apt_cache_valid_time }}"
+  notify:
+    - restart docker-engine
+
+- name: Set docker daemon options
+  copy:
+    content: "DOCKER_OPTS=\"{{ docker_opts.rstrip('\n') }}\""
+    dest: /etc/default/docker
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart docker-engine
+  when: docker_opts != ""
+
+- name: create pidproxy folder
+  file:
+    path: "{{ docker_pidproxy_install_dir }}/"
+    state: directory
+    mode: 0744
+    owner: "{{ docker_user }}"
+    group: "{{ docker_group }}"
+
+- name: copy over new pidproxy.py file
+  copy:
+    src: pidproxy.py
+    dest: "{{ docker_pidproxy_install_dir }}"
+    owner: "{{ docker_user }}"
+    group: "{{ docker_group }}"
+    mode: 0755
+
+- name: Install docker-py and docker-compose
+  pip:
+    name: "{{ item.name }}"
+    state: latest
+  with_items:
+    - { name: docker-py, version: "{{ docker_py_version }}" }
+    - { name: docker-compose, version: "{{ docker_compose_version }}" }
+
+- name: Check if /etc/updatedb.conf exists
+  stat:
+    path: /etc/updatedb.conf
+  register: updatedb_conf_exists
+
+- name: copy supervisord config
+  template:
+    src: docker-supervisord.conf.j2
+    dest: "{{ supervisord_programs_dir }}/docker-supervisord.conf"
+    mode: 0644
+  notify:
+    - reread supervisord
+    - restart docker-engine
