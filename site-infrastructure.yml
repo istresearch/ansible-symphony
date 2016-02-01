@@ -1,20 +1,18 @@
 ---
 # ------------------------------ Common roles -------------------------------
 
-- hosts: all
-  tasks:
-    - name: Group Debian hosts
-      group_by: key=all_{{ ansible_os_family }}
-  tags: group
-
 - name: Run common role
   hosts: all
   roles:
     - common
-    # - extras
-    - add-users
   tags: site-common
-  # strategy: free
+
+# ----------------------------- Add users -----------------------------------
+
+- hosts: all
+  roles:
+    - add-users
+  tags: site-add-users
 
 # -------------------------- Zookeeper and Kafka -----------------------------
 - name: Run zookeeper role
