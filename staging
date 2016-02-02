@@ -137,6 +137,7 @@ traptor-follow-nodes
 traptor-track-nodes
 
 [docker-engine]
-vagrant-as-01
+vagrant-ist-01
 
-
+[googler-nodes]
+vagrant-ist-02

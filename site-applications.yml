@@ -78,3 +78,9 @@
     - include: roles/logstash/handlers/main.yml
   roles: [ scrapy-redis-monitor-app ]
   tags: site-scrapy-redis-app
+
+# --------------------------------- Googler -----------------------------------
+- name: Run the Googler role
+  hosts: googler-nodes
+  roles: [ googler ]
+  tags: site-googler
