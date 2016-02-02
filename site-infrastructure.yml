@@ -11,8 +11,6 @@
   hosts: all
   roles:
     - common
-    # - extras
-    # - add-users
   tags: site-common
   strategy: free
 
