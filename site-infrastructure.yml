@@ -22,11 +22,11 @@
   roles: [ zookeeper ]
   tags:
     - site-zookeeper
-    - site-kafka
-    - site-storm
-    - site-hadoop
-    - site-hbase
-    - site-spark
+    - deps-kafka
+    - deps-storm
+    - deps-hadoop
+    - deps-hbase
+    - deps-spark
 
 - name: Run kafka role
   hosts: kafka-nodes
@@ -36,6 +36,7 @@
   roles: [ kafka ]
   tags:
     - site-kafka
+    - deps-kafka
 
 # ------------------------------ ELK stack ------------------------------------
 - name: Run elasticsearch master role
@@ -135,7 +136,9 @@
     - nimbus_host: "{{ groups['storm-nimbus-node'][0] }}"
     - zookeeper_host_list: "{{ groups['zookeeper-nodes'] }}"
   roles: [ storm ]
-  tags: site-storm
+  tags:
+    - site-storm
+    - deps-storm
 
 - name: Run Storm UI role
   hosts: storm-ui-node
@@ -144,7 +147,9 @@
     - nimbus_host: "{{ groups['storm-nimbus-node'][0] }}"
     - zookeeper_host_list: "{{ groups['zookeeper-nodes'] }}"
   roles: [ storm ]
-  tags: site-storm
+  tags: 
+    - site-storm
+    - deps-storm
 
 - name: Run Storm supervisor role
   hosts: storm-supervisor-nodes
@@ -154,7 +159,9 @@
     - nimbus_host: "{{ groups['storm-nimbus-node'][0] }}"
     - zookeeper_host_list: "{{ groups['zookeeper-nodes'] }}"
   roles: [ storm ]
-  tags: site-storm
+  tags:
+    - site-storm
+    - deps-storm
 
 # --------------------------------- Hadoop -----------------------------------
 - name: HDFS Namenode
@@ -170,8 +177,9 @@
   roles: [ hadoop ]
   tags:
     - site-hadoop
-    - site-hbase
-    - site-spark
+    - deps-hadoop
+    - deps-hbase
+    - deps-spark
 
 - name: HDFS Datanodes
   hosts: hadoop-datanode-nodes
@@ -184,8 +192,9 @@
   roles: [ hadoop ]
   tags:
     - site-hadoop
-    - site-hbase
-    - site-spark
+    - deps-hadoop
+    - deps-hbase
+    - deps-spark
 
 - name: HDFS Secondary Namenode
   hosts: hadoop-secondary-namenode-node
@@ -197,8 +206,9 @@
   roles: [ hadoop ]
   tags:
     - site-hadoop
-    - site-hbase
-    - site-spark
+    - deps-hadoop
+    - deps-hbase
+    - deps-spark
 
 # --------------------------------- HBase ------------------------------------
 - name: HBase Master Node
@@ -210,7 +220,9 @@
     - dfs_namenode_host: "{{ groups['hadoop-namenode-node'][0] }}"
     - zookeeper_host_list: "{{ groups['zookeeper-nodes'] }}"
   roles: [ hbase ]
-  tags: site-hbase
+  tags:
+    - site-hbase
+    - deps-hbase
 
 - name: HBase Region Servers
   hosts: hbase-regionserver-nodes
@@ -220,7 +232,9 @@
     - dfs_namenode_host: "{{ groups['hadoop-namenode-node'][0] }}"
     - zookeeper_host_list: "{{ groups['zookeeper-nodes'] }}"
   roles: [ hbase ]
-  tags: site-hbase
+  tags:
+    - site-hbase
+    - deps-hbase
 
 # --------------------------------- Spark ------------------------------------
 # Requires Hadoop and HDFS
@@ -233,7 +247,9 @@
     - dfs_namenode_host: "{{ groups['hadoop-namenode-node'][0] }}"
     - yarn_historyserver_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
   roles: [ spark ]
-  tags: site-spark
+  tags:
+    - site-spark
+    - deps-spark
 
 - name: Spark Workers
   hosts: spark-worker-nodes
@@ -243,11 +259,14 @@
     - dfs_namenode_host: "{{ groups['hadoop-namenode-node'][0] }}"
     - yarn_historyserver_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
   roles: [ spark ]
-  tags: site-spark
+  tags:
+    - site-spark
+    - deps-spark
 
 # ---------------------------------- Docker Engine ---------------------------
 
 - name: Docker Engine
   hosts: docker-engine
   roles: [ docker-engine ]
-  tags: site-docker-engine
+  tags:
+    - site-docker-engine
