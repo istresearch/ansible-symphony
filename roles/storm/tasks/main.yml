@@ -92,11 +92,21 @@
     dest="{{ storm_install_dir }}/apache-storm-{{ storm_version }}/conf/storm.yaml"
     owner={{ storm_user }}
     group={{ storm_group }}
-    mode=644
+    mode=644    
+  register: storm_config
+  tags: storm
+  
+- name: restart storm to apply configuration changes
+  set_fact: storm_config_changed={{ storm_config.changed or (storm_config_changed is defined and storm_config_changed) }}
   notify:
     - restart storm nimbus
+    - wait for nimbus port
     - restart storm supervisor
     - restart storm ui
+    - wait for ui port
+    - restart storm logviewer
+    - wait for logviewer port
+  changed_when: storm_config_changed
   tags: storm
 
 - name: set storm file permissions

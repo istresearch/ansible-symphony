@@ -163,6 +163,14 @@
     - site-storm
     - deps-storm
 
+- name: Storm Configuration Changed Fact Reset
+  hosts: storm-nodes
+  tasks:
+    - set_fact: storm_config_changed=false
+  tags:
+    - site-storm
+    - deps-storm
+
 # --------------------------------- Hadoop -----------------------------------
 - name: HDFS Namenode
   hosts: hadoop-namenode-node
