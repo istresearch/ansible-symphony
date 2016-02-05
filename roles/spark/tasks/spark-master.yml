@@ -25,5 +25,4 @@
     mode=0644
   notify:
     - reread supervisord
-    - restart spark master
   tags: spark
