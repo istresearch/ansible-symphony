@@ -236,6 +236,14 @@
     - site-hbase
     - deps-hbase
 
+- name: HBase Configuration Changed Fact Reset
+  hosts: hbase-nodes
+  tasks:
+    - set_fact: hbase_config_changed=false
+  tags:
+    - site-hbase
+    - deps-hbase
+
 # --------------------------------- Spark ------------------------------------
 # Requires Hadoop and HDFS
 
