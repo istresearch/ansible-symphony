@@ -3,7 +3,7 @@
   supervisorctl:
     name=hbase-master
     state=restarted
-  when: hbase_master_enabled
+  when: hbase_master_enabled and (hbase_config_changed is defined and hbase_config_changed)
 
 - name: wait for hbase master port
   wait_for:
@@ -16,7 +16,7 @@
   supervisorctl:
     name=hbase-regionserver
     state=restarted
-  when: hbase_regionserver_enabled
+  when: hbase_regionserver_enabled and (hbase_config_changed is defined and hbase_config_changed)
 
 - name: wait for hbase region server port
   wait_for:
@@ -28,7 +28,7 @@
   supervisorctl:
     name=hbase-rest
     state=restarted
-  when: hbase_rest_enabled
+  when: hbase_rest_enabled and (hbase_config_changed is defined and hbase_config_changed)
 
 - name: wait for hbase rest port
   wait_for:
