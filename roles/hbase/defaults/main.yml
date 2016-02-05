@@ -17,7 +17,7 @@ hbase_stdout_logfile_maxbytes: 50MB
 hbase_stderr_logfile_maxbytes: 50MB
 
 # runtime opts
-hbase_heap_size: 1000
+hbase_heap_size: 1024
 hbase_opts: -XX:+UseConcMarkSweepGC
 
 hbase_master_enabled: false
@@ -25,7 +25,6 @@ hbase_regionserver_enabled: false
 hbase_rest_enabled: false
 
 hbase_cluster_name: hbasecluster
-hbase_env_vars: 'CLASSPATH="{{ hbase_install_dir }}/default/conf:/usr/lib/tools.jar:{{ hbase_install_dir }}/default:{{ hbase_install_dir }}/default/lib/*", JAVA_HOME="{{ java_home }}", LD_LIBRARY_PATH={{ hdfs_install_dir|default("/opt/hadoop") }}/default/lib/native'
 
 hbase_root_dir: /hbase
 hbase_tmp_dir: /data/hbase
@@ -38,4 +37,4 @@ hbase_rest_port: 60050
 hbase_rest_info_port: 8086
 hbase_jmx_remote_port: 10102
 
-repository_infrastructure: "{{ apache_mirror }}/hbase/stable/"
+repository_infrastructure: "{{ apache_mirror }}/hbase/stable"
