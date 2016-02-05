@@ -79,7 +79,6 @@
     - wait for spark master port
     - restart spark worker
     - wait for spark worker port
-    - restart spark history server
   changed_when: spark_config_changed
   tags: spark
 
