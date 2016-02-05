@@ -19,9 +19,9 @@ env:
   - TAGS='scrapy-cluster'
   - TAGS='deps-storm'
   - TAGS='deps-hadoop'
-  # Hbase and Spark not working with Travis VM
-  # See https://github.com/istresearch/ansible-symphony/issues/1
-  # - TAGS='site-hbase'
+  - TAGS='deps-hbase'
+  # Spark not working with Travis VM
+  # See https://github.com/istresearch/ansible-symphony/issues/2
   # - TAGS='site-spark'
   - TAGS='site-docker-engine'
 
