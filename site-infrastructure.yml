@@ -7,6 +7,15 @@
     - common
   tags: site-common
 
+# ------------------------------ Customize Internap ------------------------
+
+- name: Run Internap customize
+  hosts: internap
+  roles:
+    - internap-customize
+  tags: internap-customize
+  strategy: free
+
 # ----------------------------- Add users -----------------------------------
 
 - hosts: all

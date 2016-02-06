@@ -1,0 +1,13 @@
+---
+
+- name: Copy over repo list
+  copy: 
+    src: "sources.list"
+    dest: /etc/apt/sources.list
+  notify: update apt cache
+
+- name: Kill 127.0.1.1 host loopback
+  lineinfile:
+    dest: "/etc/hosts"
+    regexp: '^127\.0\.1\.1.*$'
+    state: absent
