@@ -100,11 +100,11 @@
   set_fact: storm_config_changed={{ storm_config.changed or (storm_config_changed is defined and storm_config_changed) }}
   notify:
     - restart storm nimbus
-    - wait for nimbus port
     - restart storm supervisor
     - restart storm ui
-    - wait for ui port
     - restart storm logviewer
+    - wait for nimbus port
+    - wait for ui port
     - wait for logviewer port
   changed_when: storm_config_changed
   tags: storm

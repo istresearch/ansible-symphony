@@ -27,14 +27,17 @@
   wait_for: 
     port={{ nimbus_thrift_port }}
     state=started
+  when: storm_nimbus_enabled
 
 - name: wait for ui port
   wait_for: 
     port={{ storm_ui_port }}
     state=started
+  when: storm_ui_enabled
 
 - name: wait for logviewer port
   wait_for:
     port={{ storm_logviewer_port }}
     state=started
+  when: storm_logviewer_enabled
 
