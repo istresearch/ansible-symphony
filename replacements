@@ -165,7 +165,7 @@ scrapy-crawler-nodes
 scrapy-indexer-nodes
 
 [kibana-node]
-memex-hclient.istresearch.com
+captain02.istresearch.com
 
 [gnip-monitor-node]
 memex-hclient.istresearch.com
