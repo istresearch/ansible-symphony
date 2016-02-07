@@ -1,22 +1,33 @@
 ---
-- block:
-  - name: set up spark history (1/4)
-    shell: "JAVA_HOME=/usr {{ hdfs_exe_dir|default('/opt/hadoop/default/bin') }}/hadoop fs -mkdir -p {{ spark_hdfs_dir }}"
-
-  - name: set up spark history (2/4)
-    shell: "JAVA_HOME=/usr {{ hdfs_exe_dir|default('/opt/hadoop/default/bin') }}/hadoop fs -mkdir -p {{ spark_hdfs_dir }}/{{ spark_history_dir }}"
-
-  - name: set up spark history (3/4)
-    shell: "JAVA_HOME=/usr {{ hdfs_exe_dir|default('/opt/hadoop/default/bin') }}/hadoop fs -chown -R spark:spark {{ spark_hdfs_dir }}"
-
-  - name: set up spark history (4/4)
-    shell: "JAVA_HOME=/usr {{ hdfs_exe_dir|default('/opt/hadoop/default/bin') }}/hadoop fs -chmod 1777 {{ spark_hdfs_dir }}/{{ spark_history_dir }}"
-
+- name: set up spark history directory in hdfs
+  shell: "{{ item }}"
+  with_items:
+    - "{{ hdfs_exe_dir|default('/opt/hadoop/default/bin') }}/hadoop fs -mkdir -p {{ spark_hdfs_dir }}"
+    - "{{ hdfs_exe_dir|default('/opt/hadoop/default/bin') }}/hadoop fs -mkdir -p {{ spark_hdfs_dir }}/{{ spark_history_dir }}"
+    - "{{ hdfs_exe_dir|default('/opt/hadoop/default/bin') }}/hadoop fs -chown -R spark:spark {{ spark_hdfs_dir }}"
+    - "{{ hdfs_exe_dir|default('/opt/hadoop/default/bin') }}/hadoop fs -chmod 1777 {{ spark_hdfs_dir }}/{{ spark_history_dir }}"
+  environment:
+    JAVA_HOME: "{{ java_home }}"
   become: yes
-  become_method: sudo
   become_user: "{{ hdfs_user|default('hadoop') }}"
-  delegate_to: "{{ groups['hadoop-namenode-node'][0] }}"
   run_once: true
+  delegate_to: "{{ dfs_namenode_host }}"
+  when: inventory_hostname != dfs_namenode_host
+  tags: spark
+
+- name: set up spark history directory in hdfs (same host)
+  shell: "{{ item }}"
+  with_items:
+    - "{{ hdfs_exe_dir|default('/opt/hadoop/default/bin') }}/hadoop fs -mkdir -p {{ spark_hdfs_dir }}"
+    - "{{ hdfs_exe_dir|default('/opt/hadoop/default/bin') }}/hadoop fs -mkdir -p {{ spark_hdfs_dir }}/{{ spark_history_dir }}"
+    - "{{ hdfs_exe_dir|default('/opt/hadoop/default/bin') }}/hadoop fs -chown -R spark:spark {{ spark_hdfs_dir }}"
+    - "{{ hdfs_exe_dir|default('/opt/hadoop/default/bin') }}/hadoop fs -chmod 1777 {{ spark_hdfs_dir }}/{{ spark_history_dir }}"
+  environment:
+    JAVA_HOME: "{{ java_home }}"
+  become: yes
+  become_user: "{{ hdfs_user|default('hadoop') }}"
+  run_once: true
+  when: inventory_hostname == dfs_namenode_host
   tags: spark
 
 - name: copy supervisord config
