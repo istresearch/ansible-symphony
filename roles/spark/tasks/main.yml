@@ -69,7 +69,17 @@
   with_items:
     - "spark-env.sh"
     - "spark-defaults.conf"
-  notify: reread supervisord
+  register: spark_config
+  tags: spark
+  
+- name: restart spark to apply configuration changes
+  set_fact: spark_config_changed={{ spark_config.changed or (spark_config_changed is defined and spark_config_changed) }}
+  notify:
+    - restart spark master
+    - wait for spark master port
+    - restart spark worker
+    - wait for spark worker port
+  changed_when: spark_config_changed
   tags: spark
 
 - name: delete spark conf templates

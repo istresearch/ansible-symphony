@@ -163,6 +163,14 @@
     - site-storm
     - deps-storm
 
+- name: Storm Configuration Changed Fact Reset
+  hosts: storm-nodes
+  tasks:
+    - set_fact: storm_config_changed=false
+  tags:
+    - site-storm
+    - deps-storm
+
 # --------------------------------- Hadoop -----------------------------------
 - name: HDFS Namenode
   hosts: hadoop-namenode-node
@@ -204,6 +212,16 @@
     - yarn_resourcemanager_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
     - yarn_historyserver_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
   roles: [ hadoop ]
+  tags:
+    - site-hadoop
+    - deps-hadoop
+    - deps-hbase
+    - deps-spark
+
+- name: Hadoop Configuration Changed Fact Reset
+  hosts: hadoop-nodes
+  tasks:
+    - set_fact: hadoop_config_changed=false
   tags:
     - site-hadoop
     - deps-hadoop
@@ -267,6 +285,14 @@
     - dfs_namenode_host: "{{ groups['hadoop-namenode-node'][0] }}"
     - yarn_historyserver_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
   roles: [ spark ]
+  tags:
+    - site-spark
+    - deps-spark
+
+- name: Spark Configuration Changed Fact Reset
+  hosts: spark-nodes
+  tasks:
+    - set_fact: spark_config_changed=false
   tags:
     - site-spark
     - deps-spark

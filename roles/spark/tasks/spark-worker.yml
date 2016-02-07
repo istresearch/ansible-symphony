@@ -16,5 +16,4 @@
     mode=0644
   notify:
     - reread supervisord
-    - restart spark worker
   tags: spark
