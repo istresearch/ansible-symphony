@@ -20,9 +20,7 @@ env:
   - TAGS='deps-storm'
   - TAGS='deps-hadoop'
   - TAGS='deps-hbase'
-  # Spark not working with Travis VM
-  # See https://github.com/istresearch/ansible-symphony/issues/2
-  # - TAGS='site-spark'
+  - TAGS='deps-spark'
   - TAGS='site-docker-engine'
 
 matrix:
