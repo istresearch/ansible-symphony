@@ -31,19 +31,15 @@ traptor-nodes
 elastalert-nodes
 tor-proxy
 
-# Replacement1 - 74.201.215.29
-# Replacement2 - 74.201.215.30
-# Replacement3 - 63.251.114.50
-# Replacement4 - 63.251.114.51
-
-
 [zookeeper-nodes]
-replacement1.nj.istresearch.com
-replacement2.nj.istresearch.com
-replacement3.nj.istresearch.com
+crew01.istresearch.com
+crew02.istresearch.com
+crew03.istresearch.com
 
 [kafka-nodes]
-replacement4.nj.istresearch.com
+crew06.istresearch.com
+crew07.istresearch.com
+crew08.istresearch.com
 
 [redis-master-node]
 memex-services.istresearch.com
@@ -60,72 +56,80 @@ redis-slave-nodes
 redis-sentinel-nodes
 
 [hadoop-namenode-node]
-replacement1.nj.istresearch.com
+captain01.istresearch.com
 
 [hadoop-secondary-namenode-node]
-
+captain02.istresearch.com
 
 [hadoop-datanode-nodes]
-replacement2.nj.istresearch.com
-replacement3.nj.istresearch.com
-replacement4.nj.istresearch.com
+crew01.istresearch.com
+crew02.istresearch.com
+crew03.istresearch.com
+crew04.istresearch.com
+crew05.istresearch.com
 
 [hadoop-nodes:children]
 hadoop-namenode-node
 hadoop-datanode-nodes
 
 [hbase-master-node]
-replacement1.nj.istresearch.com
+captain01.istresearch.com
 
 [hbase-regionserver-nodes]
-replacement2.nj.istresearch.com
-replacement3.nj.istresearch.com
-replacement4.nj.istresearch.com
+crew01.istresearch.com
+crew02.istresearch.com
+crew03.istresearch.com
+crew04.istresearch.com
+crew05.istresearch.com
 
 [hbase-nodes:children]
 hbase-master-node
 hbase-regionserver-nodes
 
 [spark-master-node]
-replacement1.nj.istresearch.com
+captain01.istresearch.com
 
 [spark-worker-nodes]
-replacement2.nj.istresearch.com
-replacement3.nj.istresearch.com
-replacement4.nj.istresearch.com
+crew01.istresearch.com
+crew02.istresearch.com
+crew03.istresearch.com
+crew04.istresearch.com
+crew05.istresearch.com
 
 [spark-nodes:children]
 spark-master-node
 spark-worker-nodes
 
 [storm-nimbus-node]
-replacement1.nj.istresearch.com
+captain01.istresearch.com
 
 [storm-ui-node]
-replacement1.nj.istresearch.com
+captain01.istresearch.com
 
 [storm-supervisor-nodes]
-replacement2.nj.istresearch.com
-replacement3.nj.istresearch.com
-replacement4.nj.istresearch.com
+crew06.istresearch.com
+crew07.istresearch.com
+crew08.istresearch.com
 
 [storm-nodes:children]
 storm-nimbus-node
 storm-ui-node
 storm-supervisor-nodes
 
-[elasticsearch-master-data-nodes]
-
-
 [elasticsearch-master-nodes]
 
 [elasticsearch-data-nodes]
-replacement2.nj.istresearch.com elasticsearch_is_master=true
-replacement3.nj.istresearch.com elasticsearch_is_master=true
-replacement4.nj.istresearch.com
+crew01.istresearch.com elasticsearch_is_master=true
+crew02.istresearch.com elasticsearch_is_master=true
+crew03.istresearch.com elasticsearch_is_master=true
+crew04.istresearch.com elasticsearch_is_master=true
+crew05.istresearch.com elasticsearch_is_master=true
+crew06.istresearch.com elasticsearch_is_master=true
+crew07.istresearch.com elasticsearch_is_master=true
+crew08.istresearch.com elasticsearch_is_master=true
 
 [elasticsearch-client-nodes]
-replacement1.nj.istresearch.com
+captain02.istresearch.com
 
 [elasticsearch-nodes:children]
 elasticsearch-master-nodes
@@ -161,7 +165,7 @@ scrapy-crawler-nodes
 scrapy-indexer-nodes
 
 [kibana-node]
-memex-hclient.istresearch.com
+captain02.istresearch.com
 
 [gnip-monitor-node]
 memex-hclient.istresearch.com

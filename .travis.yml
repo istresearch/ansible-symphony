@@ -13,15 +13,14 @@ install:
 env:
   - TAGS='site-common'
   - TAGS='site-zookeeper'
+  - TAGS='deps-kafka'
   - TAGS='ELK'
   - TAGS='scrapy-services'
   - TAGS='scrapy-cluster'
-  - TAGS='site-storm'
-  - TAGS='site-hadoop'
-  # Hbase and Spark not working with Travis VM
-  # See https://github.com/istresearch/ansible-symphony/issues/1
-  # - TAGS='site-hbase'
-  # - TAGS='site-spark'
+  - TAGS='deps-storm'
+  - TAGS='deps-hadoop'
+  - TAGS='deps-hbase'
+  - TAGS='deps-spark'
   - TAGS='site-docker-engine'
 
 matrix:
