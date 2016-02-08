@@ -1,8 +1,6 @@
 [program:{{ sc_kafka_monitor_supervisor_name }}]
-command={{ miniconda_install_dir|default('/opt/miniconda') }}/bin/python -u {{ sc_kafka_monitor_name }}.py run
-directory={{ sc_kafka_monitor_install_dir }}
-process_name=%(program_name)s
-numprocs={{ sc_kafka_monitor_num_procs }}
+command=/usr/bin/python kafka_monitor.py run
+directory={{ sc_install_dir }}/default/kafka-monitor
 autostart=true
 autorestart=true
 startsecs={{ sc_kafka_monitor_start_secs }}
