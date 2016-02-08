@@ -1,0 +1,110 @@
+---
+- include_vars: private_roles/scrapy-crawler-app/defaults/main.yml
+  tags: crawling
+
+- name: yum install prereqs for pillow
+  yum: name={{ item }} state=installed
+  with_items:
+    - gcc
+    - libjpeg-devel
+  tags: crawling
+  when: ansible_os_family == "RedHat"
+
+- name: apt install prereqs for pillow
+  apt: name={{ item }} state=present
+  with_items:
+    - gcc
+    - libjpeg-dev
+  tags: crawling
+  when: ansible_os_family == "Debian"
+
+- name: Install Miniconda packages
+  shell: "{{ miniconda_install_dir|default('/opt/miniconda') }}/bin/conda install {{ item }} --yes"
+  with_items:
+    - pip
+    - scrapy
+  tags: crawling
+
+- name: Miniconda pip install crawling packages
+  shell: "{{ miniconda_install_dir|default('/opt/miniconda') }}/bin/pip install {{ item }}"
+  with_items:
+    - setuptools
+    - redis
+    - kafka-python
+    - docopt
+    - service_identity
+    - python-json-logger
+    - pillow
+    - tldextract
+    - mock
+    - pyyaml
+    - kazoo
+    - ConcurrentLogHandler
+    - cbor
+  tags: crawling
+
+- name: Miniconda pip install scrapy-crawler
+  shell: "{{ miniconda_install_dir|default('/opt/miniconda') }}/bin/pip install --extra-index-url {{ repository_pip }} scrapy-crawler -U"
+  notify:
+    - restart scrapy-crawling
+  tags: crawling
+
+- name: create crawling symlink
+  file:
+    src={{ crawling_miniconda_path }}
+    path={{ crawling_install_dir }}
+    state=link
+    mode=0744
+  tags: crawling
+
+- name: create crawling log directory
+  file:
+    path={{ crawling_log_dir }}/
+    state=directory
+    mode=0755
+  tags: crawling
+
+- name: copy crawling settings
+  template:
+    src=settings.py.j2
+    dest={{ crawling_install_dir }}/{{ crawling_bot_name }}/settings.py
+    mode=0644
+  notify:
+    - restart scrapy-crawling
+  tags: crawling
+
+- name: copy scrapy settings
+  template:
+    src=scrapy.cfg.j2
+    dest={{ crawling_install_dir }}/scrapy.cfg
+    mode=0644
+  tags: crawling
+
+- name: copy tld extract file
+  copy:
+    src=tld_names.dat
+    dest={{ crawling_install_dir }}/tld_names.dat
+    mode=0644
+  tags: crawling
+
+# Spider specific settings here
+# link
+- name: copy supervisord config
+  template:
+    src={{ crawling_name }}-link-supervisord.conf.j2
+    dest={{ supervisord_programs_dir|default('/etc/supervisor/conf.d') }}/{{ crawling_name }}-link-supervisord.conf
+    mode=0644
+  notify:
+    - reread supervisord
+  tags: crawling
+
+# link
+- name: copy logstash config
+  template:
+    src={{ crawling_name }}-link-logstash.conf.j2
+    dest={{ logstash_conf_dir|default('/etc/logstash.d') }}/{{ crawling_name }}-link-logstash.conf
+    mode=0644
+  notify:
+    - restart logstash
+  tags: crawling
+

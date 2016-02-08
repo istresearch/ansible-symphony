@@ -1,0 +1,127 @@
+# This file houses all default settings for the Crawler
+# to override please use a custom localsettings.py file
+
+# Scrapy Cluster Settings
+# ~~~~~~~~~~~~~~~~~~~~~~~
+
+# Specify the host and port to use when connecting to Redis.
+REDIS_HOST = "{{ groups['redis-master-node'][0] }}"
+REDIS_PORT = {{ redis_port|default(6379) }}
+
+# Kafka server information
+KAFKA_HOSTS = "{% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}"
+KAFKA_TOPIC_PREFIX = "{{ sc_crawling_kafka_topic_prefix }}"
+KAFKA_APPID_TOPICS = {{ sc_crawling_kafka_appid_topics }}
+# base64 encode the html body to avoid json dump errors due to malformed text
+KAFKA_BASE_64_ENCODE = {{ sc_crawling_kafka_base_64 }}
+
+ZOOKEEPER_ASSIGN_PATH = "{{ sc_crawling_zookeeper_dir }}"
+ZOOKEEPER_ID = "{{ sc_crawling_zookeeper_id }}"
+ZOOKEEPER_HOSTS = "{% for host in groups['zookeeper-nodes'] %}{{ host }}:{{ zookeeper_port|default(2181) }}{% if not loop.last %},{% endif %}{% endfor %}"
+
+PUBLIC_IP_URL = '{{ sc_crawling_public_ip_url }}'
+
+# Don't cleanup redis queues, allows to pause/resume crawls.
+SCHEDULER_PERSIST = {{ sc_crawling_persist }}
+
+# seconds to wait between seeing new queues, cannot be faster than spider_idle time of 5
+SCHEDULER_QUEUE_REFRESH = {{ sc_crawling_queue_refresh }}
+
+# throttled queue defaults per domain, x hits in a y second window
+QUEUE_HITS = {{ sc_crawling_queue_hits }}
+QUEUE_WINDOW = {{ sc_crawling_queue_window }}
+
+# we want the queue to produce a consistent pop flow
+QUEUE_MODERATED = {{ sc_crawling_queue_moderated }}
+
+# how long we want the duplicate timeout queues to stick around in seconds
+DUPEFILTER_TIMEOUT = {{ sc_crawling_dupefilter_timeout }}
+
+# how often to refresh the ip address of the scheduler
+SCHEDULER_IP_REFRESH = {{ sc_crawling_ip_refresh }}
+
+# add Spider type to throttle mechanism
+SCHEDULER_TYPE_ENABLED = {{ sc_crawling_type_enabled }}
+
+# add ip address to throttle mechanism
+SCHEDULER_IP_ENABLED = {{ sc_crawling_ip_enabled }}
+
+# how many times to retry getting an item from the queue before the spider is considered idle
+SCHEUDLER_ITEM_RETRIES = {{ sc_crawling_item_retries }}
+
+# log setup scrapy cluster crawler
+LOGGER_NAME = '{{ sc_crawling_logger_name }}'
+LOG_DIR = '{{ sc_crawling_log_dir }}'
+LOG_FILE = '{{ sc_crawling_log_file }}'
+LOG_MAX_BYTES = {{ sc_crawling_log_max_bytes }}
+LOG_BACKUPS = {{ sc_crawling_log_backups }}
+SC_LOG_STDOUT = {{ sc_crawling_log_stdout }}
+SC_LOG_JSON = {{ sc_crawling_log_json }}
+SC_LOG_LEVEL = '{{ sc_crawling_log_level }}'
+
+# stats setup
+STATS_STATUS_CODES = {{ sc_crawling_status_codes }}
+STATS_RESPONSE_CODES = [
+{% for item in sc_crawling_response_codes %}
+    {{ item }}{% if not loop.last %},{% endif %}
+{% endfor %}
+]
+STATS_CYCLE = {{ sc_crawling_stats_cycle }}
+# from time variables in scutils.stats_collector class
+STATS_TIMES = [
+{% for item in sc_crawling_stats_times %}
+    {{ item }}{% if not loop.last %},{% endif %}
+{% endfor %}
+]
+
+# Scrapy Settings
+# ~~~~~~~~~~~~~~~
+DOWNLOADER_CLIENTCONTEXTFACTORY = 'crawling.contextfactory.MyClientContextFactory'
+
+# Scrapy settings for distributed_crawling project
+#
+BOT_NAME = '{{ sc_crawling_bot_name }}'
+
+SPIDER_MODULES = ['{{ sc_crawling_bot_name }}.spiders']
+NEWSPIDER_MODULE = '{{ sc_crawling_bot_name }}.spiders'
+
+# Enables scheduling storing requests queue in redis.
+SCHEDULER = "crawling.distributed_scheduler.DistributedScheduler"
+
+
+# Store scraped item in redis for post-processing.
+ITEM_PIPELINES = {
+    '{{ sc_crawling_bot_name }}.{{ sc_crawling_pipeline_file }}.KafkaPipeline': {{ sc_crawling_kafka_pipeline_rank }},
+    LoggingBeforePipeline': {{ sc_crawling_logging_before_pipeline_rank }},
+    '{{ sc_crawling_bot_name }}.{{ sc_crawling_pipeline_file }}.LoggingAfterPipeline': {{ sc_crawling_logging_after_pipeline_rank }},
+}
+
+SPIDER_MIDDLEWARES = {
+    # disable built-in DepthMiddleware, since we do our own
+    # depth management per crawl request
+    'scrapy.contrib.spidermiddleware.depth.DepthMiddleware': None,
+}
+
+DOWNLOADER_MIDDLEWARES = {
+    # Handle timeout retries with the redis scheduler and logger
+    'scrapy.contrib.downloadermiddleware.retry.RetryMiddleware' : None,
+    '{{ sc_crawling_bot_name }}.redis_retry_middleware.RedisRetryMiddleware': 510,
+    # exceptions processed in reverse order
+    '{{ sc_crawling_bot_name }}.log_retry_middleware.LogRetryMiddleware': 520,
+    # custom cookies to not persist across crawl requests
+    'scrapy.contrib.downloadermiddleware.cookies.CookiesMiddleware': None,
+    '{{ sc_crawling_bot_name }}.custom_cookies.CustomCookiesMiddleware': 700,
+}
+
+# Disable the built in logging in production
+LOG_ENABLED = {{ sc_crawling_scrapy_logging_enabled }}
+
+# Allow all return codes
+HTTPERROR_ALLOW_ALL = {{ sc_crawling_httperror_all }}
+
+RETRY_TIMES = {{ sc_crawling_retry_times }}
+
+DOWNLOAD_TIMEOUT = {{ sc_crawling_download_timeout }}
+
+# Avoid in-memory DNS cache. See Advanced topics of docs for info
+DNSCACHE_ENABLED = {{ sc_crawling_dns_cache }}
