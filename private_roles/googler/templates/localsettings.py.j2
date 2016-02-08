@@ -3,7 +3,7 @@ REDIS_PORT = {{ redis_port|default(6379) }}
 
 # Kafka server information
 KAFKA_HOSTS = "{% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}"
-KAFKA_TOPIC = "{{ crawling_kafka_topic_prefix|default('pulse.incoming') }}"
+KAFKA_TOPIC = "{{ sc_crawling_kafka_topic_prefix|default('demo.incoming') }}"
 
 QUEUE_NAME = "{{ googler_queue_name }}"
 

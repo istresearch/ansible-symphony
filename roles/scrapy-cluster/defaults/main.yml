@@ -1,6 +1,6 @@
 ---
 sc_install_dir: /opt/scrapy-cluster
-sc_build_version: 18
+sc_build_version: 21
 sc_build_branch: dev
 sc_install_version: "scrapy-cluster-ist-{{ sc_build_version }}-{{ sc_build_branch }}"
 
@@ -58,8 +58,8 @@ sc_crawling_log_file: "{{ sc_crawling_name }}.log"
 sc_crawling_log_max_bytes: 25000000
 sc_crawling_log_backups: 5
 sc_crawling_logstash_tag: "{{ sc_crawling_name }}"
-sc_crawling_log_stdout: True
-sc_crawling_log_json: False
+sc_crawling_log_stdout: False
+sc_crawling_log_json: True
 sc_crawling_log_level: "INFO"
 
 sc_crawling_status_codes: True
@@ -108,8 +108,8 @@ sc_kafka_monitor_log_dir: /var/log/scrapy-cluster
 sc_kafka_monitor_log_file: "{{ sc_kafka_monitor_name }}.log"
 sc_kafka_monitor_log_max_bytes: 25000000
 sc_kafka_monitor_log_backups: 5
-sc_kafka_monitor_log_stdout: True
-sc_kafka_monitor_log_json: False
+sc_kafka_monitor_log_stdout: False
+sc_kafka_monitor_log_json: True
 sc_kafka_monitor_log_level: "INFO"
 
 sc_kafka_monitor_stats_total: True
@@ -146,8 +146,8 @@ sc_redis_monitor_log_dir: /var/log/scrapy-cluster
 sc_redis_monitor_log_file: "{{ sc_redis_monitor_name }}.log"
 sc_redis_monitor_log_max_bytes: 25000000
 sc_redis_monitor_log_backups: 5
-sc_redis_monitor_log_stdout: True
-sc_redis_monitor_log_json: False
+sc_redis_monitor_log_stdout: False
+sc_redis_monitor_log_json: True
 sc_redis_monitor_log_level: "INFO"
 
 sc_redis_monitor_supervisor_name: "{{ sc_redis_monitor_name }}"
