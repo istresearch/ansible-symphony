@@ -1,11 +1,13 @@
 ---
 - name: restart scrapy-crawling
-  shell: "supervisorctl restart {{ crawling_name }}:*"
+  shell: "supervisorctl restart {{ sc_crawling_name }}:*"
 
 - name: restart scrapy-kafka-monitor
-  shell: "supervisorctl restart {{ kafka_monitor_supervisor_name }}"
+  supervisorctl:
+    name={{ sc_kafka_monitor_supervisor_name }}
+    state=restarted
 
 - name: restart scrapy-redis-monitor
   supervisorctl:
-    name={{ redis_monitor_supervisor_name }}
+    name={{ sc_redis_monitor_supervisor_name }}
     state=restarted

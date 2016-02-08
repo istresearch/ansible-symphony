@@ -50,11 +50,11 @@ SCHEDULER_IP_ENABLED = {{ sc_crawling_ip_enabled }}
 SCHEUDLER_ITEM_RETRIES = {{ sc_crawling_item_retries }}
 
 # log setup scrapy cluster crawler
-LOGGER_NAME = '{{ sc_crawling_logger_name }}'
-LOG_DIR = '{{ sc_crawling_log_dir }}'
-LOG_FILE = '{{ sc_crawling_log_file }}'
-LOG_MAX_BYTES = {{ sc_crawling_log_max_bytes }}
-LOG_BACKUPS = {{ sc_crawling_log_backups }}
+SC_LOGGER_NAME = '{{ sc_crawling_logger_name }}'
+SC_LOG_DIR = '{{ sc_crawling_log_dir }}'
+SC_LOG_FILE = '{{ sc_crawling_log_file }}'
+SC_LOG_MAX_BYTES = {{ sc_crawling_log_max_bytes }}
+SC_LOG_BACKUPS = {{ sc_crawling_log_backups }}
 SC_LOG_STDOUT = {{ sc_crawling_log_stdout }}
 SC_LOG_JSON = {{ sc_crawling_log_json }}
 SC_LOG_LEVEL = '{{ sc_crawling_log_level }}'
@@ -64,13 +64,15 @@ STATS_STATUS_CODES = {{ sc_crawling_status_codes }}
 STATS_RESPONSE_CODES = [
 {% for item in sc_crawling_response_codes %}
     {{ item }}{% if not loop.last %},{% endif %}
+
 {% endfor %}
 ]
 STATS_CYCLE = {{ sc_crawling_stats_cycle }}
 # from time variables in scutils.stats_collector class
 STATS_TIMES = [
 {% for item in sc_crawling_stats_times %}
-    {{ item }}{% if not loop.last %},{% endif %}
+    '{{ item }}'{% if not loop.last %},{% endif %}
+
 {% endfor %}
 ]
 
@@ -92,7 +94,7 @@ SCHEDULER = "crawling.distributed_scheduler.DistributedScheduler"
 # Store scraped item in redis for post-processing.
 ITEM_PIPELINES = {
     '{{ sc_crawling_bot_name }}.{{ sc_crawling_pipeline_file }}.KafkaPipeline': {{ sc_crawling_kafka_pipeline_rank }},
-    LoggingBeforePipeline': {{ sc_crawling_logging_before_pipeline_rank }},
+    '{{ sc_crawling_bot_name }}.{{ sc_crawling_pipeline_file }}.LoggingBeforePipeline': {{ sc_crawling_logging_before_pipeline_rank }},
     '{{ sc_crawling_bot_name }}.{{ sc_crawling_pipeline_file }}.LoggingAfterPipeline': {{ sc_crawling_logging_after_pipeline_rank }},
 }
 

@@ -1,27 +1,13 @@
-[program:{{ kafka_monitor_supervisor_name }}-crawling]
-command={{ miniconda_install_dir|default('/opt/miniconda') }}/bin/python -u {{ kafka_monitor_name }}.py run -s settings_crawling.py
-directory={{ kafka_monitor_install_dir }}
+[program:{{ sc_kafka_monitor_supervisor_name }}]
+command={{ miniconda_install_dir|default('/opt/miniconda') }}/bin/python -u {{ sc_kafka_monitor_name }}.py run
+directory={{ sc_kafka_monitor_install_dir }}
 process_name=%(program_name)s
-numprocs={{ kafka_monitor_num_procs }}
+numprocs={{ sc_kafka_monitor_num_procs }}
 autostart=true
 autorestart=true
-startsecs={{ kafka_monitor_start_secs }}
-startretries={{ kafka_monitor_start_retries }}
+startsecs={{ sc_kafka_monitor_start_secs }}
+startretries={{ sc_kafka_monitor_start_retries }}
 stopsignal=KILL
 redirect_stderr=true
 stderr_logfile=AUTO
-stderr_logfile_maxbytes={{ kafka_monitor_stderr_logfile_maxbytes }}
-
-[program:{{ kafka_monitor_supervisor_name }}-actions]
-command={{ miniconda_install_dir|default('/opt/miniconda') }}/bin/python -u {{ kafka_monitor_name }}.py run -s settings_actions.py
-directory={{ kafka_monitor_install_dir }}
-process_name=%(program_name)s
-numprocs={{ kafka_monitor_num_procs }}
-autostart=true
-autorestart=true
-startsecs={{ kafka_monitor_start_secs }}
-startretries={{ kafka_monitor_start_retries }}
-stopsignal=KILL
-redirect_stderr=true
-stderr_logfile=AUTO
-stderr_logfile_maxbytes={{ kafka_monitor_stderr_logfile_maxbytes }}
+stderr_logfile_maxbytes={{ sc_kafka_monitor_stderr_logfile_maxbytes }}
