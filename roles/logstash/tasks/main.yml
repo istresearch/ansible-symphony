@@ -64,6 +64,20 @@
     - reread supervisord
   tags: logstash
 
+- name: add logstash to supervisord
+  supervisorctl:
+    name: logstash
+    state: present
+  tags:
+    - logstash
+
+- name: ensure logstash is started
+  supervisorctl:
+    name: logstash
+    state: started
+  tags:
+    - logstash
+
 - name: Set fact logstash_has_run
   set_fact:
     logstash_has_run: true
