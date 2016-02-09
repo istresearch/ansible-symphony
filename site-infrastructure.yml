@@ -36,6 +36,7 @@
     - deps-hadoop
     - deps-hbase
     - deps-spark
+    - deps-scrapy-cluster
 
 - name: Run kafka role
   hosts: kafka-nodes
@@ -46,6 +47,7 @@
   tags:
     - site-kafka
     - deps-kafka
+    - deps-scrapy-cluster
 
 # ------------------------------ ELK stack ------------------------------------
 - name: Run elasticsearch master role
@@ -98,6 +100,7 @@
   roles: [ redis ]
   tags:
     - site-redis
+    - deps-scrapy-cluster
     - scrapy-services
 
 - name: Run tor role
@@ -108,33 +111,39 @@
     - scrapy-services
 
 # --------------------------- Scrapy Cluster ---------------------------------
-- name: Run scrapy-crawler role (infrastructure)
-  hosts: scrapy-crawler-nodes
-  roles: [ scrapy-crawler ]
+- name: Run Scrapy Cluster Crawler
+  hosts: scrapy-cluster-crawler-nodes
+  vars:
+    - sc_is_crawler: True
+  roles: [ scrapy-cluster ]
   tags:
-    - site-scrapy-crawler
-    - scrapy-cluster
+    - site-scrapy-cluster
+    - deps-scrapy-cluster
 
+- name: Run Scrapy Cluster Kafka Monitor
+  hosts: scrapy-cluster-kafka-monitor-node
+  vars:
+    - sc_is_kafka_monitor: True
+  roles: [ scrapy-cluster ]
+  tags:
+    - site-scrapy-cluster
+    - deps-scrapy-cluster
+
+- name: Run Scrapy Cluster Redis Monitor
+  hosts: scrapy-cluster-redis-monitor-node
+  vars:
+    - sc_is_redis_monitor: True
+  roles: [ scrapy-cluster ]
+  tags:
+    - site-scrapy-cluster
+    - deps-scrapy-cluster
+
+# ------------------------------- Scrapy Indexers ----------------------------
 - name: Run scrapy-indexer role (infrastructure)
   hosts: scrapy-indexer-nodes
   roles: [ scrapy-indexer ]
   tags:
     - site-scrapy-indexer
-    - scrapy-cluster
-
-- name: Run scrapy-kafka role (infrastructure)
-  hosts: scrapy-kafka-monitor-node
-  roles: [ scrapy-kafka-monitor ]
-  tags:
-    - site-scrapy-indexer
-    - scrapy-cluster
-
-- name: Run scrapy-redis role (infrastructure)
-  hosts: scrapy-redis-monitor-node
-  roles: [ scrapy-redis-monitor ]
-  tags:
-    - site-scrapy-redis-monitor
-    - scrapy-cluster
 
 # -------------------------------- Storm -------------------------------------
 
@@ -156,7 +165,7 @@
     - nimbus_host: "{{ groups['storm-nimbus-node'][0] }}"
     - zookeeper_host_list: "{{ groups['zookeeper-nodes'] }}"
   roles: [ storm ]
-  tags: 
+  tags:
     - site-storm
     - deps-storm
 

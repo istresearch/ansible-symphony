@@ -1,0 +1,40 @@
+# Redis host configuration
+REDIS_HOST = "{{ groups['redis-master-node'][0] }}"
+REDIS_PORT = {{ redis_port|default(6379) }}
+
+KAFKA_HOSTS = "{% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}"
+KAFKA_TOPIC_PREFIX = '{{ sc_redis_monitor_kafka_prefix }}'
+KAFKA_CONN_TIMEOUT = {{ sc_redis_monitor_conn_timeout }}
+KAFKA_APPID_TOPICS = {{ sc_redis_monitor_kafka_appids }}
+
+PLUGIN_DIR = "{{ sc_redis_monitor_plugin_dir }}/"
+PLUGINS = {
+{% for item in sc_redis_monitor_plugins %}
+    {{ item }}{% if not loop.last %},{% endif %}
+
+{% endfor %}
+}
+
+# logging setup
+LOGGER_NAME = '{{ sc_redis_monitor_logger_name }}'
+LOG_DIR = '{{ sc_redis_monitor_log_dir }}'
+LOG_FILE = '{{ sc_redis_monitor_log_file }}'
+LOG_MAX_BYTES = '{{ sc_redis_monitor_log_max_bytes }}'
+LOG_BACKUPS = {{ sc_redis_monitor_log_backups }}
+LOG_STDOUT = {{ sc_redis_monitor_log_stdout }}
+LOG_JSON = {{ sc_redis_monitor_log_json }}
+LOG_LEVEL = '{{ sc_redis_monitor_log_level }}'
+
+# stats setup
+STATS_TOTAL = {{ sc_redis_monitor_stats_total }}
+STATS_PLUGINS = {{ sc_redis_monitor_stats_plugins }}
+STATS_CYCLE = {{ sc_redis_monitor_stats_cycle }}
+STATS_DUMP = {{ sc_redis_monitor_stats_dump }}
+STATS_DUMP_CRAWL = {{ sc_redis_monitor_stats_dump_crawl }}
+# from time variables in scutils.stats_collector class
+STATS_TIMES = [
+{% for item in sc_redis_monitor_stats_times %}
+    '{{ item }}'{% if not loop.last %},{% endif %}
+
+{% endfor %}
+]

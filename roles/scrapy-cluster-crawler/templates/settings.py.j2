@@ -1,0 +1,167 @@
+# Specify the host and port to use when connecting to Redis (optional).
+REDIS_HOST = "{{ groups['redis-master-node'][0] }}"
+REDIS_PORT = {{ redis_port|default(6379) }}
+
+# Kafka server information
+KAFKA_HOSTS = "{% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}"
+KAFKA_TOPIC_PREFIX = "{{ crawling_kafka_topic_prefix }}"
+
+LOGGER_NAME = '{{ crawling_logger_name }}'
+LOG_DIR = '{{ crawling_log_dir }}'
+LOG_FILE = '{{ crawling_log_file }}'
+LOG_MAX_BYTES = {{ crawling_log_max_bytes }}
+LOG_BACKUPS = {{ crawling_log_backups }}
+
+ZOOKEEPER_ASSIGN_PATH = "{{ crawling_zookeeper_dir }}"
+ZOOKEEPER_ID = "{{ crawling_zookeeper_id }}"
+ZOOKEEPER_HOSTS = "{% for host in groups['zookeeper-nodes'] %}{{ host }}:{{ zookeeper_port|default(2181) }}{% if not loop.last %},{% endif %}{% endfor %}"
+# S3 image settings
+S3_ACCESS_KEY = '{{ crawling_s3_access_key }}'
+S3_SECRET_KEY = '{{ crawling_s3_secret_key }}'
+S3_IMAGE_BUCKET = '{{ crawling_s3_image_bucket }}'
+
+ARCHIVE_API_URL = '{{ crawling_archive_api_url }}'
+ARCHIVE_API_TOKEN = '{{ crawling_archive_api_token }}'
+ARCHIVE_API_MAX_CONCURRENT_REQUESTS = '{{ crawling_archive_api_max_concurrent_requests }}'
+ARCHIVE_API_UPLOAD_DELAY = '{{ crawling_archive_api_upload_delay }}'
+
+SPLASH_PNG_URL = 'http://localhost:8050/render.png?url='
+SPLASH_JSON_URL = 'http://localhost:8050/render.json?url='
+SITE_CAPTURE_TMP_DIR = '/var/tmp/'
+
+# Image Pipeline Settings
+AWS_ACCESS_KEY_ID = '{{ crawling_s3_access_key }}'
+AWS_SECRET_ACCESS_KEY = '{{ crawling_s3_secret_key }}'
+IMAGES_STORE = 's3://{{ crawling_s3_image_bucket }}/'
+IMAGES_EXPIRES = {{ crawling_s3_image_expires|default(14) }}
+IMAGES_MIN_WIDTH = 50
+IMAGES_MIN_HEIGHT = 50
+IMAGES_THUMBS = {
+    'sm': (50, 50),
+    'md': (100, 100),
+    'lg': (200, 200),
+}
+
+# Tor integration
+ONION_PROXY = 'http://{{ crawling_onion_proxy }}'
+
+# Scrapy Settings
+# ~~~~~~~~~~~~~~~
+
+# Scrapy settings for distributed_crawling project
+#
+BOT_NAME = '{{ crawling_bot_name }}'
+
+SPIDER_MODULES = ['{{ crawling_bot_name }}.spiders']
+NEWSPIDER_MODULE = '{{ crawling_bot_name }}.spiders'
+
+# Enables scheduling storing requests queue in redis.
+SCHEDULER = "crawling.distributed_scheduler.DistributedScheduler"
+
+# Don't cleanup redis queues, allows to pause/resume crawls.
+SCHEDULER_PERSIST = {{ crawling_persist }}
+
+# Schedule requests using a priority queue. (default)
+SCHEDULER_QUEUE_CLASS = 'crawling.redis_queue.RedisPriorityQueue'
+
+# seconds to wait between seeing new queues, cannot be faster than spider_idle time of 5
+SCHEDULER_QUEUE_REFRESH = {{ crawling_queue_refresh }}
+
+SCHEDULER_TLD_PATH = "file://{{ crawling_install_dir }}/tld_names.dat"
+
+# throttled queue defaults per domain, x hits in a y second window
+QUEUE_HITS = {{ crawling_queue_hits }}
+QUEUE_WINDOW = {{ crawling_queue_window }}
+
+# we want the queue to produce a consistent pop flow
+QUEUE_MODERATED = {{ crawling_queue_moderated }}
+
+# how long we want the duplicate timeout queues to stick around in seconds
+DUPEFILTER_TIMEOUT = {{ crawling_dupefilter_timeout }}
+
+# how often to refresh the ip address of the scheduler
+SCHEDULER_IP_REFRESH = {{ crawling_ip_refresh }}
+
+'''
+----------------------------------------
+The below parameters configure how spiders throttle themselves across the cluster
+All throttling is based on the TLD of the page you are requesting, plus any of the
+following parameters:
+
+Type: You have different spider types and want to limit how often a given type of
+spider hits a domain
+
+IP: Your crawlers are spread across different IP's, and you want each IP crawler clump
+to throttle themselves for a given domain
+
+Combinations for any given Top Level Domain:
+None - all spider types and all crawler ips throttle themselves from one tld queue
+Type only - all spiders throttle themselves based off of their own type-based tld queue,
+    regardless of crawler ip address
+IP only - all spiders throttle themselves based off of their public ip address, regardless
+    of spider type
+Type and IP - every spider's throttle queue is determined by the spider type AND the
+    ip address, allowing the most fined grained control over the throttling mechanism
+'''
+# add Spider type to throttle mechanism
+SCHEDULER_TYPE_ENABLED = {{ crawling_type_enabled }}
+
+# add ip address to throttle mechanism
+SCHEDULER_IP_ENABLED = {{ crawling_ip_enabled }}
+
+'''
+----------------------------------------
+'''
+DOWNLOADER_CLIENTCONTEXTFACTORY = 'crawling.contextfactory.MyClientContextFactory'
+
+# how many times to retry getting an item from the queue before the spider is considered idle
+SCHEUDLER_ITEM_RETRIES = {{ crawling_item_retries }}
+
+# Store scraped item in redis for post-processing.
+ITEM_PIPELINES = {
+    #'scrapy_redis.pipelines.RedisPipeline',
+    '{{ crawling_bot_name }}.{{ crawling_pipeline_file }}.LogImagesPipeline': {{ crawling_images_pipeline_rank }},
+    '{{ crawling_bot_name }}.{{ crawling_pipeline_file }}.KafkaPipeline': {{ crawling_kafka_pipeline_rank }},
+    '{{ crawling_bot_name }}.{{ crawling_pipeline_file }}.LoggingBeforePipeline': {{ crawling_logging_before_pipeline_rank }},
+    '{{ crawling_bot_name }}.{{ crawling_pipeline_file }}.LoggingAfterPipeline': {{ crawling_logging_after_pipeline_rank }},
+#    '{{ crawling_bot_name }}.{{ crawling_pipeline_file }}.SiteCapturePipeline': {{crawling_site_capture_pipeline_rank }},
+#    '{{ crawling_bot_name }}.{{ crawling_pipeline_file }}.SiteRawContentCapturePipeline': {{crawling_site_raw_content_capture_pipeline_rank }},
+#    '{{ crawling_bot_name }}.{{ crawling_pipeline_file }}.SiteImagesCapturePipeline': {{crawling_site_images_capture_pipeline_rank }},
+}
+
+SPIDER_MIDDLEWARES = {
+    # disable built-in DepthMiddleware, since we do our own
+    # depth management per crawl request
+    'scrapy.contrib.spidermiddleware.depth.DepthMiddleware': None,
+}
+
+DOWNLOADER_MIDDLEWARES = {
+    # Handle timeout retries with the redis scheduler and logger
+    'scrapy.contrib.downloadermiddleware.retry.RetryMiddleware' : None,
+    '{{ crawling_bot_name }}.redis_retry_middleware.RedisRetryMiddleware': 510,
+    # exceptions processed in reverse order
+    '{{ crawling_bot_name }}.log_retry_middleware.LogRetryMiddleware': 520,
+    # memex related middlewares
+    'scrapy.contrib.downloadermiddleware.useragent.UserAgentMiddleware' : None,
+    '{{ crawling_bot_name }}.rotate_useragent.RotateUserAgentMiddleware' :400,
+    '{{ crawling_bot_name }}.tor_proxy.OnionProxyMiddleware':410,
+    #'{{ crawling_bot_name }}.archive.ArchiveMiddleware':500,
+}
+
+# Disable the built in logging in production
+LOG_ENABLED = {{ crawling_scrapy_logging_enabled }}
+
+# Allow all return codes
+HTTPERROR_ALLOW_ALL = {{ crawling_httperror_all }}
+
+RETRY_TIMES = {{ crawling_retry_times }}
+
+DOWNLOAD_TIMEOUT = {{ crawling_download_timeout }}
+
+# Local Overrides
+# ~~~~~~~~~~~~~~~
+
+try:
+    from localsettings import *
+except ImportError:
+    pass

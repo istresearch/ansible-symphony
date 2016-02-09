@@ -102,18 +102,23 @@ vagrant-ist-01
 [tor-proxy]
 vagrant-ist-01
 
-[scrapy-kafka-monitor-node]
+[scrapy-cluster-kafka-monitor-node]
 vagrant-ist-01
 
-[scrapy-redis-monitor-node]
+[scrapy-cluster-redis-monitor-node]
 vagrant-ist-01
+
+[scrapy-cluster-crawler-nodes]
+vagrant-ist-02
+
+[scrapy-cluster:children]
+scrapy-cluster-kafka-monitor-node
+scrapy-cluster-redis-monitor-node
+scrapy-cluster-crawler-nodes
 
 #
 # Applications topology
 #
-
-[scrapy-crawler-nodes]
-vagrant-ist-02
 
 [scrapy-indexer-nodes]
 vagrant-ist-02

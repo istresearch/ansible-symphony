@@ -1,0 +1,11 @@
+[program:{{ sc_kafka_monitor_supervisor_name }}]
+command=/usr/bin/python kafka_monitor.py run
+directory={{ sc_install_dir }}/default/kafka-monitor
+autostart=true
+autorestart=true
+startsecs={{ sc_kafka_monitor_start_secs }}
+startretries={{ sc_kafka_monitor_start_retries }}
+stopsignal=KILL
+redirect_stderr=true
+stderr_logfile=AUTO
+stderr_logfile_maxbytes={{ sc_kafka_monitor_stderr_logfile_maxbytes }}

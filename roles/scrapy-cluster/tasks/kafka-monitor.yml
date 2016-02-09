@@ -1,0 +1,35 @@
+---
+- name: create kafka-monitor log directory
+  file:
+    path: "{{ sc_kafka_monitor_log_dir }}/"
+    state: directory
+    mode: 0755
+    group: "{{ sc_group }}"
+    owner: "{{ sc_user }}"
+
+- name: copy kafka-monitor settings
+  template:
+    src: kafka_monitor_settings.py.j2
+    dest: "{{ sc_install_dir }}/default/kafka-monitor/localsettings.py"
+    mode: 0644
+  notify:
+    - restart scrapy-kafka-monitor
+
+- name: copy supervisord config
+  template:
+    src: scrapy-kafka-monitor-supervisord.conf.j2
+    dest: "{{ supervisord_programs_dir|default('/etc/supervisor/conf.d') }}/scrapy-kafka-monitor-supervisord.conf"
+    mode: 0644
+  notify:
+    - reread supervisord
+    - restart scrapy-kafka-monitor
+
+- name: add crawler to supervisord
+  supervisorctl:
+    name: "{{ sc_kafka_monitor_name }}"
+    state: present
+
+- name: ensure crawler is started
+  supervisorctl:
+    name: "{{ sc_kafka_monitor_name }}"
+    state: started
