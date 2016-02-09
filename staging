@@ -108,6 +108,9 @@ vagrant-as-01
 [scrapy-redis-monitor-node]
 vagrant-as-01
 
+[logstash-nodes]
+vagrant-as-01
+
 #
 # Applications topology
 #
