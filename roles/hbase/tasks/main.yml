@@ -10,6 +10,7 @@
     name: "{{ hbase_user }}"
     group: "{{ hbase_group }}"
     createhome: no
+    shell: /bin/bash
   tags:
     - hbase
 
@@ -79,6 +80,11 @@
   with_items:
     - hbase-site.xml.j2
     - hbase-env.sh.j2
+  register: hbase_config
+  tags: hbase
+  
+- name: restart hbase to apply configuration changes
+  set_fact: hbase_config_changed={{ hbase_config.changed or (hbase_config_changed is defined and hbase_config_changed) }}
   notify:
     - restart hbase master
     - wait for hbase master port
@@ -86,8 +92,9 @@
     - wait for hbase region server port
     - restart hbase rest
     - wait for hbase rest port
+  changed_when: hbase_config_changed
   tags: hbase
-
+    
 - name: set ulimit hbase configuration
   template:
     src=hbase.conf.j2

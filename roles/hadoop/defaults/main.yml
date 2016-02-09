@@ -46,6 +46,7 @@ dfs_namenode_secondary_https_address_port: 50091
 dfs_namenode_name_dir: /data/dfs/nn
 dfs_datanode_data_dir: /data/dfs/dn
 dfs_replication: 3
+dfs_block_size: 134217728
 dfs_datanode_max_transfer_threads: 8192
 
 mapreduce_jobhistory_address_port: 10020
