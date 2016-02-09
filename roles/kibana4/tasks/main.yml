@@ -66,4 +66,18 @@
     - kibana4
     - supervisord
 
+- name: add kibana to supervisord
+  supervisorctl:
+    name: kibana4
+    state: present
+  tags:
+    - kibana4
+
+- name: ensure kibana is started
+  supervisorctl:
+    name: kibana4
+    state: started
+  tags:
+    - kibana4
+
 
