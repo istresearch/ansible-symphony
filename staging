@@ -117,8 +117,7 @@ scrapy-cluster-redis-monitor-node
 scrapy-cluster-crawler-nodes
 
 [logstash-nodes]
-vagrant-as-01
-
+vagrant-ist-01
 #
 # Applications topology
 #
