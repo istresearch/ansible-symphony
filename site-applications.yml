@@ -88,5 +88,7 @@
 # ------------------------------- Scrapy Cluster Pulse ------------------------
 - name: Run the Sccrapy Cluster Pulse role
   hosts: scrapy-cluster
+  vars:
+    - logstash_auto_start: True
   roles: [ scrapy-cluster-pulse ]
   tags: site-scrapy-cluster-pulse
