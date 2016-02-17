@@ -1,0 +1,11 @@
+[program:xvfb]
+command=Xvfb :{{ xvfb_display }} -ac -screen 0 1280x1024x24
+process_name=%(program_name)s
+autostart=true
+autorestart=true
+startsecs={{ xvfb_start_secs }}
+startretries={{ xvfb_start_retries }}
+stopsignal=KILL
+redirect_stderr=true
+stderr_logfile=AUTO
+stderr_logfile_maxbytes={{ xvfb_stderr_logfile_maxbytes }}

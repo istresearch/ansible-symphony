@@ -13,6 +13,7 @@ Ansible Symphony allows developer and production level `Ansible <http://ansible.
     topics/tipsandtricks
     topics/production
     private_topics/ist_quickstart
+    private_topics/private_roles/index
 
 Getting Started
 ===============
@@ -43,3 +44,6 @@ IST Specific
 
 :doc:`private_topics/ist_quickstart`
     Information about IST specific deployments
+
+:doc:`private_topics/private_roles/index`
+    Explains the individual IST custom ansible roles

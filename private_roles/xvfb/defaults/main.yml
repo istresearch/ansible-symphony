@@ -1,0 +1,4 @@
+xvfb_start_secs: 5
+xvfb_start_retries: 10
+xvfb_stderr_logfile_maxbytes: 50mb
+xvfb_display: 99

@@ -1,0 +1,117 @@
+- name: Configuring group
+  group:
+    name: "{{ googler_group }}"
+  tags:
+    - googler
+
+- name: Configuring user
+  user:
+    name: "{{ googler_user }}"
+    group: "{{ googler_group }}"
+    createhome: no
+  tags:
+    - googler
+
+- name: create googler install directory
+  file:
+    path: "{{ googler_install_dir }}/"
+    state: directory
+    mode: 0744
+    owner: "{{ googler_user }}"
+    group: "{{ googler_group }}"
+  tags: googler
+
+- name: create googler log directory
+  file:
+    path: "{{ googler_log_dir }}/"
+    state: directory
+    mode: 0754
+    owner: "{{ googler_user }}"
+    group: "{{ googler_group }}"
+  tags: googler
+
+- name: check for existing googler install
+  stat:
+    path: "{{ googler_install_dir }}/googler-{{ googler_version }}"
+  register: googler
+  tags: googler
+
+- name: download googler
+  get_url:
+    url: "{{ repository_infrastructure }}/googler/googler-{{ googler_version }}.tar.gz"
+    dest: "/tmp/googler-{{ googler_version }}.tar.gz"
+    mode: 0644
+    owner: "{{ googler_user }}"
+    group: "{{ googler_group }}"
+    validate_certs: no
+  when: googler.stat.isdir is not defined
+  tags: googler
+
+- name: extract googler
+  unarchive:
+    src: "/tmp/googler-{{ googler_version }}.tar.gz"
+    dest: "{{ googler_install_dir }}/"
+    copy: no
+    owner: "{{ googler_user }}"
+    group: "{{ googler_group }}"
+  when: googler.stat.isdir is not defined
+  tags: googler
+
+- name: delete temporary googler file
+  file:
+    path: "/tmp/googler-{{ googler_version }}.tar.gz"
+    state: absent
+  ignore_errors: yes
+  tags: googler
+
+- name: Change googler file permissions
+  file:
+    path: "{{ googler_install_dir }}/"
+    recurse: yes
+    owner: "{{ googler_user }}"
+    group: "{{ googler_group }}"
+  tags: googler
+
+- name: create googler symlink
+  file:
+    path: "{{ googler_install_dir }}/default"
+    state: link
+    src: "{{ googler_install_dir }}/googler-{{ googler_version }}"
+    owner: "{{ googler_user }}"
+    group: "{{ googler_group }}"
+  tags: googler
+
+- name: install packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - firefox
+  tags: googler
+
+- name: pip install requirements
+  pip:
+    requirements: "{{ googler_install_dir }}/default/requirements.txt"
+  notify:
+    - restart googler
+  tags: googler
+
+- name: copy supervisord config
+  template:
+    src: googler-supervisord.conf.j2
+    dest: "{{ supervisord_programs_dir }}/googler-supervisord.conf"
+    mode: 0644
+  notify:
+    - reread supervisord
+  tags: googler
+
+- name: copy googler settings
+  template:
+    src: localsettings.py.j2
+    dest: "{{ googler_install_dir }}/default/googler/localsettings.py"
+    mode: 0644
+  notify:
+    - restart googler
+  tags: googler
+
+# logstash settings eventually here

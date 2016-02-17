@@ -102,3 +102,10 @@
     - roles/elasticsearch/defaults/main.yml
   roles: [ mysql-es-connector ]
   tags: site-pulse-app 
+
+# --------------------------------- Googler -----------------------------------
+- name: Run the Googler role
+  hosts: googler-nodes
+  roles: [ googler ]
+  tags: site-googler
+
