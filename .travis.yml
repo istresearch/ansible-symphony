@@ -22,6 +22,7 @@ env:
   - TAGS='deps-hbase'
   - TAGS='deps-spark'
   - TAGS='site-docker-engine'
+  - TAGS='site-neo4j'
 
 matrix:
   fast_finish: true
