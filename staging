@@ -109,6 +109,7 @@ vagrant-ist-01
 vagrant-ist-01
 
 [scrapy-cluster-crawler-nodes]
+vagrant-ist-01
 vagrant-ist-02
 
 [scrapy-cluster:children]
