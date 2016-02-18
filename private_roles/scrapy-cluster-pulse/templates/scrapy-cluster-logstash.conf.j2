@@ -7,6 +7,15 @@ input {
   }
 }
 
+input {
+  file {
+    path => ['{{ googler_log_dir|default('/var/log/googler') }}/*.log']
+    codec => json
+    tags => ['googler']
+    sincedb_path => "{{ logstash_sincedb_dir }}/since.db"
+  }
+}
+
 output {
 {% if groups['elasticsearch-nodes'] is defined and (groups['elasticsearch-nodes']|length > 0) %}
   if 'scrapy-cluster' in [tags]{
@@ -16,6 +25,21 @@ output {
       template_name => "logs-*"
       template_overwrite => true
       index => "logs-scrapy-cluster"
+      document_type => "%{[logger]}"
+    }
+  }
+{% endif %}
+}
+
+output {
+{% if groups['elasticsearch-nodes'] is defined and (groups['elasticsearch-nodes']|length > 0) %}
+  if 'googler' in [tags]{
+    elasticsearch {
+      hosts => "{{ groups['elasticsearch-nodes'][0] }}:{{ elasticsearch_network_http_port|default(9200) }}"
+      template => "{{ logstash_template_dir|default('/etc/logstash.d/templates') }}/pulse-logs-template.json"
+      template_name => "logs-*"
+      template_overwrite => true
+      index => "logs-googler"
       document_type => "%{[logger]}"
     }
   }
