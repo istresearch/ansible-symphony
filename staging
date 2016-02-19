@@ -142,4 +142,5 @@ traptor-track-nodes
 [docker-engine]
 vagrant-as-01
 
-
+[neo4j-node]
+vagrant-as-02

@@ -147,7 +147,7 @@
     - nimbus_host: "{{ groups['storm-nimbus-node'][0] }}"
     - zookeeper_host_list: "{{ groups['zookeeper-nodes'] }}"
   roles: [ storm ]
-  tags: 
+  tags:
     - site-storm
     - deps-storm
 
@@ -304,3 +304,11 @@
   roles: [ docker-engine ]
   tags:
     - site-docker-engine
+
+# ---------------------------------- Neo4j --------------------------------
+
+- name: Neo4j
+  hosts: neo4j-node
+  roles: [ neo4j ]
+  tags:
+    - site-neo4j
