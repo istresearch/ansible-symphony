@@ -182,6 +182,17 @@ memex-crawler06.istresearch.com
 traptor-follow-nodes
 traptor-track-nodes
 
+[es-amazon]
+dig-es01.istresearch.com
+dig-es02.istresearch.com
+dig-es03.istresearch.com
+dig-es04.istresearch.com
+dig-es05.istresearch.com
+dig-es06.istresearch.com
+dig-es07.istresearch.com
+dig-es08.istresearch.com
+dig-es09.istresearch.com
+dig-es10.istresearch.com
 
 [other]
 in-namenode01.nj.istresearch.com
