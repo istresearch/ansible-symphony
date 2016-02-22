@@ -26,7 +26,7 @@
   file:
     path={{ neo4j_server_database_location }}
     state=directory
-    mode=0744
+    mode=0755
     owner={{ neo4j_user }}
     group={{ neo4j_group }}
   tags: neo4j
