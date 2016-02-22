@@ -1,4 +1,4 @@
 ---
 
 dfs_replication: 2
-dfs_block_size: 67110000
+dfs_block_size: 67109888
