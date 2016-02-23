@@ -23,6 +23,9 @@ elasticsearch_data_dir: /var/lib/elasticsearch
 elasticsearch_work_dir: /tmp/elasticsearch
 elasticsearch_conf_dir: "{{ elasticsearch_install_dir }}/elasticsearch-{{ elasticsearch_version }}/config"
 
+elasticsearch_volume: /dev/sdb
+elasticsearch_in_aws: false
+
 elasticsearch_is_master: "false"
 elasticsearch_is_data: "false"
 elasticsearch_is_client: "false"
