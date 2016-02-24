@@ -162,6 +162,7 @@
     mode: 0644
   notify:
     - reread supervisord
+    - "restart elasticsearch {{ conf_name }}"
   tags:
     - elasticsearch
 
