@@ -63,12 +63,12 @@
 - name: Run elasticsearch master role in Amazon
   hosts: dig-elasticsearch-master-nodes
   vars:
-   - elasticsearch_host_list: "{{ groups['elasticsearch-nodes'] }}"
+   - elasticsearch_host_list: "{{ groups['dig-elasticsearch-nodes'] }}"
    - elasticsearch_is_master: "true"
   roles: [ elasticsearch ]
   tags:
-    - site-elasticsearch
-    - ELK
+    - dig-site-elasticsearch
+    - dig-ELK
 
 - name: Run elasticsearch data role
   hosts: elasticsearch-data-nodes
@@ -83,12 +83,12 @@
 - name: Run elasticsearch data role
   hosts: dig-elasticsearch-data-nodes
   vars:
-   - elasticsearch_host_list: "{{ groups['elasticsearch-nodes'] }}"
+   - elasticsearch_host_list: "{{ groups['dig-elasticsearch-nodes'] }}"
    - elasticsearch_is_data: "true"
   roles: [ elasticsearch ]
   tags:
-    - site-elasticsearch
-    - ELK
+    - dig-site-elasticsearch
+    - dig-ELK
 
 - name: Run elasticsearch client role
   hosts: elasticsearch-client-nodes
@@ -103,12 +103,12 @@
 - name: Run elasticsearch client role
   hosts: dig-elasticsearch-client-nodes
   vars:
-   - elasticsearch_host_list: "{{ groups['elasticsearch-nodes'] }}"
+   - elasticsearch_host_list: "{{ groups['dig-elasticsearch-nodes'] }}"
    - elasticsearch_is_client: "true"
   roles: [ elasticsearch ]
   tags:
-    - site-elasticsearch
-    - ELK
+    - dig-site-elasticsearch
+    - dig-ELK
 
 - name: Run logstash role
   hosts: logstash-nodes
