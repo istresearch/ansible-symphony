@@ -148,3 +148,6 @@ vagrant-ist-01
 
 [googler-nodes]
 vagrant-ist-02
+
+[neo4j-node]
+vagrant-ist-02

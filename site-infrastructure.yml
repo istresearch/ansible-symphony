@@ -352,3 +352,11 @@
   roles: [ docker-engine ]
   tags:
     - site-docker-engine
+
+# ---------------------------------- Neo4j --------------------------------
+
+- name: Neo4j
+  hosts: neo4j-node
+  roles: [ neo4j ]
+  tags:
+    - site-neo4j

@@ -5,7 +5,7 @@
 #hbase_master_host:
 
 # Defaults...
-hbase_version: 1.1.2
+hbase_version: 1.1.3
 hbase_install_dir: /opt/hbase
 hbase_exe_dir: "JAVA_HOME={{ java_home }} {{ hbase_install_dir }}/default/bin"
 hbase_conf_dir: "{{ hbase_install_dir }}/default/conf"
@@ -37,4 +37,4 @@ hbase_rest_port: 60050
 hbase_rest_info_port: 8086
 hbase_jmx_remote_port: 10102
 
-repository_infrastructure: "{{ apache_mirror }}/hbase/stable"
+repository_infrastructure: "{{ apache_mirror }}/hbase/{{ hbase_version }}"
