@@ -84,3 +84,11 @@
   hosts: googler-nodes
   roles: [ googler ]
   tags: site-googler
+
+# ------------------------------- Scrapy Cluster Pulse ------------------------
+- name: Run the Scrapy Cluster Pulse role
+  hosts: scrapy-cluster
+  vars:
+    - logstash_auto_start: True
+  roles: [ scrapy-cluster-pulse ]
+  tags: site-scrapy-cluster-pulse
