@@ -1,7 +1,7 @@
 ---
 # file: group_vars/all
 
-apache_mirror: http://apache.arvixe.com
+apache_mirror: http://archive.apache.org/dist
 
 slackbot: "{{ vault_slackbot }}"
 repository_un: "{{ vault_repository_un }}"

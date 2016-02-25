@@ -1,0 +1,171 @@
+---
+sc_install_dir: /opt/scrapy-cluster
+sc_build_version: 23
+sc_build_branch: dev
+sc_install_version: "scrapy-cluster-ist-{{ sc_build_version }}-{{ sc_build_branch }}"
+
+sc_is_crawler: False
+sc_is_kafka_monitor: False
+sc_is_redis_monitor: False
+
+sc_group: scrapy-cluster
+sc_user: scrapy-cluster
+
+# CRAWLER SPECIFIC SETTINGS -----------------------
+
+sc_crawling_name: sc-crawler
+sc_crawling_kafka_topic_prefix: demo
+sc_crawling_zookeeper_dir: /scrapy-cluster/crawler/
+sc_crawling_zookeeper_id: all
+sc_crawling_public_ip_url: "http://ip.42.pl/raw"
+
+sc_crawling_bot_name: crawling
+sc_crawling_spider_folder: spiders
+sc_crawling_pipeline_file: pipelines
+sc_crawling_scrapy_logging_enabled: "False"
+sc_crawling_httperror_all: "True"
+
+sc_crawling_idle_before_close: 0
+sc_crawling_download_delay: 2.0
+sc_crawling_images_pipeline_rank: 90
+sc_crawling_kafka_pipeline_rank: 100
+sc_crawling_log_retry_middleware_rank: 505
+sc_crawling_retry_times: 3
+sc_crawling_download_timeout: 30
+
+sc_crawling_persist: True
+sc_crawling_queue_refresh: 10
+sc_crawling_queue_hits: 10
+sc_crawling_queue_window: 60
+sc_crawling_queue_moderated: True
+sc_crawling_dupefilter_timeout: 600
+sc_crawling_ip_refresh: 60
+sc_crawling_type_enabled: "True"
+sc_crawling_ip_enabled: "True"
+sc_crawling_item_retries: 3
+sc_crawling_kafka_appid_topics: False
+sc_crawling_kafka_base_64: False
+sc_crawling_dns_cache: True
+sc_crawling_num_procs: 5
+sc_crawling_start_secs: 5
+sc_crawling_start_retries: 100
+sc_crawling_stdout_logfile_maxbytes: 50MB
+sc_crawling_stderr_logfile_maxbytes: 50MB
+
+sc_crawling_logger_name: "{{ sc_crawling_name }}"
+sc_crawling_log_dir: /var/log/scrapy-cluster
+sc_crawling_log_file: "{{ sc_crawling_name }}.log"
+sc_crawling_log_max_bytes: 25000000
+sc_crawling_log_backups: 5
+sc_crawling_logstash_tag: "{{ sc_crawling_name }}"
+sc_crawling_log_stdout: False
+sc_crawling_log_json: True
+sc_crawling_log_level: "INFO"
+
+sc_crawling_status_codes: True
+sc_crawling_response_codes:
+    - 200
+    - 404
+    - 403
+    - 504
+
+sc_crawling_stats_cycle: 5
+sc_crawling_stats_times:
+    - 'SECONDS_15_MINUTE'
+    - 'SECONDS_1_HOUR'
+    - 'SECONDS_6_HOUR'
+    - 'SECONDS_12_HOUR'
+    - 'SECONDS_1_DAY'
+    - 'SECONDS_1_WEEK'
+
+sc_crawling_logging_before_pipeline_rank: 1
+sc_crawling_logging_after_pipeline_rank: 101
+
+# KAFKA MONITOR SPECIFIC SETTINGS --------------------
+
+sc_kafka_monitor_name: sc-kafka-monitor
+
+sc_kafka_monitor_kafka_topic_prefix: demo
+sc_kafka_monitor_topic_main: incoming
+sc_kafka_monitor_kafka_group: "{{ sc_kafka_monitor_name }}"
+
+sc_kafka_monitor_feed_timeout: 5
+sc_kafka_monitor_conn_timeout: 5
+sc_kafka_monitor_plugin_dir: plugins
+sc_kafka_monitor_plugins:
+    - "'plugins.scraper_handler.ScraperHandler': 100"
+    - "'plugins.action_handler.ActionHandler': 200"
+    - "'plugins.stats_handler.StatsHandler': 300"
+
+sc_kafka_monitor_supervisor_name: "{{ sc_kafka_monitor_name }}"
+sc_kafka_monitor_num_procs: 1
+sc_kafka_monitor_start_secs: 5
+sc_kafka_monitor_start_retries: 100
+sc_kafka_monitor_stderr_logfile_maxbytes: 50MB
+
+sc_kafka_monitor_logger_name: "{{ sc_kafka_monitor_name }}"
+sc_kafka_monitor_log_dir: /var/log/scrapy-cluster
+sc_kafka_monitor_log_file: "{{ sc_kafka_monitor_name }}.log"
+sc_kafka_monitor_log_max_bytes: 25000000
+sc_kafka_monitor_log_backups: 5
+sc_kafka_monitor_log_stdout: False
+sc_kafka_monitor_log_json: True
+sc_kafka_monitor_log_level: "INFO"
+
+sc_kafka_monitor_stats_total: True
+sc_kafka_monitor_stats_plugins: True
+sc_kafka_monitor_stats_cycle: 5
+sc_kafka_monitor_stats_dump: 60
+sc_kafka_monitor_stats_times:
+    - 'SECONDS_15_MINUTE'
+    - 'SECONDS_1_HOUR'
+    - 'SECONDS_6_HOUR'
+    - 'SECONDS_12_HOUR'
+    - 'SECONDS_1_DAY'
+    - 'SECONDS_1_WEEK'
+
+sc_kafka_monitor_logstash_tag: "{{ sc_kafka_monitor_name }}"
+
+# REDIS MONITOR SPECIFIC SETTINGS --------------------
+sc_redis_monitor_name: sc-redis-monitor
+
+sc_redis_monitor_poll_interval: 10.0
+sc_redis_monitor_start_secs: 5
+sc_redis_monitor_start_retries: 60
+sc_redis_monitor_conn_timeout: 5
+
+sc_redis_monitor_plugin_dir: plugins
+sc_redis_monitor_plugins:
+    - "'plugins.info_monitor.InfoMonitor': 100"
+    - "'plugins.stop_monitor.StopMonitor': 200"
+    - "'plugins.expire_monitor.ExpireMonitor': 300"
+    - "'plugins.stats_monitor.StatsMonitor': 400"
+
+sc_redis_monitor_logger_name: "{{ sc_redis_monitor_name }}"
+sc_redis_monitor_log_dir: /var/log/scrapy-cluster
+sc_redis_monitor_log_file: "{{ sc_redis_monitor_name }}.log"
+sc_redis_monitor_log_max_bytes: 25000000
+sc_redis_monitor_log_backups: 5
+sc_redis_monitor_log_stdout: False
+sc_redis_monitor_log_json: True
+sc_redis_monitor_log_level: "INFO"
+
+sc_redis_monitor_supervisor_name: "{{ sc_redis_monitor_name }}"
+sc_redis_monitor_kafka_prefix: "demo"
+sc_redis_monitor_kafka_appids: False
+
+sc_redis_monitor_stats_total: True
+sc_redis_monitor_stats_plugins: True
+sc_redis_monitor_stats_cycle: 5
+sc_redis_monitor_stats_dump: 60
+sc_redis_monitor_stats_dump_crawl: True
+sc_redis_monitor_stats_times:
+    - 'SECONDS_15_MINUTE'
+    - 'SECONDS_1_HOUR'
+    - 'SECONDS_6_HOUR'
+    - 'SECONDS_12_HOUR'
+    - 'SECONDS_1_DAY'
+    - 'SECONDS_1_WEEK'
+
+sc_redis_monitor_logstash_tag: "{{ sc_redis_monitor_name }}"
+

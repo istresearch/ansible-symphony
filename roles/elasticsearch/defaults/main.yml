@@ -3,7 +3,7 @@
 elasticsearch_install_dir: /opt/elasticsearch
 elasticsearch_user: elasticsearch
 elasticsearch_group: elasticsearch
-elasticsearch_version: 2.1.1
+elasticsearch_version: 2.2.0
 elasticsearch_max_open_files: 65535
 elasticsearch_max_locked_memory: 100000
 elasticsearch_max_num_procs: 32000
@@ -22,6 +22,9 @@ elasticsearch_log_dir: /var/log/elasticsearch
 elasticsearch_data_dir: /var/lib/elasticsearch
 elasticsearch_work_dir: /tmp/elasticsearch
 elasticsearch_conf_dir: "{{ elasticsearch_install_dir }}/elasticsearch-{{ elasticsearch_version }}/config"
+
+elasticsearch_volume: /dev/xvdb
+elasticsearch_in_aws: "false"
 
 elasticsearch_is_master: "false"
 elasticsearch_is_data: "false"

@@ -1,0 +1,18 @@
+---
+# file: hostname.yml
+
+- hosts: servers
+  roles: 
+    - common
+
+  tasks:
+  - name: update hostname for CentOS
+    shell: "sed -i 's,HOSTNAME=.*,HOSTNAME={{ host_alias }},g' /etc/sysconfig/network"
+    when: ansible_os_family == 'RedHat'
+
+  - name: update hostname for Ubuntu
+    shell: "echo '{{ host_alias }}' > /etc/hostname"
+    when: ansible_os_family == "Debian"
+
+  - name: set hostname now
+    command: "hostname {{ host_alias }}"

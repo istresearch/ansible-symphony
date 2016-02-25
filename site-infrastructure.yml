@@ -9,6 +9,15 @@
     - site-common
     - site-pulse
 
+# ------------------------------ Customize Internap ------------------------
+
+- name: Run Internap customize
+  hosts: internap
+  roles:
+    - internap-customize
+  tags: internap-customize
+  strategy: free
+
 # ----------------------------- Add users -----------------------------------
 
 - hosts: all
@@ -24,11 +33,12 @@
   roles: [ zookeeper ]
   tags:
     - site-zookeeper
-    - site-kafka
-    - site-storm
-    - site-hadoop
-    - site-hbase
-    - site-spark
+    - deps-kafka
+    - deps-storm
+    - deps-hadoop
+    - deps-hbase
+    - deps-spark
+    - deps-scrapy-cluster
 
 - name: Run kafka role
   hosts: kafka-nodes
@@ -38,6 +48,8 @@
   roles: [ kafka ]
   tags:
     - site-kafka
+    - deps-kafka
+    - deps-scrapy-cluster
 
 # ------------------------------ ELK stack ------------------------------------
 - name: Run elasticsearch master role
@@ -52,6 +64,16 @@
     - site-pulse
     - site-pulse-no-docker
 
+- name: Run elasticsearch master role in Amazon
+  hosts: dig-elasticsearch-master-nodes
+  vars:
+   - elasticsearch_host_list: "{{ groups['dig-elasticsearch-nodes'] }}"
+   - elasticsearch_is_master: "true"
+  roles: [ elasticsearch ]
+  tags:
+    - dig-site-elasticsearch
+    - dig-ELK
+
 - name: Run elasticsearch data role
   hosts: elasticsearch-data-nodes
   vars:
@@ -64,6 +86,16 @@
     - site-pulse
     - site-pulse-no-docker
 
+- name: Run elasticsearch data role
+  hosts: dig-elasticsearch-data-nodes
+  vars:
+   - elasticsearch_host_list: "{{ groups['dig-elasticsearch-nodes'] }}"
+   - elasticsearch_is_data: "true"
+  roles: [ elasticsearch ]
+  tags:
+    - dig-site-elasticsearch
+    - dig-ELK
+
 - name: Run elasticsearch client role
   hosts: elasticsearch-client-nodes
   vars:
@@ -75,6 +107,16 @@
     - ELK
     - site-pulse
     - site-pulse-no-docker
+
+- name: Run elasticsearch client role
+  hosts: dig-elasticsearch-client-nodes
+  vars:
+   - elasticsearch_host_list: "{{ groups['dig-elasticsearch-nodes'] }}"
+   - elasticsearch_is_client: "true"
+  roles: [ elasticsearch ]
+  tags:
+    - dig-site-elasticsearch
+    - dig-ELK
 
 - name: Run logstash role
   hosts: logstash-nodes
@@ -97,6 +139,7 @@
   roles: [ redis ]
   tags:
     - site-redis
+    - deps-scrapy-cluster
     - scrapy-services
 
 - name: Run tor role
@@ -107,33 +150,39 @@
     - scrapy-services
 
 # --------------------------- Scrapy Cluster ---------------------------------
-- name: Run scrapy-crawler role (infrastructure)
-  hosts: scrapy-crawler-nodes
-  roles: [ scrapy-crawler ]
+- name: Run Scrapy Cluster Crawler
+  hosts: scrapy-cluster-crawler-nodes
+  vars:
+    - sc_is_crawler: True
+  roles: [ scrapy-cluster ]
   tags:
-    - site-scrapy-crawler
-    - scrapy-cluster
+    - site-scrapy-cluster
+    - deps-scrapy-cluster
 
+- name: Run Scrapy Cluster Kafka Monitor
+  hosts: scrapy-cluster-kafka-monitor-node
+  vars:
+    - sc_is_kafka_monitor: True
+  roles: [ scrapy-cluster ]
+  tags:
+    - site-scrapy-cluster
+    - deps-scrapy-cluster
+
+- name: Run Scrapy Cluster Redis Monitor
+  hosts: scrapy-cluster-redis-monitor-node
+  vars:
+    - sc_is_redis_monitor: True
+  roles: [ scrapy-cluster ]
+  tags:
+    - site-scrapy-cluster
+    - deps-scrapy-cluster
+
+# ------------------------------- Scrapy Indexers ----------------------------
 - name: Run scrapy-indexer role (infrastructure)
   hosts: scrapy-indexer-nodes
   roles: [ scrapy-indexer ]
   tags:
     - site-scrapy-indexer
-    - scrapy-cluster
-
-- name: Run scrapy-kafka role (infrastructure)
-  hosts: scrapy-kafka-monitor-node
-  roles: [ scrapy-kafka-monitor ]
-  tags:
-    - site-scrapy-indexer
-    - scrapy-cluster
-
-- name: Run scrapy-redis role (infrastructure)
-  hosts: scrapy-redis-monitor-node
-  roles: [ scrapy-redis-monitor ]
-  tags:
-    - site-scrapy-redis-monitor
-    - scrapy-cluster
 
 # -------------------------------- Storm -------------------------------------
 
@@ -144,7 +193,9 @@
     - nimbus_host: "{{ groups['storm-nimbus-node'][0] }}"
     - zookeeper_host_list: "{{ groups['zookeeper-nodes'] }}"
   roles: [ storm ]
-  tags: site-storm
+  tags:
+    - site-storm
+    - deps-storm
 
 - name: Run Storm UI role
   hosts: storm-ui-node
@@ -153,7 +204,9 @@
     - nimbus_host: "{{ groups['storm-nimbus-node'][0] }}"
     - zookeeper_host_list: "{{ groups['zookeeper-nodes'] }}"
   roles: [ storm ]
-  tags: site-storm
+  tags:
+    - site-storm
+    - deps-storm
 
 - name: Run Storm supervisor role
   hosts: storm-supervisor-nodes
@@ -163,7 +216,17 @@
     - nimbus_host: "{{ groups['storm-nimbus-node'][0] }}"
     - zookeeper_host_list: "{{ groups['zookeeper-nodes'] }}"
   roles: [ storm ]
-  tags: site-storm
+  tags:
+    - site-storm
+    - deps-storm
+
+- name: Storm Configuration Changed Fact Reset
+  hosts: storm-nodes
+  tasks:
+    - set_fact: storm_config_changed=false
+  tags:
+    - site-storm
+    - deps-storm
 
 # --------------------------------- Hadoop -----------------------------------
 - name: HDFS Namenode
@@ -179,8 +242,9 @@
   roles: [ hadoop ]
   tags:
     - site-hadoop
-    - site-hbase
-    - site-spark
+    - deps-hadoop
+    - deps-hbase
+    - deps-spark
 
 - name: HDFS Datanodes
   hosts: hadoop-datanode-nodes
@@ -193,8 +257,9 @@
   roles: [ hadoop ]
   tags:
     - site-hadoop
-    - site-hbase
-    - site-spark
+    - deps-hadoop
+    - deps-hbase
+    - deps-spark
 
 - name: HDFS Secondary Namenode
   hosts: hadoop-secondary-namenode-node
@@ -206,8 +271,19 @@
   roles: [ hadoop ]
   tags:
     - site-hadoop
-    - site-hbase
-    - site-spark
+    - deps-hadoop
+    - deps-hbase
+    - deps-spark
+
+- name: Hadoop Configuration Changed Fact Reset
+  hosts: hadoop-nodes
+  tasks:
+    - set_fact: hadoop_config_changed=false
+  tags:
+    - site-hadoop
+    - deps-hadoop
+    - deps-hbase
+    - deps-spark
 
 # --------------------------------- HBase ------------------------------------
 - name: HBase Master Node
@@ -219,7 +295,9 @@
     - dfs_namenode_host: "{{ groups['hadoop-namenode-node'][0] }}"
     - zookeeper_host_list: "{{ groups['zookeeper-nodes'] }}"
   roles: [ hbase ]
-  tags: site-hbase
+  tags:
+    - site-hbase
+    - deps-hbase
 
 - name: HBase Region Servers
   hosts: hbase-regionserver-nodes
@@ -229,7 +307,17 @@
     - dfs_namenode_host: "{{ groups['hadoop-namenode-node'][0] }}"
     - zookeeper_host_list: "{{ groups['zookeeper-nodes'] }}"
   roles: [ hbase ]
-  tags: site-hbase
+  tags:
+    - site-hbase
+    - deps-hbase
+
+- name: HBase Configuration Changed Fact Reset
+  hosts: hbase-nodes
+  tasks:
+    - set_fact: hbase_config_changed=false
+  tags:
+    - site-hbase
+    - deps-hbase
 
 # --------------------------------- Spark ------------------------------------
 # Requires Hadoop and HDFS
@@ -242,7 +330,9 @@
     - dfs_namenode_host: "{{ groups['hadoop-namenode-node'][0] }}"
     - yarn_historyserver_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
   roles: [ spark ]
-  tags: site-spark
+  tags:
+    - site-spark
+    - deps-spark
 
 - name: Spark Workers
   hosts: spark-worker-nodes
@@ -252,7 +342,17 @@
     - dfs_namenode_host: "{{ groups['hadoop-namenode-node'][0] }}"
     - yarn_historyserver_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
   roles: [ spark ]
-  tags: site-spark
+  tags:
+    - site-spark
+    - deps-spark
+
+- name: Spark Configuration Changed Fact Reset
+  hosts: spark-nodes
+  tasks:
+    - set_fact: spark_config_changed=false
+  tags:
+    - site-spark
+    - deps-spark
 
 # ---------------------------------- Docker Engine ---------------------------
 
@@ -279,3 +379,10 @@
   roles: [ pulse-docker ]
   tags: site-pulse
 
+# ---------------------------------- Neo4j --------------------------------
+
+- name: Neo4j
+  hosts: neo4j-node
+  roles: [ neo4j ]
+  tags:
+    - site-neo4j
