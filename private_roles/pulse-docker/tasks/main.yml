@@ -1,0 +1,54 @@
+---
+- include_vars: ../defaults/main.yml
+  tags: pulse-ui-app
+
+- name: Check whether pulse_docker_dir exists
+  stat:
+    path={{ pulse_docker_dir }}
+    get_md5=False
+  register: docker_dir
+  tags: docker
+
+- name: Make make pulse_docker_dir if it doesn't exist
+  file:
+    path={{ pulse_docker_dir }}
+    state=directory
+  when: not docker_dir.stat.exists
+  tags: docker
+
+- name: Move pulse docker script to host
+  template:
+    src=pulse_docker.j2
+    dest={{ pulse_docker_dir|default('/data/bin/pulse_docker') }}/{{ pulse_name }}
+    mode=755
+  tags:
+    - docker
+
+- name: Check if persistent data directory exists
+  stat:
+    path={{ pulse_docker_data_dir }}/{{ pulse_name }}
+    get_md5=False
+  register: docker_data_dir
+  tags: docker
+
+- name: Make persistent data directory if doesn't exist
+  file:
+    path={{ pulse_docker_data_dir }}/{{ pulse_name }}
+    state=directory
+  when: not docker_data_dir.stat.exists
+  tags: docker
+
+- name: Move pulse Kibana config to host
+  template:
+    src=kibana_config.j2
+    dest={{ pulse_docker_data_dir|default('/data/pulse') }}/{{ pulse_name }}/kibana{{ pulse_name }}.yml
+    mode=755
+  tags:
+    - docker
+    - pulse-ui-app
+
+- name: Start Kibana container
+  shell: "sudo bash {{ pulse_docker_dir }}/{{ pulse_name }} start"
+  tags:
+    - docker
+    - pulse-ui-app

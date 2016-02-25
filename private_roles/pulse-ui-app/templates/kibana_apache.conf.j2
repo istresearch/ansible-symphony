@@ -1,0 +1,24 @@
+<VirtualHost *:443>
+    ServerName {{ inventory_hostname }}
+    SSLEngine On
+    SSLCertificateFile /etc/apache2/ssl/kibana.crt
+    SSLCertificateKeyFile /etc/apache2/ssl/kibana.key
+
+  ProxyRequests Off
+  <Proxy *>
+      Order Allow,Deny
+      Allow from all
+      AuthType Basic
+      AuthName "Authenticated proxy"
+      AuthUserFile /etc/apache2/elastic.htpwd
+      Require valid-user
+  </Proxy>
+    ProxyPass /kibana http://127.0.0.1:{{ kibana4_port | default('5601') }}
+    ProxyPassReverse /kibana http://127.0.0.1:{{ kibana4_port | default('5601') }}
+    RewriteEngine on
+    RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_FILENAME} !-f
+    RewriteRule ^/kibana$ https://%{HTTP_HOST}%{REQUEST_URI}/ [R,L]
+          LogLevel warn
+          CustomLog ${APACHE_LOG_DIR}/kibana_access.log combined
+
+</VirtualHost>

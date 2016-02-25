@@ -1,0 +1,32 @@
+---
+# file: roles/extras/tasks/main.yml
+
+- name: install epel repository
+  yum: name=epel-release state=latest
+  tags: extras
+  when: ansible_os_family == "RedHat"
+
+- name: install some extra goodies
+  yum: name={{item}} state=latest
+  with_items:
+    - vim
+    - zsh
+    - htop
+    - glances
+  when: ansible_os_family == "RedHat"
+  tags: extras
+
+- name: add some aliases
+  lineinfile:
+    dest=/root/.bashrc
+    insertafter=EOF
+    line="{{item}}"
+    state=present
+  with_items:
+    - alias sc='supervisorctl'
+    - alias sct='supervisorctl tail -f'
+    - alias scs='supervisorctl status'
+    - alias sch='supervisorctl stop'
+    - alias scr='supervisorctl restart'
+    - alias scg='supervisorctl start'
+  tags: extras

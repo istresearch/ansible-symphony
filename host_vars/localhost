@@ -1,0 +1,14 @@
+---
+# file: host_vars/pulse-node01
+# Override group_vars for pulse-node01
+
+# uncomment to override default ports in "pulse-ES-kibana-nodes" group var file
+#elasticsearch_network_http_port: 19200
+#kibana4_port: 5602
+
+# for example, "ubuntu-trusty" or "debian-wheezy"
+docker_debian_distribution: "ubuntu-trusty"
+
+pulse_self_signed_ssl: true
+
+# repository_pip: https://pypi.python.org/simple

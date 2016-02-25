@@ -1,0 +1,36 @@
+---
+- include_vars: ../../pulse-ui-app/defaults/main.yml
+  tags:
+    - pulse-ui-db-app 
+    - pulse-ui-app
+
+- name: curl DB setup
+#  command: /usr/bin/curl --request POST --url {{ inventory_hostname }}/{{ pulse_name }}/admin/ajajResetupDb/
+  command: /usr/bin/curl {{ inventory_hostname }}/{{ pulse_name }}/install/resetup_db/
+  tags: pulse-ui-db-app
+
+#- name: Run DB setup
+#  uri: 
+#    url=https://{{ inventory_hostname }}/{{ pulse_name }}/admin/ajajResetupDb
+#    method=POST
+#  tags: pulse-ui-db-app
+
+- name: Move titan sql script over
+  template:
+    src=setup_titan.sql.j2
+    dest=/tmp/setup_titan.sql
+  tags: pulse-ui-db-app
+
+- name: Setup mysql titan user
+  mysql_db:
+    name={{ pulse_db_name }}
+    state=import
+    target=/tmp/setup_titan.sql
+  tags: pulse-ui-db-app
+
+- name: Remove titan sql script
+  file:
+    path=/tmp/setup_titan.sql
+    state=absent
+  ignore_errors: yes
+  tags: pulse-ui-db-app

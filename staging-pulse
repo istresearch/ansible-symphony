@@ -1,0 +1,38 @@
+#   - Comments begin with the '#' character
+#   - Blank lines are ignored
+#   - Groups of hosts are delimited by [header] elements
+#   - You can enter hostnames or ip addresses
+#   - A hostname/ip can be a member of multiple groups
+
+[all:vars]
+repository_host=repo.istresearch.com
+
+#
+# Infrastructure and software topology
+#
+
+[elasticsearch-master-nodes]
+# data node serves as master also
+
+[elasticsearch-data-nodes]
+pulse-node01 elasticsearch_is_master=true
+
+[elasticsearch-client-nodes]
+
+
+[elasticsearch-nodes:children]
+elasticsearch-master-nodes
+elasticsearch-data-nodes
+elasticsearch-client-nodes
+
+[kibana-node]
+pulse-node01
+
+[pulse-ui-node]
+pulse-node01
+
+[pulse-mysql-es-host]
+pulse-node01
+
+[docker-engine]
+pulse-node01

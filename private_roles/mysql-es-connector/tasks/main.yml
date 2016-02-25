@@ -1,0 +1,94 @@
+---
+- include_vars: ../../pulse-ui-app/defaults/main.yml
+  tags: 
+    - pulse-ui-app
+
+
+- include_vars: "elasticsearch_network_http_port"
+  with_first_found:
+    - "../../../roles/elasticsearch/defaults/main.yml"
+  tags:
+    - pulse-ui-app
+
+- name: check for mysql-es connector directory
+  stat: path={{ mysql_es_dir }}
+  register: mysql_es
+  tags: mysql-es-connector
+
+- name: make mysql-es connector directory if not exist
+  file:
+    path={{ mysql_es_dir }}
+    state=directory
+    mode=0755
+  when: mysql_es.stat.isdir is not defined
+  tags: mysql-es-connector
+
+- name: move myql-es connector script over
+  copy:
+    src=mysql_es_pulse.py
+    dest={{ mysql_es_dir }}/mysql_es_pulse.py
+    mode=0755
+  tags: mysql-es-connector
+
+- name: move mapping over
+  copy:
+    src=pulse_mapping_dynamic.json
+    dest={{ mysql_es_dir }}/pulse_mapping_dynamic.json
+    mode=0755
+  tags: mysql-es-connector
+
+- name: check for mysql-es log
+  stat: path={{ mysql_es_log_dir }}
+  register: mysql_es_log
+  tags: mysql-es-connector
+
+- name: make mysql-es log directory if not exist
+  file:
+    path={{ mysql_es_log_dir }}
+    state=directory
+    mode=0755
+  when: mysql_es_log.stat.isdir is not defined
+  tags: mysql-es-connector
+
+- name: install pip
+  shell: "sudo {{ miniconda_install_dir }}/bin/conda install -y -c https://conda.anaconda.org/mwcraig pip"
+  when: inventory_hostname == "localhost"
+  tags: mysql-es-connector
+
+- name: install pip from hosted repo
+  shell: "sudo {{ miniconda_install_dir }}/bin/conda install pip"
+  when: inventory_hostname != "localhost"
+  tags: mysql-es-connector
+
+- name: install elasticsearch-py from pypi
+  shell: "sudo {{ miniconda_install_dir }}/bin/pip install -i https://pypi.python.org/simple elasticsearch"
+  when: inventory_hostname == "localhost"
+  tags: mysql-es-connector
+
+- name: install elasticsearch-py from hosted repo
+  shell: "sudo {{ miniconda_install_dir }}/bin/pip install elasticsearch"
+  when: inventory_hostname != "localhost"
+  tags: mysql-es-connector
+
+- name: download mysql-connector-python from MySQL source
+  get_url: url=http://dev.mysql.com/get/Downloads/Connector-Python/mysql-connector-python_2.1.3-1ubuntu15.04_all.deb dest=/tmp/
+
+- name: dpkg mysql-connector-python
+  shell: "sudo dpkg -i /tmp/mysql-connector-python_2.1.3-1ubuntu15.04_all.deb"
+
+- name: install mysql-connector-python
+  shell: "sudo apt-get install -f"
+
+- name: get mysql-connector-python package
+  get_url: url=http://cdn.mysql.com/Downloads/Connector-Python/mysql-connector-python-2.0.4.zip dest=/tmp/
+
+- name: install mysql-connector-python package
+  shell: "sudo {{ miniconda_install_dir }}/bin/pip install /tmp/mysql-connector-python-2.0.4.zip"
+  tags: mysql-es-connector
+
+- name: build ES index
+  shell: "sudo {{ miniconda_install_dir }}/bin/python2.7 {{ mysql_es_dir }}/mysql_es_pulse.py --dbhost={{ mysql_db_host }} --dbuser={{ pulse_db_user_name }} --db={{ pulse_db_name }} --pw={{ pulse_password }} --interval=5 --es={{ es_host }} --index=pulse-1 --build=all --mapping={{ mysql_es_dir }}/pulse_mapping_dynamic.json --logfile={{ mysql_es_log_dir }}/{{ pulse_name }}.log --db_prefix=pulse"
+  tags: mysql-es-connector
+
+- cron: name="Pulse MySQL-ES-Connector" minute="{{ cron_freq }}"
+        user="root" job="sudo {{ miniconda_install_dir }}/bin/python2.7 {{ mysql_es_dir }}/mysql_es_pulse.py --dbhost={{ mysql_db_host }} --dbuser={{ pulse_db_user_name }} --db={{ pulse_db_name }} --pw={{ pulse_password }} --interval={{ interval }} --es={{ es_host }} --index=pulse-1 --build=incremental --mapping={{ mysql_es_dir }}/pulse_mapping_dynamic.json --logfile={{ mysql_es_log_dir }}/{{ pulse_name }}.log --db_prefix=pulse"

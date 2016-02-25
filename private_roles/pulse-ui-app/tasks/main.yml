@@ -1,0 +1,295 @@
+---
+# Include variables and define needed variables.
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+
+# Move Apache welcome.conf over
+- name: Move welcome.conf over
+  copy:
+    dest={{ apache_conf_path }}/welcome.conf
+    src=welcome.conf
+  tags: pulse-ui-app
+
+# Remove default site conf symlink for localhost installs
+- name: Remove Default site conf symlink
+  file:
+    path={{ apache_conf_path }}/{{ apache_site_default_conf }}
+    state=absent
+  notify:
+    - restart apache
+  tags: pulse-ui-app 
+
+# PHP configuration for Pulse UI
+- include: Configure-php-RedHat.yml
+  when: ansible_os_family == 'RedHat'
+
+- include: Configure-php-Debian.yml
+  when: ansible_os_family == 'Debian'
+
+- name: Extend php limits (1/2)
+  lineinfile:
+    dest={{ php_ini_path }}php.ini
+    regexp="^post_max_size = 8M"
+    line="post_max_size = 48M"
+    state=present
+  tags: pulse-ui-app
+
+- name: Extend php limits (2/2)
+  lineinfile:
+    dest={{ php_ini_path }}php.ini
+    regexp="^upload_max_filesize = 2M"
+    line="upload_max_filesize = 48M"
+    state=present
+  tags: pulse-ui-app
+
+- name: Create pulse-ui install directory
+  file:
+    path={{ pulse_install_dir }}/
+    state=directory
+    mode=0755
+  tags: pulse-ui-app
+
+- name: Create pulse mmr directory
+  file:
+    path={{ pulse_mmr_dir }}/
+    state=directory
+    mode=0755
+  tags: pulse-ui-app
+
+- name: Check for existing pulse install
+  stat: path={{ pulse_install_dir }}/pulse-{{ pulse_version }}
+  register: pulse
+  tags: pulse-ui-app
+
+- name: Download pulse
+  get_url:
+    url={{ pulse_repo_location }}/joka/pulse-{{ pulse_version }}.zip
+    dest=/tmp/pulse-{{ pulse_version }}.zip
+    mode=0755
+    validate_certs=no
+    url_username={{ pulse_repo_user }}
+    url_password={{ pulse_repo_password }}
+  when: pulse.stat.isdir is not defined
+  tags: pulse-ui-app
+
+- name: Extract pulse
+  unarchive:
+    src=/tmp/pulse-{{ pulse_version }}.zip
+    dest={{ pulse_install_dir }}/
+    copy=no
+  when: pulse.stat.isdir is not defined
+  tags: pulse-ui-app
+
+- name: Delete temporary pulse file
+  file:
+    path=/tmp/pulse-{{ pulse_version }}.zip
+    state=absent
+  ignore_errors: yes
+  tags: pulse-ui-app
+
+- name: Check if Pollster directory exists
+  stat:
+    path={{ pulse_install_dir }}/pulse-{{ pulse_version }}/res/files
+    get_md5=False
+  register: pollster_dir
+  tags: pulse-ui-app
+
+- name: Make pollster directory if it doesn't exist
+  file:
+    path={{ pulse_install_dir }}/pulse-{{ pulse_version }}/res/files
+    state=directory
+  when: not pollster_dir.stat.exists
+  tags: pulse-ui-app
+
+- name: Download Pollster
+  get_url:
+    url={{ pulse_repo_location }}/pollster/{{ pollster_name }}-{{ pollster_build_type }}-{{ pollster_version }}.apk
+    dest={{ pulse_install_dir }}/pulse-{{ pulse_version }}/res/files/{{ pollster_name }}-{{ pollster_build_type }}-{{ pollster_version }}.apk
+    mode=0755
+    validate_certs=no
+    url_username={{ pulse_repo_user }}
+    url_password={{ pulse_repo_password }}
+  tags: pulse-ui-app
+
+#- name: Get Pollster from file
+#  copy:
+#    src={{ pollster_version }}
+#    dest={{ pulse_install_dir }}/pulse-{{ pulse_version }}/res/files/{{ pollster_version }}
+#    mode=0755
+#  tags: pulse-ui-app
+
+- name: Create Pollster symlink
+  file:
+    path={{ pulse_install_dir }}/pulse-{{ pulse_version }}/res/files/Pollster.Prime.apk
+    state=link
+    src={{ pulse_install_dir }}/pulse-{{ pulse_version }}/res/files/{{ pollster_name }}-{{ pollster_build_type }}-{{ pollster_version }}.apk
+  tags: pulse-ui-app
+
+- name: Create Pulse symlink
+  file:
+    path={{ pulse_install_dir }}/default
+    state=link
+    src={{ pulse_install_dir }}/pulse-{{ pulse_version }}
+  tags: pulse-ui-app
+
+- name: Create Pulse web symlink
+  file:
+    path={{ apache_document_root|default('/var/www') }}/pulse
+    state=link
+    src={{ pulse_install_dir }}/pulse-{{ pulse_version }}
+  tags: pulse-ui-app
+
+- name: Install apache proxy
+  apt: 
+    name=libapache2-mod-proxy-html
+    state=present
+  tags: pulse-ui-app
+
+- name: Enable apache proxy mods
+  shell: a2enmod proxy && a2enmod proxy_http && a2enmod proxy_connect && a2enmod ssl
+  tags: pulse-ui-app
+
+- name: Check for SSL cert directory
+  stat: path=/etc/apache2/ssl
+  register: ssl_dir
+  tags: pulse-ui-app
+
+- name: Make SSL cert directory if not exist
+  file:
+    path=/etc/apache2/ssl
+    state=directory
+    mode=0755
+  when: ssl_dir.stat.isdir is not defined
+  tags: pulse-ui-app
+
+- name: Generate self-signed SSL cert for pulse
+  command: openssl req -x509 -subj "/C=/ST=/L=/O=/CN={{ inventory_hostname }}" -nodes -days 365 -newkey rsa:2048 -keyout /etc/apache2/ssl/pulse.key -out /etc/apache2/ssl/pulse.crt
+  when: pulse_self_signed_ssl
+  tags: pulse-ui-app
+
+- name: Move apache2 conf over
+  template:
+    src=pulse.conf.j2
+    dest={{ apache_conf_path }}/sites-available/pulse.conf
+    mode=0755
+  notify:
+    - create kibana pwd
+    - apache add pulse
+    - restart apache
+  tags: pulse-ui-app
+
+- name: Ceate Pulse install directory
+  file:
+    path={{ pulse_install_dir }}/pulse-{{ pulse_version }}/app/configs/anyhost
+    state=directory
+    mode=0755
+  tags: pulse-ui-app
+
+- name: Create MySQL db
+  mysql_db:
+    name: "{{ item.name }}"
+    collation: "{{ item.collation | default('utf8_general_ci') }}"
+    encoding: "{{ item.encoding | default('utf8') }}"
+    state: present
+  with_items: mysql_databases
+  tags: pulse-ui-app
+
+- name: Ensure MySQL users are present
+  mysql_user:
+    name: "{{ item.name }}"
+    host: "{{ item.host | default('localhost') }}"
+    password: "{{ item.password }}"
+    priv: "{{ item.priv | default('*.*:USAGE') }}"
+    state: present
+  with_items: mysql_users
+  tags: pulse-ui-app
+
+- name: Move dbconn-webapp template over
+  template:
+    src=dbconn-webapp.ini.j2
+    dest={{ pulse_install_dir }}/pulse-{{ pulse_version }}/app/configs/anyhost/dbconn-webapp.ini
+    mode=0755
+  notify:
+    - restart apache
+  tags: pulse-ui-app
+
+- name: Move dbconn-pulse template over
+  template:
+    src=dbconn-pulse.ini.j2
+    dest={{ pulse_install_dir }}/pulse-{{ pulse_version }}/app/configs/anyhost/dbconn-pulse.ini
+    mode=0755
+  notify:
+    - restart apache
+  tags: pulse-ui-app
+
+- name: Move Settings.php template over
+  template:
+    src=Settings.php.j2
+    dest={{ pulse_install_dir }}/pulse-{{ pulse_version }}/app/configs/anyhost/Settings.php
+    mode=0755
+  notify:
+    - restart apache
+  tags: pulse-ui-app
+
+- name: Move I18N.php over
+  copy:
+    src=I18N.php
+    dest={{ pulse_install_dir }}/pulse-{{ pulse_version }}/app/configs/anyhost/
+    mode=0755
+  tags: pulse-ui-app
+
+- name: Download Kibana backup
+  get_url:
+    url={{ pulse_repo_location }}/kibana/{{ pulse_kibana_backup }}
+    dest=/tmp/{{ pulse_kibana_backup }}
+    mode=0755
+    validate_certs=no
+    url_username={{ pulse_repo_user }}
+    url_password={{ pulse_repo_password }}
+  tags: pulse-ui-app
+
+- name: Extract the Kibana4 backup folder
+  unarchive:
+    src=/tmp/{{ pulse_kibana_backup }}
+    dest=/tmp/
+    copy=no
+  tags:
+    - pulse-ui-app
+    - kibana4-app
+
+- name: Clean up Kibana Backup file
+  file:
+    path=/tmp/{{ pulse_kibana_backup }}
+    state=absent
+  ignore_errors: yes
+  tags:
+    - pulse-ui-app
+    - kibana4-app
+
+- name: Copy over Kibana4 restore script
+  copy:
+    src=restore_kibana_index.sh
+    dest=/tmp/
+    mode=755
+  tags:
+    - pulse-ui-app
+    - kibana4-app
+
+- name: Restore Kibana4 visualizations
+  shell: "cd /tmp/; bash restore_kibana_index.sh localhost {{ elasticsearch_network_http_port | default('9200') }} backup.tar"
+  args:
+    executable: "/bin/bash"
+  tags:
+    - pulse-ui-app
+    - kibana4-app
+
+- name: Remove Kibana tmp files
+  file:
+    path=/tmp/{{ item }}
+    state=absent
+  with_items:
+    - "restore_kibana_index.sh"
+    - "backup.tar"
+  tags:
+    - pulse-ui-app
+    - kibana4-app

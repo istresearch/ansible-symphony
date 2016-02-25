@@ -98,8 +98,6 @@
 
 - name: Pulse MySQL-ES Connector Initialization
   hosts: pulse-ui-node
-  vars_files:
-    - roles/elasticsearch/defaults/main.yml
   roles: [ mysql-es-connector ]
   tags: site-pulse-app 
 
