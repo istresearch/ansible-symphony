@@ -60,7 +60,7 @@
     - site-elasticsearch
     - ELK
 
-- name: Run elasticsearch master role in Amazon
+- name: Run Dig elasticsearch master role in Amazon
   hosts: dig-elasticsearch-master-nodes
   vars:
    - elasticsearch_host_list: "{{ groups['dig-elasticsearch-nodes'] }}"
@@ -68,7 +68,15 @@
   roles: [ elasticsearch ]
   tags:
     - dig-site-elasticsearch
-    - dig-ELK
+
+- name: Run CDR elasticsearch master role in Amazon
+  hosts: dig-elasticsearch-master-nodes
+  vars:
+   - elasticsearch_host_list: "{{ groups['cdr-elasticsearch-nodes'] }}"
+   - elasticsearch_is_master: "true"
+  roles: [ elasticsearch ]
+  tags:
+    - cdr-site-elasticsearch
 
 - name: Run elasticsearch data role
   hosts: elasticsearch-data-nodes
@@ -80,7 +88,7 @@
     - site-elasticsearch
     - ELK
 
-- name: Run elasticsearch data role
+- name: Run Dig elasticsearch data role
   hosts: dig-elasticsearch-data-nodes
   vars:
    - elasticsearch_host_list: "{{ groups['dig-elasticsearch-nodes'] }}"
@@ -88,7 +96,15 @@
   roles: [ elasticsearch ]
   tags:
     - dig-site-elasticsearch
-    - dig-ELK
+
+- name: Run CDR elasticsearch data role
+  hosts: cdr-elasticsearch-data-nodes
+  vars:
+   - elasticsearch_host_list: "{{ groups['cdr-elasticsearch-nodes'] }}"
+   - elasticsearch_is_data: "true"
+  roles: [ elasticsearch ]
+  tags:
+    - cdr-site-elasticsearch
 
 - name: Run elasticsearch client role
   hosts: elasticsearch-client-nodes
@@ -100,7 +116,7 @@
     - site-elasticsearch
     - ELK
 
-- name: Run elasticsearch client role
+- name: Run Dig elasticsearch client role
   hosts: dig-elasticsearch-client-nodes
   vars:
    - elasticsearch_host_list: "{{ groups['dig-elasticsearch-nodes'] }}"
@@ -108,7 +124,15 @@
   roles: [ elasticsearch ]
   tags:
     - dig-site-elasticsearch
-    - dig-ELK
+
+- name: Run CDR elasticsearch client role
+  hosts: cdr-elasticsearch-client-nodes
+  vars:
+   - elasticsearch_host_list: "{{ groups['cdr-elasticsearch-nodes'] }}"
+   - elasticsearch_is_client: "true"
+  roles: [ elasticsearch ]
+  tags:
+    - cdr-site-elasticsearch
 
 - name: Run logstash role
   hosts: logstash-nodes
