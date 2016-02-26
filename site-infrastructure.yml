@@ -16,12 +16,26 @@
   tags: internap-customize
   strategy: free
 
+<<<<<<< HEAD
 # ----------------------------- Add users -----------------------------------
 
 - hosts: all
   roles:
     - add-users
   tags: site-add-users
+=======
+- name: Run virtualenv role
+  hosts: all
+  roles:
+    - virtualenv
+  tags: virtual-env
+
+- name: Run miniconda role
+  hosts: all
+  roles:
+    - miniconda
+  tags: miniconda
+>>>>>>> upstream/master
 
 # -------------------------- Zookeeper and Kafka -----------------------------
 - name: Run zookeeper role
