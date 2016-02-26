@@ -19,6 +19,7 @@
   when: (elasticsearch_is_data=="true" and elasticsearch_is_master=="true")
   tags: elasticsearch
 
+<<<<<<< HEAD
 - name: Format AWS volume if it isn't formatted
   filesystem:
     fstype: ext4
@@ -39,6 +40,17 @@
   tags:
     - dig-elasticsearch
     - aws
+=======
+- name: set vm.swappiness to 1 for performance
+  sysctl:
+    name: vm.swappiness
+    value: 1
+
+- name: set max_map_count to optimize virtual memory
+  sysctl:
+    name: vm.max_map_count
+    value: 262144   
+>>>>>>> upstream/master
 
 - name: Configuring group
   group:
