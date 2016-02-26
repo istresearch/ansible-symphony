@@ -14,6 +14,18 @@
   tags: site-common
   strategy: free
 
+- name: Run virtualenv role
+  hosts: all
+  roles:
+    - virtualenv
+  tags: virtual-env
+
+- name: Run miniconda role
+  hosts: all
+  roles:
+    - miniconda
+  tags: miniconda
+
 # -------------------------- Zookeeper and Kafka -----------------------------
 - name: Run zookeeper role
   hosts: zookeeper-nodes
