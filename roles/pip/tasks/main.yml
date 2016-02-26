@@ -19,7 +19,7 @@
   template:
     src: pip.conf.j2
     dest: /etc/pip.conf
-    mode: 0750
+    mode: 0775
   tags: pip
 
 - name: pip environment configuration
