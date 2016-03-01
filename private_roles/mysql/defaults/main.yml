@@ -1,7 +1,5 @@
 ---
 mysql_user_home: /root
-mysql_root_username: root
-mysql_root_password: 9CX0GqUjnAdi
 
 mysql_enabled_on_startup: yes
 

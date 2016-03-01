@@ -62,7 +62,6 @@
     - site-elasticsearch
     - ELK
     - site-pulse
-    - site-pulse-no-docker
 
 - name: Run elasticsearch master role in Amazon
   hosts: dig-elasticsearch-master-nodes
@@ -84,7 +83,6 @@
     - site-elasticsearch
     - ELK
     - site-pulse
-    - site-pulse-no-docker
 
 - name: Run elasticsearch data role
   hosts: dig-elasticsearch-data-nodes
@@ -106,7 +104,6 @@
     - site-elasticsearch
     - ELK
     - site-pulse
-    - site-pulse-no-docker
 
 - name: Run elasticsearch client role
   hosts: dig-elasticsearch-client-nodes
@@ -131,7 +128,7 @@
   tags:
     - site-kibana
     - ELK
-    - site-pulse-no-docker
+    - site-pulse
 
 # --------------------------- Scraper services -------------------------------
 - name: Run redis role
@@ -361,7 +358,7 @@
   roles: [ docker-engine ]
   tags:
     - site-docker-engine
-    - site-pulse
+    - site-pulse-docker
 
 # ---------------------------------- Pulse -----------------------------------
 
@@ -370,14 +367,12 @@
   roles: [ pulse-ui ]
   tags: 
     - site-pulse
-    - site-pulse-no-docker
+    - site-pulse-docker
 
 - name: Pulse Docker Infrastructure
   hosts: kibana-node
-  vars_files:
-    - roles/elasticsearch/defaults/main.yml
   roles: [ pulse-docker ]
-  tags: site-pulse
+  tags: site-pulse-docker
 
 # ---------------------------------- Neo4j --------------------------------
 

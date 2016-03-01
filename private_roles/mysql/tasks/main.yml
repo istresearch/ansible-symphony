@@ -28,14 +28,3 @@
 # Configure MySQL.
 - include: configure.yml
 - include: secure-installation.yml
-
-# Open ports for MySQL
-#- name: Open the neccessary ports in the firewall.
-#  command: iptables -I INPUT -p {{ item.protocol }} --dport {{ item.port }} -j ACCEPT
-#  with_items:
-#    - { protocol: tcp, port: "{{ mysql_port }}" }
-#  notify:
-#    - save iptables
-#  tags:
-#    - mysql
-#    - iptables

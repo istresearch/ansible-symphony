@@ -2,6 +2,12 @@
 - include_vars: ../defaults/main.yml
   tags: pulse-ui-app
 
+- include_vars: ../../roles/elasticsearch/defaults/main.yml
+  tags: pulse-ui-app
+
+- include_vars: ../../roles/kibana4/defaults/main.yml
+  tags: pulse-ui-app
+
 - name: Check whether pulse_docker_dir exists
   stat:
     path={{ pulse_docker_dir }}
@@ -40,7 +46,7 @@
 
 - name: Move pulse Kibana config to host
   template:
-    src=kibana_config.j2
+    src=../../roles/kibana4/templates/kibana.yml.j2
     dest={{ pulse_docker_data_dir|default('/data/pulse') }}/{{ pulse_name }}/kibana{{ pulse_name }}.yml
     mode=755
   tags:

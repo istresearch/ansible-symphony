@@ -1,6 +1,4 @@
 pulse_version: 2.0.15.0
-pulse_user: pulse
-pulse_password: l2Z0GQ03Eta4
 
 pulse_name: pulse
 pulse_install_dir: /opt/pulse
@@ -10,8 +8,6 @@ pulse_docker_dir: /data/bin/pulse_docker
 pulse_docker_data_dir: /data/pulse
 
 pulse_repo_location: http://repo.istresearch.com/pulse
-pulse_repo_user: repo
-pulse_repo_password: yX2xUTbQeSe1f19
 
 pollster_name: appPollsterPrime
 pollster_build_type: release
@@ -31,20 +27,11 @@ pulse_deploy_tag: survey-deploy
 pulse_deploy_type: deploy
 pulse_deploy_log_file: deploy_survey.log
 
-# DO NOT CHANGE THESE ATM -
-pulse_serial: E4A53F5A-BEC2-EBD0-97F8-B8492941D261
-pulse_titan_user: pulse-admin
 pulse_titan_email: pulse.feedback@istresearch.com
-pulse_titan_pw: "{{ pulse_password }}"
-# generate a new hash the normal way if you would like to change this
-pulse_password_hash: $2y$11$Yrec6DQpYnCacWMl9Jc9pejCPy78zZKoXGvwRun4S4k4cNuYCmfrm7w4tfJl8QFLIcDxP
-# --------------------------
 
 pulse_table_prefix: pulse_
 pulse_webapp_table_prefix: webapp_
 pulse_db_name: pulse
-pulse_db_user_name: pulse
-pulse_db_password: "{{ pulse_password }}"
 
 mysql_databases:
   - { name: "{{ pulse_db_name }}", collation: utf8_general_ci, encoding: utf8, replicate: 0 }
