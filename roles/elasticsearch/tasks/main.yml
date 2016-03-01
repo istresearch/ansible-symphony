@@ -40,6 +40,16 @@
     - dig-elasticsearch
     - aws
 
+- name: set vm.swappiness to 1 for performance
+  sysctl:
+    name: vm.swappiness
+    value: 1
+
+- name: set max_map_count to optimize virtual memory
+  sysctl:
+    name: vm.max_map_count
+    value: 262144   
+
 - name: Configuring group
   group:
     name: "{{ elasticsearch_group }}"

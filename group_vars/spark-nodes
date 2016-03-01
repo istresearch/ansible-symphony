@@ -1,0 +1,4 @@
+---
+
+spark_worker_memory: 96g
+spark_worker_cores: 24

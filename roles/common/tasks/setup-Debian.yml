@@ -9,11 +9,19 @@
     name={{ item }}
     state=latest
   with_items:
-   - bash
-   - openssh-server
-   - wget
-   - zip
-   - unzip
+    - bash
+    - openssh-server
+    - wget
+    - zip
+    - unzip
+    # used for scrapy, gandalf, and general python work
+    - python-lxml
+    - build-essential
+    - libssl-dev
+    - libffi-dev
+    - python-dev
+    - libxml2-dev
+    - libxslt1-dev
   tags: common
 
 - name: remove hostname loopback
