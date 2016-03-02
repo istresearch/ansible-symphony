@@ -144,3 +144,6 @@ vagrant-as-01
 
 [neo4j-node]
 vagrant-as-02
+
+[tangelo-node]
+vagrant-as-02

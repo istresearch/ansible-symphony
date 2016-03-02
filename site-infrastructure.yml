@@ -324,3 +324,11 @@
   roles: [ neo4j ]
   tags:
     - site-neo4j
+
+# ---------------------------------- Tangelo --------------------------------
+
+- name: Tangelo
+  hosts: tangelo-node
+  roles: [ tangelo ]
+  tags:
+    - site-tangelo

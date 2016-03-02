@@ -25,6 +25,7 @@ env:
   - TAGS='site-neo4j'
   - TAGS='virtualenv'
   - TAGS='miniconda'
+  - TAGS='site-tangelo'
 
 matrix:
   fast_finish: true
