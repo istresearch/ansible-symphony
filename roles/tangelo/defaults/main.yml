@@ -1,0 +1,11 @@
+tangelo_conf_dir: /etc/tangelo
+tangleo_version: "0.10"
+tangelo_hostname: 0.0.0.0
+tangelo_port: 9090
+tangelo_user: tangelo
+tangelo_group: tangelo
+tangelo_webroot: /var/www/tangelo
+tangelo_start_secs: 5
+tangelo_start_retries: 100
+tangelo_stdout_logfile_maxbytes: 50MB
+tangelo_stderr_logfile_maxbytes: 50MB
