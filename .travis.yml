@@ -23,6 +23,9 @@ env:
   - TAGS='deps-spark'
   - TAGS='site-docker-engine'
   - TAGS='site-neo4j'
+  - TAGS='virtualenv'
+  - TAGS='miniconda'
+  - TAGS='site-tangelo'
 
 matrix:
   fast_finish: true

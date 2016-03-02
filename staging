@@ -153,3 +153,6 @@ vagrant-ist-02
 
 [neo4j-node]
 vagrant-ist-02
+
+[tangelo-node]
+vagrant-ist-02

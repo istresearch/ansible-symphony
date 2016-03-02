@@ -145,3 +145,6 @@ travis-trusty
 
 [neo4j-node]
 travis-trusty
+
+[tangelo-node]
+travis-trusty

@@ -1,0 +1,4 @@
+---
+dependencies:
+  - { role: pip, when: "pip_has_run is not defined" }
+  - { role: supervisord, when: "supervisord_has_run is not defined" }
