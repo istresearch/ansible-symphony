@@ -109,6 +109,7 @@ vagrant-ist-01
 vagrant-ist-01
 
 [scrapy-cluster-crawler-nodes]
+vagrant-ist-01
 vagrant-ist-02
 
 [scrapy-cluster:children]
@@ -118,6 +119,7 @@ scrapy-cluster-crawler-nodes
 
 [logstash-nodes]
 vagrant-ist-01
+
 #
 # Applications topology
 #
@@ -147,4 +149,10 @@ traptor-track-nodes
 vagrant-ist-01
 
 [googler-nodes]
+vagrant-ist-02
+
+[neo4j-node]
+vagrant-ist-02
+
+[tangelo-node]
 vagrant-ist-02

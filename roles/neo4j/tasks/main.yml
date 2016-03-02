@@ -1,0 +1,156 @@
+---
+- name: Configuring group
+  group:
+    name={{ neo4j_group }}
+  tags:
+    - neo4j
+
+- name: Configuring user
+  user:
+    name={{ neo4j_user }}
+    group={{ neo4j_group }}
+    createhome=no
+  tags:
+    - neo4j
+
+- name: create neo4j install directory
+  file:
+    path={{ neo4j_install_dir }}/
+    state=directory
+    mode=0744
+    owner={{ neo4j_user }}
+    group={{ neo4j_group }}
+  tags: neo4j
+
+- name: create neo4j data directory
+  file:
+    path={{ neo4j_server_database_location }}
+    state=directory
+    mode=0755
+    owner={{ neo4j_user }}
+    group={{ neo4j_group }}
+  tags: neo4j
+
+- name: check for existing neo4j install
+  stat: path={{ neo4j_install_dir }}/neo4j-{{ neo4j_package }}-{{ neo4j_version }}
+  register: neo4j
+  tags: neo4j
+
+- name: download neo4j
+  get_url:
+    url={{ repository_infrastructure }}
+    dest=/tmp/neo4j-{{ neo4j_package }}-{{ neo4j_version }}-unix.tar.gz
+    mode=0644
+    owner={{ neo4j_user }}
+    group={{ neo4j_group }}
+    validate_certs=no
+  when: neo4j.stat.isdir is not defined
+  tags: neo4j
+
+- name: extract neo4j
+  unarchive:
+    src=/tmp/neo4j-{{ neo4j_package }}-{{ neo4j_version }}-unix.tar.gz
+    dest={{ neo4j_install_dir }}
+    copy=no
+    owner={{ neo4j_user }}
+    group={{ neo4j_group }}
+  when: neo4j.stat.isdir is not defined
+  tags: neo4j
+
+- name: delete temporary neo4j file
+  file:
+    path=/tmp/neo4j-{{ neo4j_package }}-{{ neo4j_version }}-unix.tar.gz
+    state=absent
+  ignore_errors: yes
+  tags: neo4j
+
+- name: Change neo4j file permissions
+  file:
+    path={{ neo4j_install_dir }}/
+    recurse=yes
+    owner={{ neo4j_user }}
+    group={{ neo4j_group }}
+  tags: neo4j
+
+- name: create neo4j symlink
+  file:
+    path={{ neo4j_install_dir }}/default
+    state=link
+    src={{ neo4j_install_dir }}/neo4j-{{ neo4j_package }}-{{ neo4j_version }}
+    owner={{ neo4j_user }}
+    group={{ neo4j_group }}
+  tags: neo4j
+
+- name: create startup neo4j auth directory
+  file:
+    path={{ neo4j_install_dir }}/neo4j-{{ neo4j_package }}-{{ neo4j_version }}/data/dbms
+    state=directory
+    mode=0744
+    owner={{ neo4j_user }}
+    group={{ neo4j_group }}
+  tags: neo4j
+
+- name: Configure Neo4j server properties
+  template:
+    src=neo4j-server.properties
+    dest={{ neo4j_install_dir }}/neo4j-{{ neo4j_package }}-{{ neo4j_version }}/conf/neo4j-server.properties
+    owner={{ neo4j_user }}
+    group={{ neo4j_group }}
+    mode=0644
+  notify: restart neo4j
+  tags: neo4j
+
+- name: Configure Neo4j server wrapper properties
+  template:
+    src=neo4j-wrapper.conf
+    dest={{ neo4j_install_dir }}/neo4j-{{ neo4j_package }}-{{ neo4j_version }}/conf/neo4j-wrapper.conf
+    owner={{ neo4j_user }}
+    group={{ neo4j_group }}
+    mode=0644
+  notify: restart neo4j
+  tags: neo4j
+
+- name: Configure Neo4j properties
+  template:
+    src=neo4j.properties
+    dest={{ neo4j_install_dir }}/neo4j-{{ neo4j_package }}-{{ neo4j_version }}/conf/neo4j.properties
+    owner={{ neo4j_user }}
+    group={{ neo4j_group }}
+    mode=0644
+  notify: restart neo4j
+  tags: neo4j
+
+- name: set neo4j limits configuration
+  template:
+    src: neo4j-limits.conf.j2
+    dest: /etc/security/limits.d/neo4j-limits.conf
+    mode: 0755
+  tags: neo4j
+
+- name: Configuring open file limits
+  lineinfile:
+    dest: /etc/pam.d/common-session
+    regexp: '^session    required   pam_limits.so'
+    insertafter: EOF
+    line: 'session    required   pam_limits.so'
+  tags:
+    - neo4j
+
+- name: copy over authentication credentials
+  copy:
+    src=auth
+    dest={{ neo4j_install_dir }}/neo4j-{{ neo4j_package }}-{{ neo4j_version }}/data/dbms/auth
+    owner={{ neo4j_user }}
+    group={{ neo4j_group }}
+    mode=0600
+  tags: neo4j
+
+- name: Move over supervisord conf
+  template:
+    src=neo4j-supervisord.conf.j2
+    dest={{ supervisord_programs_dir }}/neo4j-supervisord.conf
+    mode=0644
+  notify:
+    - reread supervisord
+  tags:
+    - neo4j

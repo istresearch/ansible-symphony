@@ -19,6 +19,37 @@
   when: (elasticsearch_is_data=="true" and elasticsearch_is_master=="true")
   tags: elasticsearch
 
+- name: Format AWS volume if it isn't formatted
+  filesystem:
+    fstype: ext4
+    dev: "{{ elasticsearch_volume }}"
+  when: (elasticsearch_in_aws=="true")
+  tags:
+    - dig-elasticsearch
+    - aws
+
+- name: Mounting attached ec2 volume if deploying in amazon
+  mount:
+    name: /data
+    src: "{{ elasticsearch_volume }}"
+    fstype: ext4
+    opts: rw
+    state: mounted
+  when: (elasticsearch_in_aws=="true")
+  tags:
+    - dig-elasticsearch
+    - aws
+
+- name: set vm.swappiness to 1 for performance
+  sysctl:
+    name: vm.swappiness
+    value: 1
+
+- name: set max_map_count to optimize virtual memory
+  sysctl:
+    name: vm.max_map_count
+    value: 262144   
+
 - name: Configuring group
   group:
     name: "{{ elasticsearch_group }}"
@@ -162,6 +193,7 @@
     mode: 0644
   notify:
     - reread supervisord
+    - "restart elasticsearch {{ conf_name }}"
   tags:
     - elasticsearch
 
