@@ -381,3 +381,10 @@
   roles: [ tangelo ]
   tags:
     - site-tangelo
+
+# ---------------------------------- DataDog --------------------------------
+
+- hosts: dd-agent-nodes
+  roles: [ dd-agent ]
+  tags:
+    - site-dd-agent

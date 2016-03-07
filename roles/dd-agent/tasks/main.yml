@@ -1,0 +1,40 @@
+---
+# file: roles/dd-agent/tasks/main.yml
+# dd-agent install: https://app.datadoghq.com/account/settings#agent/ubuntu
+
+- name: Install dependencies for dd-agent
+  apt:
+    name: apt-transport-https
+    state: present
+    update_cache: yes
+
+- name: Add dd-agent repository to source list
+  apt_repository:
+    repo: 'deb http://apt.datadoghq.com/ stable main'
+    state: present
+
+- name: Import dd-agent apt key
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: C7A7DA52
+
+- name: Install dd-agent
+  apt:
+    name: datadog-agent
+    state: present
+    update_cache: yes
+
+- name: Copy default dd-agent config
+  command: cp -n /etc/dd-agent/datadog.conf.example /etc/dd-agent/datadog.conf
+
+- name: Alter dd-agent config to include API Key
+  lineinfile:
+    dest: /etc/dd-agent/datadog.conf
+    state: present
+    regexp: "^api_key:"
+    line: "api_key: {{ datadog_api_key }}"
+
+- name: Start dd-agent
+  service:
+    name: datadog-agent
+    state: started
