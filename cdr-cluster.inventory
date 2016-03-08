@@ -1,0 +1,44 @@
+#   - Comments begin with the '#' character
+#   - Blank lines are ignored
+#   - Groups of hosts are delimited by [header] elements
+#   - You can enter hostnames or ip addresses
+#   - A hostname/ip can be a member of multiple groups
+
+[all:vars]
+repository_host=default
+
+[servers]
+#127.0.0.1 host_alias=localhost
+
+# Dig Servers on AWS 
+cdr-es01.istresearch.com host_alias=cdr-es01.istresearch.com
+cdr-es02.istresearch.com host_alias=cdr-es02.istresearch.com
+cdr-es03.istresearch.com host_alias=cdr-es03.istresearch.com
+cdr-es04.istresearch.com host_alias=cdr-es04.istresearch.com
+cdr-es05.istresearch.com host_alias=cdr-es05.istresearch.com
+cdr-es06.istresearch.com host_alias=cdr-es06.istresearch.com
+cdr-es07.istresearch.com host_alias=cdr-es07.istresearch.com
+cdr-es08.istresearch.com host_alias=cdr-es08.istresearch.com
+cdr-es09.istresearch.com host_alias=cdr-es09.istresearch.com
+cdr-es10.istresearch.com host_alias=cdr-es10.istresearch.com
+
+[elasticsearch-master-nodes]
+
+[elasticsearch-data-nodes]
+cdr-es01.istresearch.com elasticsearch_is_master=true
+cdr-es02.istresearch.com elasticsearch_is_master=true
+cdr-es03.istresearch.com elasticsearch_is_master=true
+cdr-es04.istresearch.com elasticsearch_is_master=true
+cdr-es05.istresearch.com elasticsearch_is_master=true
+cdr-es06.istresearch.com elasticsearch_is_master=true
+cdr-es07.istresearch.com elasticsearch_is_master=true
+cdr-es08.istresearch.com elasticsearch_is_master=true
+cdr-es09.istresearch.com elasticsearch_is_master=true
+cdr-es10.istresearch.com elasticsearch_is_master=true
+
+[elasticsearch-client-nodes]
+
+[elasticsearch-nodes:children]
+elasticsearch-master-nodes
+elasticsearch-data-nodes
+elasticsearch-client-nodes
