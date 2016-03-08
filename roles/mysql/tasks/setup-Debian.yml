@@ -1,0 +1,78 @@
+---
+- name: Debian - Check if MySQL is already installed.
+  stat: path=/etc/mysql
+  register: mysql_installed
+  tags: mysql
+
+- name: Debian - Update apt cache if MySQL is not yet installed.
+  apt: update_cache=yes
+  when: mysql_installed.stat.isdir is not defined
+  tags: mysql
+
+- name: Debian - Ensure MySQL Python libraries are installed.
+  apt: "name=python-mysqldb state=installed"
+  tags: mysql
+
+- name: Debian - Ensure MySQL packages are installed.
+  apt: "name={{ item }} state=installed"
+  with_items: mysql_packages
+  tags: mysql-included
+
+# Because Ubuntu starts MySQL as part of the install process, we need to stop
+# mysql and remove the logfiles in case the user set a custom log file size.
+- name: Debian - Ensure MySQL is stopped after initial install.
+  service: name=mysql state=stopped
+  tags: mysql-included
+
+- name: Debian - Remove MySQL from init.d.
+  file:
+    path=/etc/init.d/mysql
+    state=absent
+  tags: mysql
+
+- name: Debian - Copy supervisord config.
+  template:
+    src=mysql-supervisord-conf.j2
+    dest={{ supervisord_programs_dir }}/mysql-supervisord.conf
+    mode=0644
+  notify:
+    - reread supervisord
+  tags:
+    - mysql
+    - supervisord
+
+- name: Debian - Check for MySQL pid file.
+  stat: path={{ mysql_pid_file }}
+  register: mysql_pid
+  tags: mysql
+
+- name: Debian - Configure MySQL pid for use with supervisord.
+  file: 
+    path={{ mysql_pid_file }}
+    state=touch
+    owner=mysql
+    group=mysql
+  when: mysql_pid.stat.exists == False
+  
+- name: Debian - Add MySQL to supervisord
+  supervisorctl: 
+    name: mysql
+    state: present
+  tags: mysql
+
+- name: Debian - Delete innodb log files created by apt package after initial install.
+  shell: "rm -f {{ mysql_datadir }}/ib_logfile[01]"
+  when: mysql_installed.stat.isdir is not defined
+  tags: mysql
+
+- name: Debian - Copy my.cnf global MySQL configuration.
+  template:
+    src: my.cnf.j2
+    dest: "{{ mysql_config_file }}"
+    owner: root
+    group: root
+    mode: 0644
+    force: "{{ overwrite_global_mycnf }}"
+  notify: restart mysql debian
+  tags:
+    - mysql

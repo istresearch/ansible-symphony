@@ -147,3 +147,6 @@ vagrant-as-02
 
 [tangelo-node]
 vagrant-as-02
+
+[mysql-node]
+vagrant-as-01
