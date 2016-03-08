@@ -1,6 +1,6 @@
 mysql_es_dir: /opt/mysql_es_pulse
 mysql_es_log_dir: /var/log/mysql_es_pulse
-es_host: localhost:{{ elasticsearch_network_http_port }}
+es_host: "{{ inventory_hostname }}:{{ elasticsearch_network_http_port|default(9200) }}"
 interval: 5
 mysql_db_host: localhost
 

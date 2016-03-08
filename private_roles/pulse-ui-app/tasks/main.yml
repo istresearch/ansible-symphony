@@ -111,13 +111,6 @@
     url_password={{ pulse_repo_password }}
   tags: pulse-ui-app
 
-#- name: Get Pollster from file
-#  copy:
-#    src={{ pollster_version }}
-#    dest={{ pulse_install_dir }}/pulse-{{ pulse_version }}/res/files/{{ pollster_version }}
-#    mode=0755
-#  tags: pulse-ui-app
-
 - name: Create Pollster symlink
   file:
     path={{ pulse_install_dir }}/pulse-{{ pulse_version }}/res/files/Pollster.Prime.apk
@@ -246,7 +239,9 @@
     validate_certs=no
     url_username={{ pulse_repo_user }}
     url_password={{ pulse_repo_password }}
-  tags: pulse-ui-app
+  tags: 
+    - pulse-ui-app
+    - kibana4-app
 
 - name: Extract the Kibana4 backup folder
   unarchive:

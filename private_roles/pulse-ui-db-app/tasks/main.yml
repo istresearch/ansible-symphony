@@ -1,19 +1,13 @@
 ---
-- include_vars: ../../pulse-ui-app/defaults/main.yml
-  tags:
-    - pulse-ui-db-app 
-    - pulse-ui-app
-
-- name: curl DB setup
-#  command: /usr/bin/curl --request POST --url {{ inventory_hostname }}/{{ pulse_name }}/admin/ajajResetupDb/
+- name: curl legacy DB setup
   command: /usr/bin/curl {{ inventory_hostname }}/{{ pulse_name }}/install/resetup_db/
+  when: pulse_db_legacy_setup
   tags: pulse-ui-db-app
 
-#- name: Run DB setup
-#  uri: 
-#    url=https://{{ inventory_hostname }}/{{ pulse_name }}/admin/ajajResetupDb
-#    method=POST
-#  tags: pulse-ui-db-app
+- name: curl DB setup
+  command: /usr/bin/curl --request POST --url {{ inventory_hostname }}/{{ pulse_name }}/admin/ajajResetupDb/
+  when: not pulse_db_legacy_setup
+  tags: pulse-ui-db-app
 
 - name: Move titan sql script over
   template:
@@ -34,3 +28,24 @@
     state=absent
   ignore_errors: yes
   tags: pulse-ui-db-app
+
+- name: Move mmr setup sql script over
+  template:
+    src=setup_mmr.sql.j2
+    dest=/tmp/setup_mmr.sql
+  tags: pulse-ui-db-app
+
+- name: Setup default mmr directory in the Pulse instance
+  mysql_db:
+    name={{ pulse_db_name }}
+    state=import
+    target=/tmp/setup_mmr.sql
+  tags: pulse-ui-db-app
+
+- name: Remove mmr setup sql script
+  file:
+    path=/tmp/setup_mmr.sql
+    state=absent
+  ignore_errors: yes
+  tags: pulse-ui-db-app
+

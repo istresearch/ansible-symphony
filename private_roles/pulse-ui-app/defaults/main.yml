@@ -1,4 +1,4 @@
-pulse_version: 2.0.15.0
+pulse_version: 2.0.15.0   # 2.1.3
 
 pulse_name: pulse
 pulse_install_dir: /opt/pulse
@@ -11,7 +11,7 @@ pulse_repo_location: http://repo.istresearch.com/pulse
 
 pollster_name: appPollsterPrime
 pollster_build_type: release
-pollster_version: 5.2.15.0
+pollster_version: 5.3.3
 
 # logstash config
 pulse_logstash_template: pulse-template.json

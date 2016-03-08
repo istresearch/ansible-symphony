@@ -16,6 +16,7 @@ This section explains the different roles within Ansible Symphony
    kibana4
    logstash
    miniconda
+   mysql
    neo4j
    pip
    redis
@@ -61,6 +62,9 @@ This section explains the different roles within Ansible Symphony
 
 :doc:`miniconda`
     Miniconda
+
+:doc:`mysql`
+    MySQL
 
 :doc:`neo4j`
     Neo4j

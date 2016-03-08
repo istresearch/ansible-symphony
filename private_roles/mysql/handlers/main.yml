@@ -1,5 +1,0 @@
----
-- name: restart mysql
-  service: "name={{ mysql_daemon }} state=restarted sleep=5"
-#  when: docker_deployment
-  tags: mysql-included

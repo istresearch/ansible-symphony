@@ -1,10 +1,4 @@
 ---
-- include_vars: ../../pulse-ui-app/defaults/main.yml
-  tags: pulse-ui-app
-
-- include_vars: ../../roles/elasticsearch/defaults/main.yml
-  tags: pulse-ui-app
-
 - name: check for mysql-es connector directory
   stat: path={{ mysql_es_dir }}
   register: mysql_es
@@ -18,12 +12,15 @@
   when: mysql_es.stat.isdir is not defined
   tags: mysql-es-connector
 
-- name: move myql-es connector script over
-  copy:
-    src=mysql_es_pulse.py
+- name: download mysql-es-connector script
+  get_url:
+    url=http://{{ repository_host }}/pulse/mysql-es-connector/mysql_es_pulse.py
     dest={{ mysql_es_dir }}/mysql_es_pulse.py
     mode=0755
-  tags: mysql-es-connector
+    validate_certs=no
+    url_username={{ pulse_repo_user }}
+    url_password={{ pulse_repo_password }}
+  tags: mysql-es-connector      
 
 - name: move mapping over
   copy:
@@ -45,24 +42,14 @@
   when: mysql_es_log.stat.isdir is not defined
   tags: mysql-es-connector
 
-- name: install pip
-  shell: "sudo {{ miniconda_install_dir }}/bin/conda install -y -c https://conda.anaconda.org/mwcraig pip"
-  when: local_install
-  tags: mysql-es-connector
-
-- name: install pip from hosted repo
-  shell: "sudo {{ miniconda_install_dir }}/bin/conda install pip"
-  when: not local_install
-  tags: mysql-es-connector
-
 - name: install elasticsearch-py from pypi
   shell: "sudo {{ miniconda_install_dir }}/bin/pip install -i https://pypi.python.org/simple elasticsearch"
-  when: inventory_hostname == "localhost"
+  when: pulse_local_install
   tags: mysql-es-connector
 
 - name: install elasticsearch-py from hosted repo
   shell: "sudo {{ miniconda_install_dir }}/bin/pip install elasticsearch"
-  when: not local_install
+  when: not pulse_local_install
   tags: mysql-es-connector
 
 - name: download mysql-connector-python from MySQL source

@@ -90,14 +90,16 @@
   tags: site-pulse-app
 
 - name: Pulse DB Initialization
-  hosts: pulse-ui-node
+  hosts: mysql-node
   vars_files:
     - private_roles/pulse-ui-app/defaults/main.yml
   roles: [ pulse-ui-db-app]
   tags: site-pulse-app
 
 - name: Pulse MySQL-ES Connector Initialization
-  hosts: pulse-ui-node
+  hosts: pulse-mysql-es-host
+  vars_files:
+    - private_roles/pulse-ui-app/defaults/main.yml
   roles: [ mysql-es-connector ]
   tags: site-pulse-app 
 

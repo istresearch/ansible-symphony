@@ -1,16 +1,4 @@
 ---
-- name: Copy my.cnf global MySQL configuration.
-  template:
-    src: my.cnf.j2
-    dest: "{{ mysql_config_file }}"
-    owner: root
-    group: root
-    mode: 0644
-    force: "{{ overwrite_global_mycnf }}"
-  notify: restart mysql
-  tags:
-    - mysql
-
 - name: Create slow query log file (if configured).
   shell: "touch {{ mysql_slow_query_log_file }} creates={{ mysql_slow_query_log_file }}"
   when: mysql_slow_query_log_enabled
@@ -28,7 +16,8 @@
   tags:
     - mysql
 
-- name: Ensure MySQL is started and enabled on boot.
+- name: RedHat - Ensure MySQL is started and enabled on boot.
   service: "name={{ mysql_daemon }} state=started enabled={{ mysql_enabled_on_startup }}"
+  when: ansible_os_family == 'RedHat'
   tags:
     - mysql

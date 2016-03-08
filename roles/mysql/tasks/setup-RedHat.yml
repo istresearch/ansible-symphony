@@ -15,3 +15,15 @@
   with_items: mysql_packages
   tags:
     - mysql
+
+- name: RedHat - Copy my.cnf global MySQL configuration.
+  template:
+    src: my.cnf.j2
+    dest: "{{ mysql_config_file }}"
+    owner: root
+    group: root
+    mode: 0644
+    force: "{{ overwrite_global_mycnf }}"
+  notify: restart mysql redhat
+  tags:
+    - mysql

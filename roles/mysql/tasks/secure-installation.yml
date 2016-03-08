@@ -1,4 +1,11 @@
 ---
+- name: Debian - Ensure MySQL is started
+  supervisorctl: 
+    name=mysql
+    state=started
+  when: ansible_os_family == 'Debian'
+  tags: mysql
+
 - name: Get list of hosts for the root user.
   command: mysql -NBe 'SELECT Host FROM mysql.user WHERE User = "root" ORDER BY (Host="localhost") ASC'
   register: mysql_root_hosts

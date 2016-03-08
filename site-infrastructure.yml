@@ -73,7 +73,7 @@
   tags:
     - site-elasticsearch
     - ELK
-    - site-pulse
+    - deps-pulse
 
 - name: Run Dig elasticsearch master role in Amazon
   hosts: dig-elasticsearch-master-nodes
@@ -102,7 +102,7 @@
   tags:
     - site-elasticsearch
     - ELK
-    - site-pulse
+    - deps-pulse
 
 - name: Run Dig elasticsearch data role
   hosts: dig-elasticsearch-data-nodes
@@ -131,7 +131,7 @@
   tags:
     - site-elasticsearch
     - ELK
-    - site-pulse
+    - deps-pulse
 
 - name: Run Dig elasticsearch client role
   hosts: dig-elasticsearch-client-nodes
@@ -164,7 +164,7 @@
   tags:
     - site-kibana
     - ELK
-    - site-pulse
+    - deps-pulse
 
 # --------------------------- Scraper services -------------------------------
 - name: Run redis role
@@ -394,7 +394,15 @@
   roles: [ docker-engine ]
   tags:
     - site-docker-engine
-    - site-pulse-docker
+
+# ---------------------------------- MySQL -----------------------------------
+
+- name: MySQL
+  hosts: mysql-node
+  roles: [ mysql ]
+  tags:
+    - mysql
+    - deps-pulse
 
 # ---------------------------------- Pulse -----------------------------------
 
@@ -403,12 +411,14 @@
   roles: [ pulse-ui ]
   tags: 
     - site-pulse
+    - deps-pulse
     - site-pulse-docker
 
 - name: Pulse Docker Infrastructure
   hosts: kibana-node
   roles: [ pulse-docker ]
-  tags: site-pulse-docker
+  tags: 
+    - site-pulse-docker
 
 # ---------------------------------- Neo4j --------------------------------
 

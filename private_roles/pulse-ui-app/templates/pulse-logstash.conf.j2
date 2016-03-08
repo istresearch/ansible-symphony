@@ -59,9 +59,9 @@ input {
 }
 
 output {
-{% if groups['pulse-elasticsearch-nodes'] is defined and (groups['pulse-elasticsearch-nodes']|length > 0) %}
+{% if groups['elasticsearch-nodes'] is defined and (groups['elasticsearch-nodes']|length > 0) %}
     elasticsearch {
-        host => "{{ groups['pulse-ES-kibana-nodes'][0] }}"
+        host => "{{ kibana-node }}"
         port => {{ elasticsearch_network_http_port | default('9200') }}
         protocol => http
         template => "{{ logstash_template_dir|default('/etc/logstash.d/templates') }}/{{ pulse_logstash_template }}"
