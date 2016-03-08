@@ -317,6 +317,14 @@
   tags:
     - site-docker-engine
 
+# ---------------------------------- MySQL -----------------------------------
+
+- name: MySQL
+  hosts: mysql-node
+  roles: [ mysql ]
+  tags:
+    - mysql
+
 # ---------------------------------- Neo4j --------------------------------
 
 - name: Neo4j
