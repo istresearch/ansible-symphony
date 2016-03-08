@@ -13,6 +13,7 @@ This section explains the different roles within Ansible Symphony
    hadoop
    hbase
    javakafka
+   kafka
    kibana4
    logstash
    miniconda
@@ -23,6 +24,7 @@ This section explains the different roles within Ansible Symphony
    spark
    storm
    supervisord
+   tangelo
    tor
    virtualenv
    zookeeper
@@ -83,6 +85,9 @@ This section explains the different roles within Ansible Symphony
 
 :doc:`supervisord`
     Supervisord
+
+:doc:`tangelo`
+    Tangelo Web Framework
 
 :doc:`tor`
     Tor
