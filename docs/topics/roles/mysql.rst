@@ -1,5 +1,5 @@
 MySQL
-========
+=====
 
 Deploys `MySQL <http://www.mysql.com>`_
 
@@ -13,17 +13,34 @@ UI Ports
 
 None
 
+Ports
+-----
+
+* **<mysql-node>:3306** - The main port to access MySQL
+
 Verify Your Installation
 ------------------------
 
 MySQL is installed under Supervisord. You can confirm MySQL is installed and running via the following command:
 
-#. SSH onto the MySQL machine.
+1. SSH onto the MySQL machine.
 
-#. Run the following command from anywhere
+2. Log into MySQL (Password stored in the defaults.yml file)
 
 ::
 
-    $ sudo supervisorctl
-    mysql          RUNNING   pid 12345, uptime 0:01:00
+    $ mysql -u root -p
 
+3. Execute a command to show the databases within MySQL
+
+::
+
+    mysql> show databases;
+    +--------------------+
+    | Database           |
+    +--------------------+
+    | information_schema |
+    | mysql              |
+    | performance_schema |
+    +--------------------+
+    3 rows in set (0.00 sec)

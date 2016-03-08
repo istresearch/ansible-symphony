@@ -5,9 +5,8 @@
   hosts: all
   roles:
     - common
-  tags: 
+  tags:
     - site-common
-    - site-pulse
 
 # ------------------------------ Customize Internap ------------------------
 
@@ -355,7 +354,7 @@
 - name: Pulse UI Node Infrastructure
   hosts: pulse-ui-node
   roles: [ pulse-ui ]
-  tags: 
+  tags:
     - site-pulse
     - deps-pulse
     - site-pulse-docker
@@ -363,7 +362,7 @@
 - name: Pulse Docker Infrastructure
   hosts: kibana-node
   roles: [ pulse-docker ]
-  tags: 
+  tags:
     - site-pulse-docker
 
 # ---------------------------------- Neo4j --------------------------------

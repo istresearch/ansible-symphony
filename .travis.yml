@@ -26,6 +26,7 @@ env:
   - TAGS='virtualenv'
   - TAGS='miniconda'
   - TAGS='site-tangelo'
+  - TAGS='mysql'
 
 matrix:
   fast_finish: true

@@ -148,3 +148,6 @@ travis-trusty
 
 [tangelo-node]
 travis-trusty
+
+[mysql-node]
+travis-trusty
