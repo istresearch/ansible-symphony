@@ -22,7 +22,7 @@
     - python-dev
     - libxml2-dev
     - libxslt1-dev
-    - byubo
+    - byobu
   tags: common
 
 - name: remove hostname loopback

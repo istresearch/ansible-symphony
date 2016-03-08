@@ -1,0 +1,44 @@
+#   - Comments begin with the '#' character
+#   - Blank lines are ignored
+#   - Groups of hosts are delimited by [header] elements
+#   - You can enter hostnames or ip addresses
+#   - A hostname/ip can be a member of multiple groups
+
+[all:vars]
+repository_host=default
+
+[servers]
+#127.0.0.1 host_alias=localhost
+# This group is 
+# Dig Servers on AWS 
+dig-es01.istresearch.com host_alias=dig-es01.istresearch.com
+dig-es02.istresearch.com host_alias=dig-es02.istresearch.com
+dig-es03.istresearch.com host_alias=dig-es03.istresearch.com
+dig-es04.istresearch.com host_alias=dig-es04.istresearch.com
+dig-es05.istresearch.com host_alias=dig-es05.istresearch.com
+dig-es06.istresearch.com host_alias=dig-es06.istresearch.com
+dig-es07.istresearch.com host_alias=dig-es07.istresearch.com
+dig-es08.istresearch.com host_alias=dig-es08.istresearch.com
+dig-es09.istresearch.com host_alias=dig-es09.istresearch.com
+dig-es10.istresearch.com host_alias=dig-es10.istresearch.com
+
+[elasticsearch-master-nodes]
+
+[elasticsearch-data-nodes]
+dig-es01.istresearch.com elasticsearch_is_master=true
+dig-es02.istresearch.com elasticsearch_is_master=true
+dig-es03.istresearch.com elasticsearch_is_master=true
+dig-es04.istresearch.com elasticsearch_is_master=true
+dig-es05.istresearch.com elasticsearch_is_master=true
+dig-es06.istresearch.com elasticsearch_is_master=true
+dig-es07.istresearch.com elasticsearch_is_master=true
+dig-es08.istresearch.com elasticsearch_is_master=true
+dig-es09.istresearch.com elasticsearch_is_master=true
+dig-es10.istresearch.com elasticsearch_is_master=true
+
+[elasticsearch-client-nodes]
+
+[elasticsearch-nodes:children]
+elasticsearch-master-nodes
+elasticsearch-data-nodes
+elasticsearch-client-nodes
