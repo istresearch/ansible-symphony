@@ -17,21 +17,23 @@ UI Ports
 Verify Your Installation
 ------------------------
 
-In a browser, navigate the Pulse UI website at **<pulse-ui-node>/pulse**. You should see:
+1. In a browser, navigate the Pulse UI website at **<pulse-ui-node>/pulse**. You should see:
 
 .. figure:: ./img/pulse_ui_app.png
    :alt: Pulse UI App
    :align: center
    :width: 600
 
-Enter the titan user credentials and click **Login**.
+2. Enter the titan user credentials and click **Login**.
+
+.. note:: The credentials are stored both in LastPass and in the vault password file located within ``/group_vars/pulse-ui-node/``
 
 .. figure:: ./img/pulse_ui_db_app.png
    :alt: Pulse UI DB App
    :align: center
    :width: 600
 
-Verify the login was successful. You should see:
+3. Verify the login was successful. You should see:
 
 .. figure:: ./img/pulse_ui_db_app_success.png
    :alt: Pulse UI DB App Success

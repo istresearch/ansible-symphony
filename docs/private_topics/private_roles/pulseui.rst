@@ -16,6 +16,8 @@ None
 Verify Your Installation
 ------------------------
 
+.. note:: The role is primarily to set up connections and plumbling. You should independently verify the component installation.
+
 Verify Apache service is installed and running via the following command:
 
 ::

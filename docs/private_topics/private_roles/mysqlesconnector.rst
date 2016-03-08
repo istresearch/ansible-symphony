@@ -16,22 +16,32 @@ None
 Verify Your Installation
 ------------------------
 
-Verify the cron job for the default MySQL ES index has been created via the following command: 
+Verify the cron job for the default MySQL ES index has been created via the following commands:
+
+1. SSH onto the machine
+
+2. Switch to the ``root`` user
 
 ::
 
-    $ sudo crontab -l
-    */1 * * * * sudo /opt/miniconda/bin/python2.7 /opt/mysql_es_pulse/mysql_es_pulse.py 
-    --dbhost=localhost --dbuser=pulse --db=pulse --pw=12Z0GQ03Eta4 --interval=5 
-    --es=vagrant-ist-01:9200 --index=pulse-1 --build=incremental 
-    --mapping=/opt/mysql_es_pulse/pulse_mapping_dynamic.json --logfile=/var/log/mysql_es_pulse/pulse.log 
+    $ sudo su
+
+3. View the crontab to ensure the process was added
+
+::
+
+    $ crontab -l
+    */1 * * * * sudo /opt/miniconda/bin/python2.7 /opt/mysql_es_pulse/mysql_es_pulse.py
+    --dbhost=localhost --dbuser=pulse --db=pulse --pw=12Z0GQ03Eta4 --interval=5
+    --es=vagrant-ist-01:9200 --index=pulse-1 --build=incremental
+    --mapping=/opt/mysql_es_pulse/pulse_mapping_dynamic.json --logfile=/var/log/mysql_es_pulse/pulse.log
     --db_prefix=pulse
 
-Verify the cron job for the default MySQL ES index has run successfully via the following command:
+4. Verify the cron job for the default MySQL ES index has run successfully via the following command:
 
 ::
 
-    $ sudo vim /var/log/mysql_es_pulse/pulse.log
+    $ tail /var/log/mysql_es_pulse/pulse.log
     2016-03-07 14:43:11.258011       no db query results for question_responses
     2016-03-07 14:43:11.261572       no db query results for outgoing
     2016-03-07 14:43:11.266470       no db query results for deploy
