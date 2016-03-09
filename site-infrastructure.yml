@@ -281,6 +281,7 @@
   hosts: hbase-regionserver-nodes
   vars:
     - hbase_regionserver_enabled: true
+    - hbase_thriftserver_enabled: true
     - hbase_master_host: "{{ groups['hbase-master-node'][0] }}"
     - dfs_namenode_host: "{{ groups['hadoop-namenode-node'][0] }}"
     - zookeeper_host_list: "{{ groups['zookeeper-nodes'] }}"
