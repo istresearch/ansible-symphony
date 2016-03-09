@@ -33,7 +33,8 @@ matrix:
 script:
   - ansible-playbook -i testing site-infrastructure.yml --tags $TAGS --syntax-check
   - ansible-playbook -i testing site-infrastructure.yml --tags $TAGS --connection=local --become
-
+after_failure:
+  - sudo cat /var/log/supervisor/*
 notifications:
   slack:
     rooms:

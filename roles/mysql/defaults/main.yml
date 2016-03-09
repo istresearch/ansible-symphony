@@ -90,3 +90,6 @@ mysql_replication_master: ''
 # Same keys as `mysql_users` above.
 mysql_replication_user: []
 
+mysql_stdout_logfile_maxbytes: 50MB
+mysql_stderr_logfile_maxbytes: 50MB
+
