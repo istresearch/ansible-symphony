@@ -34,7 +34,7 @@ script:
   - ansible-playbook -i testing site-infrastructure.yml --tags $TAGS --syntax-check
   - ansible-playbook -i testing site-infrastructure.yml --tags $TAGS --connection=local --become
 after_failure:
-  - cat /var/log/supervisor/*
+  - sudo cat /var/log/supervisor/*
 notifications:
   slack:
     rooms:
