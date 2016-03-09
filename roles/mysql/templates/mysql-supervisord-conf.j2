@@ -1,5 +1,5 @@
 [program:mysql]
-command=/usr/sbin/mysqld --pid-file={{ mysql_pid_file }} && sleep 5
+command=/usr/sbin/mysqld --pid-file={{ mysql_pid_file }}
 autostart=true
 autorestart=true
 stopsignal=KILL
