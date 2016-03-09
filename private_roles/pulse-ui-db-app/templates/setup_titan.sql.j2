@@ -1,0 +1,4 @@
+USE {{ pulse_db_name }};
+INSERT IGNORE INTO `{{ pulse_webapp_table_prefix }}accounts` (`account_id`, `account_name`) VALUES (1, "{{ pulse_titan_user }}");
+INSERT IGNORE INTO `{{ pulse_webapp_table_prefix }}auth` (`auth_id`, `email`, `account_id`, `pwhash`, `verified`, `_created`) VALUES (now(), "{{ pulse_titan_email }}", "1", "{{ pulse_password_hash }}", now(), now());
+INSERT IGNORE INTO `{{ pulse_webapp_table_prefix }}groups_map` (`account_id`, `group_id`) VALUES ("1", "1");

@@ -1,0 +1,42 @@
+pulse_version: 2.1.4.dev
+
+pulse_name: pulse
+pulse_install_dir: /opt/pulse
+pulse_mmr_dir: /var/mmr/pulse
+pulse_log_dir: "{{ pulse_mmr_dir }}/logs"
+pulse_docker_dir: /data/bin/pulse_docker
+pulse_docker_data_dir: /data/pulse
+
+pulse_repo_location: http://repo.istresearch.com/pulse
+
+pollster_name: appPollsterPrime
+pollster_build_type: release
+pollster_version: 5.3.3
+
+# logstash config
+pulse_logstash_template: pulse-template.json
+pulse_logstash_template_name: pulse-template
+pulse_logstash_index_name: "{{ pulse_name }}"
+pulse_outgoing_tag: survey-outgoing
+pulse_outgoing_type: outgoing
+pulse_outgoing_log_file: survey_outgoing.log
+pulse_qr_tag: survey-question-responses
+pulse_qr_type: question_responses
+pulse_qr_log_file: survey_question_responses.log
+pulse_deploy_tag: survey-deploy
+pulse_deploy_type: deploy
+pulse_deploy_log_file: deploy_survey.log
+
+pulse_titan_email: pulse.feedback@istresearch.com
+
+pulse_table_prefix: pulse_
+pulse_webapp_table_prefix: webapp_
+pulse_db_name: pulse
+
+mysql_databases:
+  - { name: "{{ pulse_db_name }}", collation: utf8_general_ci, encoding: utf8, replicate: 0 }
+
+mysql_users:
+  - { name: "{{ pulse_db_user_name }}", host: localhost, password: "{{ pulse_db_password }}", priv: "{{ pulse_db_user_name }}.*:ALL" }
+
+pulse_kibana_backup: backup.tar

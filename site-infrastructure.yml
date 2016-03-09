@@ -5,7 +5,8 @@
   hosts: all
   roles:
     - common
-  tags: site-common
+  tags:
+    - site-common
 
 # ------------------------------ Customize Internap ------------------------
 
@@ -71,24 +72,7 @@
   tags:
     - site-elasticsearch
     - ELK
-
-- name: Run Dig elasticsearch master role in Amazon
-  hosts: dig-elasticsearch-master-nodes
-  vars:
-   - elasticsearch_host_list: "{{ groups['dig-elasticsearch-nodes'] }}"
-   - elasticsearch_is_master: "true"
-  roles: [ elasticsearch ]
-  tags:
-    - dig-site-elasticsearch
-
-- name: Run CDR elasticsearch master role in Amazon
-  hosts: dig-elasticsearch-master-nodes
-  vars:
-   - elasticsearch_host_list: "{{ groups['cdr-elasticsearch-nodes'] }}"
-   - elasticsearch_is_master: "true"
-  roles: [ elasticsearch ]
-  tags:
-    - cdr-site-elasticsearch
+    - deps-pulse
 
 - name: Run elasticsearch data role
   hosts: elasticsearch-data-nodes
@@ -99,24 +83,7 @@
   tags:
     - site-elasticsearch
     - ELK
-
-- name: Run Dig elasticsearch data role
-  hosts: dig-elasticsearch-data-nodes
-  vars:
-   - elasticsearch_host_list: "{{ groups['dig-elasticsearch-nodes'] }}"
-   - elasticsearch_is_data: "true"
-  roles: [ elasticsearch ]
-  tags:
-    - dig-site-elasticsearch
-
-- name: Run CDR elasticsearch data role
-  hosts: cdr-elasticsearch-data-nodes
-  vars:
-   - elasticsearch_host_list: "{{ groups['cdr-elasticsearch-nodes'] }}"
-   - elasticsearch_is_data: "true"
-  roles: [ elasticsearch ]
-  tags:
-    - cdr-site-elasticsearch
+    - deps-pulse
 
 - name: Run elasticsearch client role
   hosts: elasticsearch-client-nodes
@@ -127,24 +94,7 @@
   tags:
     - site-elasticsearch
     - ELK
-
-- name: Run Dig elasticsearch client role
-  hosts: dig-elasticsearch-client-nodes
-  vars:
-   - elasticsearch_host_list: "{{ groups['dig-elasticsearch-nodes'] }}"
-   - elasticsearch_is_client: "true"
-  roles: [ elasticsearch ]
-  tags:
-    - dig-site-elasticsearch
-
-- name: Run CDR elasticsearch client role
-  hosts: cdr-elasticsearch-client-nodes
-  vars:
-   - elasticsearch_host_list: "{{ groups['cdr-elasticsearch-nodes'] }}"
-   - elasticsearch_is_client: "true"
-  roles: [ elasticsearch ]
-  tags:
-    - cdr-site-elasticsearch
+    - deps-pulse
 
 - name: Run logstash role
   hosts: logstash-nodes
@@ -159,6 +109,7 @@
   tags:
     - site-kibana
     - ELK
+    - deps-pulse
 
 # --------------------------- Scraper services -------------------------------
 - name: Run redis role
@@ -330,6 +281,7 @@
   hosts: hbase-regionserver-nodes
   vars:
     - hbase_regionserver_enabled: true
+    - hbase_thriftserver_enabled: true
     - hbase_master_host: "{{ groups['hbase-master-node'][0] }}"
     - dfs_namenode_host: "{{ groups['hadoop-namenode-node'][0] }}"
     - zookeeper_host_list: "{{ groups['zookeeper-nodes'] }}"
@@ -388,6 +340,31 @@
   roles: [ docker-engine ]
   tags:
     - site-docker-engine
+
+# ---------------------------------- MySQL -----------------------------------
+
+- name: MySQL
+  hosts: mysql-node
+  roles: [ mysql ]
+  tags:
+    - mysql
+    - deps-pulse
+
+# ---------------------------------- Pulse -----------------------------------
+
+- name: Pulse UI Node Infrastructure
+  hosts: pulse-ui-node
+  roles: [ pulse-ui ]
+  tags:
+    - site-pulse
+    - deps-pulse
+    - site-pulse-docker
+
+- name: Pulse Docker Infrastructure
+  hosts: kibana-node
+  roles: [ pulse-docker ]
+  tags:
+    - site-pulse-docker
 
 # ---------------------------------- Neo4j --------------------------------
 

@@ -1,0 +1,49 @@
+#!/bin/bash
+
+APP="{{ pulse_name }}"
+CONTAINER_K="kibana:4.1.2"
+KIBANA_PORT={{ kibana4_port }}
+KIBANA_TAG="KIBANA_{{ pulse_name }}"
+
+stop() {
+    echo "Stopping..."
+    docker stop $KIBANA_TAG
+    docker rm $KIBANA_TAG
+    echo "done"
+}
+
+start() {
+    echo "Starting Kibana..."
+    docker run \
+    --name $KIBANA_TAG \
+    --expose 5601 \
+    -p 127.0.0.1:$KIBANA_PORT:5601 \
+    -e ELASTICSEARCH_URL={{ inventory_hostname }}:{{ elasticsearch_network_http_port }} \
+    -v {{ pulse_docker_data_dir|default('/data/pulse') }}/{{ pulse_name }}/kibana{{ pulse_name }}.yml:/usr/share/kibana/config/kibana.yml \
+    -d $CONTAINER_K
+    echo "done with $KIBANA_TAG"
+}
+
+case "$1" in
+start)
+    start
+    ;;
+restart)
+    stop
+    start
+    ;;
+refresh)
+    pull
+    stop
+    start
+    ;;
+stop)
+    stop
+    ;;
+*)
+    echo "usage: $0 [start|restart|refresh|stop]"
+    exit 1
+    ;;
+esac
+
+exit 0
