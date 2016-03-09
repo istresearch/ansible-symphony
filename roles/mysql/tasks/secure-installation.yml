@@ -6,6 +6,11 @@
   when: ansible_os_family == 'Debian'
   tags: mysql
 
+- name: Wait for MySQL port
+  wait_for:
+    port: "{{ mysql_port }}"
+  tags: mysql
+
 - name: Get list of hosts for the root user.
   command: mysql -NBe 'SELECT Host FROM mysql.user WHERE User = "root" ORDER BY (Host="localhost") ASC'
   register: mysql_root_hosts
