@@ -1,11 +1,22 @@
 ---
-- name: curl legacy DB setup
+- name: Curl legacy DB setup
   command: /usr/bin/curl {{ inventory_hostname }}/{{ pulse_name }}/install/resetup_db/
   when: pulse_db_legacy_setup
   tags: pulse-ui-db-app
 
-- name: curl DB setup
-  command: /usr/bin/curl --request POST --url {{ inventory_hostname }}/{{ pulse_name }}/admin/ajajResetupDb/
+- name: Retrieve passwd
+  shell: cat {{ pulse_install_dir }}/pulse-{{ pulse_version }}/install.pw
+  register: passwd
+  when: not pulse_db_legacy_setup
+  tags: pulse-ui-db-app
+
+- name: Show passwd
+  debug: msg="The passwd is {{ passwd.stdout }}"
+  when: not pulse_db_legacy_setup
+  tags: pulse-ui-db-app
+
+- name: Curl DB setup
+  command: /usr/bin/curl --request POST --url {{ inventory_hostname }}/{{ pulse_name }}/install/setup_website --data "installpw={{ passwd.stdout }}" --data "install_database=true"
   when: not pulse_db_legacy_setup
   tags: pulse-ui-db-app
 
