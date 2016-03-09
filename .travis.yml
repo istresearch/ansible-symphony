@@ -11,21 +11,21 @@ before_install:
 install:
   - pip install ansible
 env:
-  - TAGS='site-common'
-  - TAGS='site-zookeeper'
-  - TAGS='deps-kafka'
-  - TAGS='ELK'
-  - TAGS='scrapy-services'
-  - TAGS='scrapy-cluster'
-  - TAGS='deps-storm'
-  - TAGS='deps-hadoop'
-  - TAGS='deps-hbase'
-  - TAGS='deps-spark'
-  - TAGS='site-docker-engine'
-  - TAGS='site-neo4j'
-  - TAGS='virtualenv'
-  - TAGS='miniconda'
-  - TAGS='site-tangelo'
+  # - TAGS='site-common'
+  # - TAGS='site-zookeeper'
+  # - TAGS='deps-kafka'
+  # - TAGS='ELK'
+  # - TAGS='scrapy-services'
+  # - TAGS='scrapy-cluster'
+  # - TAGS='deps-storm'
+  # - TAGS='deps-hadoop'
+  # - TAGS='deps-hbase'
+  # - TAGS='deps-spark'
+  # - TAGS='site-docker-engine'
+  # - TAGS='site-neo4j'
+  # - TAGS='virtualenv'
+  # - TAGS='miniconda'
+  # - TAGS='site-tangelo'
   - TAGS='mysql'
 
 matrix:
@@ -34,7 +34,7 @@ script:
   - ansible-playbook -i testing site-infrastructure.yml --tags $TAGS --syntax-check
   - ansible-playbook -i testing site-infrastructure.yml --tags $TAGS --connection=local --become
 after_failure:
-  - cat /var/log/supervisord/*
+  - cat /var/log/supervisor/*
 notifications:
   slack:
     rooms:
