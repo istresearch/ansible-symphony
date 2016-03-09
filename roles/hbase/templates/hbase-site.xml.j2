@@ -67,6 +67,15 @@
     <value>{{ hbase_rest_info_port|default(8085) }}</value>
   </property>
 
+  <property>
+    <name>hbase.regionserver.thrift.port</name>
+    <value>{{ hbase_thriftserver_port|default(9090) }}</value>
+  </property>
+
+  <property>
+    <name>hbase.thrift.info.port</name>
+    <value>{{ hbase_thriftserver_info_port|default(9095) }}</value>
+  </property>
 
   <property>
     <name>hbase.rootdir</name>
