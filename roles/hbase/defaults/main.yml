@@ -23,6 +23,7 @@ hbase_opts: -XX:+UseConcMarkSweepGC
 hbase_master_enabled: false
 hbase_regionserver_enabled: false
 hbase_rest_enabled: false
+hbase_thriftserver_enabled: false
 
 hbase_cluster_name: hbasecluster
 
@@ -35,6 +36,8 @@ hbase_regionserver_port: 60020
 hbase_regionserver_info_port: 60030
 hbase_rest_port: 60050
 hbase_rest_info_port: 8086
+hbase_thriftserver_port: 9090
+hbase_thriftserver_info_port: 9095
 hbase_jmx_remote_port: 10102
 
 repository_infrastructure: "{{ apache_mirror }}/hbase/{{ hbase_version }}"
