@@ -159,3 +159,9 @@ vagrant-ist-02
 
 [mysql-node]
 vagrant-ist-01
+
+[pulse-ui-node]
+vagrant-ist-01
+
+[pulse-mysql-es-host]
+vagrant-ist-01

@@ -1,0 +1,9 @@
+---
+- name: Ensure PHP packages are installed on RedHat.
+  yum:
+    name={{ item }}
+    state=installed
+    disable_gpg_check=yes
+  with_items: "{{ php_packages | list }}"
+  tags:
+    - pulse-ui-app
