@@ -75,7 +75,6 @@ hadoop-datanode-nodes
 
 [hbase-master-node]
 
-
 [hbase-regionserver-nodes]
 
 [hbase-nodes:children]
@@ -181,48 +180,6 @@ memex-crawler06.istresearch.com
 [traptor-nodes:children]
 traptor-follow-nodes
 traptor-track-nodes
-
-[dig-elasticsearch-master-nodes]
-
-[dig-elasticsearch-data-nodes]
-dig-es01.istresearch.com elasticsearch_is_master=true
-dig-es02.istresearch.com elasticsearch_is_master=true
-dig-es03.istresearch.com elasticsearch_is_master=true
-dig-es04.istresearch.com elasticsearch_is_master=true
-dig-es05.istresearch.com elasticsearch_is_master=true
-dig-es06.istresearch.com elasticsearch_is_master=true
-dig-es07.istresearch.com elasticsearch_is_master=true
-dig-es08.istresearch.com elasticsearch_is_master=true
-dig-es09.istresearch.com elasticsearch_is_master=true
-dig-es10.istresearch.com elasticsearch_is_master=true
-
-[dig-elasticsearch-client-nodes]
-
-[dig-elasticsearch-nodes:children]
-dig-elasticsearch-master-nodes
-dig-elasticsearch-data-nodes
-dig-elasticsearch-client-nodes
-
-[cdr-elasticsearch-master-nodes]
-
-[cdr-elasticsearch-data-nodes]
-cdr-es01.istresearch.com elasticsearch_is_master=true
-cdr-es02.istresearch.com elasticsearch_is_master=true
-cdr-es03.istresearch.com elasticsearch_is_master=true
-cdr-es04.istresearch.com elasticsearch_is_master=true
-cdr-es05.istresearch.com elasticsearch_is_master=true
-cdr-es06.istresearch.com elasticsearch_is_master=true
-cdr-es07.istresearch.com elasticsearch_is_master=true
-cdr-es08.istresearch.com elasticsearch_is_master=true
-cdr-es09.istresearch.com elasticsearch_is_master=true
-cdr-es10.istresearch.com elasticsearch_is_master=true
-
-[cdr-elasticsearch-client-nodes]
-
-[cdr-elasticsearch-nodes:children]
-cdr-elasticsearch-master-nodes
-cdr-elasticsearch-data-nodes
-cdr-elasticsearch-client-nodes
 
 [other]
 in-namenode01.nj.istresearch.com
