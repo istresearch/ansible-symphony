@@ -1,0 +1,8 @@
+---
+- name: Ensure PHP packages are installed on Debian.
+  apt:
+    name={{ item }}
+    state=installed
+  with_items: "{{ php_packages | list }}"
+  tags:
+    - pulse-ui-app

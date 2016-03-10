@@ -1,0 +1,73 @@
+input {
+
+  file {
+    # Path: Specify where Log file is located.
+    path => "{{ pulse_log_dir }}/{{ pulse_outgoing_log_file }}"
+
+    # Start Position: Change to "beginning" if we want to read old /existing data,
+    # "end" if we want to only ever read tail (new data).
+    start_position => end
+
+    # SinceDB_Path: Where to write the sincedb database (keeps track of the
+    # current position of monitored log files).
+    sincedb_path => "{{ logstash_install_dir|default('/opt/logstash') }}/logstash-{{ logstash_version|default('1.5.0') }}"
+
+    # elastic search type
+    type => "{{ pulse_outgoing_type }}"
+
+    # message is json
+    codec => json
+  }
+
+  file {
+    # Path: Specify where Log file is located.
+    path => "{{ pulse_log_dir }}/{{ pulse_qr_log_file }}"
+
+    # Start Position: Change to "beginning" if we want to read old /existing data,
+    # "end" if we want to only ever read tail (new data).
+    start_position => end
+
+    # SinceDB_Path: Where to write the sincedb database (keeps track of the
+    # current position of monitored log files).
+    sincedb_path => "{{ logstash_install_dir|default('/opt/logstash') }}/logstash-{{ logstash_version|default('1.5.0') }}"
+
+    # elastic search type
+    type => "{{ pulse_qr_type }}"
+
+    # message is json
+    codec => json
+  }
+
+  file {
+    # Path: Specify where Log file is located.
+    path => "{{ pulse_log_dir }}/{{ pulse_deploy_log_file }}"
+
+    # Start Position: Change to "beginning" if we want to read old /existing data,
+    # "end" if we want to only ever read tail (new data).
+    start_position => end
+
+    # SinceDB_Path: Where to write the sincedb database (keeps track of the
+    # current position of monitored log files).
+    sincedb_path => "{{ logstash_install_dir|default('/opt/logstash') }}/logstash-{{ logstash_version|default('1.5.0') }}"
+
+    # elastic search type
+    type => "{{ pulse_deploy_type }}"
+
+    # message is json
+    codec => json
+  }
+}
+
+output {
+{% if groups['elasticsearch-nodes'] is defined and (groups['elasticsearch-nodes']|length > 0) %}
+    elasticsearch {
+        host => "{{ kibana-node }}"
+        port => {{ elasticsearch_network_http_port | default('9200') }}
+        protocol => http
+        template => "{{ logstash_template_dir|default('/etc/logstash.d/templates') }}/{{ pulse_logstash_template }}"
+        template_name => "{{ pulse_logstash_template_name }}"
+        template_overwrite => true
+        index => "{{ pulse_logstash_index_name }}-%{+YYYY.MM.dd}"
+    }
+{% endif %}
+}

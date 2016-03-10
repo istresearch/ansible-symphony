@@ -1,0 +1,6 @@
+---
+- name: restart mysql debian
+  shell: supervisorctl stop mysql && sleep 5 && supervisorctl start mysql
+
+- name: restart mysql redhat
+  service: "name={{ mysql_daemon }} state=restarted sleep=5"

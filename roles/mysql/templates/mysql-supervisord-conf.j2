@@ -1,0 +1,13 @@
+[program:mysql]
+command=/usr/sbin/mysqld --pid-file={{ mysql_pid_file }}
+autostart=true
+autorestart=true
+stopsignal=KILL
+user=mysql
+startsecs=15
+startretries=5
+redirect_stderr=true
+stdout_logfile=AUTO
+stdout_logfile_maxbytes={{ mysql_stdout_logfile_maxbytes }}
+stderr_logfile=AUTO
+stderr_logfile_maxbytes={{ mysql_stderr_logfile_maxbytes }}

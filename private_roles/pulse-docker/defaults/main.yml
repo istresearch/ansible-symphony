@@ -1,0 +1,5 @@
+pulse_name: pulse
+pulse_docker_dir: /data/bin/pulse_docker
+pulse_docker_data_dir: /data/pulse
+
+kibana4_port: 5602

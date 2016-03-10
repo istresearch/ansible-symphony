@@ -36,3 +36,15 @@
     state=started
   when: hbase_rest_enabled
 
+- name: restart hbase thrift server
+  supervisorctl:
+    name=hbase-rest
+    state=restarted
+  when: hbase_thriftserver_enabled
+
+- name: wait for hbase thrift server port
+  wait_for:
+    port={{ hbase_thriftserver_port }}
+    state=started
+  when: hbase_thriftserver_enabled
+

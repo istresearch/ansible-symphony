@@ -1,0 +1,8 @@
+---
+apache_conf_path: /etc/apache2
+apache_site_default_conf: sites-enabled/000-default.conf
+php_packages: 
+  - php5
+  - php5-mysql
+  - php5-curl
+php_ini_path: /etc/php5/cli/
