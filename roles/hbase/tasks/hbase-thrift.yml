@@ -1,0 +1,39 @@
+---
+- name: copy supervisord config
+  template:
+    src: hbase-thriftserver-supervisord.conf.j2
+    dest: "{{ supervisord_programs_dir }}/hbase-thriftserver-supervisord.conf"
+    mode: 0644
+  notify:
+    - reread supervisord
+    - restart hbase thrift server
+    - wait for hbase thrift server port
+  tags:
+    - hbase
+    - hbase_thrift
+
+- name: add hbase thrift to supervisord
+  supervisorctl:
+    name: hbase-thriftserver
+    state: present
+  tags: 
+    - hadoop
+    - hbase_thrift
+
+- name: ensure hbase thrift server is started
+  supervisorctl:
+    name: hbase-thriftserver
+    state: started
+  notify:
+    - wait for hbase thrift server port
+  tags: 
+    - hadoop
+    - hbase_thrift
+
+- name: wait for hbase thrift server port
+  wait_for:
+    port: "{{ hbase_thriftserver_port }}"
+    host: "{{ inventory_hostname }}"
+  tags: 
+    - hadoop
+    - hbase_thrift
