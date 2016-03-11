@@ -151,9 +151,7 @@ When using ``vagrant-ist-01`` as the Deployment Machine with the ``gdk`` invento
 Verifying the Deployment
 -------------------------
 
-After both playbooks have successfully completed, you should be able to browse the Pulse website at https://vagrant-ist-01/pulse . You must use the secure version of the site to update the Pulse Settings initially.
-
-.. note:: You may receive a SSL connection error the first time you try this due to issues with the self-signed SSL certificate. To resolve this, restart the Apache service on the Pulse Host machine by running ``sudo service apache2 restart``. You can then reload the page and proceed.
+After both playbooks have successfully completed, you should be able to browse the Pulse website at http://vagrant-ist-01/pulse .
 
 .. figure:: ./private_roles/img/pulse_ui_db_app.png
    :alt: Login
@@ -179,6 +177,8 @@ You must first set the Kibana URL on the *Admin Settings* page in Pulse in order
    :alt: Pulse Admin Settings
    :align: center
    :width: 600
+
+.. note:: You may have issues loading this page the first time you try this. To resolve this, restart the Apache service on the Pulse Host machine by running ``sudo service apache2 restart``. You can then reload the page and proceed with no issues.
 
 On the Settings page you will need to set the value for ``Analysis IFrame URL`` to ``http://vagrant-ist-01:5601``.
 
