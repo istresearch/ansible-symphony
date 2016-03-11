@@ -116,13 +116,16 @@ prod-as-02
 prod-as-01
 
 [traptor-follow-nodes]
-prod-as-02
 
 [traptor-track-nodes]
+prod-as-02
+
+[traptor-location-nodes]
 
 [traptor-nodes:children]
 traptor-follow-nodes
 traptor-track-nodes
+traptor-location-nodes
 
 [ansible-symphony:children]
 zookeeper-nodes
