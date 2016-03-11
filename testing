@@ -142,3 +142,12 @@ traptor-track-nodes
 
 [docker-engine]
 travis-trusty
+
+[neo4j-node]
+travis-trusty
+
+[tangelo-node]
+travis-trusty
+
+[mysql-node]
+travis-trusty

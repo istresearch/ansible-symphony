@@ -1,0 +1,5 @@
+---
+- name: restart neo4j
+  supervisorctl:
+    name=neo4j
+    state=restarted

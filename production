@@ -75,7 +75,6 @@ hadoop-datanode-nodes
 
 [hbase-master-node]
 
-
 [hbase-regionserver-nodes]
 
 [hbase-nodes:children]
@@ -181,7 +180,6 @@ memex-crawler06.istresearch.com
 [traptor-nodes:children]
 traptor-follow-nodes
 traptor-track-nodes
-
 
 [other]
 in-namenode01.nj.istresearch.com

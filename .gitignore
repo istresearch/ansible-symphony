@@ -5,3 +5,8 @@ vault.passwd
 # docs
 _build
 _build_html
+
+# vim
+*~
+*.*~
+*.swp

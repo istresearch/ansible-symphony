@@ -5,7 +5,8 @@
   hosts: all
   roles:
     - common
-  tags: site-common
+  tags:
+    - site-common
 
 # ------------------------------ Customize Internap ------------------------
 
@@ -22,6 +23,18 @@
   roles:
     - add-users
   tags: site-add-users
+
+- name: Run virtualenv role
+  hosts: all
+  roles:
+    - virtualenv
+  tags: virtual-env
+
+- name: Run miniconda role
+  hosts: all
+  roles:
+    - miniconda
+  tags: miniconda
 
 # -------------------------- Zookeeper and Kafka -----------------------------
 - name: Run zookeeper role
@@ -59,6 +72,7 @@
   tags:
     - site-elasticsearch
     - ELK
+    - deps-pulse
 
 - name: Run elasticsearch data role
   hosts: elasticsearch-data-nodes
@@ -69,6 +83,7 @@
   tags:
     - site-elasticsearch
     - ELK
+    - deps-pulse
 
 - name: Run elasticsearch client role
   hosts: elasticsearch-client-nodes
@@ -79,6 +94,7 @@
   tags:
     - site-elasticsearch
     - ELK
+    - deps-pulse
 
 - name: Run logstash role
   hosts: logstash-nodes
@@ -93,6 +109,7 @@
   tags:
     - site-kibana
     - ELK
+    - deps-pulse
 
 # --------------------------- Scraper services -------------------------------
 - name: Run redis role
@@ -264,6 +281,7 @@
   hosts: hbase-regionserver-nodes
   vars:
     - hbase_regionserver_enabled: true
+    - hbase_thriftserver_enabled: true
     - hbase_master_host: "{{ groups['hbase-master-node'][0] }}"
     - dfs_namenode_host: "{{ groups['hadoop-namenode-node'][0] }}"
     - zookeeper_host_list: "{{ groups['zookeeper-nodes'] }}"
@@ -322,3 +340,44 @@
   roles: [ docker-engine ]
   tags:
     - site-docker-engine
+
+# ---------------------------------- MySQL -----------------------------------
+
+- name: MySQL
+  hosts: mysql-node
+  roles: [ mysql ]
+  tags:
+    - mysql
+    - deps-pulse
+
+# ---------------------------------- Pulse -----------------------------------
+
+- name: Pulse UI Node Infrastructure
+  hosts: pulse-ui-node
+  roles: [ pulse-ui ]
+  tags:
+    - site-pulse
+    - deps-pulse
+    - site-pulse-docker
+
+- name: Pulse Docker Infrastructure
+  hosts: kibana-node
+  roles: [ pulse-docker ]
+  tags:
+    - site-pulse-docker
+
+# ---------------------------------- Neo4j --------------------------------
+
+- name: Neo4j
+  hosts: neo4j-node
+  roles: [ neo4j ]
+  tags:
+    - site-neo4j
+
+# ---------------------------------- Tangelo --------------------------------
+
+- name: Tangelo
+  hosts: tangelo-node
+  roles: [ tangelo ]
+  tags:
+    - site-tangelo

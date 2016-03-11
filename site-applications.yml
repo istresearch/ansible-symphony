@@ -79,8 +79,40 @@
 #   roles: [ scrapy-redis-monitor-app ]
 #   tags: site-scrapy-redis-app
 
+# -------------------------------- Pulse App ----------------------------------
+- name: Pulse UI Application
+  hosts: pulse-ui-node
+  handlers: 
+    - include: roles/apache2/handlers/main.yml
+  vars_files:
+    - roles/kibana4/defaults/main.yml
+  roles: [ pulse-ui-app ]
+  tags: site-pulse-app
+
+- name: Pulse DB Initialization
+  hosts: mysql-node
+  vars_files:
+    - private_roles/pulse-ui-app/defaults/main.yml
+  roles: [ pulse-ui-db-app]
+  tags: site-pulse-app
+
+- name: Pulse MySQL-ES Connector Initialization
+  hosts: pulse-mysql-es-host
+  vars_files:
+    - private_roles/pulse-ui-app/defaults/main.yml
+  roles: [ mysql-es-connector ]
+  tags: site-pulse-app 
+
 # --------------------------------- Googler -----------------------------------
 - name: Run the Googler role
   hosts: googler-nodes
   roles: [ googler ]
   tags: site-googler
+
+# ------------------------------- Scrapy Cluster Pulse ------------------------
+- name: Run the Scrapy Cluster Pulse role
+  hosts: scrapy-cluster
+  vars:
+    - logstash_auto_start: True
+  roles: [ scrapy-cluster-pulse ]
+  tags: site-scrapy-cluster-pulse

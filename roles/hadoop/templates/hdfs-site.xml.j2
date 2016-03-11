@@ -21,7 +21,7 @@
 
   <property>
     <name>dfs.datanode.data.dir</name>
-    <value>file://{{ dfs_datanode_data_dir }}</value>
+    <value>{% for datanode_dir in dfs_datanode_data_dir %}file://{{ datanode_dir }}{% if not loop.last %},{% endif %}{% endfor %}</value>
   </property>
 
   <property>
@@ -118,6 +118,11 @@
   <property>
     <name>dfs.web.ugi</name>
     <value>hdfs</value>
+  </property>
+
+  <property>
+    <name>dfs.permissions.enabled</name>
+    <value>{{ dfs_permissions_enabled|default(false) }}</value>
   </property>
 
 </configuration>

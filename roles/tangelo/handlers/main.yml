@@ -1,0 +1,5 @@
+---
+- name: restart tangelo
+  supervisorctl:
+    name: tangelo
+    state: restarted

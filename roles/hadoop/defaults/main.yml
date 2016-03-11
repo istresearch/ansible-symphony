@@ -3,8 +3,8 @@
 #Required...
 #hadoop_cluster_name:
 #dfs_namenode_host:
-#yarn_resourcemanager_hostname:
-#yarn_historyserver_hostname:
+#yarn_resourcemanager_hostname: 
+#yarn_historyserver_hostname: 
 
 # Defaults...
 hdfs_version: 2.5.2
@@ -43,6 +43,7 @@ dfs_namenode_port: 8020
 dfs_namenode_secondary_http_address_port: 50090
 dfs_namenode_secondary_https_address_port: 50091
 
+dfs_internap: false
 dfs_namenode_name_dir: /data/dfs/nn
 dfs_datanode_data_dir: /data/dfs/dn
 dfs_replication: 3

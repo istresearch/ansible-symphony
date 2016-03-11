@@ -16,3 +16,7 @@ elastalert_es3_port: 9200
 elastalert_es4_port: 9200
 elastalert_es5_port: 9200
 storm_worker_ports: [ 6701 ]
+
+
+pulse_self_signed_ssl: true
+pulse_local_install: false

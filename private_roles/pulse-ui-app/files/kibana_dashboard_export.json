@@ -1,0 +1,764 @@
+[
+  {
+    "_id": "More-Widgets",
+    "_type": "dashboard",
+    "_source": {
+      "title": "More Widgets",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"col\":1,\"id\":\"Response-Count-Over-Time\",\"row\":1,\"size_x\":6,\"size_y\":3,\"type\":\"visualization\"},{\"col\":7,\"id\":\"Responses\",\"row\":4,\"size_x\":6,\"size_y\":3,\"type\":\"visualization\"},{\"col\":10,\"id\":\"Top-Responses-Listed\",\"row\":11,\"size_x\":3,\"size_y\":10,\"type\":\"visualization\"},{\"col\":1,\"id\":\"Top-Survey-Responses\",\"row\":14,\"size_x\":9,\"size_y\":7,\"type\":\"visualization\"},{\"col\":1,\"id\":\"Total-Responses-By-Gateway\",\"row\":7,\"size_x\":6,\"size_y\":4,\"type\":\"visualization\"},{\"col\":7,\"id\":\"Surveys\",\"row\":1,\"size_x\":6,\"size_y\":3,\"type\":\"visualization\"},{\"col\":1,\"id\":\"Top-Surveys-Visualized\",\"row\":11,\"size_x\":9,\"size_y\":3,\"type\":\"visualization\"},{\"col\":1,\"id\":\"Response-Count-Over-Time-By-Survey\",\"row\":4,\"size_x\":6,\"size_y\":3,\"type\":\"visualization\"},{\"col\":7,\"id\":\"Response-Count-By-Question\",\"row\":7,\"size_x\":6,\"size_y\":4,\"type\":\"visualization\"}]",
+      "version": 1,
+      "timeRestore": true,
+      "timeTo": "now",
+      "timeFrom": "now-10d",
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[{\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}}}]}"
+      }
+    }
+  },
+  {
+    "_id": "Pulse-Dashboard-Option-2",
+    "_type": "dashboard",
+    "_source": {
+      "title": "Pulse Dashboard Option 2",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"col\":11,\"id\":\"Participant-Responses\",\"row\":1,\"size_x\":2,\"size_y\":3,\"type\":\"visualization\"},{\"col\":1,\"id\":\"Top-Responses-Visualized\",\"row\":1,\"size_x\":2,\"size_y\":9,\"type\":\"visualization\"},{\"col\":3,\"id\":\"Top-Responses-Listed\",\"row\":1,\"size_x\":3,\"size_y\":9,\"type\":\"visualization\"},{\"col\":6,\"id\":\"Deploy-Histogram\",\"row\":8,\"size_x\":7,\"size_y\":2,\"type\":\"visualization\"},{\"col\":6,\"id\":\"All-Question-Responses-Histogram\",\"row\":1,\"size_x\":5,\"size_y\":3,\"type\":\"visualization\"},{\"col\":6,\"id\":\"Response-Count-by-Question\",\"row\":4,\"size_x\":7,\"size_y\":4,\"type\":\"visualization\"},{\"col\":1,\"columns\":[\"contact_id\",\"text\",\"gateway_id\",\"survey_instance\",\"question_id\"],\"id\":\"Outgoing-Search\",\"row\":15,\"size_x\":6,\"size_y\":4,\"sort\":[\"log_time\",\"desc\"],\"type\":\"search\"},{\"col\":7,\"columns\":[\"name\",\"optin_text\",\"survey_id\",\"created_by\",\"survey_json\",\"survey_question_answers\",\"survey_questions\"],\"id\":\"Deploy-Search\",\"row\":15,\"size_x\":6,\"size_y\":4,\"sort\":[\"log_time\",\"desc\"],\"type\":\"search\"},{\"id\":\"Question-Responses-Search\",\"type\":\"search\",\"size_x\":12,\"size_y\":5,\"col\":1,\"row\":10,\"columns\":[\"survey_title\",\"question_title\",\"text\",\"contact_id\",\"gateway_name\",\"gateway_id\",\"question_id\",\"survey_id\",\"survey_instance\"],\"sort\":[\"log_time\",\"desc\"]}]",
+      "version": 1,
+      "timeRestore": true,
+      "timeTo": "now",
+      "timeFrom": "now-2y",
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[{\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}}}]}"
+      }
+    }
+  },
+  {
+    "_id": "Pulse-Survey-Data",
+    "_type": "dashboard",
+    "_source": {
+      "title": "Pulse Survey Data",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"col\":3,\"id\":\"Total-Outgoing\",\"row\":1,\"size_x\":3,\"size_y\":2,\"type\":\"visualization\"},{\"col\":6,\"id\":\"Total-Responses\",\"row\":1,\"size_x\":5,\"size_y\":2,\"type\":\"visualization\"},{\"col\":1,\"id\":\"Total-Surveys-Deployed\",\"row\":1,\"size_x\":2,\"size_y\":2,\"type\":\"visualization\"},{\"col\":1,\"id\":\"Deployed-Surveys\",\"row\":3,\"size_x\":2,\"size_y\":3,\"type\":\"visualization\"},{\"col\":1,\"id\":\"All-Outgoing-Over-Time\",\"row\":6,\"size_x\":5,\"size_y\":3,\"type\":\"visualization\"},{\"col\":6,\"id\":\"All-Responses-Over-Time\",\"row\":6,\"size_x\":5,\"size_y\":3,\"type\":\"visualization\"},{\"col\":3,\"id\":\"Outgoing-Counts-Over-Time\",\"row\":3,\"size_x\":4,\"size_y\":3,\"type\":\"visualization\"},{\"col\":7,\"id\":\"Response-Counts-Over-Time\",\"row\":3,\"size_x\":4,\"size_y\":3,\"type\":\"visualization\"},{\"col\":1,\"id\":\"Outgoing-Over-Time\",\"row\":9,\"size_x\":5,\"size_y\":5,\"type\":\"visualization\"},{\"col\":6,\"id\":\"Responses-Over-Time\",\"row\":9,\"size_x\":5,\"size_y\":5,\"type\":\"visualization\"},{\"col\":11,\"id\":\"Responses-By-Question\",\"row\":1,\"size_x\":2,\"size_y\":6,\"type\":\"visualization\"},{\"col\":11,\"id\":\"Responses-By-Survey\",\"row\":7,\"size_x\":2,\"size_y\":7,\"type\":\"visualization\"}]",
+      "version": 1,
+      "timeRestore": true,
+      "timeTo": "now",
+      "timeFrom": "now-10d",
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[{\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}}}]}"
+      }
+    }
+  },
+  {
+    "_id": "Pulse-Overview",
+    "_type": "dashboard",
+    "_source": {
+      "title": "Pulse Overview",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"col\":7,\"columns\":[\"contact_id\",\"text\",\"gateway_id\",\"survey_instance\",\"question_id\"],\"id\":\"Outgoing-Search\",\"row\":7,\"size_x\":6,\"size_y\":5,\"sort\":[\"log_time\",\"desc\"],\"type\":\"search\"},{\"col\":1,\"columns\":[\"survey_title\",\"question_title\",\"text\",\"contact_id\",\"gateway_name\",\"gateway_id\",\"question_id\",\"survey_id\",\"survey_instance\"],\"id\":\"Question-Responses-Search\",\"row\":12,\"size_x\":12,\"size_y\":4,\"sort\":[\"log_time\",\"desc\"],\"type\":\"search\"},{\"col\":1,\"id\":\"All-Question-Responses-Histogram\",\"row\":6,\"size_x\":6,\"size_y\":3,\"type\":\"visualization\"},{\"col\":7,\"id\":\"Question-Pie-Charts\",\"row\":1,\"size_x\":3,\"size_y\":6,\"type\":\"visualization\"},{\"col\":1,\"id\":\"Example-Markdown\",\"row\":1,\"size_x\":3,\"size_y\":2,\"type\":\"visualization\"},{\"col\":4,\"id\":\"Question-Response-Count\",\"row\":1,\"size_x\":3,\"size_y\":2,\"type\":\"visualization\"},{\"col\":10,\"id\":\"Table-Results\",\"row\":1,\"size_x\":3,\"size_y\":6,\"type\":\"visualization\"},{\"col\":1,\"id\":\"Deploy-Histogram\",\"row\":3,\"size_x\":6,\"size_y\":3,\"type\":\"visualization\"},{\"col\":1,\"columns\":[\"name\",\"optin_text\",\"survey_id\",\"created_by\",\"survey_json\",\"survey_question_answers\",\"survey_questions\"],\"id\":\"Deploy-Search\",\"row\":9,\"size_x\":6,\"size_y\":3,\"sort\":[\"log_time\",\"desc\"],\"type\":\"search\"},{\"id\":\"Contacts-Over-Time\",\"type\":\"visualization\",\"size_x\":12,\"size_y\":5,\"col\":1,\"row\":16}]",
+      "version": 1,
+      "timeRestore": false,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[{\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}}}]}"
+      }
+    }
+  },
+  {
+    "_id": "Deploy-Search",
+    "_type": "search",
+    "_source": {
+      "title": "Deploy Search",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "name",
+        "optin_text",
+        "survey_id",
+        "created_by",
+        "survey_json",
+        "survey_question_answers",
+        "survey_questions"
+      ],
+      "sort": [
+        "log_time",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"pulse-*\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"_type:deploy\"}},\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}},\"fragment_size\":2147483647},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Outgoing-Search",
+    "_type": "search",
+    "_source": {
+      "title": "Outgoing Search",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "contact_id",
+        "text",
+        "gateway_id",
+        "survey_instance",
+        "question_id"
+      ],
+      "sort": [
+        "log_time",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"pulse-*\",\"query\":{\"query_string\":{\"query\":\"_type: outgoing\",\"analyze_wildcard\":true}},\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}},\"fragment_size\":2147483647},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Question-Responses-Search",
+    "_type": "search",
+    "_source": {
+      "title": "Question Responses Search",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "survey_title",
+        "question_title",
+        "text",
+        "contact_id",
+        "gateway_name",
+        "gateway_id",
+        "question_id",
+        "survey_id",
+        "survey_instance"
+      ],
+      "sort": [
+        "log_time",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"pulse-*\",\"query\":{\"query_string\":{\"query\":\"_type:question_responses\",\"analyze_wildcard\":true}},\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}},\"fragment_size\":2147483647},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Question-Responses-Search2",
+    "_type": "search",
+    "_source": {
+      "title": "Question Responses Search2",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "survey_title",
+        "question_title",
+        "text",
+        "contact_id",
+        "gateway_name",
+        "gateway_id",
+        "question_id",
+        "survey_id",
+        "survey_instance"
+      ],
+      "sort": [
+        "log_time",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"pulse-*\",\"query\":{\"query_string\":{\"query\":\"_type:question_responses\",\"analyze_wildcard\":true}},\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}},\"fragment_size\":2147483647},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Search:-All-Pulse*",
+    "_type": "search",
+    "_source": {
+      "title": "Search: All Pulse*",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "survey_title",
+        "question_title",
+        "text",
+        "contact_id",
+        "gateway_name",
+        "gateway_id",
+        "question_id",
+        "survey_id",
+        "survey_instance"
+      ],
+      "sort": [
+        "log_time",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"pulse-*\",\"query\":{\"query_string\":{\"query\":\"_type:*\",\"analyze_wildcard\":true}},\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}},\"fragment_size\":2147483647},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Search:-Deploy-Pulse*",
+    "_type": "search",
+    "_source": {
+      "title": "Search: Deploy Pulse*",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "_source"
+      ],
+      "sort": [
+        "log_time",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"pulse*\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"_type:deploy\"}},\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}},\"fragment_size\":2147483647},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Search:-Outgoing-Pulse*",
+    "_type": "search",
+    "_source": {
+      "title": "Search: Outgoing Pulse*",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "_source"
+      ],
+      "sort": [
+        "log_time",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"pulse*\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"_type: outgoing\"}},\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}},\"fragment_size\":2147483647},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Search:-Responses-Pulse*",
+    "_type": "search",
+    "_source": {
+      "title": "Search: Responses Pulse*",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "_source"
+      ],
+      "sort": [
+        "log_time",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"pulse*\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"_type:question_responses\"}},\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}},\"fragment_size\":2147483647},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Contacts",
+    "_type": "search",
+    "_source": {
+      "title": "Contacts",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "created_ts"
+      ],
+      "sort": [
+        "log_time",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"pulse*\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}},\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}},\"fragment_size\":2147483647},\"filter\":[{\"meta\":{\"disabled\":false,\"index\":\"pulse*\",\"key\":\"_type\",\"negate\":false,\"value\":\"contacts\"},\"query\":{\"match\":{\"_type\":{\"query\":\"contacts\",\"type\":\"phrase\"}}}}]}"
+      }
+    }
+  },
+  {
+    "_id": "All-Outgoing-Over-Time",
+    "_type": "visualization",
+    "_source": {
+      "title": "All Outgoing Over Time",
+      "visState": "{\"type\":\"histogram\",\"params\":{\"addLegend\":false,\"addTimeMarker\":false,\"addTooltip\":true,\"defaultYExtents\":false,\"mode\":\"stacked\",\"scale\":\"linear\",\"setYExtents\":false,\"shareYAxis\":true,\"times\":[],\"yAxis\":{}},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"log_time\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"4\",\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"question_title\",\"size\":99,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "description": "",
+      "savedSearchId": "Search:-Outgoing-Pulse*",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "All-Question-Responses-Histogram",
+    "_type": "visualization",
+    "_source": {
+      "title": "All Question Responses Histogram",
+      "visState": "{\n \"type\": \"histogram\",\n \"params\": {\n \"shareYAxis\": true,\n \"addTooltip\": true,\n \"addLegend\": true,\n \"mode\": \"stacked\",\n \"defaultYExtents\": false,\n \"scale\": \"linear\",\n \"times\": [],\n \"addTimeMarker\": false,\n \"setYExtents\": false,\n \"yAxis\": {}\n },\n \"aggs\": [\n {\n \"id\": \"1\",\n \"type\": \"count\",\n \"schema\": \"metric\",\n \"params\": {}\n },\n {\n \"id\": \"2\",\n \"type\": \"date_histogram\",\n \"schema\": \"segment\",\n \"params\": {\n \"field\": \"log_time\",\n \"interval\": \"auto\",\n \"customInterval\": \"2h\",\n \"min_doc_count\": 1,\n \"extended_bounds\": {}\n }\n },\n {\n \"id\": \"3\",\n \"type\": \"terms\",\n \"schema\": \"group\",\n \"params\": {\n \"field\": \"survey_title\",\n \"size\": 5,\n \"order\": \"desc\",\n \"orderBy\": \"1\"\n }\n }\n ],\n \"listeners\": {}\n}",
+      "description": "",
+      "savedSearchId": "Question-Responses-Search",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\n \"filter\": []\n}"
+      }
+    }
+  },
+  {
+    "_id": "All-Responses-Over-Time",
+    "_type": "visualization",
+    "_source": {
+      "title": "All Responses Over Time",
+      "visState": "{\"type\":\"histogram\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":false,\"scale\":\"linear\",\"mode\":\"stacked\",\"times\":[],\"addTimeMarker\":false,\"defaultYExtents\":false,\"setYExtents\":false,\"yAxis\":{}},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"log_time\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"question_responses_text\",\"size\":99,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "description": "",
+      "savedSearchId": "Search:-Responses-Pulse*",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Deployed-Surveys",
+    "_type": "visualization",
+    "_source": {
+      "title": "Deployed Surveys",
+      "visState": "{\"type\":\"pie\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":false,\"isDonut\":true},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"survey_title\",\"size\":99,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "description": "",
+      "savedSearchId": "Search:-Deploy-Pulse*",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Deploy-Histogram",
+    "_type": "visualization",
+    "_source": {
+      "title": "Deploy Histogram",
+      "visState": "{\n \"type\": \"histogram\",\n \"params\": {\n \"shareYAxis\": true,\n \"addTooltip\": true,\n \"addLegend\": true,\n \"scale\": \"linear\",\n \"mode\": \"stacked\",\n \"times\": [],\n \"addTimeMarker\": false,\n \"defaultYExtents\": true,\n \"setYExtents\": false,\n \"yAxis\": {}\n },\n \"aggs\": [\n {\n \"id\": \"1\",\n \"type\": \"count\",\n \"schema\": \"metric\",\n \"params\": {}\n },\n {\n \"id\": \"2\",\n \"type\": \"date_histogram\",\n \"schema\": \"segment\",\n \"params\": {\n \"field\": \"log_time\",\n \"interval\": \"auto\",\n \"customInterval\": \"2h\",\n \"min_doc_count\": 1,\n \"extended_bounds\": {}\n }\n },\n {\n \"id\": \"3\",\n \"type\": \"terms\",\n \"schema\": \"group\",\n \"params\": {\n \"field\": \"survey_title\",\n \"size\": 5,\n \"order\": \"desc\",\n \"orderBy\": \"1\"\n }\n }\n ],\n \"listeners\": {}\n}",
+      "description": "",
+      "savedSearchId": "Deploy-Search",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\n \"filter\": []\n}"
+      }
+    }
+  },
+  {
+    "_id": "Example-Markdown",
+    "_type": "visualization",
+    "_source": {
+      "title": "Example Markdown",
+      "visState": "{\"type\":\"markdown\",\"params\":{\"markdown\":\"## PULSE Dashboard\\n\\nFurther notes or HTML can be placed here using [Git Markdown](https://help.github.com/articles/markdown-basics/).\"},\"aggs\":[],\"listeners\":{}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Outgoing-Counts-Over-Time",
+    "_type": "visualization",
+    "_source": {
+      "title": "Outgoing Counts Over Time",
+      "visState": "{\"type\":\"line\",\"params\":{\"addLegend\":false,\"addTimeMarker\":false,\"addTooltip\":true,\"defaultYExtents\":false,\"drawLinesBetweenPoints\":false,\"interpolate\":\"linear\",\"radiusRatio\":\"13\",\"scale\":\"log\",\"setYExtents\":false,\"shareYAxis\":true,\"showCircles\":true,\"smoothLines\":true,\"times\":[],\"yAxis\":{}},\"aggs\":[{\"id\":\"4\",\"type\":\"count\",\"schema\":\"radius\",\"params\":{}},{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"5\",\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"outgoing_created_ts\",\"interval\":\"h\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"6\",\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"survey_title\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"4\"}}],\"listeners\":{}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[],\"index\":\"pulse*\",\"query\":{\"query_string\":{\"query\":\"_type:outgoing\",\"analyze_wildcard\":true}},\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}},\"fragment_size\":2147483647}}"
+      }
+    }
+  },
+  {
+    "_id": "Outgoing-Over-Time",
+    "_type": "visualization",
+    "_source": {
+      "title": "Outgoing Over Time",
+      "visState": "{\"type\":\"histogram\",\"params\":{\"addLegend\":false,\"addTimeMarker\":false,\"addTooltip\":true,\"defaultYExtents\":false,\"mode\":\"stacked\",\"scale\":\"linear\",\"setYExtents\":false,\"shareYAxis\":true,\"times\":[],\"yAxis\":{}},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"log_time\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"split\",\"params\":{\"field\":\"survey_title\",\"size\":1,\"order\":\"desc\",\"orderBy\":\"1\",\"row\":true}},{\"id\":\"4\",\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"question_title\",\"size\":99,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "description": "",
+      "savedSearchId": "Search:-Outgoing-Pulse*",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Participant-Responses",
+    "_type": "visualization",
+    "_source": {
+      "title": "Participant Responses",
+      "visState": "{\"type\":\"metric\",\"params\":{\"fontSize\":\"40\"},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"type\":\"cardinality\",\"schema\":\"metric\",\"params\":{\"field\":\"contact_id\"}}],\"listeners\":{}}",
+      "description": "",
+      "savedSearchId": "Question-Responses-Search",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Question-Response-Count",
+    "_type": "visualization",
+    "_source": {
+      "title": "Question Response Count",
+      "visState": "{\"type\":\"metric\",\"params\":{\"fontSize\":60},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}}],\"listeners\":{}}",
+      "description": "",
+      "savedSearchId": "Question-Responses-Search",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Response-Count-by-Question",
+    "_type": "visualization",
+    "_source": {
+      "title": "Response Count by Question",
+      "visState": "{\n \"type\": \"histogram\",\n \"params\": {\n \"addLegend\": false,\n \"addTooltip\": true,\n \"defaultYExtents\": true,\n \"mode\": \"stacked\",\n \"shareYAxis\": true,\n \"spyPerPage\": 10,\n \"scale\": \"linear\",\n \"times\": [],\n \"addTimeMarker\": false,\n \"setYExtents\": false,\n \"yAxis\": {}\n },\n \"aggs\": [\n {\n \"id\": \"1\",\n \"type\": \"terms\",\n \"schema\": \"segment\",\n \"params\": {\n \"field\": \"question_title\",\n \"size\": 99,\n \"order\": \"desc\",\n \"orderBy\": \"2\"\n }\n },\n {\n \"id\": \"3\",\n \"type\": \"terms\",\n \"schema\": \"group\",\n \"params\": {\n \"field\": \"question_responses_text\",\n \"size\": 99,\n \"order\": \"desc\",\n \"orderBy\": \"2\"\n }\n },\n {\n \"id\": \"2\",\n \"type\": \"count\",\n \"schema\": \"metric\",\n \"params\": {}\n }\n ],\n \"listeners\": {}\n}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\n \"index\": \"pulse-*\",\n \"query\": {\n \"query_string\": {\n \"analyze_wildcard\": true,\n \"query\": \"*\"\n }\n },\n \"filter\": []\n}"
+      }
+    }
+  },
+  {
+    "_id": "Response-Count-By-Question",
+    "_type": "visualization",
+    "_source": {
+      "title": "Response Count By Question",
+      "visState": "{\"type\":\"histogram\",\"params\":{\"addLegend\":false,\"addTimeMarker\":false,\"addTooltip\":true,\"defaultYExtents\":false,\"mode\":\"stacked\",\"scale\":\"linear\",\"setYExtents\":false,\"shareYAxis\":true,\"spyPerPage\":10,\"times\":[],\"yAxis\":{}},\"aggs\":[{\"id\":\"1\",\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"question_title\",\"size\":10,\"order\":\"desc\",\"orderBy\":\"2\"}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"question_responses_text\",\"size\":99,\"order\":\"desc\",\"orderBy\":\"2\"}},{\"id\":\"2\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}}],\"listeners\":{}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"pulse-*\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Response-Count-Over-Time",
+    "_type": "visualization",
+    "_source": {
+      "title": "Response Count Over Time",
+      "visState": "{\"type\":\"line\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"showCircles\":true,\"smoothLines\":false,\"interpolate\":\"linear\",\"scale\":\"log\",\"drawLinesBetweenPoints\":true,\"radiusRatio\":9,\"times\":[],\"addTimeMarker\":true,\"defaultYExtents\":false,\"setYExtents\":false,\"yAxis\":{}},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"question_responses_created_ts\",\"interval\":\"h\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}}],\"listeners\":{}}",
+      "description": "",
+      "savedSearchId": "Search:-Responses-Pulse*",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Response-Count-Over-Time-By-Survey",
+    "_type": "visualization",
+    "_source": {
+      "title": "Response Count Over Time By Survey",
+      "visState": "{\"type\":\"line\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"showCircles\":true,\"smoothLines\":false,\"interpolate\":\"linear\",\"scale\":\"log\",\"drawLinesBetweenPoints\":true,\"radiusRatio\":\"21\",\"times\":[],\"addTimeMarker\":true,\"defaultYExtents\":false,\"setYExtents\":false,\"yAxis\":{}},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"question_responses_created_ts\",\"interval\":\"h\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"survey_title\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "description": "",
+      "savedSearchId": "Search:-Responses-Pulse*",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Response-Counts-Over-Time",
+    "_type": "visualization",
+    "_source": {
+      "title": "Response Counts Over Time",
+      "visState": "{\"type\":\"line\",\"params\":{\"addLegend\":false,\"addTimeMarker\":false,\"addTooltip\":true,\"defaultYExtents\":false,\"drawLinesBetweenPoints\":false,\"interpolate\":\"linear\",\"radiusRatio\":\"13\",\"scale\":\"log\",\"setYExtents\":false,\"shareYAxis\":true,\"showCircles\":true,\"smoothLines\":true,\"times\":[],\"yAxis\":{}},\"aggs\":[{\"id\":\"4\",\"type\":\"count\",\"schema\":\"radius\",\"params\":{}},{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"5\",\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"question_responses_created_ts\",\"interval\":\"h\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"6\",\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"survey_title\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"4\"}}],\"listeners\":{}}",
+      "description": "",
+      "savedSearchId": "Search:-Responses-Pulse*",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Responses",
+    "_type": "visualization",
+    "_source": {
+      "title": "Responses",
+      "visState": "{\n \"aggs\": [\n {\n \"id\": \"1\",\n \"params\": {\n \"field\": \"question_responses_text\",\n \"order\": \"desc\",\n \"orderBy\": \"2\",\n \"size\": 20\n },\n \"schema\": \"segment\",\n \"type\": \"terms\"\n },\n {\n \"id\": \"2\",\n \"params\": {},\n \"schema\": \"metric\",\n \"type\": \"count\"\n }\n ],\n \"listeners\": {},\n \"params\": {\n \"addLegend\": true,\n \"addTooltip\": true,\n \"defaultYExtents\": false,\n \"mode\": \"stacked\",\n \"shareYAxis\": true,\n \"spyPerPage\": 10\n },\n \"type\": \"histogram\"\n}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\n \"index\": \"pulse-*\",\n \"query\": {\n \"query_string\": {\n \"analyze_wildcard\": true,\n \"query\": \"*\"\n }\n },\n \"filter\": []\n}"
+      }
+    }
+  },
+  {
+    "_id": "Responses-By-Gateway",
+    "_type": "visualization",
+    "_source": {
+      "title": "Responses By Gateway",
+      "visState": "{\"type\":\"line\",\"params\":{\"addLegend\":false,\"addTimeMarker\":false,\"addTooltip\":true,\"defaultYExtents\":false,\"drawLinesBetweenPoints\":false,\"interpolate\":\"linear\",\"radiusRatio\":\"13\",\"scale\":\"log\",\"setYExtents\":false,\"shareYAxis\":true,\"showCircles\":true,\"smoothLines\":true,\"times\":[],\"yAxis\":{}},\"aggs\":[{\"id\":\"4\",\"type\":\"count\",\"schema\":\"radius\",\"params\":{}},{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"5\",\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"question_responses_created_ts\",\"interval\":\"h\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"6\",\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"survey_title\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"4\"}}],\"listeners\":{}}",
+      "description": "",
+      "savedSearchId": "Search:-Responses-Pulse*",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Responses-By-Question",
+    "_type": "visualization",
+    "_source": {
+      "title": "Responses By Question",
+      "visState": "{\"type\":\"pie\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":false,\"isDonut\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"split\",\"params\":{\"field\":\"question_title\",\"size\":99,\"order\":\"desc\",\"orderBy\":\"1\",\"row\":true}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"question_title\",\"size\":99,\"order\":\"desc\",\"orderBy\":\"1\"}},{\"id\":\"4\",\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"question_responses_text\",\"size\":99,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "description": "",
+      "savedSearchId": "Search:-Responses-Pulse*",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Responses-By-Survey",
+    "_type": "visualization",
+    "_source": {
+      "title": "Responses By Survey",
+      "visState": "{\"type\":\"pie\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":false,\"isDonut\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"split\",\"params\":{\"field\":\"survey_title\",\"size\":99,\"order\":\"desc\",\"orderBy\":\"1\",\"row\":true}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"question_title\",\"size\":99,\"order\":\"desc\",\"orderBy\":\"1\"}},{\"id\":\"4\",\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"question_responses_text\",\"size\":99,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "description": "",
+      "savedSearchId": "Search:-Responses-Pulse*",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Responses-Over-Time",
+    "_type": "visualization",
+    "_source": {
+      "title": "Responses Over Time",
+      "visState": "{\"type\":\"histogram\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":false,\"scale\":\"linear\",\"mode\":\"stacked\",\"times\":[],\"addTimeMarker\":false,\"defaultYExtents\":false,\"setYExtents\":false,\"yAxis\":{}},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"log_time\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"4\",\"type\":\"terms\",\"schema\":\"split\",\"params\":{\"field\":\"survey_title\",\"size\":99,\"order\":\"desc\",\"orderBy\":\"1\",\"row\":true}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"question_responses_text\",\"size\":99,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "description": "",
+      "savedSearchId": "Search:-Responses-Pulse*",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Survey-Responses-Over-Time",
+    "_type": "visualization",
+    "_source": {
+      "title": "Survey Responses Over Time",
+      "visState": "{\n \"type\": \"histogram\",\n \"params\": {\n \"shareYAxis\": true,\n \"addTooltip\": true,\n \"addLegend\": true,\n \"scale\": \"linear\",\n \"mode\": \"stacked\",\n \"times\": [],\n \"addTimeMarker\": false,\n \"defaultYExtents\": false,\n \"setYExtents\": false,\n \"yAxis\": {}\n },\n \"aggs\": [\n {\n \"id\": \"1\",\n \"type\": \"count\",\n \"schema\": \"metric\",\n \"params\": {}\n },\n {\n \"id\": \"2\",\n \"type\": \"date_histogram\",\n \"schema\": \"segment\",\n \"params\": {\n \"field\": \"log_time\",\n \"interval\": \"m\",\n \"customInterval\": \"2h\",\n \"min_doc_count\": 1,\n \"extended_bounds\": {}\n }\n },\n {\n \"id\": \"3\",\n \"type\": \"terms\",\n \"schema\": \"split\",\n \"params\": {\n \"field\": \"survey_title\",\n \"size\": 5,\n \"order\": \"desc\",\n \"orderBy\": \"1\",\n \"row\": true\n }\n },\n {\n \"id\": \"4\",\n \"type\": \"terms\",\n \"schema\": \"group\",\n \"params\": {\n \"field\": \"question_responses_text\",\n \"exclude\": {\n \"flags\": [\n \"CANON_EQ\"\n ]\n },\n \"include\": {\n \"flags\": [\n \"CASE_INSENSITIVE\"\n ],\n \"pattern\": \"\"\n },\n \"size\": 5,\n \"order\": \"desc\",\n \"orderBy\": \"1\"\n }\n }\n ],\n \"listeners\": {}\n}",
+      "description": "",
+      "savedSearchId": "Search:-Responses-Pulse*",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\n \"filter\": []\n}"
+      }
+    }
+  },
+  {
+    "_id": "Surveys",
+    "_type": "visualization",
+    "_source": {
+      "title": "Surveys",
+      "visState": "{\"type\":\"histogram\",\"params\":{\"addLegend\":true,\"addTooltip\":true,\"defaultYExtents\":false,\"mode\":\"stacked\",\"shareYAxis\":true,\"spyPerPage\":10,\"scale\":\"linear\",\"times\":[],\"addTimeMarker\":false,\"setYExtents\":false,\"yAxis\":{}},\"aggs\":[{\"id\":\"1\",\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"survey_title\",\"size\":20,\"order\":\"desc\",\"orderBy\":\"2\"}},{\"id\":\"2\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}}],\"listeners\":{}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"pulse-*\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Top-Responses-Listed",
+    "_type": "visualization",
+    "_source": {
+      "title": "Top Responses Listed",
+      "visState": "{\n \"type\": \"table\",\n \"params\": {\n \"perPage\": 10,\n \"showPartialRows\": false,\n \"showMeticsAtAllLevels\": false\n },\n \"aggs\": [\n {\n \"id\": \"1\",\n \"type\": \"count\",\n \"schema\": \"metric\",\n \"params\": {}\n },\n {\n \"id\": \"3\",\n \"type\": \"terms\",\n \"schema\": \"split\",\n \"params\": {\n \"field\": \"question_title\",\n \"size\": 99,\n \"order\": \"desc\",\n \"orderBy\": \"1\",\n \"row\": true\n }\n },\n {\n \"id\": \"2\",\n \"type\": \"terms\",\n \"schema\": \"bucket\",\n \"params\": {\n \"field\": \"question_responses_text\",\n \"size\": 99,\n \"order\": \"desc\",\n \"orderBy\": \"1\"\n }\n }\n ],\n \"listeners\": {}\n}",
+      "description": "",
+      "savedSearchId": "Question-Responses-Search",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\n \"filter\": []\n}"
+      }
+    }
+  },
+  {
+    "_id": "Top-Responses-Visualized",
+    "_type": "visualization",
+    "_source": {
+      "title": "Top Responses Visualized",
+      "visState": "{\n \"type\": \"pie\",\n \"params\": {\n \"shareYAxis\": true,\n \"addTooltip\": true,\n \"addLegend\": false,\n \"isDonut\": false\n },\n \"aggs\": [\n {\n \"id\": \"1\",\n \"type\": \"count\",\n \"schema\": \"metric\",\n \"params\": {}\n },\n {\n \"id\": \"3\",\n \"type\": \"terms\",\n \"schema\": \"split\",\n \"params\": {\n \"field\": \"question_title\",\n \"size\": 5,\n \"order\": \"desc\",\n \"orderBy\": \"1\",\n \"row\": true\n }\n },\n {\n \"id\": \"2\",\n \"type\": \"terms\",\n \"schema\": \"segment\",\n \"params\": {\n \"field\": \"question_responses_text\",\n \"size\": 99,\n \"order\": \"desc\",\n \"orderBy\": \"1\"\n }\n }\n ],\n \"listeners\": {}\n}",
+      "description": "",
+      "savedSearchId": "Question-Responses-Search",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\n \"filter\": []\n}"
+      }
+    }
+  },
+  {
+    "_id": "Top-Survey-Responses",
+    "_type": "visualization",
+    "_source": {
+      "title": "Top Survey Responses",
+      "visState": "{\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"split\",\"params\":{\"field\":\"survey_title\",\"size\":99,\"order\":\"desc\",\"orderBy\":\"1\",\"row\":false}},{\"id\":\"4\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"question_title\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"question_responses_text\",\"size\":99,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"pulse-*\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"_type:question_responses\"}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Top-Surveys-Visualized",
+    "_type": "visualization",
+    "_source": {
+      "title": "Top Surveys Visualized",
+      "visState": "{\"type\":\"pie\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":false,\"isDonut\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"split\",\"params\":{\"field\":\"survey_title\",\"size\":99,\"order\":\"desc\",\"orderBy\":\"1\",\"row\":false}},{\"id\":\"4\",\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"question_title\",\"size\":99,\"order\":\"desc\",\"orderBy\":\"1\"}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"question_responses_text\",\"size\":99,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "description": "",
+      "savedSearchId": "Question-Responses-Search",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Total-Outgoing",
+    "_type": "visualization",
+    "_source": {
+      "title": "Total Outgoing",
+      "visState": "{\"type\":\"metric\",\"params\":{\"fontSize\":\"35\"},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}}],\"listeners\":{}}",
+      "description": "",
+      "savedSearchId": "Search:-Outgoing-Pulse*",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Total-Responses",
+    "_type": "visualization",
+    "_source": {
+      "title": "Total Responses",
+      "visState": "{\"type\":\"metric\",\"params\":{\"fontSize\":\"35\"},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"type\":\"cardinality\",\"schema\":\"metric\",\"params\":{\"field\":\"contact_id\"}},{\"id\":\"3\",\"type\":\"cardinality\",\"schema\":\"metric\",\"params\":{\"field\":\"gateway_name\"}}],\"listeners\":{}}",
+      "description": "",
+      "savedSearchId": "Search:-Responses-Pulse*",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Total-Responses-By-Gateway",
+    "_type": "visualization",
+    "_source": {
+      "title": "Total Responses By Gateway",
+      "visState": "{\"type\":\"histogram\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":false,\"scale\":\"linear\",\"mode\":\"stacked\",\"times\":[],\"addTimeMarker\":false,\"defaultYExtents\":false,\"setYExtents\":false,\"yAxis\":{}},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"gateway_name2\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"contact_id\",\"size\":99,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "description": "",
+      "savedSearchId": "Search:-Responses-Pulse*",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Total-Surveys-Deployed",
+    "_type": "visualization",
+    "_source": {
+      "title": "Total Surveys Deployed",
+      "visState": "{\"type\":\"metric\",\"params\":{\"fontSize\":\"35\"},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}}],\"listeners\":{}}",
+      "description": "",
+      "savedSearchId": "Search:-Deploy-Pulse*",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Widget:-Outgoing-Count-Pulse*",
+    "_type": "visualization",
+    "_source": {
+      "title": "Widget: Outgoing Count Pulse*",
+      "visState": "{\"type\":\"metric\",\"params\":{\"fontSize\":\"35\"},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"type\":\"cardinality\",\"schema\":\"metric\",\"params\":{\"field\":\"contact_id\"}}],\"listeners\":{}}",
+      "description": "",
+      "savedSearchId": "Search:-Outgoing-Pulse*",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Widget:-Responses-Count-Pulse*",
+    "_type": "visualization",
+    "_source": {
+      "title": "Widget: Responses Count Pulse*",
+      "visState": "{\"type\":\"metric\",\"params\":{\"fontSize\":\"35\"},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"type\":\"cardinality\",\"schema\":\"metric\",\"params\":{\"field\":\"contact_id\"}}],\"listeners\":{}}",
+      "description": "",
+      "savedSearchId": "Search:-Responses-Pulse*",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Contacts-Over-Time",
+    "_type": "visualization",
+    "_source": {
+      "title": "Contacts Over Time",
+      "visState": "{\"type\":\"histogram\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"scale\":\"linear\",\"mode\":\"stacked\",\"times\":[],\"addTimeMarker\":false,\"defaultYExtents\":false,\"setYExtents\":false,\"yAxis\":{}},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"created_ts\",\"interval\":\"d\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"contact_num\",\"size\":1000,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "description": "",
+      "savedSearchId": "Contacts",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Table-Results",
+    "_type": "visualization",
+    "_source": {
+      "title": "Table Results",
+      "visState": "{\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"norm_question_responses_text\",\"size\":99,\"order\":\"desc\",\"orderBy\":\"1\"}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"split\",\"params\":{\"field\":\"question_title\",\"size\":99,\"order\":\"desc\",\"orderBy\":\"1\",\"row\":true}}],\"listeners\":{}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"pulse-*\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"_type:question_responses\"}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Question-Pie-Charts",
+    "_type": "visualization",
+    "_source": {
+      "title": "Question Pie Charts",
+      "visState": "{\"type\":\"pie\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"isDonut\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"split\",\"params\":{\"field\":\"question_title\",\"size\":10,\"order\":\"desc\",\"orderBy\":\"1\",\"row\":true}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"norm_question_responses_text\",\"size\":10,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "description": "",
+      "savedSearchId": "Question-Responses-Search",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[]}"
+      }
+    }
+  }
+]
