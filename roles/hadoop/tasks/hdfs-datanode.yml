@@ -1,5 +1,39 @@
 ---
 
+- name: make sure volumes have filesystems
+  filesystem:
+    fstype: ext4
+    dev: "{{ item }}"
+  when: dfs_internap
+  with_items:
+    - /dev/sdb
+    - /dev/sdc
+    - /dev/sdd
+    - /dev/sde
+    - /dev/sdf
+    - /dev/sdg
+  tags:
+    - hadoop
+    - hdfs_datanode
+
+- name: mount directories to volumes
+  mount:
+    name={{ item.dir }}
+    src={{ item.vol }}
+    fstype=ext4
+    state=mounted
+  with_items:
+    - { dir: '/data/1', vol: '/dev/sdb' }  
+    - { dir: '/data/2', vol: '/dev/sdc' }  
+    - { dir: '/data/3', vol: '/dev/sdd' }  
+    - { dir: '/data/4', vol: '/dev/sde' }  
+    - { dir: '/data/5', vol: '/dev/sdf' }  
+    - { dir: '/data/6', vol: '/dev/sdg' }
+  when: dfs_internap  
+  tags:
+    - hadoop
+    - hdfs_datanode
+
 - name: create data directories
   file:
     path={{ item }}
