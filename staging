@@ -131,13 +131,16 @@ vagrant-as-02
 vagrant-as-01
 
 [traptor-follow-nodes]
-vagrant-as-02
 
 [traptor-track-nodes]
+vagrant-as-02
+
+[traptor-location-nodes]
 
 [traptor-nodes:children]
 traptor-follow-nodes
 traptor-track-nodes
+traptor-location-nodes
 
 [docker-engine]
 vagrant-as-01
