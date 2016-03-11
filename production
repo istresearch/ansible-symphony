@@ -180,6 +180,7 @@ memex-crawler06.istresearch.com
 [traptor-nodes:children]
 traptor-follow-nodes
 traptor-track-nodes
+traptor-location-nodes
 
 [other]
 in-namenode01.nj.istresearch.com

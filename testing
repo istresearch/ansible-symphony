@@ -132,13 +132,16 @@ travis-trusty
 travis-trusty
 
 [traptor-follow-nodes]
-travis-trusty
 
 [traptor-track-nodes]
+travis-trusty
+
+[traptor-location-nodes]
 
 [traptor-nodes:children]
 traptor-follow-nodes
 traptor-track-nodes
+traptor-location-nodes
 
 [docker-engine]
 travis-trusty
