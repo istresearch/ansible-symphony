@@ -1,0 +1,31 @@
+---
+# Installation config
+traptor_name: traptor
+traptor_install_dir: "/opt/{{ traptor_name }}"
+traptor_miniconda_path: "{{ miniconda_install_dir|default('/opt/miniconda') }}/lib/python2.7/site-packages/{{ traptor_name }}"
+
+# Supervisor config
+traptor_num_procs: 1
+traptor_start_secs: 5
+traptor_start_retries: 100
+traptor_stderr_logfile_maxbytes: 50MB
+
+traptor_logger_name: "{{ traptor_name }}"
+traptor_log_dir: /var/log
+traptor_log_file: "{{ traptor_name }}.log"
+traptor_log_max_bytes: 25000000
+traptor_log_backups: 5
+
+# Traptor localsettings.py
+traptor_kafka_topic: "traptor"
+traptor_type: "track"
+
+apikeys:
+  - consumer_key: ''
+    consumer_secret: ''
+    access_token: ''
+    access_token_secret: ''
+
+traptor_log_level: "INFO"
+traptor_redis_port: 6379
+traptor_redis_db: 0

@@ -1,0 +1,49 @@
+---
+- name: Install Miniconda packages
+  shell: "{{ miniconda_install_dir|default('/opt/miniconda') }}/bin/conda install {{ item }} --yes"
+  with_items:
+    - pip
+  tags:
+    - traptor
+    - miniconda
+
+- name: Miniconda pip install traptor
+  shell: "{{ miniconda_install_dir|default('/opt/miniconda') }}/bin/pip install traptor -U"
+  # notify:
+  #   - restart wat-scrapy-crawling
+  tags:
+    - traptor
+    - miniconda
+
+- name: create traptor symlink
+  file:
+    src={{ traptor_miniconda_path }}
+    path={{ traptor_install_dir }}
+    state=link
+    mode=0744
+  tags: traptor
+
+- name: create traptor log directory
+  file:
+    path={{ traptor_log_dir }}/
+    state=directory
+    mode=0755
+  tags: traptor
+
+- name: copy supervisord config
+  template:
+    src={{ traptor_name }}-supervisord.conf.j2
+    dest={{ supervisord_programs_dir }}/{{ traptor_name }}-supervisord.conf
+    mode=0644
+  notify:
+    - reread supervisord
+  tags: traptor
+
+- name: copy traptor settings
+  template:
+    src=localsettings.py.j2
+    dest={{ traptor_install_dir }}/localsettings.py
+    mode=0644
+  notify:
+    - restart traptor
+  tags: traptor
