@@ -11,3 +11,29 @@
     dest: "/etc/hosts"
     regexp: '^127\.0\.1\.1.*$'
     state: absent
+
+- name: Add all internap hosts with local ips
+  lineinfile:
+    dest=/etc/hosts
+    line="{{ item }}"
+  with_items:
+    - '172.27.43.85 captain01.istresearch.com'
+    - '172.27.43.86 captain02.istresearch.com'
+    - '172.27.43.82 crew01.istresearch.com'
+    - '172.27.43.83 crew02.istresearch.com'
+    - '172.27.43.67 crew03.istresearch.com'
+    - '172.27.43.68 crew04.istresearch.com'
+    - '172.27.43.69 crew05.istresearch.com'
+    - '172.27.43.70 crew06.istresearch.com'
+    - '172.27.43.71 crew07.istresearch.com'
+    - '172.27.43.84 crew08.istresearch.com'
+    - '172.27.43.72 in-namenode01.nj.istresearch.com'
+    - '172.27.43.73 in-namenode02.nj.istresearch.com'
+    - '172.27.43.74 in-slave01.nj.istresearch.com'
+    - '172.27.43.75 in-slave02.nj.istresearch.com'
+    - '172.27.43.76 in-slave03.nj.istresearch.com'
+    - '172.27.43.77 in-slave04.nj.istresearch.com'
+    - '172.27.43.78 in-slave05.nj.istresearch.com'
+    - '172.27.43.79 in-slave06.nj.istresearch.com'
+    - '172.27.43.80 in-slave07.nj.istresearch.com'
+    - '172.27.43.81 in-slave08.nj.istresearch.com'

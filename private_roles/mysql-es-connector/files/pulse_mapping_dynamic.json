@@ -1,0 +1,34 @@
+{
+    "template" : "pulse-1",
+    "order" : 0,
+    "settings" : {
+        "index.refresh_interval" : "5s"
+    },
+    "mappings" : {
+        "_default_" : {
+            "_all" : {"enabled" : true},
+            "dynamic_templates" : [ 
+            {
+                "geo_fields" : {
+                    "match" : "location",
+                    "match_mapping_type" : "string",
+                    "mapping" : {
+                        "type" : "geo_point"
+                    }
+                }
+            },
+            {
+                "string_fields" : {
+                    "match" : "*",
+                    "unmatch": "location",
+                    "match_mapping_type" : "string",
+                    "mapping" : {
+                        "type" : "string", "index" : "not_analyzed", "omit_norms" : true
+
+                    }
+                }
+            }
+            ]
+        }
+    }
+}

@@ -147,3 +147,9 @@
     - hbase
     - hbase_rest
 
+- include: hbase-thrift.yml
+  when: hbase_thriftserver_enabled
+  tags:
+    - hbase
+    - hbase_thrift
+

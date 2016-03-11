@@ -1,0 +1,2 @@
+USE {{ pulse_db_name }};
+UPDATE `{{ pulse_webapp_table_prefix }}config` SET `value` = "{{ pulse_mmr_dir }}" WHERE `namespace` = "site" AND `setting` = "mmr";
