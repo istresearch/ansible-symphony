@@ -10,3 +10,4 @@ _build_html
 *~
 *.*~
 *.swp
+*.retry
