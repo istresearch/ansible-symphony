@@ -8,7 +8,7 @@
     - miniconda
 
 - name: Miniconda pip install traptor
-  shell: "{{ miniconda_install_dir|default('/opt/miniconda') }}/bin/pip install traptor -U"
+  shell: "{{ miniconda_install_dir|default('/opt/miniconda') }}/bin/pip install traptor -U --ignore-installed"
   # notify:
   #   - restart wat-scrapy-crawling
   tags:
