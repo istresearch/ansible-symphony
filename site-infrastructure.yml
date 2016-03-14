@@ -34,7 +34,9 @@
   hosts: all
   roles:
     - miniconda
-  tags: miniconda
+  tags:
+    - miniconda
+    - deps-traptor
 
 # -------------------------- Zookeeper and Kafka -----------------------------
 - name: Run zookeeper role
@@ -50,6 +52,7 @@
     - deps-hbase
     - deps-spark
     - deps-scrapy-cluster
+    - deps-traptor
 
 - name: Run kafka role
   hosts: kafka-nodes
@@ -61,6 +64,7 @@
     - site-kafka
     - deps-kafka
     - deps-scrapy-cluster
+    - deps-traptor
 
 # ------------------------------ ELK stack ------------------------------------
 - name: Run elasticsearch master role
@@ -381,3 +385,13 @@
   roles: [ tangelo ]
   tags:
     - site-tangelo
+
+# -------------------------------- Traptor -----------------------------------
+# TODO also test traptor-track-nodes and traptor-location-nodes
+
+- name: Run Traptor role
+  hosts: traptor-track-nodes
+  roles: [ traptor ]
+  tags:
+    - site-traptor
+    - deps-traptor
