@@ -23,7 +23,7 @@ This repository serves as a base to get you started setting up the environment f
 #. ``git merge upstream/master``
 
 Now you should have the master code in your private repo.  Run ``git remote -v`` to make sure that the origin is your private repo and the upstream is **ansible-symphony** like this::
-    
+
     origin  git@github.com:you/ansible-masterblaster (fetch)
     origin  git@github.com:you/ansible-masterblaster (push)
     upstream    git@github.com:istresearch/ansible-symphony (fetch)
@@ -31,7 +31,7 @@ Now you should have the master code in your private repo.  Run ``git remote -v``
 
 #. ``mkdir private_roles`` to house your project specific roles.  If you are adding a role that can apply to other projects, please submit a pull request to the upstream repository.
 #. In the **ansible.cfg** file, add a line under [defaults], ``roles_path = private_roles/``
-#. Modify the repository at the top of the **staging** and **production** inventories if you are using a private repository.
+#. Modify the repository at the top of the **staging.inventory** and **production** inventories if you are using a private repository.
 #. ``touch site-applications.yml`` to create your custom applications playbook.
 
 Adding more machines
@@ -41,7 +41,7 @@ To add more VM's to your test cluster, add a new line to the **vagrant_hosts** f
 
     192.168.33.103   vagrant-as-03    vas03    ubuntu
 
-Be sure to also update your **/etc/hosts** file so that you can reference the machine in your Ansible inventory file, **staging**.  Like this::
+Be sure to also update your **/etc/hosts** file so that you can reference the machine in your Ansible inventory file, **staging.inventory**.  Like this::
 
     192.168.33.103   vagrant-as-03    vas03
 
@@ -50,9 +50,9 @@ Now, run ``vagrant up`` and your new machine should boot.
 Editing the inventory file
 --------------------------
 
-This repository comes with two inventories, **staging** and  **production**.  The former is used for the Vagrant VM's, and is the default.  The **production** inventory is only a sample and will vary based on your specific site deployment.
+This repository comes with two inventories, **staging.inventory** and  **production**.  The former is used for the Vagrant VM's, and is the default.  The **production** inventory is only a sample and will vary based on your specific site deployment.
 
-As an example, if you wanted to use your new machine as a Storm Supervisor node, change this line in the **staging** file::
+As an example, if you wanted to use your new machine as a Storm Supervisor node, change this line in the **staging.inventory** file::
 
     [storm-supervisor-nodes]
     vagrant-as-03
