@@ -19,7 +19,6 @@ hadoop-nodes
 hbase-nodes
 spark-nodes
 storm-nodes
-elasticsearch-nodes
 
 [aws:children]
 redis-nodes
@@ -119,17 +118,8 @@ storm-supervisor-nodes
 [elasticsearch-master-nodes]
 
 [elasticsearch-data-nodes]
-crew01.istresearch.com elasticsearch_is_master=true
-crew02.istresearch.com elasticsearch_is_master=true
-crew03.istresearch.com elasticsearch_is_master=true
-crew04.istresearch.com elasticsearch_is_master=true
-crew05.istresearch.com elasticsearch_is_master=true
-crew06.istresearch.com elasticsearch_is_master=true
-crew07.istresearch.com elasticsearch_is_master=true
-crew08.istresearch.com elasticsearch_is_master=true
 
 [elasticsearch-client-nodes]
-captain02.istresearch.com
 
 [elasticsearch-nodes:children]
 elasticsearch-master-nodes
