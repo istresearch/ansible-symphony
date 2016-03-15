@@ -1,0 +1,34 @@
+#   - Comments begin with the '#' character
+#   - Blank lines are ignored
+#   - Groups of hosts are delimited by [header] elements
+#   - You can enter hostnames or ip addresses
+#   - A hostname/ip can be a member of multiple groups
+
+[all:vars]
+repository_host=default
+
+[servers]
+#127.0.0.1 host_alias=localhost
+# This group is 
+# IST Servers on AWS 
+ist-es01.istresearch.com host_alias=ist-es01.istresearch.com
+ist-es02.istresearch.com host_alias=ist-es02.istresearch.com
+ist-es03.istresearch.com host_alias=ist-es03.istresearch.com
+ist-es04.istresearch.com host_alias=ist-es04.istresearch.com
+ist-es05.istresearch.com host_alias=ist-es05.istresearch.com
+
+[elasticsearch-master-nodes]
+
+[elasticsearch-data-nodes]
+ist-es01.istresearch.com elasticsearch_is_master=true
+ist-es02.istresearch.com elasticsearch_is_master=true
+ist-es03.istresearch.com elasticsearch_is_master=true
+ist-es04.istresearch.com elasticsearch_is_master=true
+ist-es05.istresearch.com elasticsearch_is_master=true
+
+[elasticsearch-client-nodes]
+
+[elasticsearch-nodes:children]
+elasticsearch-master-nodes
+elasticsearch-data-nodes
+elasticsearch-client-nodes
