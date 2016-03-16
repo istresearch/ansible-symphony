@@ -5,7 +5,8 @@
 #   - A hostname/ip can be a member of multiple groups
 
 [all:vars]
-repository_host=default
+repository_host=repo.istresearch.com
+elasticsearch_heap_size=16g
 
 [servers]
 #127.0.0.1 host_alias=localhost
