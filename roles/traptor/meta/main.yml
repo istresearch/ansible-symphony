@@ -2,4 +2,4 @@
 dependencies:
   - { role: pip }
   - { role: supervisord }
-  - { role: miniconda }
+  - { role: virtualenv }
