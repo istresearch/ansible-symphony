@@ -11,3 +11,6 @@
   supervisorctl:
     name={{ sc_redis_monitor_supervisor_name }}
     state=restarted
+
+- name: restart scrapy-indexer
+  shell: "supervisorctl restart {{ sc_indexer_name }}:*"

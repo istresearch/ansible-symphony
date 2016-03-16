@@ -101,6 +101,12 @@
     - scrapy-cluster
     - scrapy-cluster-crawler
 
+- include: indexer.yml
+  when: sc_is_indexer
+  tags:
+    - scrapy-cluster
+    - scrapy-cluster-indexer
+
 - include: kafka-monitor.yml
   when: sc_is_kafka_monitor
   tags:

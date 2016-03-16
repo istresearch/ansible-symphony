@@ -112,10 +112,15 @@ vagrant-ist-01
 vagrant-ist-01
 vagrant-ist-02
 
+[scrapy-cluster-indexer-nodes]
+vagrant-ist-01
+vagrant-ist-02
+
 [scrapy-cluster:children]
 scrapy-cluster-kafka-monitor-node
 scrapy-cluster-redis-monitor-node
 scrapy-cluster-crawler-nodes
+scrapy-cluster-indexer-nodes
 
 [logstash-nodes]
 vagrant-ist-01
@@ -137,7 +142,7 @@ vagrant-ist-02
 vagrant-ist-01
 
 [traptor-follow-nodes]
-vagrant-as-01
+vagrant-ist-01
 
 [traptor-track-nodes]
 vagrant-ist-02
