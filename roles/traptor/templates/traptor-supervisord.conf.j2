@@ -1,5 +1,5 @@
 [program:{{ traptor_name }}]
-command=python {{ traptor_install_dir }}/default/traptor.py --info --delay=60
+command=python {{ traptor_install_dir }}/default/traptor.py --info --delay=5
 environment=PATH="{{ traptor_virtualenv_path }}"
 directory={{ traptor_install_dir }}/default
 process_name=%(program_name)s
