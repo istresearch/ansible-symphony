@@ -340,6 +340,7 @@
   roles: [ docker-engine ]
   tags:
     - site-docker-engine
+    - deps-pulse-docker
 
 # ---------------------------------- MySQL -----------------------------------
 
@@ -349,6 +350,7 @@
   tags:
     - mysql
     - deps-pulse
+    - deps-pulse-docker
 
 # ---------------------------------- Pulse -----------------------------------
 
@@ -359,12 +361,17 @@
     - site-pulse
     - deps-pulse
     - site-pulse-docker
+    - deps-pulse-docker
 
 - name: Pulse Docker Infrastructure
-  hosts: kibana-node
+  hosts: docker-engine
+  vars_files:
+    - roles/elasticsearch/defaults/main.yml
+    - roles/kibana4/defaults/main.yml
   roles: [ pulse-docker ]
   tags:
     - site-pulse-docker
+    - deps-pulse-docker
 
 # ---------------------------------- Neo4j --------------------------------
 

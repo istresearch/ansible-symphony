@@ -1,60 +1,87 @@
 ---
-- include_vars: ../defaults/main.yml
-  tags: pulse-ui-app
-
-- include_vars: ../../roles/elasticsearch/defaults/main.yml
-  tags: pulse-ui-app
-
-- include_vars: ../../roles/kibana4/defaults/main.yml
-  tags: pulse-ui-app
-
-- name: Check whether pulse_docker_dir exists
-  stat:
-    path={{ pulse_docker_dir }}
-    get_md5=False
-  register: docker_dir
-  tags: docker
-
-- name: Make make pulse_docker_dir if it doesn't exist
+- name: Ensure Docker directory exists
   file:
-    path={{ pulse_docker_dir }}
-    state=directory
-  when: not docker_dir.stat.exists
-  tags: docker
+    state: directory
+    path: "{{ pulse_docker_dir }}"
+    mode: 0755
+  tags: pulse-docker
 
-- name: Move pulse docker script to host
-  template:
+- name: Move Docker script to host
+  template: 
     src=pulse_docker.j2
-    dest={{ pulse_docker_dir|default('/data/bin/pulse_docker') }}/{{ pulse_name }}
-    mode=755
-  tags:
-    - docker
+    dest={{ pulse_docker_dir }}/{{ pulse_name }}
+    mode=0755
+  tags: pulse-docker
 
-- name: Check if persistent data directory exists
-  stat:
-    path={{ pulse_docker_data_dir }}/{{ pulse_name }}
-    get_md5=False
-  register: docker_data_dir
-  tags: docker
-
-- name: Make persistent data directory if doesn't exist
+- name: Ensure Docker data exists
   file:
-    path={{ pulse_docker_data_dir }}/{{ pulse_name }}
-    state=directory
-  when: not docker_data_dir.stat.exists
-  tags: docker
+    state: directory
+    path: "{{ pulse_docker_data_dir }}"
+    mode: 0755
+  tags: pulse-docker
 
-- name: Move pulse Kibana config to host
+#-------------------- Elasticsearch container ----------------------------
+- name: Ensure Docker Elasticsearch directories exist
+  file:
+    state: directory
+    path: "{{ item }}"
+    mode: 0755
+  with_items:
+    - "{{ pulse_docker_elasticsearch_volume_dir }}"
+    - "{{ pulse_docker_elasticsearch_data_dir }}"
+    - "{{ pulse_docker_elasticsearch_conf_dir }}"
+    - "{{ pulse_docker_elasticsearch_scripts_dir }}"
+  tags: pulse-docker
+
+- name: Move Elasticsearch config to host
   template:
-    src=../../roles/kibana4/templates/kibana.yml.j2
-    dest={{ pulse_docker_data_dir|default('/data/pulse') }}/{{ pulse_name }}/kibana{{ pulse_name }}.yml
-    mode=755
-  tags:
-    - docker
-    - pulse-ui-app
+    src=elasticsearch.yml.j2
+    dest={{ pulse_docker_elasticsearch_conf_dir }}/elasticsearch.yml
+    mode=0755
+  tags: pulse-docker
 
-- name: Start Kibana container
-  shell: "sudo bash {{ pulse_docker_dir }}/{{ pulse_name }} start"
-  tags:
-    - docker
-    - pulse-ui-app
+- name: Run Docker Elasticsearch container
+  docker:
+    env: "{{ pulse_docker_elasticsearch_env }}"
+    ports: "{{ pulse_docker_elasticsearch_ports }}"
+    image: "{{ pulse_docker_elasticsearch_image }}"
+    name: "{{ pulse_docker_elasticsearch_name }}"
+    pull: always
+    restart_policy: always
+    state: reloaded
+    volumes: "{{ pulse_docker_elasticsearch_volumes }}"
+  tags: pulse-docker
+
+#-------------------- Kibana4 container ------------------------
+- name: Ensure Docker Kibana directories exist
+  file:
+    state: directory
+    path: "{{ item }}"
+    mode: 0644
+  with_items:
+    - "{{ pulse_docker_kibana4_volume_dir }}"
+    - "{{ pulse_docker_kibana4_conf_dir }}"
+  tags: pulse-docker
+
+- name: Move Kibana4 config to host
+  template:
+    src=kibana.yml.j2
+    dest={{ pulse_docker_kibana4_conf_dir }}/kibana.yml
+    mode=0644
+  tags: pulse-docker
+
+- name: Run Docker Kibana4 container
+  docker:
+    expose:
+      - "{{ pulse_docker_kibana4_port }}"
+    ports:
+      - "{{ pulse_docker_kibana4_port }}:{{ pulse_docker_kibana4_port }}"
+    image: "{{ pulse_docker_kibana4_image }}"
+    name: "{{ pulse_docker_kibana4_name }}"
+    links:
+      - "{{ pulse_docker_elasticsearch_name }}:elasticsearch"
+    pull: always
+    restart_policy: always
+    state: reloaded
+    volumes: "{{ pulse_docker_kibana4_volumes }}"
+  tags: pulse-docker
