@@ -137,13 +137,17 @@ vagrant-ist-02
 vagrant-ist-01
 
 [traptor-follow-nodes]
-vagrant-ist-02
+vagrant-as-01
 
 [traptor-track-nodes]
+vagrant-ist-02
+
+[traptor-location-nodes]
 
 [traptor-nodes:children]
 traptor-follow-nodes
 traptor-track-nodes
+traptor-location-nodes
 
 [docker-engine]
 vagrant-ist-01

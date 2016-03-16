@@ -11,4 +11,4 @@ traptor_log_level: "INFO"
 traptor_redis_port: 6379
 traptor_redis_db: 1
 
-traptor_type: 'follow'
+traptor_type: 'track'

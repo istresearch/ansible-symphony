@@ -14,10 +14,10 @@ Follow the steps in the main :doc:`../topics/quickstart` guide to get your VM's 
 
 If you wish to deploy a specific tag to production, do this::
 
-    ansible-playbook -i production site-infrastructure.yml --tags <site-app> --vault-password-file vault.passwd
+    ansible-playbook -i production.inventory site-infrastructure.yml --tags <site-app> --vault-password-file vault.passwd
 
 Fill in the ``--tags <site-app>`` with the tag of the infrastructure that you want to run.  For example, ``--tags site-kafka`` or ``--tags ELK``.  You can also limit by server group by using ``--limit aws`` or ``--limit internap``.
-  
+
 Site Applications
 -----------------
 
@@ -25,11 +25,11 @@ This section talks about deploying site application software.  This typically in
 
 Typically the **site-infrastructure.yml** top level playbook is run first to provision the software suites needed.  After that is run you can similarly run the **site-applications.yml** playbook by running::
 
-    ansible-playbook -i production site-applications.yml --tags <site-app> --vault-password-file vault.passwd
+    ansible-playbook -i production.inventory site-applications.yml --tags <site-app> --vault-password-file vault.passwd
 
 Fill in the ``--tags <site-app>`` with the tag of the application that you want to run.  For example, ``--tags site-cooper``.
 
-By default this will deploy to the **staging** inventory.  If you want to deploy to production, add a ``-i production`` tag in there.
+By default this will deploy to the **staging.inventory** inventory.  If you want to deploy to production, add a ``-i production.inventory`` tag in there.
 
 Differences from public deployments
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -38,7 +38,7 @@ Even though the commands are the same as in the public **ansible-symphony** repo
 
 - **Private accounts** - To work with custom accounts and API keys, we take advantage of group_vars.  Variables that are sensitive are encrypted with ``ansible-vault``, so you need to use a password to run Ansible with these encrypted variables.
 - **Private repos** - (http://repo.istresearch.com/infrastructure) and custom pip packages (http://repo.istresearch.com/pip).  In the pubic repo, it grabs everything from public mirrors.
-- **Custom inventories** - The inventory files for **staging** and **production** are different.  For **staging** the main difference is the VM's are named differently. The **production** inventory is completely customized per our AWS and Internap production servers.
+- **Custom inventories** - The inventory files for **staging,inventory** and **production.inventory** are different.  For **staging.inventory** the main difference is the VM's are named differently. The **production.inventory** inventory is completely customized per our AWS and Internap production servers.
 - **private_roles** - These are Ansible roles that are not included in the public ansible-symphony repository and for internal IST use only.
 - **private_topics** - This is the folder that this document lives in.  These are docs that are specific also for IST use and not available in the public ansible-symphony repository.
 
@@ -48,20 +48,22 @@ FAQ
 How to I deploy a testing environment?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The **staging** inventory is used for this.  Follow :doc:`../topics/quickstart` to get some VM's set up for testing purposes.
+The **staging.inventory** file is used for this.  Follow :doc:`../topics/quickstart` to get some VM's set up for testing purposes.
 
 How do I run individual roles or only on AWS/Internap, etc?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To run only Internap plays, run::
 
-    ansible-playbook -i production site-infrastructure.yml --limit internap --vault-password-file vault.passwd
+    ansible-playbook -i production.inventory site-infrastructure.yml --limit internap --vault-password-file vault.passwd
 
 To run only the roles that will be installed on the Internap servers.  Of course you can combine this with ``--tags`` also to limit by tag and server group.
 
-The **production** inventory file is set up to break up the hosts into groups such as **kafka-nodes**, **storm-nodes**, etc.  There are also "parent group" like **aws-nodes** and **internap-nodes** that include all of the children groups that are in either AWS or Internap.
+The **production.inventory** file is set up to break up the hosts into groups such as **kafka-nodes**, **storm-nodes**, etc.  There are also "parent group" like **aws-nodes** and **internap-nodes** that include all of the children groups that are in either AWS or Internap.
 
-.. tip:: Check out the :doc:`../topics/customization` guide for some background information.  
+Each large group of machines is under its own ``.inventory`` file, in order to specify more granular provisioning of the ansible roles.
+
+.. tip:: Check out the :doc:`../topics/customization` guide for some background information.
 
 How do I update the **add-users** role to add new users?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

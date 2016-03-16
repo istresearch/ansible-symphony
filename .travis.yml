@@ -27,12 +27,13 @@ env:
   - TAGS='miniconda'
   - TAGS='site-tangelo'
   - TAGS='mysql'
+  - TAGS='deps-traptor'
 
 matrix:
   fast_finish: true
 script:
-  - ansible-playbook -i testing site-infrastructure.yml --tags $TAGS --syntax-check
-  - ansible-playbook -i testing site-infrastructure.yml --tags $TAGS --connection=local --become
+  - ansible-playbook -i testing.inventory site-infrastructure.yml --tags $TAGS --syntax-check
+  - ansible-playbook -i testing.inventory site-infrastructure.yml --tags $TAGS --connection=local --become
 after_failure:
   - sudo cat /var/log/supervisor/*
 notifications:

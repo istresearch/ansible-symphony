@@ -1,0 +1,41 @@
+---
+- name: pip install traptor
+  pip:
+    virtualenv: "{{ traptor_virtualenv_path }}"
+    name: traptor
+    state: latest
+  tags:
+    - traptor
+
+- name: create traptor symlink
+  file:
+    src={{ traptor_virtualenv_path }}/lib/python2.7/site-packages/traptor/
+    path={{ traptor_install_dir }}/default
+    state=link
+    mode=0744
+  tags: traptor
+
+- name: create traptor log directory
+  file:
+    path={{ traptor_log_dir }}/
+    state=directory
+    mode=0755
+  tags: traptor
+
+- name: copy supervisord config
+  template:
+    src={{ traptor_name }}-supervisord.conf.j2
+    dest={{ supervisord_programs_dir }}/{{ traptor_name }}-supervisord.conf
+    mode=0644
+  notify:
+    - reread supervisord
+  tags: traptor
+
+- name: copy traptor settings
+  template:
+    src=localsettings.py.j2
+    dest={{ traptor_install_dir }}/default/localsettings.py
+    mode=0644
+  notify:
+    - restart traptor
+  tags: traptor
