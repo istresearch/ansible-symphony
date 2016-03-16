@@ -18,7 +18,9 @@
   hosts: all
   roles:
     - virtualenv
-  tags: virtual-env
+  tags:
+    - virtual-env
+    - deps-traptor
 
 - name: Run miniconda role
   hosts: all
@@ -26,7 +28,6 @@
     - miniconda
   tags:
     - miniconda
-    - deps-traptor
 
 # -------------------------- Zookeeper and Kafka -----------------------------
 - name: Run zookeeper role
@@ -106,6 +107,7 @@
   tags:
     - site-redis
     - scrapy-services
+    - deps-traptor
 
 - name: Run tor role
   hosts: tor-proxy
