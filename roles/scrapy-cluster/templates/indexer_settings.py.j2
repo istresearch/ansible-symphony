@@ -1,0 +1,81 @@
+# Scrapy Cluster Settings
+# ~~~~~~~~~~~~~~~~~~~~~~~
+INDEXER_ID = {% for host in groups['scrapy-cluster-indexer-nodes'] %}{%- if host == inventory_hostname -%}"{{ loop.index }}"{%- endif -%}{% endfor %}
+
+INDEXER_PRIORITY = {{ sc_indexer_default_priority }}
+
+# Specify the host and port to use when connecting to Redis.
+REDIS_HOST = "{{ groups['redis-master-node'][0] }}"
+REDIS_PORT = {{ redis_port|default(6379) }}
+REDIS_UURL = "{{ sc_indexer_uurl }}"
+REDIS_REFRESH = "{{ sc_indexer_refresh }}"
+REDIS_DB = {{ sc_redis_master_db }}
+
+# Kafka server information
+KAFKA_HOSTS = "{% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}"
+KAFKA_INCOMING_TOPIC = "{{ sc_indexer_incoming_topic }}"
+
+ZOOKEEPER_ASSIGN_PATH = "{{ sc_indexer_zookeeper_dir }}"
+ZOOKEEPER_HOSTS = "{% for host in groups['zookeeper-nodes'] %}{{ host }}:{{ zookeeper_port|default(2181) }}{% if not loop.last %},{% endif %}{% endfor %}"
+
+PUBLIC_IP_URL = '{{ sc_indexer_public_ip_url }}'
+
+# how often to refresh the ip address of the scheduler
+SCHEDULER_IP_REFRESH = {{ sc_indexer_ip_refresh }}
+
+# log setup scrapy cluster crawler
+SC_LOGGER_NAME = '{{ sc_indexer_logger_name }}'
+SC_LOG_DIR = '{{ sc_indexer_log_dir }}'
+SC_LOG_FILE = '{{ sc_indexer_log_file }}'
+SC_LOG_MAX_BYTES = {{ sc_indexer_log_max_bytes }}
+SC_LOG_BACKUPS = {{ sc_indexer_log_backups }}
+SC_LOG_STDOUT = {{ sc_indexer_log_stdout }}
+SC_LOG_JSON = {{ sc_indexer_log_json }}
+SC_LOG_LEVEL = '{{ sc_indexer_log_level }}'
+
+# stats setup
+STATS_STATUS_CODES = {{ sc_indexer_status_codes }}
+STATS_RESPONSE_CODES = [
+{% for item in sc_indexer_response_codes %}
+    {{ item }}{% if not loop.last %},{% endif %}
+
+{% endfor %}
+]
+STATS_CYCLE = {{ sc_indexer_stats_cycle }}
+# from time variables in scutils.stats_collector class
+STATS_TIMES = [
+{% for item in sc_indexer_stats_times %}
+    '{{ item }}'{% if not loop.last %},{% endif %}
+
+{% endfor %}
+]
+
+# Scrapy Settings
+# ~~~~~~~~~~~~~~~
+DOWNLOADER_CLIENTCONTEXTFACTORY = 'crawling.contextfactory.MyClientContextFactory'
+
+# Scrapy settings for distributed_indexer project
+#
+BOT_NAME = '{{ sc_indexer_bot_name }}'
+
+SPIDER_MODULES = ['{{ sc_indexer_bot_name }}.spiders']
+NEWSPIDER_MODULE = '{{ sc_indexer_bot_name }}.spiders'
+
+# Enables scheduling storing requests queue in redis.
+SCHEDULER = "crawling.indexer_scheduler.IndexerScheduler"
+
+DOWNLOADER_MIDDLEWARES = {
+    # rotate crawler user agent
+    'scrapy.contrib.downloadermiddleware.useragent.UserAgentMiddleware' : None,
+    'crawling.rotate_useragent.RotateUserAgentMiddleware' :400,
+}
+
+# Disable the built in logging in production
+LOG_ENABLED = {{ sc_indexer_scrapy_logging_enabled }}
+
+# Allow all return codes
+HTTPERROR_ALLOW_ALL = {{ sc_indexer_httperror_all }}
+
+RETRY_TIMES = {{ sc_indexer_retry_times }}
+
+DOWNLOAD_TIMEOUT = {{ sc_indexer_download_timeout }}
