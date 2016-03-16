@@ -2,7 +2,7 @@
 # Installation config
 traptor_name: traptor
 traptor_install_dir: "/opt/{{ traptor_name }}"
-traptor_miniconda_path: "{{ miniconda_install_dir|default('/opt/miniconda') }}/lib/python2.7/site-packages/{{ traptor_name }}"
+traptor_virtualenv_path: "{{ traptor_install_dir }}/venv"
 
 # Supervisor config
 traptor_num_procs: 1
@@ -21,6 +21,10 @@ traptor_kafka_topic: "traptor"
 traptor_type: "track"
 
 apikeys:
+  - consumer_key: ''
+    consumer_secret: ''
+    access_token: ''
+    access_token_secret: ''
   - consumer_key: ''
     consumer_secret: ''
     access_token: ''
