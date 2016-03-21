@@ -1,6 +1,7 @@
 [program:{{ sc_indexer_name }}]
-command=/usr/local/bin/scrapy runspider crawling/spiders/indexer_spider.py -a id=%(process_num)02d
+command={{ sc_virtualenv_path }}/bin/scrapy runspider crawling/spiders/indexer_spider.py -a id=%(process_num)02d
 directory= {{ sc_install_dir }}/default/indexer
+environment=PATH="{{ sc_virtualenv_path }}/bin"
 autostart=true
 autorestart=true
 process_name=%(process_num)02d

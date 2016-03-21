@@ -22,7 +22,7 @@ storm-nodes
 
 [aws:children]
 redis-nodes
-scrapy-cluster
+scrapy-cluster-nodes
 kibana-node
 gnip-monitor-node
 gdelt-monitor-node
@@ -126,33 +126,66 @@ elasticsearch-master-nodes
 elasticsearch-data-nodes
 elasticsearch-client-nodes
 
-[scrapy-kafka-monitor-node]
-memex-services.istresearch.com
+# DEPRECATED SCRAPY CLUSTER NODES -------------
 
-[scrapy-redis-monitor-node]
-memex-services.istresearch.com
+#[scrapy-kafka-monitor-node]
+#memex-services.istresearch.com
 
-[scrapy-crawler-nodes]
-memex-crawler01.istresearch.com
-memex-crawler02.istresearch.com
-memex-crawler03.istresearch.com
-memex-crawler04.istresearch.com
-memex-crawler05.istresearch.com
-memex-crawler06.istresearch.com
+#[scrapy-redis-monitor-node]
+#memex-services.istresearch.com
 
-[scrapy-indexer-nodes]
-memex-crawler01.istresearch.com
-memex-crawler02.istresearch.com
-memex-crawler03.istresearch.com
-memex-crawler04.istresearch.com
-memex-crawler05.istresearch.com
-memex-crawler06.istresearch.com
+#[scrapy-crawler-nodes]
+#memex-crawler01.istresearch.com
+#memex-crawler02.istresearch.com
+#memex-crawler03.istresearch.com
+#memex-crawler04.istresearch.com
+#memex-crawler05.istresearch.com
+#memex-crawler06.istresearch.com
 
-[scrapy-cluster:children]
-scrapy-kafka-monitor-node
-scrapy-redis-monitor-node
-scrapy-crawler-nodes
-scrapy-indexer-nodes
+#[scrapy-indexer-nodes]
+#memex-crawler01.istresearch.com
+#memex-crawler02.istresearch.com
+#memex-crawler03.istresearch.com
+#memex-crawler04.istresearch.com
+#memex-crawler05.istresearch.com
+#memex-crawler06.istresearch.com
+
+#[scrapy-cluster:children]
+#scrapy-kafka-monitor-node
+#scrapy-redis-monitor-node
+#scrapy-crawler-nodes
+#scrapy-indexer-nodes
+
+# NEW SCRAPY CLUSTER NODES --------------------
+
+[scrapy-cluster-kafka-monitor-node]
+ist-crawler01.istresearch.com
+
+[scrapy-cluster-redis-monitor-node]
+ist-crawler01.istresearch.com
+
+[scrapy-cluster-crawler-nodes]
+ist-crawler01.istresearch.com
+ist-crawler02.istresearch.com
+ist-crawler03.istresearch.com
+ist-crawler04.istresearch.com
+ist-crawler05.istresearch.com
+ist-crawler06.istresearch.com
+
+[scrapy-cluster-indexer-nodes]
+ist-crawler01.istresearch.com
+ist-crawler02.istresearch.com
+ist-crawler03.istresearch.com
+ist-crawler04.istresearch.com
+ist-crawler05.istresearch.com
+ist-crawler06.istresearch.com
+
+[scrapy-cluster-nodes:children]
+scrapy-cluster-kafka-monitor-node
+scrapy-cluster-redis-monitor-node
+scrapy-cluster-crawler-nodes
+scrapy-cluster-indexer-nodes
+
 
 [kibana-node]
 captain02.istresearch.com

@@ -1,6 +1,7 @@
 [program:{{ sc_redis_monitor_supervisor_name }}]
-command=/usr/bin/python redis_monitor.py
+command=python redis_monitor.py
 directory={{ sc_install_dir }}/default/redis-monitor
+environment=PATH="{{ sc_virtualenv_path }}/bin"
 autostart=true
 autorestart=true
 startsecs={{ sc_redis_monitor_start_secs }}

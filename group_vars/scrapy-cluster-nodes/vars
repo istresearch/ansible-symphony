@@ -1,0 +1,23 @@
+---
+# master configs
+sc_kafka_master_topic_prefix: crawl
+sc_redis_master_db: 2
+
+# crawling
+sc_crawling_queue_hits: 60
+sc_crawling_kafka_appid_topics: True
+sc_crawling_kafka_base_64: True
+sc_crawling_num_procs: 10
+
+# kafka monitor
+sc_kafka_monitor_plugins:
+    - "'plugins.scraper_handler.ScraperHandler': 100"
+    - "'plugins.action_handler.ActionHandler': 200"
+    - "'plugins.stats_handler.StatsHandler': 300"
+    - "'plugins.keyword_handler.KeywordHandler': 400"
+
+# redis monitor
+sc_redis_monitor_kafka_appids: True
+
+# indexer
+sc_indexer_parallelism: 10

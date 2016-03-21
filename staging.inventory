@@ -116,7 +116,7 @@ vagrant-ist-02
 vagrant-ist-01
 vagrant-ist-02
 
-[scrapy-cluster:children]
+[scrapy-cluster-nodes:children]
 scrapy-cluster-kafka-monitor-node
 scrapy-cluster-redis-monitor-node
 scrapy-cluster-crawler-nodes

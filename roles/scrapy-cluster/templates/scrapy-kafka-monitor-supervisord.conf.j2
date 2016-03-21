@@ -1,6 +1,7 @@
 [program:{{ sc_kafka_monitor_supervisor_name }}]
-command=/usr/bin/python kafka_monitor.py run
+command=python kafka_monitor.py run
 directory={{ sc_install_dir }}/default/kafka-monitor
+environment=PATH="{{ sc_virtualenv_path }}/bin"
 autostart=true
 autorestart=true
 startsecs={{ sc_kafka_monitor_start_secs }}
