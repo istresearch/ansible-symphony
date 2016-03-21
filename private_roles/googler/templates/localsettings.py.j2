@@ -1,9 +1,10 @@
 REDIS_HOST = "{{ groups['redis-master-node'][0] }}"
 REDIS_PORT = {{ redis_port|default(6379) }}
+REDIS_DB = {{ googler_redis_db|default(0) }}
 
 # Kafka server information
 KAFKA_HOSTS = "{% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}"
-KAFKA_TOPIC = "{{ sc_kafka_monitor_kafka_topic_prefix|default('demo') }}.{{ sc_kafka_monitor_topic_main|default('incoming') }}"
+KAFKA_TOPIC = "{{ sc_kafka_master_topic_prefix|default('demo') }}.{{ sc_kafka_monitor_topic_main|default('incoming') }}"
 
 QUEUE_NAME = "{{ googler_queue_name }}"
 

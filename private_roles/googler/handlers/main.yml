@@ -1,5 +1,5 @@
 ---
 - name: restart googler
   supervisorctl:
-    name=googler
+    name='googler:'
     state=restarted

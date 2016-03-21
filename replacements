@@ -186,6 +186,10 @@ scrapy-cluster-redis-monitor-node
 scrapy-cluster-crawler-nodes
 scrapy-cluster-indexer-nodes
 
+[googler-nodes]
+ist-crawler04.istresearch.com
+ist-crawler05.istresearch.com
+ist-crawler06.istresearch.com
 
 [kibana-node]
 captain02.istresearch.com
