@@ -2,4 +2,40 @@ pulse_name: pulse
 pulse_docker_dir: /data/bin/pulse_docker
 pulse_docker_data_dir: /data/pulse
 
-kibana4_port: 5602
+pulse_docker_elasticsearch_version: "{{ elasticsearch_version|default('2.2.0') }}"
+pulse_docker_elasticsearch_image: "elasticsearch:{{ pulse_docker_elasticsearch_version }}"
+pulse_docker_elasticsearch_cluster_name: "{{ pulse_name }}_es_cluster"
+pulse_docker_elasticsearch_name: "ES_{{ pulse_name }}"
+pulse_docker_elasticsearch_heap_size: "{{ elasticsearch_heap_size|default('1g') }}"
+pulse_docker_elasticsearch_env:
+  ES_HEAP_SIZE: "{{ pulse_docker_elasticsearch_heap_size }}"
+
+pulse_docker_elasticsearch_network_transport_tcp_port: "{{ elasticsearch_network_transport_tcp_port_min|default('9300') }}"
+pulse_docker_elasticsearch_network_http_port: "{{ elasticsearch_network_http_port|default('9200') }}"
+pulse_docker_elasticsearch_ports:
+  - "{{ pulse_docker_elasticsearch_network_transport_tcp_port }}:{{ pulse_docker_elasticsearch_network_transport_tcp_port }}"
+  - "{{ pulse_docker_elasticsearch_network_http_port }}:{{ pulse_docker_elasticsearch_network_http_port }}"
+
+pulse_docker_elasticsearch_volume_dir: "{{ pulse_docker_data_dir }}/es-{{ pulse_docker_elasticsearch_version }}"
+pulse_docker_elasticsearch_data_dir: "{{ pulse_docker_elasticsearch_volume_dir }}/data"
+pulse_docker_elasticsearch_conf_dir: "{{ pulse_docker_elasticsearch_volume_dir }}/config"
+pulse_docker_elasticsearch_scripts_dir: "{{ pulse_docker_elasticsearch_conf_dir }}/scripts"
+
+pulse_docker_elasticsearch_volumes:
+  - "{{ pulse_docker_elasticsearch_data_dir }}:/usr/share/elasticsearch/data"
+  - "{{ pulse_docker_elasticsearch_conf_dir }}:/usr/share/elasticsearch/config"
+  - "{{ pulse_docker_elasticsearch_scripts_dir }}:/usr/share/elasticsearch/config/scripts"
+
+pulse_docker_kibana4_version: 4.4
+pulse_docker_kibana4_image: "kibana:{{ pulse_docker_kibana4_version }}"
+pulse_docker_kibana4_port: "{{ kibana4_port|default('5601') }}"
+pulse_docker_kibana4_index: "{{ kibana4_index|default('.kibana') }}"
+pulse_docker_kibana4_request_timeout: "{{ kibana4_request_timeout|default('300000') }}"
+pulse_docker_kibana4_verify_ssl: "{{ kibana4_verify_ssl|default('false') }}"
+pulse_docker_kibana4_name: "KIBANA_{{ pulse_name }}"
+
+pulse_docker_kibana4_volume_dir: "{{ pulse_docker_data_dir }}/kibana4-{{ pulse_docker_kibana4_version }}"
+pulse_docker_kibana4_conf_dir: "{{ pulse_docker_kibana4_volume_dir }}/config"
+
+pulse_docker_kibana4_volumes:
+  - "{{ pulse_docker_kibana4_conf_dir }}:/usr/share/kibana/config"

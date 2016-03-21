@@ -38,16 +38,17 @@ Lastly, before running anything you will need to download the "Ansible vault" pa
 VM Creation
 ------------
 
-The Vagrantfile and playbooks have been configured for immediate deployment. There are four different deployment configurations you may use. 
+The Vagrantfile and playbooks have been configured for immediate deployment. There are five different deployment configurations you may use. 
 
 ::
 
-    Deployment Machine      Pulse Host         ES Client Node      Inventory 
-    -------------------     --------------     ---------------     ----------
-    Your computer           vagrant-ist-01     vagrant-ist-02      staging
-    Your computer           vagrant-ist-01     None                gdk
-    vagrant-ist-01          vagrant-ist-01     vagrant-ist-02      staging
-    vagrant-ist-01          vagrant-ist-01     None                gdk
+    Deployment Machine      Pulse Host         ES Client Node      Inventory      Docker Installed
+    -------------------     --------------     ---------------     ----------     -----------------
+    Your computer           vagrant-ist-01     vagrant-ist-02      staging        No
+    Your computer           vagrant-ist-01     None                staging        Yes
+    Your computer           vagrant-ist-01     None                gdk            User Choice
+    vagrant-ist-01          vagrant-ist-01     vagrant-ist-02      staging        No
+    vagrant-ist-01          vagrant-ist-01     None                gdk            User Choice
 
 Depending on which configuration you will be deploying with, you will need to start one or two virtual machines. To start a virtual machine, first navigate to the main directory of the checked out **ansible-symphony-ist** repo on your computer. From this directory, you can start the ``vagrant-ist-01`` vm with the following command: ::
 
@@ -83,7 +84,7 @@ Once logged in and connected to the Deployment Machine, you must install Ansible
     $ sudo apt-get install -y ansible
     $ sudo apt-get update
 
-.. note:: If you will be using the ``gdk`` inventory file for single machine deployment, you can skip this part as it does not require a ssh connection to itself.
+.. note:: If you will be using the ``gdk.inventory`` file for single machine deployment, you can skip this part as it does not require a ssh connection to itself.
 
 Once Ansible is installed, you need to ensure the user you will use to run the playbooks can ssh into all required machines. To test this, run the following commands to ssh into the machines:
 
@@ -103,41 +104,52 @@ Once Ansible is installed, you need to ensure the user you will use to run the p
 Running the Playbooks
 ----------------------
 
-Once the Deployment Machine is set up, you are ready to run the playbooks and install the Pulse platform into your desired environment. There are two plays you will need to run to accomplish this. ``site-infrastructure.yml`` is responsible for installing all required software needed for the Pulse platform. ``site-applications.yml`` installs the actual Pulse application, then configures all software and the application appropriately.
+Once the Deployment Machine is set up, you are ready to run the playbooks and install the Pulse platform into your desired environment. There are two playbooks you will need to run to accomplish this. ``site-infrastructure.yml`` is responsible for installing all required software needed for the Pulse platform. ``site-applications.yml`` installs the actual Pulse application, then configures all software and the application appropriately. In addition to the playbooks, tags are utilized to determine which plays to execute for your desired deployment.
 
-When using your machine as the Deployment Machine with the ``staging`` inventory to install the Pulse platform, run the following commands:
-
-::
-
-    $ cd /vagrant
-    $ ansible-playbook -i staging --tags deps-pulse --vault-password-file vault.passwd site-infrastructure.yml
-    $ ansible-playbook -i staging --tags site-pulse-app --vault-password-file vault.passwd site-applications.yml
-
-When using your machine as the Deployment Machine with the ``gdk`` inventory to install the Pulse platform, run the following commands:
+When using your machine as the Deployment Machine with ``staging.inventory`` to install the Pulse platform, run the following commands to install the infrastructure:
 
 ::
 
     $ cd /vagrant
-    $ ansible-playbook -i gdk --tags deps-pulse --vault-password-file vault.passwd site-infrastructure.yml
-    $ ansible-playbook -i gdk --tags site-pulse-app --vault-password-file vault.passwd site-applications.yml
+    $ ansible-playbook -i staging.inventory --tags deps-pulse --vault-password-file vault.passwd site-infrastructure.yml
+
+If you want to install Docker and run Elasticsearch and Kibana as containers instead of installed applications, you will need to change the ``--tags`` parameter. To accomplish this, run the following commands:
+
+::
+
+    $ cd /vagrant
+    $ ansible-playbook -i staging.inventory --tags deps-pulse-docker --vault-password-file vault.passwd site-infrastructure.yml
+
+Once the infrastructure is installed, deploy the application with the following command: ::
+
+    $ ansible-playbook -i staging.inventory --tags site-pulse-app --vault-password-file vault.passwd site-applications.yml
+
+
+When using your machine as the Deployment Machine with ``gdk.inventory`` to install the Pulse platform, simply change the ``-i`` parameter and run the same commands:
+
+::
+
+    $ cd /vagrant
+    $ ansible-playbook -i gdk.inventory --tags deps-pulse --vault-password-file vault.passwd site-infrastructure.yml
+    $ ansible-playbook -i gdk.inventory --tags site-pulse-app --vault-password-file vault.passwd site-applications.yml
 
 .. note:: When using ``vagrant-ist-01`` as the Deployment Machine, you mush be logged in to the vm and all ansible commands are run on the vm.
     
-When using ``vagrant-ist-01`` as the Deployment Machine with the ``staging`` inventory to install the Pulse platform, run the following commands:
+When using ``vagrant-ist-01`` as the Deployment Machine with ``staging.inventory`` to install the Pulse platform, you will run the exact same commands as above. The difference is that the commands are run from vm instead of your local machine:
 
 ::
 
     $ cd /vagrant
-    $ ansible-playbook -i staging --tags deps-pulse --vault-password-file vault.passwd site-infrastructure.yml
-    $ ansible-playbook -i staging --tags site-pulse-app --vault-password-file vault.passwd site-applications.yml
+    $ ansible-playbook -i staging.inventory --tags deps-pulse --vault-password-file vault.passwd site-infrastructure.yml
+    $ ansible-playbook -i staging.inventory --tags site-pulse-app --vault-password-file vault.passwd site-applications.yml
     
-When using ``vagrant-ist-01`` as the Deployment Machine with the ``gdk`` inventory to install the Pulse platform, run the following commands:
+When using ``vagrant-ist-01`` as the Deployment Machine with ``gdk.inventory`` to install the Pulse platform, you will need to add the ``-c`` parameter to the command as everything is being installed locally. To do this, run the following commands:
 
 ::
 
     $ cd /vagrant
-    $ ansible-playbook -i gdk --tags deps-pulse --vault-password-file vault.passwd -c local site-infrastructure.yml
-    $ ansible-playbook -i gdk --tags site-pulse-app --vault-password-file vault.passwd -c local site-applications.yml
+    $ ansible-playbook -i gdk.inventory --tags deps-pulse --vault-password-file vault.passwd -c local site-infrastructure.yml
+    $ ansible-playbook -i gdk.inventory --tags site-pulse-app --vault-password-file vault.passwd -c local site-applications.yml
 
 .. warning:: Windows users may experience permissions issues with the ``vault.passwd`` file. If when running the playbook Ansible throws an error regarding the ``vault.passwd`` being executable, the problem is likely due to Windows affecting the file permissions in the synced folder. The easiest way to reolve this is to copy the ``vault.passwd`` file to the ``/home/vagrant/`` directory, remove the executable bit from the copied file, and then re-run the playbook using that file as the ``--vault-password-file``. Below are the commands to follow.
 

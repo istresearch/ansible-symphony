@@ -1,0 +1,193 @@
+# ======================== Elasticsearch Configuration =========================
+#
+# NOTE: Elasticsearch comes with reasonable defaults for most settings.
+#       Before you set out to tweak and tune the configuration, make sure you
+#       understand what are you trying to accomplish and the consequences.
+#
+# The primary way of configuring a node is via this file. This template lists
+# the most important settings you may want to configure for a production cluster.
+#
+# Please see the documentation for further information on configuration options:
+# <http://www.elastic.co/guide/en/elasticsearch/reference/current/setup-configuration.html>
+#
+# ---------------------------------- Cluster -----------------------------------
+#
+# Use a descriptive name for your cluster:
+#
+# cluster.name: my-application
+cluster.name: {{ pulse_docker_elasticsearch_cluster_name }}
+#
+# ------------------------------------ Node ------------------------------------
+#
+# Use a descriptive name for the node:
+#
+# node.name: node-1
+
+#
+# Add custom attributes to the node:
+#
+# node.rack: r1
+
+# Every node can be configured to allow or deny being eligible as the master,
+# and to allow or deny to store the data.
+#
+# Allow this node to be eligible as a master node (enabled by default):
+#
+node.master: true
+
+#
+# Allow this node to store data (enabled by default):
+#
+node.data: true
+
+#
+# Allow this node be a client only :
+#
+node.client: false
+
+# ----------------------------------- Index ------------------------------------
+# Set the number of shards (splits) of an index (5 by default):
+#
+index.number_of_shards: 1
+index.number_of_replicas: 0
+
+#
+# ----------------------------------- Paths ------------------------------------
+#
+# path.conf: /path/to/conf
+
+# Path to directory where to store the data (separate multiple locations by comma):
+#
+# path.data: /path/to/data
+
+# path.work: /path/to/work
+
+#
+# Path to log files:
+#
+# path.logs: /path/to/logs
+
+# Path to where plugins are installed:
+#
+# path.plugins: /path/to/plugins
+
+#
+# ----------------------------------- Memory -----------------------------------
+#
+# Lock the memory on startup:
+#
+bootstrap.mlockall: true
+#
+# Make sure that the `ES_HEAP_SIZE` environment variable is set to about half the memory
+# available on the system and that the owner of the process is allowed to use this limit.
+#
+# Elasticsearch performs poorly when the system is swapping the memory.
+#
+# ---------------------------------- Network -----------------------------------
+#
+# network.publish_host: 192.168.0.1
+
+# Set the bind address to a specific IP (IPv4 or IPv6):
+#
+# network.host: 192.168.0.1
+network.host: 0.0.0.0
+#
+# Set a custom port for the node to node communication (9300 by default):
+#
+# transport.tcp.port: 9300
+transport.tcp.port: {{ pulse_docker_elasticsearch_network_transport_tcp_port }}
+
+# Enable compression for all communication between nodes (disabled by default):
+#
+# transport.tcp.compress: true
+
+# Set a custom port for HTTP:
+#
+# http.port: 9200
+http.port: {{ pulse_docker_elasticsearch_network_http_port }}
+
+# Set a custom allowed content length:
+#
+http.max_content_length: 100mb
+
+# Disable HTTP completely:
+# 
+http.enabled: true
+
+#
+# For more information, see the documentation at:
+# <http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-network.html>
+#
+# ---------------------------------- Gateway -----------------------------------
+#
+# Block initial recovery after a full cluster restart until N nodes are started:
+#
+gateway.recover_after_nodes: 1
+#
+# For more information, see the documentation at:
+# <http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-gateway.html>
+
+# --------------------------- Recovery Throttling ------------------------------
+
+# These settings allow to control the process of shards allocation between
+# nodes during initial recovery, replica allocation, rebalancing,
+# or when adding and removing nodes.
+
+# Set the number of concurrent recoveries happening on a node:
+#
+# 1. During the initial recovery
+#
+cluster.routing.allocation.node_initial_primaries_recoveries: 4
+
+#
+# 2. During adding/removing nodes, rebalancing, etc
+#
+cluster.routing.allocation.node_concurrent_recoveries: 2
+
+# Set to limit the number of open concurrent streams when
+# recovering a shard from a peer:
+#
+indices.recovery.concurrent_streams: 5
+
+#
+# --------------------------------- Discovery ----------------------------------
+#
+# Elasticsearch nodes will find each other via unicast, by default.
+#
+# Pass an initial list of hosts to perform discovery when new node is started:
+# The default list of hosts is ["127.0.0.1", "[::1]"]
+#
+# discovery.zen.ping.unicast.hosts: ["host1", "host2"]
+#
+# Prevent the "split brain" by configuring the majority of nodes (total number of nodes / 2 + 1):
+#
+# discovery.zen.minimum_master_nodes: 3
+#
+# Set the time to wait for ping responses from other nodes when discovering.
+# Set this option to a higher value on a slow or congested network
+# to minimize discovery failures:
+#
+# discovery.zen.ping.timeout: 3s
+
+# Unicast discovery allows to explicitly control which nodes will be used
+# to discover the cluster. It can be used when multicast is not present,
+# or to restrict the cluster communication-wise.
+#
+# 1. Disable multicast discovery (enabled by default):
+#
+discovery.zen.ping.multicast.enabled: false
+
+# For more information, see the documentation at:
+# <http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-discovery.html>
+#
+# ---------------------------------- Various -----------------------------------
+#
+# Disable starting multiple nodes on a single system:
+#
+node.max_local_storage_nodes: 1
+#
+# Require explicit names when deleting indices:
+#
+# action.destructive_requires_name: true
+action.destructive_requires_name: true
+
