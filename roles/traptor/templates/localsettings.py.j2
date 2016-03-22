@@ -35,12 +35,14 @@ KAFKA_TOPIC = "{{ traptor_kafka_topic }}"
 {% for host in groups['traptor-nodes'] %}
 {% if loop.index <= groups['traptor-nodes'] | length %}
 {%- if host == inventory_hostname -%}
-APIKEYS = {
-    'CONSUMER_KEY': "{{ apikeys[loop.index - 1]['consumer_key'] }}",
-    'CONSUMER_SECRET': "{{ apikeys[loop.index - 1]['consumer_secret'] }}",
-    'ACCESS_TOKEN': "{{ apikeys[loop.index - 1]['access_token'] }}",
-    'ACCESS_TOKEN_SECRET': "{{ apikeys[loop.index - 1]['access_token_secret'] }}"
-}
+APIKEYS = (
+    {
+        'CONSUMER_KEY': "{{ apikeys[loop.index - 1]['consumer_key'] }}",
+        'CONSUMER_SECRET': "{{ apikeys[loop.index - 1]['consumer_secret'] }}",
+        'ACCESS_TOKEN': "{{ apikeys[loop.index - 1]['access_token'] }}",
+        'ACCESS_TOKEN_SECRET': "{{ apikeys[loop.index - 1]['access_token_secret'] }}"
+    },
+)
 {%- endif -%}
 {% endif %}
 {% endfor %}
