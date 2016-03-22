@@ -209,14 +209,14 @@ memex-hclient.istresearch.com
 [traptor-location-nodes]
 
 [traptor-follow-nodes]
-memex-crawler01.istresearch.com
-memex-crawler02.istresearch.com
-memex-crawler03.istresearch.com
-memex-crawler04.istresearch.com
+ist-crawler01.istresearch.com
+ist-crawler02.istresearch.com
+ist-crawler03.istresearch.com
+ist-crawler04.istresearch.com
 
 [traptor-track-nodes]
-memex-crawler05.istresearch.com
-memex-crawler06.istresearch.com
+ist-crawler05.istresearch.com
+ist-crawler06.istresearch.com
 
 [traptor-nodes:children]
 traptor-follow-nodes
