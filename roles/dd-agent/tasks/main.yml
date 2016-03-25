@@ -25,16 +25,26 @@
     update_cache: yes
 
 - name: Copy default dd-agent config
-  command: cp -n /etc/dd-agent/datadog.conf.example /etc/dd-agent/datadog.conf
+  command: cp -n {{ ddagent_conf_path }}.example {{ ddagent_conf_path }}
 
 - name: Alter dd-agent config to include API Key
   lineinfile:
-    dest: /etc/dd-agent/datadog.conf
+    dest: {{ ddagent_conf_path }}
     state: present
     regexp: "^api_key:"
     line: "api_key: {{ datadog_api_key }}"
 
-- name: Start dd-agent
+# dd-agent was previously just run as a service before being run under
+# supervisor.
+- name: Stop service based dd-agent
   service:
     name: datadog-agent
-    state: started
+    state: stopped
+
+- name: Copy ddagent supervisord config
+  template:
+    src=dd-agent-supervisord.conf.j2
+    dest={{ supervisord_programs_dir }}/ddagent-supervisord.conf
+    mode=0644
+  notify:
+    - reread supervisord

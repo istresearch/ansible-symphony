@@ -1,0 +1,6 @@
+[program:dd-agent]
+command={{ ddagent_install_dir }}/dd-agent foreground
+autostart=true
+autorestart=true
+startsecs=5
+stopsignal=KILL

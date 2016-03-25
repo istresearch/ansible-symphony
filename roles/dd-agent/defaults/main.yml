@@ -1,0 +1,4 @@
+---
+
+ddagent_install_dir: /usr/bin
+ddagent_conf_path: /etc/dd-agent/datadog.conf
