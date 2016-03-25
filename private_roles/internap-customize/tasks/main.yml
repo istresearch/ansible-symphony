@@ -5,12 +5,16 @@
     src: "sources.list"
     dest: /etc/apt/sources.list
   notify: update apt cache
+  tags:
+    - internap
 
 - name: Kill 127.0.1.1 host loopback
   lineinfile:
     dest: "/etc/hosts"
     regexp: '^127\.0\.1\.1.*$'
     state: absent
+  tags:
+    - internap
 
 - name: make sure volumes have filesystems
   filesystem:
@@ -67,3 +71,5 @@
     - '172.27.43.79 in-slave06.nj.istresearch.com'
     - '172.27.43.80 in-slave07.nj.istresearch.com'
     - '172.27.43.81 in-slave08.nj.istresearch.com'
+  tags:
+    - internap
