@@ -25,11 +25,11 @@
     update_cache: yes
 
 - name: Copy default dd-agent config
-  command: cp -n {{ ddagent_conf_path }}.example {{ ddagent_conf_path }}
+  command: cp -n "{{ ddagent_conf_path }}.example {{ ddagent_conf_path }}"
 
 - name: Alter dd-agent config to include API Key
   lineinfile:
-    dest: {{ ddagent_conf_path }}
+    dest: "{{ ddagent_conf_path }}"
     state: present
     regexp: "^api_key:"
     line: "api_key: {{ datadog_api_key }}"
@@ -44,7 +44,7 @@
 - name: Copy ddagent supervisord config
   template:
     src=dd-agent-supervisord.conf.j2
-    dest={{ supervisord_programs_dir }}/ddagent-supervisord.conf
+    dest="{{ supervisord_programs_dir }}/ddagent-supervisord.conf"
     mode=0644
   notify:
     - reread supervisord
