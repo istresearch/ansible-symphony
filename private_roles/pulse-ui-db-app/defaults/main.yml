@@ -1,1 +1,11 @@
 pulse_db_legacy_setup: false
+
+pulse_db_install_database: true
+pulse_db_install_first_account: true
+
+pulse_db_titan_user: "{{ pulse_titan_user | default('pulse-admin') }}"
+pulse_db_titan_email: "{{ pulse_titan_email | default('pulse.feedback@istresearch.com') }}"
+pulse_db_titan_pw: "{{ pulse_titan_pw | default('change this password') }}"
+
+pulse_db_setup_json: "\"install_database\": {{ pulse_db_install_database }} "
+# pulse_db_setup_json: "\"install_database\": {{ pulse_db_install_database }}, \"install_first_account\": {{ pulse_db_install_first_account }}, \"first_account\": { \"name\": \"{{ pulse_db_titan_user }}\", \"email\": \"{{ pulse_db_titan_email }}\", \"password\": \"{{ pulse_db_titan_pw }}\" }"

@@ -1,29 +1,51 @@
 ---
-- name: Curl legacy DB setup
-  command: /usr/bin/curl {{ inventory_hostname }}/{{ pulse_name }}/install/resetup_db/
-  when: pulse_db_legacy_setup
-  tags: pulse-ui-db-app
-
 - name: Retrieve passwd
   shell: cat {{ pulse_install_dir }}/pulse-{{ pulse_version }}/install.pw
   register: passwd
   when: not pulse_db_legacy_setup
   tags: pulse-ui-db-app
 
-- name: Show passwd
-  debug: msg="The passwd is {{ passwd.stdout }}"
+#- name: Show passwd
+#  debug: msg="The passwd is {{ passwd.stdout }}"
+#  when: not pulse_db_legacy_setup
+#  tags: pulse-ui-db-app
+
+- name: Set password for JSON
+  set_fact:
+    json_to_send: "{ \"installpw\": \"{{ passwd.stdout }}\", {{ pulse_db_setup_json }} }"
+  when: not pulse_db_legacy_setup
+  tags: pulse-ui-db-app
+
+- name: Check JSON body to send
+  debug: msg="{{ json_to_send }}"
   when: not pulse_db_legacy_setup
   tags: pulse-ui-db-app
 
 - name: Curl DB setup
-  command: /usr/bin/curl --request POST --url {{ inventory_hostname }}/{{ pulse_name }}/install/setup_website --data "installpw={{ passwd.stdout }}" --data "install_database=true"
+  command: "/usr/bin/curl --header \"Content-Type: application/json\" -X POST -d {{ json_to_send }} --url {{ inventory_hostname }}/{{ pulse_name }}/install/setupWebsite"
   when: not pulse_db_legacy_setup
+  tags: pulse-ui-db-app
+
+#- name: DB setup
+#  uri:
+#    url: "http://{{ inventory_hostname }}/{{ pulse_name }}/install/setupWebsite"
+#    method: POST
+#    body: "{{ json_to_send }}"
+#    body_format: json
+#    return_content: yes
+#  when: not pulse_db_legacy_setup
+#  tags: pulse-ui-db-app
+
+- name: Curl legacy DB setup
+  command: /usr/bin/curl {{ inventory_hostname }}/{{ pulse_name }}/install/resetup_db/
+  when: pulse_db_legacy_setup
   tags: pulse-ui-db-app
 
 - name: Move titan sql script over
   template:
     src=setup_titan.sql.j2
     dest=/tmp/setup_titan.sql
+  when: pulse_db_legacy_setup
   tags: pulse-ui-db-app
 
 - name: Setup mysql titan user
@@ -31,6 +53,7 @@
     name={{ pulse_db_name }}
     state=import
     target=/tmp/setup_titan.sql
+  when: pulse_db_legacy_setup
   tags: pulse-ui-db-app
 
 - name: Remove titan sql script
@@ -38,6 +61,7 @@
     path=/tmp/setup_titan.sql
     state=absent
   ignore_errors: yes
+  when: pulse_db_legacy_setup
   tags: pulse-ui-db-app
 
 - name: Move mmr setup sql script over

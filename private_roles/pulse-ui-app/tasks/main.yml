@@ -20,10 +20,10 @@
   tags: pulse-ui-app 
 
 # PHP configuration for Pulse UI
-- include: Configure-php-RedHat.yml
+- include: configure-php-RedHat.yml
   when: ansible_os_family == 'RedHat'
 
-- include: Configure-php-Debian.yml
+- include: configure-php-Debian.yml
   when: ansible_os_family == 'Debian'
 
 - name: Extend php limits (1/2)
