@@ -1,0 +1,10 @@
+# Managed by Ansible
+
+[Main]
+
+dd_url: https://app.datadoghq.com
+api_key: {{ datadog_api_key }}
+use_mount: no
+
+# Additional directory to look for Datadog checks
+additional_checksd: {{ additional_checksd_dir }}

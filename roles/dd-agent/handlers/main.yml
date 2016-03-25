@@ -1,0 +1,5 @@
+---
+- name: restart dd-agent
+  supervisorctl:
+    name=dd-agent
+    state=restarted
