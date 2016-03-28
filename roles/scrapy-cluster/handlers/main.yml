@@ -1,6 +1,8 @@
 ---
 - name: restart scrapy-crawling
-  shell: "supervisorctl restart {{ sc_crawling_name }}:*"
+  shell: "supervisorctl update && supervisorctl restart {{ sc_crawling_name }}:*"
+  become: yes
+  become_user: root
 
 - name: restart scrapy-kafka-monitor
   supervisorctl:
@@ -11,3 +13,8 @@
   supervisorctl:
     name={{ sc_redis_monitor_supervisor_name }}
     state=restarted
+
+- name: restart scrapy-indexer
+  shell: "supervisorctl update && supervisorctl restart {{ sc_indexer_name }}:*"
+  become: yes
+  become_user: root

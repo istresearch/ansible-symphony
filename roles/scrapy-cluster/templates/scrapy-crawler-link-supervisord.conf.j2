@@ -1,6 +1,7 @@
 [program:{{ sc_crawling_name }}]
-command=/usr/local/bin/scrapy runspider crawling/spiders/link_spider.py
+command={{ sc_virtualenv_path }}/bin/scrapy runspider crawling/spiders/link_spider.py
 directory= {{ sc_install_dir }}/default/crawler
+environment=PATH="{{ sc_virtualenv_path }}/bin"
 process_name=link_%(process_num)02d
 numprocs={{ sc_crawling_num_procs }}
 autostart=true

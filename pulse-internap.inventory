@@ -8,6 +8,14 @@
 [all:vars]
 repository_host=repo.istresearch.com
 
+[internap:children]
+zookeeper-nodes
+kafka-nodes
+hadoop-nodes
+hbase-nodes
+spark-nodes
+storm-nodes
+
 [zookeeper-nodes]
 crew01.istresearch.com
 crew02.istresearch.com

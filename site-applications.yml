@@ -82,7 +82,7 @@
 # -------------------------------- Pulse App ----------------------------------
 - name: Pulse UI Application
   hosts: pulse-ui-node
-  handlers: 
+  handlers:
     - include: roles/apache2/handlers/main.yml
   vars_files:
     - roles/kibana4/defaults/main.yml
@@ -101,7 +101,7 @@
   vars_files:
     - private_roles/pulse-ui-app/defaults/main.yml
   roles: [ mysql-es-connector ]
-  tags: site-pulse-app 
+  tags: site-pulse-app
 
 # --------------------------------- Googler -----------------------------------
 - name: Run the Googler role
@@ -111,7 +111,7 @@
 
 # ------------------------------- Scrapy Cluster Pulse ------------------------
 - name: Run the Scrapy Cluster Pulse role
-  hosts: scrapy-cluster
+  hosts: scrapy-cluster-nodes
   vars:
     - logstash_auto_start: True
   roles: [ scrapy-cluster-pulse ]

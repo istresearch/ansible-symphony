@@ -28,13 +28,17 @@
   hosts: all
   roles:
     - virtualenv
-  tags: virtual-env
+  tags:
+    - virtual-env
+    - deps-traptor
+    - deps-scrapy-cluster
 
 - name: Run miniconda role
   hosts: all
   roles:
     - miniconda
-  tags: miniconda
+  tags:
+    - miniconda
 
 # -------------------------- Zookeeper and Kafka -----------------------------
 - name: Run zookeeper role
@@ -50,6 +54,7 @@
     - deps-hbase
     - deps-spark
     - deps-scrapy-cluster
+    - deps-traptor
 
 - name: Run kafka role
   hosts: kafka-nodes
@@ -61,6 +66,7 @@
     - site-kafka
     - deps-kafka
     - deps-scrapy-cluster
+    - deps-traptor
 
 # ------------------------------ ELK stack ------------------------------------
 - name: Run elasticsearch master role
@@ -119,6 +125,7 @@
     - site-redis
     - deps-scrapy-cluster
     - scrapy-services
+    - deps-traptor
 
 - name: Run tor role
   hosts: tor-proxy
@@ -134,6 +141,7 @@
     - sc_is_crawler: True
   roles: [ scrapy-cluster ]
   tags:
+    - site-scrapy-cluster-crawler
     - site-scrapy-cluster
     - deps-scrapy-cluster
 
@@ -143,6 +151,7 @@
     - sc_is_kafka_monitor: True
   roles: [ scrapy-cluster ]
   tags:
+    - site-scrapy-cluster-kafka-monitor
     - site-scrapy-cluster
     - deps-scrapy-cluster
 
@@ -152,15 +161,19 @@
     - sc_is_redis_monitor: True
   roles: [ scrapy-cluster ]
   tags:
+    - site-scrapy-cluster-redis-monitor
     - site-scrapy-cluster
     - deps-scrapy-cluster
 
-# ------------------------------- Scrapy Indexers ----------------------------
-- name: Run scrapy-indexer role (infrastructure)
-  hosts: scrapy-indexer-nodes
-  roles: [ scrapy-indexer ]
+- name: Run Scrapy Cluster Indexer
+  hosts: scrapy-cluster-indexer-nodes
+  vars:
+    - sc_is_indexer: True
+  roles: [ scrapy-cluster ]
   tags:
-    - site-scrapy-indexer
+    - site-scrapy-cluster-indexer
+    - site-scrapy-cluster
+    - deps-scrapy-cluster
 
 # -------------------------------- Storm -------------------------------------
 
@@ -340,6 +353,7 @@
   roles: [ docker-engine ]
   tags:
     - site-docker-engine
+    - deps-pulse-docker
 
 # ---------------------------------- MySQL -----------------------------------
 
@@ -349,6 +363,7 @@
   tags:
     - mysql
     - deps-pulse
+    - deps-pulse-docker
 
 # ---------------------------------- Pulse -----------------------------------
 
@@ -359,12 +374,17 @@
     - site-pulse
     - deps-pulse
     - site-pulse-docker
+    - deps-pulse-docker
 
 - name: Pulse Docker Infrastructure
-  hosts: kibana-node
+  hosts: docker-engine
+  vars_files:
+    - roles/elasticsearch/defaults/main.yml
+    - roles/kibana4/defaults/main.yml
   roles: [ pulse-docker ]
   tags:
     - site-pulse-docker
+    - deps-pulse-docker
 
 # ---------------------------------- Neo4j --------------------------------
 
@@ -388,3 +408,13 @@
   roles: [ dd-agent ]
   tags:
     - site-dd-agent
+
+# -------------------------------- Traptor -----------------------------------
+# TODO also test traptor-track-nodes and traptor-location-nodes
+
+- name: Run Traptor role
+  hosts: traptor-nodes
+  roles: [ traptor ]
+  tags:
+    - site-traptor
+    - deps-traptor

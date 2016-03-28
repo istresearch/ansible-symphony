@@ -1,6 +1,7 @@
 # Redis host configuration
 REDIS_HOST = "{{ groups['redis-master-node'][0] }}"
 REDIS_PORT = {{ redis_port|default(6379) }}
+REDIS_DB = {{ sc_redis_master_db }}
 
 KAFKA_HOSTS = "{% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}"
 KAFKA_TOPIC_PREFIX = '{{ sc_redis_monitor_kafka_prefix }}'

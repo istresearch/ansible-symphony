@@ -38,7 +38,7 @@
 
 - name: restart hbase thrift server
   supervisorctl:
-    name=hbase-rest
+    name=hbase-thriftserver
     state=restarted
   when: hbase_thriftserver_enabled
 

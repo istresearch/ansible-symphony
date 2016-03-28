@@ -42,7 +42,7 @@
 - name: download scrapy cluster
   get_url:
     url: "{{ repository_infrastructure }}/scrapy-cluster/{{ sc_install_version }}.tar.gz"
-    dest: /tmp/{{ sc_install_version }}.tgz
+    dest: "/tmp/{{ sc_install_version }}.tgz"
     mode: 0644
     validate_certs: no
   when: sc.stat.isdir is not defined
@@ -50,7 +50,7 @@
 
 - name: extract scrapy cluster
   unarchive:
-    src: /tmp/{{ sc_install_version }}.tgz
+    src: "/tmp/{{ sc_install_version }}.tgz"
     dest: "{{ sc_install_dir }}"
     copy: no
     owner: "{{ sc_user }}"
@@ -60,7 +60,7 @@
 
 - name: delete temporary scrapy cluster file
   file:
-    path: /tmp/{{ sc_install_version }}.tgz
+    path: "/tmp/{{ sc_install_version }}.tgz"
     state: absent
   ignore_errors: yes
   tags: scrapy-cluster
@@ -91,15 +91,30 @@
 - name: install pip packages
   pip:
     requirements: "{{ sc_install_dir }}/{{ sc_install_version }}/requirements.txt"
+    virtualenv: "{{ sc_virtualenv_path }}"
   become: yes
   become_user: root
   tags: scrapy-cluster
+
+- name: chown venv folder
+  file:
+    path: "{{ sc_virtualenv_path }}"
+    owner: "{{ sc_user }}"
+    group: "{{ sc_group }}"
+  tags:
+    - scrapy-cluster
 
 - include: crawler.yml
   when: sc_is_crawler
   tags:
     - scrapy-cluster
     - scrapy-cluster-crawler
+
+- include: indexer.yml
+  when: sc_is_indexer
+  tags:
+    - scrapy-cluster
+    - scrapy-cluster-indexer
 
 - include: kafka-monitor.yml
   when: sc_is_kafka_monitor

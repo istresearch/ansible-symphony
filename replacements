@@ -24,11 +24,10 @@ hadoop-nodes
 hbase-nodes
 spark-nodes
 storm-nodes
-elasticsearch-nodes
 
 [aws:children]
 redis-nodes
-scrapy-cluster
+scrapy-cluster-nodes
 kibana-node
 gnip-monitor-node
 gdelt-monitor-node
@@ -124,50 +123,78 @@ storm-supervisor-nodes
 [elasticsearch-master-nodes]
 
 [elasticsearch-data-nodes]
-crew01.istresearch.com elasticsearch_is_master=true
-crew02.istresearch.com elasticsearch_is_master=true
-crew03.istresearch.com elasticsearch_is_master=true
-crew04.istresearch.com elasticsearch_is_master=true
-crew05.istresearch.com elasticsearch_is_master=true
-crew06.istresearch.com elasticsearch_is_master=true
-crew07.istresearch.com elasticsearch_is_master=true
-crew08.istresearch.com elasticsearch_is_master=true
 
 [elasticsearch-client-nodes]
-captain02.istresearch.com
 
 [elasticsearch-nodes:children]
 elasticsearch-master-nodes
 elasticsearch-data-nodes
 elasticsearch-client-nodes
 
-[scrapy-kafka-monitor-node]
-memex-services.istresearch.com
+# DEPRECATED SCRAPY CLUSTER NODES -------------
 
-[scrapy-redis-monitor-node]
-memex-services.istresearch.com
+#[scrapy-kafka-monitor-node]
+#memex-services.istresearch.com
 
-[scrapy-crawler-nodes]
-memex-crawler01.istresearch.com
-memex-crawler02.istresearch.com
-memex-crawler03.istresearch.com
-memex-crawler04.istresearch.com
-memex-crawler05.istresearch.com
-memex-crawler06.istresearch.com
+#[scrapy-redis-monitor-node]
+#memex-services.istresearch.com
 
-[scrapy-indexer-nodes]
-memex-crawler01.istresearch.com
-memex-crawler02.istresearch.com
-memex-crawler03.istresearch.com
-memex-crawler04.istresearch.com
-memex-crawler05.istresearch.com
-memex-crawler06.istresearch.com
+#[scrapy-crawler-nodes]
+#memex-crawler01.istresearch.com
+#memex-crawler02.istresearch.com
+#memex-crawler03.istresearch.com
+#memex-crawler04.istresearch.com
+#memex-crawler05.istresearch.com
+#memex-crawler06.istresearch.com
 
-[scrapy-cluster:children]
-scrapy-kafka-monitor-node
-scrapy-redis-monitor-node
-scrapy-crawler-nodes
-scrapy-indexer-nodes
+#[scrapy-indexer-nodes]
+#memex-crawler01.istresearch.com
+#memex-crawler02.istresearch.com
+#memex-crawler03.istresearch.com
+#memex-crawler04.istresearch.com
+#memex-crawler05.istresearch.com
+#memex-crawler06.istresearch.com
+
+#[scrapy-cluster:children]
+#scrapy-kafka-monitor-node
+#scrapy-redis-monitor-node
+#scrapy-crawler-nodes
+#scrapy-indexer-nodes
+
+# NEW SCRAPY CLUSTER NODES --------------------
+
+[scrapy-cluster-kafka-monitor-node]
+ist-crawler01.istresearch.com
+
+[scrapy-cluster-redis-monitor-node]
+ist-crawler01.istresearch.com
+
+[scrapy-cluster-crawler-nodes]
+ist-crawler01.istresearch.com
+ist-crawler02.istresearch.com
+ist-crawler03.istresearch.com
+ist-crawler04.istresearch.com
+ist-crawler05.istresearch.com
+ist-crawler06.istresearch.com
+
+[scrapy-cluster-indexer-nodes]
+ist-crawler01.istresearch.com
+ist-crawler02.istresearch.com
+ist-crawler03.istresearch.com
+ist-crawler04.istresearch.com
+ist-crawler05.istresearch.com
+ist-crawler06.istresearch.com
+
+[scrapy-cluster-nodes:children]
+scrapy-cluster-kafka-monitor-node
+scrapy-cluster-redis-monitor-node
+scrapy-cluster-crawler-nodes
+scrapy-cluster-indexer-nodes
+
+[googler-nodes]
+ist-crawler04.istresearch.com
+ist-crawler05.istresearch.com
+ist-crawler06.istresearch.com
 
 [kibana-node]
 captain02.istresearch.com
@@ -184,15 +211,17 @@ memex-services.istresearch.com
 [elastalert-nodes]
 memex-hclient.istresearch.com
 
+[traptor-location-nodes]
+
 [traptor-follow-nodes]
-memex-crawler01.istresearch.com
-memex-crawler02.istresearch.com
-memex-crawler03.istresearch.com
-memex-crawler04.istresearch.com
+ist-crawler01.istresearch.com
+ist-crawler02.istresearch.com
+ist-crawler03.istresearch.com
+ist-crawler04.istresearch.com
 
 [traptor-track-nodes]
-memex-crawler05.istresearch.com
-memex-crawler06.istresearch.com
+ist-crawler05.istresearch.com
+ist-crawler06.istresearch.com
 
 [traptor-nodes:children]
 traptor-follow-nodes
