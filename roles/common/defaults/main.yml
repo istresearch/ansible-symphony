@@ -1,3 +1,6 @@
 ---
 
 ntp_server_host: pool.ntp.org
+
+swap_file: /var/swap
+swap_size: 2000000000
