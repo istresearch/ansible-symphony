@@ -17,6 +17,9 @@ TRAPTOR_TYPE = 'follow'
 {% endif %}
 
 
+REDIS_PUBSUB_CHANNEL = "{{ traptor_redis_pubsub }}"
+
+
 {% if inventory_hostname in groups['traptor-track-nodes'] %}
 # Twitter Streaming API 'track'
 {% for host in groups['traptor-track-nodes'] %}
