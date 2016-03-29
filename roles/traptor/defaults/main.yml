@@ -19,6 +19,7 @@ traptor_log_backups: 5
 # Traptor localsettings.py
 traptor_kafka_topic: "traptor"
 traptor_type: "track"
+traptor_redis_pubsub: "traptor-notify"
 
 apikeys:
   - consumer_key: ''

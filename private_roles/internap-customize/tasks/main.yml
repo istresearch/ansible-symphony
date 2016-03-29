@@ -5,12 +5,46 @@
     src: "sources.list"
     dest: /etc/apt/sources.list
   notify: update apt cache
+  tags:
+    - internap
 
 - name: Kill 127.0.1.1 host loopback
   lineinfile:
     dest: "/etc/hosts"
     regexp: '^127\.0\.1\.1.*$'
     state: absent
+  tags:
+    - internap
+
+- name: make sure volumes have filesystems
+  filesystem:
+    fstype: ext4
+    dev: "{{ item }}"
+  with_items:
+    - /dev/sdb
+    - /dev/sdc
+    - /dev/sdd
+    - /dev/sde
+    - /dev/sdf
+    - /dev/sdg
+  tags:
+    - internap
+
+- name: mount directories to volumes
+  mount:
+    name={{ item.dir }}
+    src={{ item.vol }}
+    fstype=ext4
+    state=mounted
+  with_items:
+    - { dir: '/data/1', vol: '/dev/sdb' }
+    - { dir: '/data/2', vol: '/dev/sdc' }
+    - { dir: '/data/3', vol: '/dev/sdd' }
+    - { dir: '/data/4', vol: '/dev/sde' }
+    - { dir: '/data/5', vol: '/dev/sdf' }
+    - { dir: '/data/6', vol: '/dev/sdg' }
+  tags:
+    - internap
 
 - name: Add all internap hosts with local ips
   lineinfile:
@@ -37,3 +71,5 @@
     - '172.27.43.79 in-slave06.nj.istresearch.com'
     - '172.27.43.80 in-slave07.nj.istresearch.com'
     - '172.27.43.81 in-slave08.nj.istresearch.com'
+  tags:
+    - internap
