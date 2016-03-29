@@ -1,11 +1,37 @@
 pulse_db_legacy_setup: false
 
-pulse_db_install_database: true
-pulse_db_install_first_account: true
+pulse_db_table_prefix: pulse_
+pulse_db_webapp_table_prefix: webapp_
+pulse_db_name: pulse
 
 pulse_db_titan_user: "{{ pulse_titan_user | default('pulse-admin') }}"
 pulse_db_titan_email: "{{ pulse_titan_email | default('pulse.feedback@istresearch.com') }}"
 pulse_db_titan_pw: "{{ pulse_titan_pw | default('change this password') }}"
 
-pulse_db_setup_json: "\"install_database\": {{ pulse_db_install_database }} "
-# pulse_db_setup_json: "\"install_database\": {{ pulse_db_install_database }}, \"install_first_account\": {{ pulse_db_install_first_account }}, \"first_account\": { \"name\": \"{{ pulse_db_titan_user }}\", \"email\": \"{{ pulse_db_titan_email }}\", \"password\": \"{{ pulse_db_titan_pw }}\" }"
+pulse_mysql_databases:
+  - { name: "{{ pulse_db_name }}", collation: utf8_general_ci, encoding: utf8, replicate: 0 }
+
+pulse_mysql_users:
+  - { name: "{{ pulse_db_user_name }}", host: "{{ inventory_hostname }}" , password: "{{ pulse_db_password }}", priv: "{{ pulse_db_user_name }}.*:ALL" }
+
+pulse_install_language_settings: true
+pulse_install_language_json: "\"install_language_settings\": {{ pulse_install_language_settings }}"
+
+pulse_install_db_conn_files: true
+pulse_install_db_conn_json: "\"install_db_conn_files\": {{ pulse_install_db_conn_files }}, \"webapp_dbhost\": \"{{ inventory_hostname }}\", \"webapp_dbname\": \"{{ pulse_db_name }}\", \"webapp_dbuser\": \"{{ pulse_db_user_name }}\", \"webapp_dbpwrd\": \"{{ pulse_db_password }}\", \"pulse_dbhost\": \"{{ inventory_hostname }}\", \"pulse_dbname\": \"{{ pulse_db_name }}\", \"pulse_dbuser\": \"{{ pulse_db_user_name }}\", \"pulse_dbpwrd\": \"{{ pulse_db_password }}\""
+
+pulse_install_database: true
+pulse_install_database_json: "\"install_database\": {{ pulse_install_database }}"
+
+pulse_install_settings_class: true
+pulse_install_settings_class_json: "\"install_settings_class\": {{ pulse_install_settings_class }}"
+
+pulse_install_config_settings: true
+pulse_install_config_settings_json: "\"install_config_settings\": {{ pulse_install_config_settings }}, \"config_settings\": { \"site/mmr\": \"{{ pulse_mmr_dir | default('/var/mmr/pulse') }}\", \"site/maxfilesize\": \"{{ pulse_mmr_maxfilesize | default('12') }}\" }"
+
+pulse_install_first_account: true
+pulse_install_first_account_json: "\"install_first_account\": {{ pulse_install_first_account }}, \"first_account\": { \"name\": \"{{ pulse_db_titan_user }}\", \"email\": \"{{ pulse_db_titan_email }}\", \"password\": \"{{ pulse_db_titan_pw }}\" }"
+
+pulse_db_setup_json: "{{ pulse_install_language_json }}, {{ pulse_install_db_conn_json }}, {{ pulse_install_database_json }}, {{ pulse_install_settings_class_json }}, {{ pulse_install_config_settings_json }}, {{ pulse_install_first_account_json }}"
+
+pulse_configs_dir: "{{ pulse_install_dir | default('/opt/pulse') }}/pulse-{{ pulse_version | default('2.1.4') }}/app/configs"

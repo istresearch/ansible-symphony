@@ -1,4 +1,5 @@
 ---
+apache_daemon: apache2
 apache_conf_path: /etc/apache2
 apache_site_default_conf: sites-enabled/000-default.conf
 php_packages: 

@@ -10,15 +10,6 @@
     src=welcome.conf
   tags: pulse-ui-app
 
-# Remove default site conf symlink for localhost installs
-- name: Remove Default site conf symlink
-  file:
-    path={{ apache_conf_path }}/{{ apache_site_default_conf }}
-    state=absent
-  notify:
-    - restart apache
-  tags: pulse-ui-app 
-
 # PHP configuration for Pulse UI
 - include: configure-php-RedHat.yml
   when: ansible_os_family == 'RedHat'
@@ -101,6 +92,13 @@
   when: not pollster_dir.stat.exists
   tags: pulse-ui-app
 
+- name: Create Pulse config directory
+  file:
+    path={{ pulse_install_dir }}/pulse-{{ pulse_version }}/app/configs/anyhost
+    state=directory
+    mode=0755
+  tags: pulse-ui-app
+
 - name: Download Pollster
   get_url:
     url={{ pulse_repo_location }}/pollster/{{ pollster_name }}-{{ pollster_build_type }}-{{ pollster_version }}.apk
@@ -171,66 +169,6 @@
     - restart apache
   tags: pulse-ui-app
 
-- name: Ceate Pulse install directory
-  file:
-    path={{ pulse_install_dir }}/pulse-{{ pulse_version }}/app/configs/anyhost
-    state=directory
-    mode=0755
-  tags: pulse-ui-app
-
-- name: Create MySQL db
-  mysql_db:
-    name: "{{ item.name }}"
-    collation: "{{ item.collation | default('utf8_general_ci') }}"
-    encoding: "{{ item.encoding | default('utf8') }}"
-    state: present
-  with_items: mysql_databases
-  tags: pulse-ui-app
-
-- name: Ensure MySQL users are present
-  mysql_user:
-    name: "{{ item.name }}"
-    host: "{{ item.host | default('localhost') }}"
-    password: "{{ item.password }}"
-    priv: "{{ item.priv | default('*.*:USAGE') }}"
-    state: present
-  with_items: mysql_users
-  tags: pulse-ui-app
-
-- name: Move dbconn-webapp template over
-  template:
-    src=dbconn-webapp.ini.j2
-    dest={{ pulse_install_dir }}/pulse-{{ pulse_version }}/app/configs/anyhost/dbconn-webapp.ini
-    mode=0755
-  notify:
-    - restart apache
-  tags: pulse-ui-app
-
-- name: Move dbconn-pulse template over
-  template:
-    src=dbconn-pulse.ini.j2
-    dest={{ pulse_install_dir }}/pulse-{{ pulse_version }}/app/configs/anyhost/dbconn-pulse.ini
-    mode=0755
-  notify:
-    - restart apache
-  tags: pulse-ui-app
-
-- name: Move Settings.php template over
-  template:
-    src=Settings.php.j2
-    dest={{ pulse_install_dir }}/pulse-{{ pulse_version }}/app/configs/anyhost/Settings.php
-    mode=0755
-  notify:
-    - restart apache
-  tags: pulse-ui-app
-
-- name: Move I18N.php over
-  copy:
-    src=I18N.php
-    dest={{ pulse_install_dir }}/pulse-{{ pulse_version }}/app/configs/anyhost/
-    mode=0755
-  tags: pulse-ui-app
-
 - name: Download Kibana backup
   get_url:
     url={{ pulse_repo_location }}/kibana/{{ pulse_kibana_backup }}
@@ -271,7 +209,7 @@
     - kibana4-app
 
 - name: Restore Kibana4 visualizations
-  shell: "cd /tmp/; bash restore_kibana_index.sh localhost {{ elasticsearch_network_http_port | default('9200') }} backup.tar"
+  shell: "cd /tmp/; bash restore_kibana_index.sh {{ inventory_hostname }} {{ elasticsearch_network_http_port | default('9200') }} backup.tar"
   args:
     executable: "/bin/bash"
   tags:
@@ -288,3 +226,10 @@
   tags:
     - pulse-ui-app
     - kibana4-app
+
+- name: Restart apache to ensure all changes have been picked up
+  service: 
+    name: "{{ apache_daemon }}"
+    state: restarted
+  tags: pulse-ui-app
+
