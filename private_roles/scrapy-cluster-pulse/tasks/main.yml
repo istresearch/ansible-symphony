@@ -6,6 +6,8 @@
     mode: 0644
   notify:
     - restart logstash
+  tags:
+    - scrapy-cluster-pulse
 
 - name: add the logstash configuration
   template:
@@ -14,17 +16,24 @@
     mode: 0644
   notify:
     - restart logstash
+  tags:
+    - scrapy-cluster-pulse
 
 - name: start logstash
   supervisorctl:
     name: logstash
     state: started
+  tags:
+    - scrapy-cluster-pulse
 
 - name: Copy over Kibana4 backup folder
   unarchive:
     src=backup.tar
     dest=/tmp/
   run_once: true
+  when: restore_kibana_visualization
+  tags:
+    - scrapy-cluster-pulse
 
 - name: Copy over Kibana4 restore script
   copy:
@@ -32,12 +41,18 @@
     dest=/tmp/
     mode=755
   run_once: true
+  when: restore_kibana_visualization
+  tags:
+    - scrapy-cluster-pulse
 
 - name: restore Kibana4 visualizations
   shell: "./restore_kibana_index.sh {{ groups['elasticsearch-nodes'][0] }} {{ elasticsearch_network_http_port|default(9200) }} backup.tar"
   args:
     chdir: "/tmp/"
   run_once: true
+  when: restore_kibana_visualization
+  tags:
+    - scrapy-cluster-pulse
 
 - name: Remove Kibana tmp files
   file:
@@ -47,3 +62,6 @@
     - "restore_kibana_index.sh"
     - "backup.tar"
   run_once: true
+  when: restore_kibana_visualization
+  tags:
+    - scrapy-cluster-pulse

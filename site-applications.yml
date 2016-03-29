@@ -116,3 +116,11 @@
     - logstash_auto_start: True
   roles: [ scrapy-cluster-pulse ]
   tags: site-scrapy-cluster-pulse
+
+# ------------------------------- Topologies ------------------------
+- name: Run the Topologies role
+  hosts: storm-supervisor-nodes
+  vars:
+    - logstash_auto_start: True
+  roles: [ topologies ]
+  tags: site-topologies

@@ -118,6 +118,11 @@ storm-supervisor-nodes
 [elasticsearch-master-nodes]
 
 [elasticsearch-data-nodes]
+ist-es01.istresearch.com elasticsearch_is_master=true
+ist-es02.istresearch.com elasticsearch_is_master=true
+ist-es03.istresearch.com elasticsearch_is_master=true
+ist-es04.istresearch.com elasticsearch_is_master=true
+ist-es05.istresearch.com elasticsearch_is_master=true
 
 [elasticsearch-client-nodes]
 
