@@ -1,14 +1,4 @@
 ---
-- name: copy logstash template
-  template:
-    src: "pulse-logs-template.json"
-    dest: "{{ logstash_template_dir|default('/etc/logstash.d/templates') }}/pulse-logs-template.json"
-    mode: 0644
-  notify:
-    - restart logstash
-  tags:
-    - scrapy-cluster-pulse
-
 - name: add the logstash configuration
   template:
     src: scrapy-cluster-logstash.conf.j2
