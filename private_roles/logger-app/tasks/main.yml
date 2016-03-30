@@ -1,0 +1,14 @@
+---
+- name: move primary logging template over
+  copy:
+    src=pulse-logs-template.json
+    dest={{ logstash_template_dir|default('/opt/logstash/templates') }}/pulse-logs-template.json
+    mode=0644
+  notify:
+    - restart logstash
+  tags:
+    - logger-app
+
+- name: Set fact logger_app_has_run
+  set_fact:
+    logger_app_has_run: true
