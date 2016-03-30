@@ -1,0 +1,47 @@
+---
+- name: create log directory
+  file:
+    path: "{{ topologies_log_dir }}"
+    state: directory
+    mode: 0755
+    group: "{{ storm_group|default('storm') }}"
+    owner: "{{ storm_user|default('storm') }}"
+  tags:
+    - topologies
+
+- name: create streamparse log directory
+  file:
+    path: "{{ topologies_streamparse_log_dir }}"
+    state: directory
+    mode: 0755
+    group: "{{ storm_group|default('storm') }}"
+    owner: "{{ storm_user|default('storm') }}"
+  tags:
+    - topologies
+
+- name: create virtualenv directory
+  file:
+    path: "{{ topologies_virtualenv_dir }}"
+    state: directory
+    mode: 0755
+    group: "{{ topologies_group }}"
+    owner: "{{ topologies_user }}"
+  tags:
+    - topologies
+
+- name: add the logstash configuration
+  template:
+    src: topologies-logstash.conf.j2
+    dest: "{{ logstash_conf_dir|default('/etc/logstash.d') }}/topologies-logstash.conf"
+    mode: 0644
+  notify:
+    - restart logstash
+  tags:
+    - topologies
+
+- name: start logstash
+  supervisorctl:
+    name: logstash
+    state: started
+  tags:
+    - topologies

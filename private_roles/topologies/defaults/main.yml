@@ -1,0 +1,6 @@
+---
+topologies_virtualenv_dir: "/opt/storm/virtualenvs"
+topologies_log_dir: "/var/log/topologies"
+topologies_streamparse_log_dir: "/var/log/streamparse"
+topologies_user: streamparse
+topologies_group: streamparse

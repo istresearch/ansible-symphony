@@ -1,4 +1,4 @@
 ---
 dependencies:
   - { role: scrapy-cluster}
-  - { role: logstash, when: "logstash_has_run is not defined" }
+  - { role: logger-app, when: "logger_app_has_run is not defined" }
