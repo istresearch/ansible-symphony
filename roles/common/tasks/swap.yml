@@ -31,8 +31,3 @@
 
 - name: turn on swap
   command: swapon -a
-
-- name: set swapiness
-  sysctl:
-    name: vm.swappiness
-    value: "1"
