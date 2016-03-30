@@ -8,7 +8,7 @@ pulse_log_dir: "{{ pulse_mmr_dir }}/logs"
 pulse_docker_dir: /data/bin/pulse_docker
 pulse_docker_data_dir: /data/pulse
 
-pulse_repo_location: http://repo.istresearch.com/pulse
+pulse_repo_location: "http://{{ repository_host }}/pulse"
 
 pollster_name: appPollsterPrime
 pollster_build_type: release
