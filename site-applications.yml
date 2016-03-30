@@ -91,6 +91,8 @@
 
 - name: Pulse DB Initialization
   hosts: mysql-node
+  handlers:
+    - include: roles/apache2/handlers/main.yml
   vars_files:
     - private_roles/pulse-ui-app/defaults/main.yml
   roles: [ pulse-ui-db-app]
@@ -99,7 +101,7 @@
 - name: Pulse MySQL-ES Connector Initialization
   hosts: pulse-mysql-es-host
   vars_files:
-    - private_roles/pulse-ui-app/defaults/main.yml
+    - private_roles/pulse-ui-db-app/defaults/main.yml
   roles: [ mysql-es-connector ]
   tags: site-pulse-app
 

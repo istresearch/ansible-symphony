@@ -69,8 +69,8 @@
   tags: mysql-es-connector
 
 - name: build ES index
-  shell: "sudo {{ miniconda_install_dir }}/bin/python2.7 {{ mysql_es_dir }}/mysql_es_pulse.py --dbhost={{ mysql_db_host }} --dbuser={{ pulse_db_user_name }} --db={{ pulse_db_name }} --pw={{ pulse_password }} --interval=5 --es={{ es_host }} --index=pulse-1 --build=all --mapping={{ mysql_es_dir }}/pulse_mapping_dynamic.json --logfile={{ mysql_es_log_dir }}/{{ pulse_name }}.log --db_prefix=pulse"
+  shell: "sudo {{ miniconda_install_dir }}/bin/python2.7 {{ mysql_es_dir }}/mysql_es_pulse.py --dbhost={{ mysql_db_host }} --dbuser={{ pulse_db_user_name }} --db={{ pulse_db_name }} --pw={{ pulse_password }} --interval=5 --es={{ es_host }} --index=pulse-1 --build=all --mapping={{ mysql_es_dir }}/pulse_mapping_dynamic.json --logfile={{ mysql_es_log_dir }}/{{ pulse_name | default('pulse') }}.log --db_prefix=pulse"
   tags: mysql-es-connector
 
 - cron: name="Pulse MySQL-ES-Connector" minute="{{ cron_freq }}"
-        user="root" job="sudo {{ miniconda_install_dir }}/bin/python2.7 {{ mysql_es_dir }}/mysql_es_pulse.py --dbhost={{ mysql_db_host }} --dbuser={{ pulse_db_user_name }} --db={{ pulse_db_name }} --pw={{ pulse_password }} --interval={{ interval }} --es={{ es_host }} --index=pulse-1 --build=incremental --mapping={{ mysql_es_dir }}/pulse_mapping_dynamic.json --logfile={{ mysql_es_log_dir }}/{{ pulse_name }}.log --db_prefix=pulse"
+        user="root" job="sudo {{ miniconda_install_dir }}/bin/python2.7 {{ mysql_es_dir }}/mysql_es_pulse.py --dbhost={{ mysql_db_host }} --dbuser={{ pulse_db_user_name }} --db={{ pulse_db_name }} --pw={{ pulse_password }} --interval={{ interval }} --es={{ es_host }} --index=pulse-1 --build=incremental --mapping={{ mysql_es_dir }}/pulse_mapping_dynamic.json --logfile={{ mysql_es_log_dir }}/{{ pulse_name | default('pulse') }}.log --db_prefix=pulse"
