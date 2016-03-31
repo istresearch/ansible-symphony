@@ -402,6 +402,13 @@
   tags:
     - site-tangelo
 
+# ---------------------------------- DataDog --------------------------------
+
+- hosts: dd-agent-nodes
+  roles: [ dd-agent ]
+  tags:
+    - site-dd-agent
+
 # -------------------------------- Traptor -----------------------------------
 # TODO also test traptor-track-nodes and traptor-location-nodes
 

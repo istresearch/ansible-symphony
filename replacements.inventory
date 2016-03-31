@@ -8,6 +8,11 @@
 [all:vars]
 repository_host=repo.istresearch.com
 
+[dd-agent-nodes:children]
+internap
+aws
+other
+
 #
 # Memex infrastructure and software topology
 #
@@ -225,7 +230,6 @@ ist-crawler06.istresearch.com
 [traptor-nodes:children]
 traptor-follow-nodes
 traptor-track-nodes
-
 
 [other]
 in-namenode01.nj.istresearch.com
