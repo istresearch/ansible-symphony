@@ -30,6 +30,7 @@
   service:
     name: datadog-agent
     state: stopped
+    enabled: no
 
 - name: Copy dd-agent supervisord config
   template:
