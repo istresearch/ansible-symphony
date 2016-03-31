@@ -1,29 +1,110 @@
 ---
-- name: Curl legacy DB setup
-  command: /usr/bin/curl {{ inventory_hostname }}/{{ pulse_name }}/install/resetup_db/
-  when: pulse_db_legacy_setup
+- name: Create MySQL db
+  mysql_db:
+    name: "{{ item.name }}"
+    collation: "{{ item.collation | default('utf8_general_ci') }}"
+    encoding: "{{ item.encoding | default('utf8') }}"
+    state: present
+  with_items: pulse_mysql_databases
   tags: pulse-ui-db-app
 
+- name: Ensure MySQL users are present
+  mysql_user:
+    name: "{{ item.name }}"
+    host: "{{ item.host | default('{{ inventory_hostname }}') }}"
+    password: "{{ item.password }}"
+    priv: "{{ item.priv | default('*.*:USAGE') }}"
+    state: present
+  with_items: pulse_mysql_users
+  tags: pulse-ui-db-app
+
+# ####################################################################
+# Start updated database setup process for newer versions of Pulse
+# ####################################################################
 - name: Retrieve passwd
   shell: cat {{ pulse_install_dir }}/pulse-{{ pulse_version }}/install.pw
   register: passwd
   when: not pulse_db_legacy_setup
   tags: pulse-ui-db-app
 
-- name: Show passwd
-  debug: msg="The passwd is {{ passwd.stdout }}"
+- name: Set directory permissions for install
+  file: 
+    path: "{{ pulse_configs_dir }}/anyhost"
+    mode: 0777
+    recurse: yes
+  when: not pulse_db_legacy_setup
+  tags: pulse-ui-db-app 
+
+- name: DB setup
+  uri:
+    url: "http://{{ inventory_hostname }}/{{ pulse_name }}/install/setupWebsite"
+    method: POST
+    body: "{ \"installpw\": \"{{ passwd.stdout }}\", {{ pulse_db_setup_json }} }"
+    body_format: json
+    return_content: yes
+    validate_certs: no
   when: not pulse_db_legacy_setup
   tags: pulse-ui-db-app
 
-- name: Curl DB setup
-  command: /usr/bin/curl --request POST --url {{ inventory_hostname }}/{{ pulse_name }}/install/setup_website --data "installpw={{ passwd.stdout }}" --data "install_database=true"
+- name: Revert directory permissions after install
+  file: 
+    path: "{{ pulse_configs_dir }}/anyhost"
+    mode: 0755
+    recurse: yes
   when: not pulse_db_legacy_setup
+  tags: pulse-ui-db-app 
+
+# ####################################################################
+# Start original database setup process for older versions of Pulse
+# ####################################################################
+- name: Move dbconn-webapp template over
+  template:
+    src=dbconn-webapp.ini.j2
+    dest={{ pulse_install_dir }}/pulse-{{ pulse_version }}/app/configs/anyhost/dbconn-webapp.ini
+    mode=0755
+  notify:
+    - restart apache
+  when: pulse_db_legacy_setup
+  tags: pulse-ui-db-app
+
+- name: Move dbconn-pulse template over
+  template:
+    src=dbconn-pulse.ini.j2
+    dest={{ pulse_install_dir }}/pulse-{{ pulse_version }}/app/configs/anyhost/dbconn-pulse.ini
+    mode=0755
+  notify:
+    - restart apache
+  when: pulse_db_legacy_setup
+  tags: pulse-ui-db-app
+
+- name: Move Settings.php template over
+  template:
+    src=Settings.php.j2
+    dest={{ pulse_install_dir }}/pulse-{{ pulse_version }}/app/configs/anyhost/Settings.php
+    mode=0755
+  notify:
+    - restart apache
+  when: pulse_db_legacy_setup
+  tags: pulse-ui-db-app
+
+- name: Move I18N.php over
+  copy:
+    src=I18N.php
+    dest={{ pulse_install_dir }}/pulse-{{ pulse_version }}/app/configs/anyhost/
+    mode=0755
+  when: pulse_db_legacy_setup
+  tags: pulse-ui-db-app
+
+- name: Curl legacy DB setup
+  command: /usr/bin/curl {{ inventory_hostname }}/{{ pulse_name }}/install/resetup_db/
+  when: pulse_db_legacy_setup
   tags: pulse-ui-db-app
 
 - name: Move titan sql script over
   template:
     src=setup_titan.sql.j2
     dest=/tmp/setup_titan.sql
+  when: pulse_db_legacy_setup
   tags: pulse-ui-db-app
 
 - name: Setup mysql titan user
@@ -31,6 +112,7 @@
     name={{ pulse_db_name }}
     state=import
     target=/tmp/setup_titan.sql
+  when: pulse_db_legacy_setup
   tags: pulse-ui-db-app
 
 - name: Remove titan sql script
@@ -38,12 +120,14 @@
     path=/tmp/setup_titan.sql
     state=absent
   ignore_errors: yes
+  when: pulse_db_legacy_setup
   tags: pulse-ui-db-app
 
 - name: Move mmr setup sql script over
   template:
     src=setup_mmr.sql.j2
     dest=/tmp/setup_mmr.sql
+  when: pulse_db_legacy_setup
   tags: pulse-ui-db-app
 
 - name: Setup default mmr directory in the Pulse instance
@@ -51,6 +135,7 @@
     name={{ pulse_db_name }}
     state=import
     target=/tmp/setup_mmr.sql
+  when: pulse_db_legacy_setup
   tags: pulse-ui-db-app
 
 - name: Remove mmr setup sql script
@@ -58,5 +143,6 @@
     path=/tmp/setup_mmr.sql
     state=absent
   ignore_errors: yes
+  when: pulse_db_legacy_setup
   tags: pulse-ui-db-app
 

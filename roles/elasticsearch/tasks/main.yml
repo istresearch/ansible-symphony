@@ -25,7 +25,7 @@
     dev: "{{ elasticsearch_volume }}"
   when: (elasticsearch_in_aws=="true")
   tags:
-    - dig-elasticsearch
+    - elasticsearch
     - aws
 
 - name: Mounting attached ec2 volume if deploying in amazon
@@ -37,18 +37,22 @@
     state: mounted
   when: (elasticsearch_in_aws=="true")
   tags:
-    - dig-elasticsearch
+    - elasticsearch
     - aws
 
 - name: set vm.swappiness to 1 for performance
   sysctl:
     name: vm.swappiness
     value: 1
+  tags:
+    - elasticsearch
 
 - name: set max_map_count to optimize virtual memory
   sysctl:
     name: vm.max_map_count
-    value: 262144   
+    value: 262144
+  tags:
+    - elasticsearch
 
 - name: Configuring group
   group:

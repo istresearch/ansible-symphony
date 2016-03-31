@@ -123,6 +123,11 @@ storm-supervisor-nodes
 [elasticsearch-master-nodes]
 
 [elasticsearch-data-nodes]
+ist-es01.istresearch.com elasticsearch_is_master=true
+ist-es02.istresearch.com elasticsearch_is_master=true
+ist-es03.istresearch.com elasticsearch_is_master=true
+ist-es04.istresearch.com elasticsearch_is_master=true
+ist-es05.istresearch.com elasticsearch_is_master=true
 
 [elasticsearch-client-nodes]
 
@@ -197,7 +202,6 @@ ist-crawler05.istresearch.com
 ist-crawler06.istresearch.com
 
 [kibana-node]
-captain02.istresearch.com
 
 [gnip-monitor-node]
 memex-hclient.istresearch.com

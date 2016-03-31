@@ -24,7 +24,7 @@ output {
       template => "{{ logstash_template_dir|default('/etc/logstash.d/templates') }}/pulse-logs-template.json"
       template_name => "logs-*"
       template_overwrite => true
-      index => "logs-scrapy-cluster"
+      index => "logs-scrapy-cluster-%{+YYYY.MM}"
       document_type => "%{[logger]}"
     }
   }
@@ -39,7 +39,7 @@ output {
       template => "{{ logstash_template_dir|default('/etc/logstash.d/templates') }}/pulse-logs-template.json"
       template_name => "logs-*"
       template_overwrite => true
-      index => "logs-googler"
+      index => "logs-googler-%{+YYYY.MM}"
       document_type => "%{[logger]}"
     }
   }
