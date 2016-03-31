@@ -62,7 +62,10 @@ export SPARK_WORKER_PORT={{ spark_worker_port }}
 export SPARK_WORKER_WEBUI_PORT={{ spark_worker_webui_port }}
 export SPARK_WORKER_DIR={{ spark_worker_dir }}
 export SPARK_WORKER_MEMORY={{ spark_worker_memory }}
-export SPARK_WORKER_INSTANCES="{{ spark_worker_instances }}"
+
+# Deprecated as of Spark 1.0+
+# export SPARK_WORKER_INSTANCES="{{ spark_worker_instances }}"
+
 export SPARK_WORKER_CORES="{{ spark_worker_cores }}"
 
 export SPARK_HISTORY_OPTS="$SPARK_HISTORY_OPTS -Dspark.history.ui.port={{ spark_history_ui_port }}"
