@@ -19,7 +19,11 @@ yarn_nodemanager_log_dirs:
 zookeeper_data_dir: /data
 dfs_datanode_data_dir:
    - /data/dfs/dn
-supervisor.childopts: -Xmx128m
-worker.childopts: -XX:MaxPermSize=32m -XX:+UseConcMarkSweepGC
-nimbus.childopts: -Xmx128m
-ui.childopts: -Xmx64m
+storm_nimbus_extra_config:
+    nimbus.childopts: "-Xmx128m"
+storm_supervisor_extra_config:
+    supervisor.childopts: "-Xmx128m"
+storm_ui_extra_config:
+    ui.childopts: "-Xmx64m"
+storm_worker_extra_config:
+    worker.childopts: "-XX:MaxPermSize=48m -XX:+UseConcMarkSweepGC"
