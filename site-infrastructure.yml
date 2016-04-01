@@ -117,6 +117,14 @@
     - ELK
     - deps-pulse
 
+# --------------------------- Elasticsearch Hadoop ---------------------------
+
+- name: Elasticsearch Hadoop connector
+  hosts: hadoop-nodes
+  roles: [ es-hadoop ]
+  tags:
+    - site-es-hadoop
+
 # --------------------------- Scraper services -------------------------------
 - name: Run redis role
   hosts: redis-nodes
