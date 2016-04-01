@@ -3,6 +3,8 @@
 pulse_titan_pw: "{{ vault_pulse_password }}"
 pulse_db_password: "{{ vault_pulse_password }}"
 
+pulse_self_signed_ssl: true
+pulse_local_install: false
 mysql_root_password: "{{ vault_mysql_root_password }}"
 elasticsearch_heap_size: 4g
 kafka_data_log_dir: 
@@ -17,3 +19,7 @@ yarn_nodemanager_log_dirs:
 zookeeper_data_dir: /data
 dfs_datanode_data_dir:
    - /data/dfs/dn
+supervisor.childopts: -Xmx128m
+worker.childopts: -XX:MaxPermSize=32m -XX:+UseConcMarkSweepGC
+nimbus.childopts: -Xmx128m
+ui.childopts: -Xmx64m

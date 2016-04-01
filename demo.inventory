@@ -152,4 +152,14 @@ demo.istresearch.com
 traptor-follow-nodes
 traptor-track-nodes
 
-[other]
+[kibana-node]
+demo.istresearch.com
+
+[mysql-node]
+demo.istresearch.com
+
+[pulse-ui-node]
+demo.istresearch.com
+
+[pulse-mysql-es-host]
+demo.istresearch.com
