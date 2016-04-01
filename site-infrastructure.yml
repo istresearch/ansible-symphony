@@ -17,6 +17,15 @@
   tags: internap-customize
   strategy: free
 
+# ------------------------------ Customize AWS ------------------------
+
+- name: Run AWS customize
+  hosts: aws
+  roles:
+    - aws-customize
+  tags: aws-customize
+  strategy: free
+
 # ----------------------------- Add users -----------------------------------
 
 - hosts: all

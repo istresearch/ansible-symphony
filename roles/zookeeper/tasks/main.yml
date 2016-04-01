@@ -48,7 +48,7 @@
   file:
     path={{ item }}
     state=directory
-    mode=0744
+    mode=0777
   with_items:
     - "{{ zookeeper_conf_dir }}"
     - "{{ zookeeper_log_dir }}"
