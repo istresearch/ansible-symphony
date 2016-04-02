@@ -87,7 +87,9 @@
   vars_files:
     - roles/kibana4/defaults/main.yml
   roles: [ pulse-ui-app ]
-  tags: site-pulse-app
+  tags: 
+    - site-pulse-app
+    - site-pulse-ui
 
 - name: Pulse DB Initialization
   hosts: mysql-node
@@ -96,14 +98,18 @@
   vars_files:
     - private_roles/pulse-ui-app/defaults/main.yml
   roles: [ pulse-ui-db-app]
-  tags: site-pulse-app
+  tags: 
+    - site-pulse-app
+    - site-pulse-db
 
 - name: Pulse MySQL-ES Connector Initialization
   hosts: pulse-mysql-es-host
   vars_files:
     - private_roles/pulse-ui-db-app/defaults/main.yml
   roles: [ mysql-es-connector ]
-  tags: site-pulse-app
+  tags: 
+    - site-pulse-app
+    - site-pulse-es-conn
 
 # --------------------------------- Googler -----------------------------------
 - name: Run the Googler role
