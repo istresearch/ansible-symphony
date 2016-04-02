@@ -23,6 +23,7 @@
     - libxml2-dev
     - libxslt1-dev
     - byobu
+    - python-httplib2
   tags: common
 
 - name: remove hostname loopback

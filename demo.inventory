@@ -29,16 +29,16 @@ elastalert-nodes
 tor-proxy
 
 [dd-agent-nodes]
-demo.istresearch.com
+demo-box.istresearch.com
 
 [zookeeper-nodes]
-demo.istresearch.com host_alias=demo.istresearch.com
+demo-box.istresearch.com host_alias=demo-box.istresearch.com
 
 [kafka-nodes]
-demo.istresearch.com
+demo-box.istresearch.com
 
 [redis-master-node]
-demo.istresearch.com
+demo-box.istresearch.com
 
 [redis-slave-nodes]
 #leave empty
@@ -52,46 +52,46 @@ redis-slave-nodes
 redis-sentinel-nodes
 
 [hadoop-namenode-node]
-demo.istresearch.com
+demo-box.istresearch.com
 
 [hadoop-secondary-namenode-node]
 #leave empty
 
 [hadoop-datanode-nodes]
-demo.istresearch.com
+demo-box.istresearch.com
 
 [hadoop-nodes:children]
 hadoop-namenode-node
 hadoop-datanode-nodes
 
 [hbase-master-node]
-demo.istresearch.com
+demo-box.istresearch.com
 
 [hbase-regionserver-nodes]
-demo.istresearch.com
+demo-box.istresearch.com
 
 [hbase-nodes:children]
 hbase-master-node
 hbase-regionserver-nodes
 
 [spark-master-node]
-demo.istresearch.com
+demo-box.istresearch.com
 
 [spark-worker-nodes]
-demo.istresearch.com
+demo-box.istresearch.com
 
 [spark-nodes:children]
 spark-master-node
 spark-worker-nodes
 
 [storm-nimbus-node]
-demo.istresearch.com
+demo-box.istresearch.com
 
 [storm-ui-node]
-demo.istresearch.com
+demo-box.istresearch.com
 
 [storm-supervisor-nodes]
-demo.istresearch.com
+demo-box.istresearch.com
 
 [storm-nodes:children]
 storm-nimbus-node
@@ -101,7 +101,7 @@ storm-supervisor-nodes
 [elasticsearch-master-nodes]
 
 [elasticsearch-data-nodes]
-demo.istresearch.com elasticsearch_is_master=true
+demo-box.istresearch.com elasticsearch_is_master=true
 
 [elasticsearch-client-nodes]
 
@@ -111,13 +111,13 @@ elasticsearch-data-nodes
 elasticsearch-client-nodes
 
 [scrapy-cluster-kafka-monitor-node]
-demo.istresearch.com
+demo-box.istresearch.com
 
 [scrapy-cluster-redis-monitor-node]
-demo.istresearch.com
+demo-box.istresearch.com
 
 [scrapy-cluster-crawler-nodes]
-demo.istresearch.com
+demo-box.istresearch.com
 
 [scrapy-cluster-indexer-nodes]
 
@@ -128,7 +128,7 @@ scrapy-cluster-crawler-nodes
 scrapy-cluster-indexer-nodes
 
 [googler-nodes]
-demo.istresearch.com
+demo-box.istresearch.com
 
 [kibana-node]
 
@@ -143,23 +143,23 @@ demo.istresearch.com
 [traptor-location-nodes]
 
 [traptor-follow-nodes]
-demo.istresearch.com
+demo-box.istresearch.com
 
 [traptor-track-nodes]
-demo.istresearch.com
+demo-box.istresearch.com
 
 [traptor-nodes:children]
 traptor-follow-nodes
 traptor-track-nodes
 
 [kibana-node]
-demo.istresearch.com
+demo-box.istresearch.com
 
 [mysql-node]
-demo.istresearch.com
+demo-box.istresearch.com
 
 [pulse-ui-node]
-demo.istresearch.com
+demo-box.istresearch.com
 
 [pulse-mysql-es-host]
-demo.istresearch.com
+demo-box.istresearch.com
