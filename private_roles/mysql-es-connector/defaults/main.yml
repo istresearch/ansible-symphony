@@ -4,4 +4,6 @@ es_host: "{{ inventory_hostname }}:{{ elasticsearch_network_http_port|default(92
 interval: 5
 
 # for now just minutes
-cron_freq: "*/1" 
+cron_freq: "*/1"
+
+pulse_local_install: "{{ pulse_local_install | defaults('false') }}" 
