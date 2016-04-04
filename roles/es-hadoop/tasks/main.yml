@@ -1,0 +1,60 @@
+---
+
+- name: Install unzip
+  apt:
+    name: unzip
+    state: present
+  tags: es-hadoop
+
+- name: create es-hadoop install directory
+  file:
+    path={{ es_hadoop_install_dir }}/
+    state=directory
+    mode=0744
+  tags: es-hadoop
+
+- name: check for existing es-hadoop install
+  stat: path={{ es_hadoop_install_dir }}/elasticsearch-hadoop-{{ es_hadoop_version }}
+  register: es_hadoop
+  tags: es-hadoop
+
+- name: download es-hadoop
+  get_url:
+    validate_certs=no
+    url={{ repository_infrastructure }}/elasticsearch-hadoop-{{ es_hadoop_version }}.zip
+    dest=/tmp/elasticsearch-hadoop-{{ es_hadoop_version }}.zip
+    mode=0644
+  when: es_hadoop.stat.isdir is not defined
+  tags: es-hadoop
+
+- name: extract es-hadoop
+  unarchive:
+    src=/tmp/elasticsearch-hadoop-{{ es_hadoop_version }}.zip
+    dest={{ es_hadoop_install_dir }}/
+    copy=no
+  when: es_hadoop.stat.isdir is not defined
+  tags: es-hadoop
+
+- name: delete temporary es-hadoop file
+  file:
+    path=/tmp/elasticsearch-hadoop-{{ es_hadoop_version }}.zip
+    state=absent
+  ignore_errors: yes
+  tags: es-hadoop
+
+- name: Change es-hadoop permissions
+  file:
+    path={{ es_hadoop_install_dir }}
+    mode=0755
+  tags: es-hadoop
+
+- name: create default symlink
+  file:
+    path={{ es_hadoop_install_dir }}/default
+    state=link
+    src={{ es_hadoop_install_dir }}/elasticsearch-hadoop-{{ es_hadoop_version }}
+  tags: es-hadoop
+
+- name: Set fact es_hadoop_has_run
+  set_fact:
+    es_hadoop_has_run: true

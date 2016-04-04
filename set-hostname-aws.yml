@@ -1,7 +1,7 @@
 ---
 # file: hostname.yml
 
-- hosts: servers
+- hosts: aws
   roles: 
     - common
 

@@ -1,18 +1,17 @@
-pulse_version: 2.1.4.dev
+pulse_version: 2.1.4.1
 
 pulse_name: pulse
 pulse_install_dir: /opt/pulse
 pulse_mmr_dir: /var/mmr/pulse
-pulse_mmr_maxfilesize: 12
 pulse_log_dir: "{{ pulse_mmr_dir }}/logs"
 pulse_docker_dir: /data/bin/pulse_docker
 pulse_docker_data_dir: /data/pulse
-
+pulse_analysis_iframe_url: "http://{{ inventory_hostname }}:{{ kibana4_port | default('5601') }}"
 pulse_repo_location: "http://{{ repository_host }}/pulse"
 
 pollster_name: appPollsterPrime
 pollster_build_type: release
-pollster_version: 5.3.3
+pollster_version: 5.3.4
 
 # logstash config
 pulse_logstash_template: pulse-template.json
@@ -29,3 +28,5 @@ pulse_deploy_type: deploy
 pulse_deploy_log_file: deploy_survey.log
 
 pulse_kibana_backup: backup.tar
+
+pulse_self_signed_ssl: "{{ pulse_self_signed_url | default('false') }}"
