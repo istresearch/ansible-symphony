@@ -1,3 +1,6 @@
 ---
 
+es_hadoop_install_dir: /opt/elasticsearch-hadoop
+es_hadoop_version: 2.2.0
+
 repository_infrastructure:  "http://download.elastic.co/hadoop"
