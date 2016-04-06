@@ -78,7 +78,7 @@ Once logged in and connected to the Deployment Machine, you must install Ansible
 ::
 
     $ sudo apt-get update
-    $ sudo apt-get install -y software properties-common
+    $ sudo apt-get install -y software-properties-common
     $ sudo apt-add-repository ppa:ansible/ansible
     $ sudo apt-get update
     $ sudo apt-get install -y ansible

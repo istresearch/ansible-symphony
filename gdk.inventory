@@ -16,7 +16,7 @@ repository_host=repo.istresearch.com
 # data node serves as master also
 
 [elasticsearch-data-nodes]
-vagrant-ist-01 elasticsearch_is_master=true
+pulse-node01 elasticsearch_is_master=true
 
 [elasticsearch-client-nodes]
 
@@ -27,16 +27,16 @@ elasticsearch-data-nodes
 elasticsearch-client-nodes
 
 [kibana-node]
-vagrant-ist-01
+pulse-node01
 
 [docker-engine]
-vagrant-ist-01
+pulse-node01
 
 [mysql-node]
-vagrant-ist-01
+pulse-node01
 
 [pulse-ui-node]
-vagrant-ist-01
+pulse-node01
 
 [pulse-mysql-es-host]
-vagrant-ist-01
+pulse-node01
