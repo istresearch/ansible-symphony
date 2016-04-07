@@ -23,7 +23,25 @@
     - libxml2-dev
     - libxslt1-dev
     - byobu
-    - python-httplib2
+    - mosh
+    - mtr-tiny
+    - vim
+    - git
+    - python
+    - vim-scripts
+    - etckeeper
+    - htop
+    - sudo
+    - rcconf
+    - logwatch
+    - telnet
+    - dnsutils
+    - unattended-upgrades
+    - gcc
+    - libc6-dev
+    - make
+    - zlib1g-dev
+    - e2fslibs-dev
   tags: common
 
 - name: remove hostname loopback

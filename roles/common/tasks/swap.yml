@@ -1,0 +1,33 @@
+---
+# file: roles/common/tasks/swap.yml
+
+######################################################################
+# Credit: https://gist.github.com/manuelmeurer/a2c0a8c24a0bb5092250
+######################################################################
+
+- name: check if swap file exists
+  stat:
+    path: "{{ swap_file }}"
+  register: swap_file_check
+
+- name: create swap file
+  command: fallocate -l "{{ swap_size }}" "{{ swap_file }}"
+  when: not swap_file_check.stat.exists
+
+- name: set permissions on swap file
+  file:
+    path: "{{ swap_file }}"
+    mode: 0600
+
+- name: format swap file
+  command: mkswap "{{ swap_file }}"
+  when: not swap_file_check.stat.exists
+
+- name: add to fstab
+  lineinfile:
+    dest: /etc/fstab
+    regexp: "{{ swap_file }}"
+    line: "{{ swap_file }} none swap sw 0 0"
+
+- name: turn on swap
+  command: swapon -a

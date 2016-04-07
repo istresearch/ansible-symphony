@@ -97,6 +97,7 @@
     - include: roles/apache2/handlers/main.yml
   vars_files:
     - private_roles/pulse-ui-app/defaults/main.yml
+    - roles/kibana4/defaults/main.yml
   roles: [ pulse-ui-db-app]
   tags: 
     - site-pulse-app

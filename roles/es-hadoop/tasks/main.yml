@@ -54,3 +54,7 @@
     state=link
     src={{ es_hadoop_install_dir }}/elasticsearch-hadoop-{{ es_hadoop_version }}
   tags: es-hadoop
+
+- name: Set fact es_hadoop_has_run
+  set_fact:
+    es_hadoop_has_run: true

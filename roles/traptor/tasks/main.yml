@@ -3,7 +3,8 @@
   pip:
     virtualenv: "{{ traptor_virtualenv_path }}"
     name: traptor
-    state: latest
+    state: present
+    version: "{{ traptor_version }}"
   tags:
     - traptor
 

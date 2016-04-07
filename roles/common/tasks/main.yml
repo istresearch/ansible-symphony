@@ -17,6 +17,10 @@
     - common
     - ntp
 
+- include: swap.yml
+  tags:
+    - swap_file
+
 - name: Set fact common_has_run
   set_fact:
     common_has_run: true
