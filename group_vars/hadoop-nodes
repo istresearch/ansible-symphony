@@ -3,6 +3,7 @@
 dfs_internap: true
 dfs_replication: 2
 dfs_block_size: 67109888
+dfs_webhdfs_enabled: true
 dfs_datanode_data_dir:
    - /data/1/dfs/dn
    - /data/2/dfs/dn
