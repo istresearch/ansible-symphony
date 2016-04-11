@@ -1,19 +1,40 @@
 ---
-- name: pip install traptor
-  pip:
-    virtualenv: "{{ traptor_virtualenv_path }}"
-    name: traptor
-    state: present
-    version: "{{ traptor_version }}"
-  tags:
-    - traptor
+- name: Install Miniconda packages
+  shell: "{{ miniconda_install_dir|default('/opt/miniconda') }}/bin/conda install {{ item }} --yes"
+  with_items:
+    - pip
+  tags: traptor
+
+- name: Miniconda pip install traptor
+  shell: "{{ miniconda_install_dir|default('/opt/miniconda') }}/bin/pip install traptor"
+  tags: traptor
+
+- name: make traptor directory
+  file:
+    path={{ traptor_install_dir }}
+    state=directory
+  tags: traptor
 
 - name: create traptor symlink
   file:
-    src={{ traptor_virtualenv_path }}/lib/python2.7/site-packages/traptor/
     path={{ traptor_install_dir }}/default
+    src={{ traptor_miniconda_path }}
     state=link
-    mode=0744
+  tags: traptor
+
+- name: Miniconda pip install packages
+  shell: "{{ miniconda_install_dir|default('/opt/miniconda') }}/bin/pip install {{ item }}"
+  with_items:
+    - requests
+    - requests-oauthlib
+    - redis
+    - kafka-python
+    - python-dateutil
+    - click
+    - scutils
+    - pymysql
+    - nose
+    - flatdict
   tags: traptor
 
 - name: create traptor log directory
