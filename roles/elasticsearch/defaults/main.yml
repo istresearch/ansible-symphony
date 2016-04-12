@@ -3,7 +3,7 @@
 elasticsearch_install_dir: /opt/elasticsearch
 elasticsearch_user: elasticsearch
 elasticsearch_group: elasticsearch
-elasticsearch_version: 2.2.0
+elasticsearch_version: 2.3.0
 elasticsearch_max_open_files: 65535
 elasticsearch_max_locked_memory: 100000
 elasticsearch_max_num_procs: 32000
