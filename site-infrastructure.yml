@@ -20,7 +20,6 @@
     - virtualenv
   tags:
     - virtual-env
-    - deps-traptor
 
 - name: Run miniconda role
   hosts: all
@@ -28,6 +27,7 @@
     - miniconda
   tags:
     - miniconda
+    - deps-traptor
 
 # -------------------------- Zookeeper and Kafka -----------------------------
 - name: Run zookeeper role

@@ -1,19 +1,41 @@
 ---
-- name: pip install traptor
-  pip:
-    virtualenv: "{{ traptor_virtualenv_path }}"
-    name: traptor
-    state: present
-    version: "{{ traptor_version }}"
-  tags:
-    - traptor
+- name: check if the Traptor conda environment exists
+  stat: path={{ traptor_miniconda_env }}
+  register: t_conda_env
+  tags: traptor
+
+- name: create conda environment for Traptor
+  command: "{{ miniconda_install_dir }}/bin/conda create -y -n traptor python=2.7 anaconda"
+  when: not (t_conda_env.stat.isdir is defined and t_conda_env.stat.isdir)
+  tags: traptor
+
+- name: activate Traptor conda environment
+  shell: "source {{ miniconda_install_dir }}/bin/activate traptor"
+  args:
+    executable: /bin/bash
+  tags: traptor
+
+- name: miniconda pip install Traptor
+  command: "{{ traptor_miniconda_env }}/bin/pip install traptor"
+  tags: traptor
+
+- name: check if the Traptor install folder exists
+  stat: path={{ traptor_install_dir }}
+  register: t_dir
+  tags: traptor
+
+- name: make traptor directory
+  file:
+    path={{ traptor_install_dir }}
+    state=directory
+  when: not (t_dir.stat.isdir is defined and t_dir.stat.isdir)
+  tags: traptor
 
 - name: create traptor symlink
   file:
-    src={{ traptor_virtualenv_path }}/lib/python2.7/site-packages/traptor/
     path={{ traptor_install_dir }}/default
+    src={{ traptor_miniconda_path }}
     state=link
-    mode=0744
   tags: traptor
 
 - name: create traptor log directory
