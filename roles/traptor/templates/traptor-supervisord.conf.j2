@@ -1,5 +1,5 @@
 [program:{{ traptor_name }}]
-command={{ miniconda_install_dir|default('/opt/miniconda') }}/bin/python {{ traptor_install_dir }}/default/traptor.py --info --delay=5
+command={{ traptor_miniconda_env }}/bin/python {{ traptor_install_dir }}/default/traptor.py --info --delay=5
 directory={{ traptor_install_dir }}/default
 process_name=%(program_name)s
 numprocs={{ traptor_num_procs }}

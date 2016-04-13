@@ -3,7 +3,9 @@
 traptor_name: traptor
 traptor_version: 1.1.7
 traptor_install_dir: "/opt/{{ traptor_name }}"
-traptor_miniconda_path: "{{ miniconda_install_dir|default('/opt/miniconda') }}/lib/python2.7/site-packages/{{ traptor_name }}"
+traptor_miniconda_env: "/opt/miniconda/envs/{{ traptor_name }}"
+traptor_miniconda_path: "/opt/miniconda/envs/traptor/lib/python2.7/site-packages/{{ traptor_name }}"
+miniconda_install_dir: "/opt/miniconda"
 
 # Supervisor config
 traptor_num_procs: 1
