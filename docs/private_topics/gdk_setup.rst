@@ -258,10 +258,16 @@ Gateway Device(s)
 
 Testing
 --------
+The first thing to test is that you can browse the Pulse instance you have installed on the Pulse VM. Open a browser on the GDK laptop and point it to http://192.168.33.101/pulse .
+
+.. note:: If you used a different IP address, use that IP address to browse Pulse.
+
+If the Pulse website comes in, log in with the ``pulse-admin`` username and ``vault_pulse_password`` you created. 
+
+If you can succesffuly login, navigate to the ``Analysis`` tab and ensure Kibana is running.
+
 
 
 Clean Up
 ---------
-After successful installation and configuration of the GDK, all repository files should be deleted from the laptop.
-
-.. warning:: The IST vault password in ``vault.passwd`` and should be deleted with all the other files. 
+After successful installation and configuration of the GDK, all repository files should be deleted from the laptop. Additionally, you should confirm that the **vagrant** user has been removed from the Pulse VM and the ``/home/vagrant`` directory has been deleted.
