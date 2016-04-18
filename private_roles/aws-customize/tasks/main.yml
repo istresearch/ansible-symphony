@@ -4,6 +4,7 @@
   filesystem:
     fstype: ext4
     dev: "{{ data_volume }}"
+  when: aws_customize
   tags:
     - aws
 
@@ -14,6 +15,7 @@
     fstype: ext4
     opts: rw
     state: mounted
+  when: aws_customize
   tags:
     - aws
 
@@ -22,5 +24,6 @@
     path: /data
     state: touch
     mode: 0777
+  when: aws_customize
   tags:
     - aws
