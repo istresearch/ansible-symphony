@@ -80,4 +80,19 @@
   tags:
     - kibana4
 
+- name: check for existing timelion plugin install
+  stat:
+    path: "{{ kibana4_install_dir }}/default/installedPlugins/timelion"
+  register: kibanatimelion
+  when: kibana4_install_timelion
+  tags:
+    - kibana4
+
+- name: install timelion plugin
+  shell: "{{ kibana4_install_dir }}/default/bin/kibana plugin -i kibana/timelion"
+  when: kibana4_install_timelion and kibanatimelion.stat.isdir is not defined
+  notify:
+    - restart kibana4
+  tags:
+    - kibana4
 

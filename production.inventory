@@ -32,7 +32,6 @@ scrapy-cluster
 kibana-node
 gnip-monitor-node
 gdelt-monitor-node
-traptor-nodes
 elastalert-nodes
 tor-proxy
 
@@ -172,23 +171,6 @@ tor.istresearch.com
 
 [elastalert-nodes]
 memex-hclient.istresearch.com
-
-[traptor-follow-nodes]
-memex-crawler01.istresearch.com
-memex-crawler02.istresearch.com
-memex-crawler03.istresearch.com
-memex-crawler04.istresearch.com
-
-[traptor-track-nodes]
-memex-crawler05.istresearch.com
-memex-crawler06.istresearch.com
-
-[traptor-location-nodes]
-
-[traptor-nodes:children]
-traptor-follow-nodes
-traptor-track-nodes
-traptor-location-nodes
 
 [other]
 in-namenode01.nj.istresearch.com

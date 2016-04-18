@@ -1,0 +1,14 @@
+---
+
+- name: update apt-get cache
+  apt: update-cache=yes
+  tags: pulse-ui
+
+- name: install required packages for pulse
+  apt:
+    name={{ item }}
+    state=latest
+  with_items:
+    - libmysqlclient-dev
+  tags: pulse-ui
+
