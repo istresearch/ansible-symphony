@@ -1,5 +1,5 @@
-<VirtualHost *:443>
-    ServerName {{ inventory_hostname }}
+<VirtualHost *:80>
+    ServerName {{ pulse_url_host }}
     SSLEngine On
     SSLCertificateFile /etc/apache2/ssl/pulse.crt
     SSLCertificateKeyFile /etc/apache2/ssl/pulse.key

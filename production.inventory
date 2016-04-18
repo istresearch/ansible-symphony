@@ -167,6 +167,7 @@ memex-hclient.istresearch.com
 
 [tor-proxy]
 memex-services.istresearch.com
+tor.istresearch.com
 
 [elastalert-nodes]
 memex-hclient.istresearch.com

@@ -37,7 +37,7 @@
 
 - name: DB setup
   uri:
-    url: "http://{{ inventory_hostname }}/{{ pulse_name }}/install/setupWebsite"
+    url: "https://{{ pulse_url_host }}/{{ pulse_name }}/install/setupWebsite"
     method: POST
     body: "{ \"installpw\": \"{{ passwd.stdout }}\", {{ pulse_db_setup_json }} }"
     body_format: json

@@ -90,6 +90,7 @@
   tags:
     - site-pulse-app
     - site-pulse-app-with-connector
+    - site-pulse-ui
 
 - name: Pulse DB Initialization
   hosts: mysql-node
@@ -102,6 +103,7 @@
   tags: 
     - site-pulse-app
     - site-pulse-app-with-connector
+    - site-pulse-db
 
 - name: Pulse MySQL-ES Connector Initialization
   hosts: pulse-mysql-es-host
@@ -110,6 +112,7 @@
   roles: [ mysql-es-connector ]
   tags: 
     - site-pulse-app-with-connector
+    - site-pulse-es-conn
 
 # --------------------------------- Googler -----------------------------------
 - name: Run the Googler role

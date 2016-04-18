@@ -29,16 +29,16 @@ elastalert-nodes
 tor-proxy
 
 [dd-agent-nodes]
-demo-box.istresearch.com
+vagrant-ist-01
 
 [zookeeper-nodes]
-demo-box.istresearch.com host_alias=demo-box.istresearch.com
+vagrant-ist-01
 
 [kafka-nodes]
-demo-box.istresearch.com
+vagrant-ist-01
 
 [redis-master-node]
-demo-box.istresearch.com
+vagrant-ist-01
 
 [redis-slave-nodes]
 #leave empty
@@ -52,46 +52,46 @@ redis-slave-nodes
 redis-sentinel-nodes
 
 [hadoop-namenode-node]
-demo-box.istresearch.com
+vagrant-ist-01
 
 [hadoop-secondary-namenode-node]
 #leave empty
 
 [hadoop-datanode-nodes]
-demo-box.istresearch.com
+vagrant-ist-01
 
 [hadoop-nodes:children]
 hadoop-namenode-node
 hadoop-datanode-nodes
 
 [hbase-master-node]
-demo-box.istresearch.com
+vagrant-ist-01
 
 [hbase-regionserver-nodes]
-demo-box.istresearch.com
+vagrant-ist-01
 
 [hbase-nodes:children]
 hbase-master-node
 hbase-regionserver-nodes
 
 [spark-master-node]
-demo-box.istresearch.com
+vagrant-ist-01
 
 [spark-worker-nodes]
-demo-box.istresearch.com
+vagrant-ist-01
 
 [spark-nodes:children]
 spark-master-node
 spark-worker-nodes
 
 [storm-nimbus-node]
-demo-box.istresearch.com
+vagrant-ist-01
 
 [storm-ui-node]
-demo-box.istresearch.com
+vagrant-ist-01
 
 [storm-supervisor-nodes]
-demo-box.istresearch.com
+vagrant-ist-01
 
 [storm-nodes:children]
 storm-nimbus-node
@@ -101,7 +101,7 @@ storm-supervisor-nodes
 [elasticsearch-master-nodes]
 
 [elasticsearch-data-nodes]
-demo-box.istresearch.com elasticsearch_is_master=true
+vagrant-ist-01 elasticsearch_is_master=true
 
 [elasticsearch-client-nodes]
 
@@ -111,13 +111,13 @@ elasticsearch-data-nodes
 elasticsearch-client-nodes
 
 [scrapy-cluster-kafka-monitor-node]
-demo-box.istresearch.com
+vagrant-ist-01
 
 [scrapy-cluster-redis-monitor-node]
-demo-box.istresearch.com
+vagrant-ist-01
 
 [scrapy-cluster-crawler-nodes]
-demo-box.istresearch.com
+vagrant-ist-01
 
 [scrapy-cluster-indexer-nodes]
 
@@ -128,9 +128,10 @@ scrapy-cluster-crawler-nodes
 scrapy-cluster-indexer-nodes
 
 [googler-nodes]
-demo-box.istresearch.com
+vagrant-ist-01
 
 [kibana-node]
+vagrant-ist-01
 
 [gnip-monitor-node]
 
@@ -143,23 +144,18 @@ demo-box.istresearch.com
 [traptor-location-nodes]
 
 [traptor-follow-nodes]
-demo-box.istresearch.com
 
 [traptor-track-nodes]
-demo-box.istresearch.com
 
 [traptor-nodes:children]
 traptor-follow-nodes
 traptor-track-nodes
 
-[kibana-node]
-demo-box.istresearch.com
-
 [mysql-node]
-demo-box.istresearch.com
+vagrant-ist-01
 
 [pulse-ui-node]
-demo-box.istresearch.com
+vagrant-ist-01
 
 [pulse-mysql-es-host]
-demo-box.istresearch.com
+vagrant-ist-01
