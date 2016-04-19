@@ -32,6 +32,9 @@ vagrant-ist-01
 [docker-engine]
 vagrant-ist-01
 
+[apache-node]
+vagrant-ist-01
+
 [mysql-node]
 vagrant-ist-01
 
