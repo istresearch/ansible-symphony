@@ -230,6 +230,7 @@ ist-crawler06.istresearch.com
 
 [traptor-nodes:children]
 traptor-follow-nodes
+traptor-location-nodes
 traptor-track-nodes
 
 [other]
