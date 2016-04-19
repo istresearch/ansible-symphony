@@ -10,6 +10,9 @@ repository_host=repo.istresearch.com
 [dd-agent-nodes:children]
 servers
 
+[cdr-elasticsearch-nodes]
+servers
+
 [servers]
 #127.0.0.1 host_alias=localhost
 
