@@ -11,6 +11,9 @@ elasticsearch_heap_size=16g
 [dd-agent-nodes:children]
 servers
 
+[ist-elasticsearch-nodes:children]
+servers
+
 [servers]
 #127.0.0.1 host_alias=localhost
 # This group is 
