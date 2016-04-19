@@ -11,7 +11,7 @@ elasticsearch_heap_size=16g
 [dd-agent-nodes:children]
 servers
 
-[ist-elasticsearch-nodes]
+[ist-elasticsearch-nodes:children]
 servers
 
 [servers]
