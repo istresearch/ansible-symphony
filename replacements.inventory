@@ -215,11 +215,12 @@ memex-services.istresearch.com
 [elastalert-nodes]
 memex-hclient.istresearch.com
 
-[traptor-location-nodes]
 
 [traptor-follow-nodes]
 ist-crawler01.istresearch.com
 ist-crawler02.istresearch.com
+
+[traptor-location-nodes]
 ist-crawler03.istresearch.com
 ist-crawler04.istresearch.com
 
@@ -229,6 +230,7 @@ ist-crawler06.istresearch.com
 
 [traptor-nodes:children]
 traptor-follow-nodes
+traptor-location-nodes
 traptor-track-nodes
 
 [other]
