@@ -7,7 +7,6 @@ pulse_db_name: pulse
 pulse_db_titan_user: "{{ pulse_titan_user | default('pulse-admin') }}"
 pulse_db_titan_email: "{{ pulse_titan_email | default('pulse.feedback@istresearch.com') }}"
 pulse_db_titan_pw: "{{ pulse_titan_pw | default('change this password') }}"
-pulse_url_host: "{{ inventory_hostname }}"
 
 pulse_mysql_databases:
   - { name: "{{ pulse_db_name }}", collation: utf8_general_ci, encoding: utf8, replicate: 0 }
