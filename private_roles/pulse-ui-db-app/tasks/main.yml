@@ -35,9 +35,6 @@
   when: not pulse_db_legacy_setup
   tags: pulse-ui-db-app
 
-- debug:
-    var=pulse_self_signed_ssl
-
 - name: DB setup using SSL
   uri:
     url: "https://{{ pulse_url_host }}/{{ pulse_name }}/install/setupWebsite"
