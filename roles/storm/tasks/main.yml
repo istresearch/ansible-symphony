@@ -56,6 +56,8 @@
   file:
     path={{ storm_install_dir }}/default
     state=link
+    owner={{ storm_user }}
+    group={{ storm_group }}
     src={{ storm_install_dir }}/apache-storm-{{ storm_version }}
   tags: storm
 
