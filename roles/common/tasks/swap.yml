@@ -31,3 +31,8 @@
 
 - name: turn on swap
   command: swapon -a
+
+- name: set swappiness
+  sysctl:
+    name: vm.swappiness
+    value: "{{ sys_swappiness }}"
