@@ -33,9 +33,9 @@
     mode: 0777
     recurse: yes
   when: not pulse_db_legacy_setup
-  tags: pulse-ui-db-app 
+  tags: pulse-ui-db-app
 
-- name: DB setup
+- name: DB setup using SSL
   uri:
     url: "https://{{ pulse_url_host }}/{{ pulse_name }}/install/setupWebsite"
     method: POST
@@ -43,7 +43,18 @@
     body_format: json
     return_content: yes
     validate_certs: no
-  when: not pulse_db_legacy_setup
+  when: not pulse_db_legacy_setup and not pulse_self_signed_ssl
+  tags: pulse-ui-db-app
+
+- name: DB setup NOT using SSL
+  uri:
+    url: "http://{{ pulse_url_host }}/{{ pulse_name }}/install/setupWebsite"
+    method: POST
+    body: "{ \"installpw\": \"{{ passwd.stdout }}\", {{ pulse_db_setup_json }} }"
+    body_format: json
+    return_content: yes
+    validate_certs: no
+  when: not pulse_db_legacy_setup and pulse_self_signed_ssl
   tags: pulse-ui-db-app
 
 - name: Revert directory permissions after install

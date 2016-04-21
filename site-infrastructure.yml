@@ -374,6 +374,15 @@
     - deps-pulse
     - deps-pulse-docker
 
+# --------------------------------- Apache -----------------------------------
+- name: Apache
+  hosts: apache-node
+  roles: [ apache2 ]
+  tags:
+    - apache
+    - deps-pulse
+    - deps-pulse-docker
+
 # ---------------------------------- Pulse -----------------------------------
 
 - name: Pulse UI Node Infrastructure

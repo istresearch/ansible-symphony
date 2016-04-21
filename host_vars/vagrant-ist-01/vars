@@ -27,3 +27,5 @@ storm_ui_extra_config:
     ui.childopts: "-Xmx64m"
 storm_worker_extra_config:
     worker.childopts: "-XX:MaxPermSize=48m -XX:+UseConcMarkSweepGC"
+
+pulse_url_host: "{{ inventory_hostname }}"
