@@ -111,7 +111,7 @@
 
 - name: set storm file permissions
   file:
-    path={{ storm_install_dir }}/default
+    path={{ storm_install_dir }}//apache-storm-{{ storm_version }}
     owner={{ storm_user }}
     group={{ storm_group }}
     recurse=yes
