@@ -1,0 +1,11 @@
+---
+# file: roles/common/tasks/resolv-conf.yml
+
+- name: Add istresearch search entry to resolvconf
+  lineinfile:
+    dest=/etc/resolvconf/resolv.conf.d/base
+    state=present
+    create=yes
+    line="search istresearch.com"
+  notify:
+    - update resolvconf
