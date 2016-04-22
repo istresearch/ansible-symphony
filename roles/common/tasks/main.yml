@@ -19,7 +19,14 @@
 
 - include: swap.yml
   tags:
+    - common
     - swap_file
+
+- include: resolv-conf.yml
+  when: ansible_os_family == 'Debian'
+  tags:
+    - common
+    - resolvconf
 
 - name: Set fact common_has_run
   set_fact:
