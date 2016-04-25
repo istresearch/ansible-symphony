@@ -39,7 +39,6 @@
     - virtualenv
   tags:
     - virtual-env
-    - deps-traptor
     - deps-scrapy-cluster
 
 - name: Run miniconda role
@@ -48,6 +47,7 @@
     - miniconda
   tags:
     - miniconda
+    - deps-traptor
 
 # -------------------------- Zookeeper and Kafka -----------------------------
 - name: Run zookeeper role
@@ -371,6 +371,15 @@
   roles: [ mysql ]
   tags:
     - mysql
+    - deps-pulse
+    - deps-pulse-docker
+
+# --------------------------------- Apache -----------------------------------
+- name: Apache
+  hosts: apache-node
+  roles: [ apache2 ]
+  tags:
+    - apache
     - deps-pulse
     - deps-pulse-docker
 

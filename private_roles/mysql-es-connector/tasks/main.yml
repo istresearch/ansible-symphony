@@ -1,33 +1,56 @@
 ---
-- name: check for mysql-es connector directory
-  stat: path={{ mysql_es_dir }}
+- name: create mysql-es connector directory
+  file:
+    path={{ mysql_es_dir }}/
+    state=directory
+    mode=0755
+  tags: mysql-es-connector
+
+- name: check for existing mysql-es connector version install
+  stat: path={{ mysql_es_install_dir }}
   register: mysql_es
   tags: mysql-es-connector
 
-- name: make mysql-es connector directory if not exist
+- name: make mysql-es connector version directory if not exist
   file:
-    path={{ mysql_es_dir }}
+    path={{ mysql_es_install_dir }}/
     state=directory
     mode=0755
   when: mysql_es.stat.isdir is not defined
   tags: mysql-es-connector
 
-- name: download mysql-es-connector script
+- name: download mysql-es-connector
   get_url:
-    url=http://{{ repository_host }}/pulse/mysql-es-connector/mysql_es_pulse.py
-    dest={{ mysql_es_dir }}/mysql_es_pulse.py
+    url={{ mysql_es_repo_location }}/mysql_es_v{{ mysql_es_version }}.zip
+    dest=/tmp/mysql_es_v{{ mysql_es_version }}.zip
     mode=0755
     validate_certs=no
     url_username={{ pulse_repo_user }}
     url_password={{ pulse_repo_password }}
+  when: mysql_es.stat.isdir is not defined
   tags: mysql-es-connector      
 
-- name: move mapping over
-  copy:
-    src=pulse_mapping_dynamic.json
-    dest={{ mysql_es_dir }}/pulse_mapping_dynamic.json
-    mode=0755
+- name: extract mysql-es-connector files
+  unarchive:
+    src=/tmp/mysql_es_v{{ mysql_es_version }}.zip
+    dest={{ mysql_es_install_dir }}/
+    copy=no
+  when: mysql_es.stat.isdir is not defined
   tags: mysql-es-connector
+
+- name: delete temp mysql-es connector file
+  file:
+    path=/tmp/mysql_es_v{{ mysql_es_version }}.zip
+    state=absent
+  ignore_errors: yes
+  tags: mysql-es-connector
+
+#- name: move mapping over
+#  copy:
+#    src=pulse_mapping_dynamic.json
+#    dest={{ mysql_es_dir }}/pulse_mapping_dynamic.json
+#    mode=0755
+#  tags: mysql-es-connector
 
 - name: check for mysql-es log
   stat: path={{ mysql_es_log_dir }}
@@ -68,9 +91,14 @@
   shell: "sudo {{ miniconda_install_dir }}/bin/pip install /tmp/mysql-connector-python-2.0.4.zip"
   tags: mysql-es-connector
 
+- name: install MySQL-python
+  shell: "sudo {{ miniconda_install_dir }}/bin/pip install MySQL-python"
+  tags: mysql-es-connector      
+
 - name: build ES index
-  shell: "sudo {{ miniconda_install_dir }}/bin/python2.7 {{ mysql_es_dir }}/mysql_es_pulse.py --dbhost={{ mysql_db_host }} --dbuser={{ pulse_db_user_name }} --db={{ pulse_db_name }} --pw={{ pulse_password }} --interval=5 --es={{ es_host }} --index=pulse-1 --build=all --mapping={{ mysql_es_dir }}/pulse_mapping_dynamic.json --logfile={{ mysql_es_log_dir }}/{{ pulse_name | default('pulse') }}.log --db_prefix=pulse"
+  shell: "sudo {{ miniconda_install_dir }}/bin/python2.7 {{ mysql_es_install_dir }}/mysql_es_pulse.py --dbhost={{ mysql_db_host }} --dbuser={{ pulse_db_user_name }} --db={{ pulse_db_name }} --pw={{ pulse_password }} --interval={{ interval }} --es={{ es_host }} --index=pulse-1 --build=all --mapping={{ mysql_es_install_dir }}/pulse_mapping_dynamic.json --logfile={{ mysql_es_log_dir }}/{{ pulse_name | default('pulse') }}.log --db_prefix=pulse_"
   tags: mysql-es-connector
 
-- cron: name="Pulse MySQL-ES-Connector" minute="{{ cron_freq }}"
-        user="root" job="sudo {{ miniconda_install_dir }}/bin/python2.7 {{ mysql_es_dir }}/mysql_es_pulse.py --dbhost={{ mysql_db_host }} --dbuser={{ pulse_db_user_name }} --db={{ pulse_db_name }} --pw={{ pulse_password }} --interval={{ interval }} --es={{ es_host }} --index=pulse-1 --build=incremental --mapping={{ mysql_es_dir }}/pulse_mapping_dynamic.json --logfile={{ mysql_es_log_dir }}/{{ pulse_name | default('pulse') }}.log --db_prefix=pulse"
+- cron:
+    name="Pulse MySQL-ES-Connector" minute="{{ cron_freq }}"
+    user="root" job="sudo {{ miniconda_install_dir }}/bin/python2.7 {{ mysql_es_install_dir }}/mysql_es_pulse.py --dbhost={{ mysql_db_host }} --dbuser={{ pulse_db_user_name }} --db={{ pulse_db_name }} --pw={{ pulse_password }} --interval={{ interval }} --es={{ es_host }} --index=pulse-1 --build=incremental --mapping={{ mysql_es_install_dir }}/pulse_mapping_dynamic.json --logfile={{ mysql_es_log_dir }}/{{ pulse_name | default('pulse') }}.log --db_prefix=pulse_"

@@ -1,4 +1,19 @@
 ---
+- name: install packages
+  apt:
+    name={{ item }}
+    state=latest
+  with_items:
+    - libjpeg-dev
+    - zlib1g-dev
+    - libblas-dev
+    - liblapack-dev
+    - libatlas-base-dev
+    - gfortran
+  tags:
+    - topologies
+    - topologies-packages
+
 - name: create log directory
   file:
     path: "{{ topologies_log_dir }}"

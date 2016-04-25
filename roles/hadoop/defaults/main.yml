@@ -32,6 +32,7 @@ dfs_datanode_address_port: 50010
 dfs_datanode_http_address_port: 50075
 dfs_datanode_https_address_port: 50475
 dfs_datanode_ipc_address_port: 50020
+dfs_webhdfs_enabled: false
 dfs_journalnode_rpc_address_port: 8485
 dfs_journalnode_http_address_port: 8480
 dfs_journalnode_https_address_port: 8481

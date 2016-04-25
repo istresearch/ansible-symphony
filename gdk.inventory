@@ -32,6 +32,9 @@ pulse-node01
 [docker-engine]
 pulse-node01
 
+[apache-node]
+vagrant-ist-01
+
 [mysql-node]
 pulse-node01
 

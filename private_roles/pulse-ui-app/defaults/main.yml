@@ -1,4 +1,4 @@
-pulse_version: 2.1.4.1
+pulse_version: 2.1.5
 
 pulse_name: pulse
 pulse_install_dir: /opt/pulse
@@ -11,7 +11,7 @@ pulse_repo_location: "http://{{ repository_host }}/pulse"
 
 pollster_name: appPollsterPrime
 pollster_build_type: release
-pollster_version: 5.3.4
+pollster_version: 5.3.5
 
 # logstash config
 pulse_logstash_template: pulse-template.json

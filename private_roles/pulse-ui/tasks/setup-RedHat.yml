@@ -1,0 +1,11 @@
+---
+
+- name: install required packages for pulse
+  yum:
+    name={{ item }}
+    state=latest
+  with_items:
+   - curl
+   - mysql-devel
+  tags:
+    - pulse-ui

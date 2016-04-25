@@ -1,8 +1,12 @@
 LOG_LEVEL = "{{ traptor_log_level }}"
+
 KAFKA_HOSTS = "{% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}"
+KAFKA_TOPIC = "{{ traptor_kafka_topic }}"
+
 REDIS_HOST = "{{ groups['redis-master-node'][0] }}"
 REDIS_PORT = {{ traptor_redis_port }}
 REDIS_DB = {{ traptor_redis_db }}
+REDIS_PUBSUB_CHANNEL = "{{ traptor_redis_pubsub }}"
 
 {% if inventory_hostname in groups['traptor-follow-nodes'] %}
 # Twitter Streaming API 'follow'
@@ -16,10 +20,6 @@ TRAPTOR_ID = {{ loop.index - 1}}
 TRAPTOR_TYPE = 'follow'
 {% endif %}
 
-
-REDIS_PUBSUB_CHANNEL = "{{ traptor_redis_pubsub }}"
-
-
 {% if inventory_hostname in groups['traptor-track-nodes'] %}
 # Twitter Streaming API 'track'
 {% for host in groups['traptor-track-nodes'] %}
@@ -32,7 +32,18 @@ TRAPTOR_ID = {{ loop.index - 1}}
 TRAPTOR_TYPE = 'track'
 {% endif %}
 
-KAFKA_TOPIC = "{{ traptor_kafka_topic }}"
+{% if inventory_hostname in groups['traptor-location-nodes'] %}
+# Twitter Streaming API 'location'
+{% for host in groups['traptor-location-nodes'] %}
+{%- if host == inventory_hostname -%}
+
+TRAPTOR_ID = {{ loop.index - 1}}
+{%- endif -%}
+{% endfor %}
+
+TRAPTOR_TYPE = 'locations'
+{% endif %}
+
 
 # Twitter API Keys
 {% for host in groups['traptor-nodes'] %}
