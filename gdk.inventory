@@ -33,7 +33,7 @@ pulse-node01
 pulse-node01
 
 [apache-node]
-vagrant-ist-01
+pulse-node01
 
 [mysql-node]
 pulse-node01

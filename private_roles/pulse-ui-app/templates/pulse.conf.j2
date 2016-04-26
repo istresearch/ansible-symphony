@@ -1,4 +1,4 @@
-<VirtualHost *:80>
+<VirtualHost *:{{ pulse_listen_port | default('80') }}>
     ServerName {{ pulse_url_host }}
     SSLEngine On
     SSLCertificateFile /etc/apache2/ssl/pulse.crt

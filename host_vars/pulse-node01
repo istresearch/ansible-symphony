@@ -23,3 +23,4 @@ pulse_local_install: false
 
 mysql_db_host: pulse-node01
 pulse_url_host: "{{ inventory_hostname }}"
+pulse_listen_port: 443

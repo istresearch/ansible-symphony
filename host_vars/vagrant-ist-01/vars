@@ -29,3 +29,4 @@ storm_worker_extra_config:
     worker.childopts: "-XX:MaxPermSize=48m -XX:+UseConcMarkSweepGC"
 
 pulse_url_host: "{{ inventory_hostname }}"
+pulse_listen_port: 443
