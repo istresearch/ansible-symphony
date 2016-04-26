@@ -156,7 +156,14 @@ If you need to update OpenSSH, you will need to download the OpenSSH source, bui
 
 Pulse Deployment
 ^^^^^^^^^^^^^^^^^
-Before you can run the playbooks, you will have to mount the ``/vagrant`` directory to the VM. Because we set up the VM using Vagrant, the ``C:\Pulse`` directory is already shared in the ``/shared`` directory on the Pulse VM. However, until you mount the directory, you will not be able to see or access any of the files in the shared space. To mount the directory, run the following command:
+Before you can run the playbooks, you will have to mount the ``/vagrant`` directory to the VM. First, ensure the ``C:\Pulse`` directory is properly set up as a Shared Folder in Oracle VM VirtualBox. To do this, select the Pulse VM and click the **Settings** button. The ``Settings`` modal window should appear. Select **Shared Folders** in the left column. The ``C:\Pulse`` directory should be listed under *Machine Folders* in the Folders List. Click the **Edit** icon and confirm the settings as shown below.
+
+.. figure:: ./private_roles/img/virtual_box_settings_add_share.png
+   :alt: Virtual Box Add Share Settings
+   :align: center
+   :width: 308
+
+To mount the directory on the VM, start the VM and after logging in, run the following command:
 
 ::
 

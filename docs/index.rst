@@ -51,7 +51,7 @@ IST Specific
     Information about Pulse deployments
 
 :doc:`private_topics/gdk_setup`
-    Information about deploying Pulse to a GDK laptop
+    Information about deploying Pulse on a GDK laptop
 
 :doc:`private_topics/private_roles/index`
     Explains the individual IST custom ansible roles
