@@ -36,3 +36,4 @@ apikeys:
 traptor_log_level: "INFO"
 traptor_redis_port: 6379
 traptor_redis_db: 0
+traptor_sentry_secret: ''
