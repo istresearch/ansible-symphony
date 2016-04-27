@@ -1,6 +1,8 @@
 ---
 # file: group_vars/traptor-nodes/vars
 
+traptor_sentry_secret: "{{ vault_traptor_sentry_secret }}"
+
 traptor_kafka_topic: "{{ vault_traptor_kafka_topic }}"
 
 apikeys: "{{ vault_apikeys }}"
