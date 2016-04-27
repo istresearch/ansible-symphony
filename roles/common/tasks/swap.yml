@@ -15,6 +15,7 @@
   when: not swap_file_check.stat.exists
 
 - name: set permissions on swap file
+  ignore_errors: yes
   file:
     path: "{{ swap_file }}"
     mode: 0600
