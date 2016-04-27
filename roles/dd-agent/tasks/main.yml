@@ -36,11 +36,13 @@
   supervisorctl:
     name=dd-agent
     state=stopped
+  ignore_errors: yes
 
 - name: Remove dd-agent from supervisor
   supervisorctl:
     name=dd-agent
     state=absent
+  ignore_errors: yes
 
 - name: Remove dd-agent supervisor config file
   file:
