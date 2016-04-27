@@ -54,3 +54,17 @@
     state=absent
   tags: common
   when: remove_hostname_loopback
+
+- name: Template out auto upgrade .conf
+  template:
+    src: 20auto-upgrades
+    dest: /etc/apt/apt.conf.d/20auto-upgrades
+    group: root
+    owner: root
+
+- name: Template out unattended upgrades .conf
+  template:
+    src: 50unattended-upgrades
+    dest: /etc/apt/apt.conf.d/50unattended-upgrades
+    group: root
+    owner: root
