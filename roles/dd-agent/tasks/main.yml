@@ -24,22 +24,30 @@
     state: present
     update_cache: yes
 
-# dd-agent was previously just run as a service before being run under
-# supervisor.
-- name: Stop service based dd-agent
+- name: Start datadog-agent service
   service:
-    name: datadog-agent
-    state: stopped
-    enabled: no
+    name=datadog-agent
+    state=started
+    enabled=yes
 
-- name: Copy dd-agent supervisord config
-  template:
-    src=dd-agent-supervisord.conf.j2
-    dest="{{ supervisord_programs_dir }}/dd-agent-supervisord.conf"
-    mode=0644
+# We attempted to run dd-agent under supervisor. Stop and remove dd-agent
+# supervisor processes
+- name: Stop dd-agent supervisor process
+  supervisorctl:
+    name=dd-agent
+    state=stopped
+
+- name: Remove dd-agent from supervisor
+  supervisorctl:
+    name=dd-agent
+    state=absent
+
+- name: Remove dd-agent supervisor config file
+  file:
+    path="{{ supervisord_programs_dir }}/dd-agent-supervisord.conf"
+    state=absent
   notify:
     - reread supervisord
-    - restart dd-agent
 
 - name: Create additional_checksd directory
   file:
@@ -51,5 +59,14 @@
     src=datadog.conf.j2
     dest="{{ ddagent_conf_path }}"
     mode=0644
+  notify:
+    - restart dd-agent
+
+- name: Assign correct owner to datadog log directory
+  file:
+    path="/var/log/datadog"
+    state=directory
+    owner="dd-agent"
+    recurse=yes
   notify:
     - restart dd-agent
