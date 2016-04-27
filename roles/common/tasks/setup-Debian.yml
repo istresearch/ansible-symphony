@@ -44,6 +44,7 @@
     - zlib1g-dev
     - e2fslibs-dev
     - resolvconf
+    - awscli
   tags: common
 
 - name: remove hostname loopback
