@@ -46,6 +46,12 @@
   notify:
     - restart docker-engine
 
+- name: stop docker service
+  service:
+    name: docker
+    state: stopped
+    enabled: no
+
 - name: Set docker daemon options
   copy:
     content: "DOCKER_OPTS=\"{{ docker_opts.rstrip('\n') }}\""
