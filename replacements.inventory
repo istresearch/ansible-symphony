@@ -35,6 +35,10 @@ traptor-nodes
 elastalert-nodes
 tor-proxy
 
+[internap-backup]
+backup02.nj.istresearch.com
+backup01.nj.istresearch.com
+
 [zookeeper-nodes]
 crew01.istresearch.com
 crew02.istresearch.com
