@@ -23,11 +23,11 @@
 
   DocumentRoot /var/www
   <Directory />
-    Options +FollowSymLinks
+    Options -Indexes +FollowSymLinks
     AllowOverride None
   </Directory>
   <Directory /var/www/>
-    Options +Indexes +FollowSymLinks -MultiViews
+    Options -Indexes +FollowSymLinks -MultiViews
     AllowOverride all
     Order allow,deny
     allow from all
