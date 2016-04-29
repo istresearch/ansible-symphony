@@ -200,6 +200,8 @@ Supervisord has known issues with Ubuntu with regards to not starting on boot. T
 
 When you are done, save the file as ``/usr/local/bin/supervisord_boot.sh``. Close the file.
 
+.. warning:: Be sure to the ``supervisord_boot.sh`` script has the appropriate permissions to be executed. It is recomended you set it to **0700**.
+
 Next, you need to create a cron job to run the script on boot. To do this, open the crontab editor with the following command:
 
 ::
@@ -256,7 +258,13 @@ After you have successfully tested login and sudo privileges, delete the **vagra
 
 Router Setup
 -------------
-Need to get a router and walk through.
+We are currently using TP-LINK routers. For more information on your router and how to sign in and complete the initial configuration, go to http://www.tp-link.us/download-center.html . The router should be put in ``AP Router`` for the **Operation Mode**.
+
+To set up the DHCP server, click the **NETWORK** tab on the router interface. In the **LAN** section of the NETWORK screen, check the ``DHCP Server`` checkbox to enable it. The **DHCP Server** section should now be visible. Update the **Start IP Address** and **End IP Address** to create the range of IP addresses the DHCP server will pull from to assign. 
+
+.. note:: We are using the IP range 192.168.0.100 to 192.168.0.199.
+
+In order to assign a static IP to the Pulse instance, you have to add an **Address Reservation** to the DHCP server. 
 
 
 Gateway Device(s)
