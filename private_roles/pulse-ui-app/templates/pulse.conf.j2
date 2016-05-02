@@ -1,8 +1,12 @@
 <VirtualHost *:80>
     ServerName {{ pulse_url_host }}
+    {% if pulse_self_signed_ssl==true %}
     SSLEngine On
     SSLCertificateFile /etc/apache2/ssl/pulse.crt
     SSLCertificateKeyFile /etc/apache2/ssl/pulse.key
+    {% else %}
+    SSLEngine Off
+    {% endif %}
 
   ProxyRequests Off
   <Proxy *>
