@@ -1,0 +1,12 @@
+---
+urllist:
+ - http://classivox.com/t/women-seeking-men/
+ - http://classivox.com/t/escorts/
+ - http://classivox.com/t/sex-guide/
+ - http://classivox.com/t/show-biz-audition/
+ - http://classivox.com/t/beauty-spa/
+ - http://classivox.com/t/salon-spa/
+findadregex:
+ - http:\/\/\S+\/t\/\S+\/\S+\/\d+\/
+downloaddelay: 10
+rediskey: indexer-classivox

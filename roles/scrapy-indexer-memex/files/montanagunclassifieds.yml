@@ -1,7 +1,8 @@
----
-rediskey: indexer-montanagunclassifieds
+campaignid: memex
 downloaddelay: 30
+engagementid: eng1
+findurlregex:
+- .*\/posts\/[^"]+
+rediskey: indexer-montanagunclassifieds
 urllist:
- - http://www.montanagunclassifieds.com/
-findadregex:
- - .*\/posts\/[^"]+
+- http://www.montanagunclassifieds.com/

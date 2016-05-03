@@ -1,0 +1,7 @@
+---
+rediskey: indexer-floridagunclassifieds
+downloaddelay: 30
+urllist:
+ - http://www.floridagunclassifieds.com/
+findadregex:
+ - http[^"]+\/listing\/[^"]+

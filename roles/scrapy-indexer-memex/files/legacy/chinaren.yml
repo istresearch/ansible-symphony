@@ -1,0 +1,21 @@
+---
+rediskey: indexer-chinaren
+downloaddelay: 30
+findadregex: (http:\/\/\S+|)\/f\/page_viewtopic\/\S+html
+paginateregex: \/f\/page_viewforum\/f_29\/start_\d+\.html
+paginatenum: 150
+urllist:
+ - http://www.chineseinsfbay.com/f/page_viewforum/f_29.html
+ - http://www.chicagochinaren.com/f/page_viewforum/f_29.html
+ - http://www.chineseinoz.com/f/page_viewforum/f_29.html
+ - http://www.chineseinboston.com/f/page_viewforum/f_29.html
+ - http://www.chineseinhi.com/f/page_viewforum/f_29.html
+ - http://www.seattlechinaren.com/f/page_viewforum/f_29.html
+ - http://www.dcchinaren.com/f/page_viewforum/f_29.html
+ - http://www.vegaschinaren.com/f/page_viewforum/f_29.html
+ - http://www.chineseinla.com/f/page_viewforum/f_29.html
+ - http://www.sdchinaren.com/f/page_viewforum/f_29.html
+ - http://www.chineseinpa.com/f/page_viewforum/f_29.html
+ - http://www.chineseinhouston.com/f/page_viewforum/f_29.html
+ - http://www.chineseinvan.com/f/page_viewforum/f_29.html
+ - http://www.nychinaren.com/f/page_viewforum/f_29.html

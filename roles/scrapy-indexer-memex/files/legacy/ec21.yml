@@ -1,0 +1,10 @@
+---
+urllist:
+ - http://manufacturer.ec21.com/Labour_Employment--0418.html
+ - http://manufacturer.ec21.com/Passport_Visa--0423.html
+findadregex:
+ - http\:\/\/www\.ec21\.com\/product\-details\S*\d+\.html
+downloaddelay: 10
+paginateregex: \/\S+\/page_\d+\.html
+paginatenum: 10
+rediskey: indexer-ec21

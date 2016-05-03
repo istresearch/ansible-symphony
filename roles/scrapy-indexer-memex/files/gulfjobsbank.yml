@@ -1,12 +1,13 @@
----
-urllist:
- - http://www.gulfjobsbank.com/jobads/an/
- - http://www.gulfjobsbank.com/jobads/gdn/
- - http://www.gulfjobsbank.com/jobads/misc/
- - http://www.gulfjobsbank.com/jobads/at/
- - http://www.gulfjobsbank.com/jobads/kt/
- - http://www.gulfjobsbank.com/jobads/gt/
-findadregex:
- - \d+\S+\.htm
+campaignid: memex
 downloaddelay: 10
+engagementid: eng1
+findurlregex:
+- \d+\S+\.htm
 rediskey: indexer-gulfjobsbank
+urllist:
+- http://www.gulfjobsbank.com/jobads/an/
+- http://www.gulfjobsbank.com/jobads/gdn/
+- http://www.gulfjobsbank.com/jobads/misc/
+- http://www.gulfjobsbank.com/jobads/at/
+- http://www.gulfjobsbank.com/jobads/kt/
+- http://www.gulfjobsbank.com/jobads/gt/

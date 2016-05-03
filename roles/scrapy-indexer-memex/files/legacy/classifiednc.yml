@@ -1,0 +1,7 @@
+---
+rediskey: indexer-classifiednc
+downloaddelay: 30
+urllist:
+ - http://www.classifiednc.com/for-sale/guns-hunting/
+findadregex:
+ - http:\/\/www.classifiednc.com\/[^/]+\/\d+\/

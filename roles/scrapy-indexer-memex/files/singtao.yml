@@ -1,7 +1,8 @@
----
-rediskey: indexer-singtao
+campaignid: memex
 downloaddelay: 30
-findadregex: http:\/\/\w+\.singtao\.ca\/category\/\S+\/\S+\/\w+\/\?variant=\w{2}-\w{2}
+engagementid: eng1
+findurlregex: http:\/\/\w+\.singtao\.ca\/category\/\S+\/\S+\/\w+\/\?variant=\w{2}-\w{2}
+rediskey: indexer-singtao
 urllist:
- - http://toronto.singtao.ca/category/%E5%88%86%E9%A1%9E%E5%BB%A3%E5%91%8A/?variant=zh-cn
- - http://vancouver.singtao.ca/category/%E5%88%86%E9%A1%9E%E5%BB%A3%E5%91%8A/?variant=zh-hk
+- http://toronto.singtao.ca/category/%E5%88%86%E9%A1%9E%E5%BB%A3%E5%91%8A/?variant=zh-cn
+- http://vancouver.singtao.ca/category/%E5%88%86%E9%A1%9E%E5%BB%A3%E5%91%8A/?variant=zh-hk

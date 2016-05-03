@@ -1,0 +1,12 @@
+---
+urllist:
+ - http://www.gulfjobsbank.com/jobads/an/
+ - http://www.gulfjobsbank.com/jobads/gdn/
+ - http://www.gulfjobsbank.com/jobads/misc/
+ - http://www.gulfjobsbank.com/jobads/at/
+ - http://www.gulfjobsbank.com/jobads/kt/
+ - http://www.gulfjobsbank.com/jobads/gt/
+findadregex:
+ - \d+\S+\.htm
+downloaddelay: 10
+rediskey: indexer-gulfjobsbank

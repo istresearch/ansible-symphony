@@ -1,0 +1,11 @@
+---
+rediskey: indexer-floridaguntrader
+downloaddelay: 30
+urllist:
+ - http://floridaguntrader.com/index.php?a=5&b=384
+ - http://floridaguntrader.com/index.php?a=5&b=341
+ - http://floridaguntrader.com/index.php?a=5&b=340
+ - http://floridaguntrader.com/index.php?a=5&b=342
+ - http://floridaguntrader.com/index.php?a=5&b=385
+findadregex:
+ - index.php\?a=2&b=\d+

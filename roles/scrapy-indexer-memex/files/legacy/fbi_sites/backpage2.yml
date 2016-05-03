@@ -1,0 +1,27 @@
+---
+# The seed urls to index
+urllist:
+# A small subset of all of the backpage escort urls
+# - http://austin.backpage.com/FemaleEscorts/
+ - http://baltimore.backpage.com/FemaleEscorts/
+# - http://bronx.backpage.com/FemaleEscorts/
+# - http://brooklyn.backpage.com/FemaleEscorts/
+# - http://dallas.backpage.com/FemaleEscorts/
+# - http://indianapolis.backpage.com/FemaleEscorts/
+# - http://newyork.backpage.com/FemaleEscorts/
+# - http://portland.backpage.com/FemaleEscorts/
+# - http://sacramento.backpage.com/FemaleEscorts/
+# - http://seattle.backpage.com/FemaleEscorts/
+# - http://sf.backpage.com/FemaleEscorts/
+# - http://stlouis.backpage.com/FemaleEscorts/
+# - http://washingtondc.backpage.com/FemaleEscorts/
+
+# The regex to pull ad links out fo the indexed page
+findadregex: http://.+backpage.com/FemaleEscorts/.+/\d+
+
+# Needed or we will get banned (in seconds)
+downloaddelay: 10
+
+# the redis hash key to manage duplicate urls and refresh alerts
+# this should be the same across indexers doing the same site
+rediskey: indexer-backpage

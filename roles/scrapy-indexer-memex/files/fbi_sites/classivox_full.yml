@@ -1,435 +1,424 @@
----
-# The seed urls to index
-urllist:
-  - http://charleston-wv.classivox.com/t/escorts/
-  - http://eastern-panhandle.classivox.com/t/escorts/
-  - http://huntington.classivox.com/t/escorts/
-  - http://morgantown.classivox.com/t/escorts/
-  - http://north-panhandle.classivox.com/t/escorts/
-  - http://old-west-virginia.classivox.com/t/escorts/
-  - http://parkersburg.classivox.com/t/escorts/
-  - http://south-wv.classivox.com/t/escorts/
-  - http://altoona.classivox.com/t/escorts/
-  - http://cumberland.classivox.com/t/escorts/
-  - http://erie.classivox.com/t/escorts/
-  - http://harrisburg.classivox.com/t/escorts/
-  - http://lancaster.classivox.com/t/escorts/
-  - http://lehigh-valley.classivox.com/t/escorts/
-  - http://meadville.classivox.com/t/escorts/
-  - http://philadelphia.classivox.com/t/escorts/
-  - http://pittsburgh.classivox.com/t/escorts/
-  - http://poconos.classivox.com/t/escorts/
-  - http://reading.classivox.com/t/escorts/
-  - http://scranton.classivox.com/t/escorts/
-  - http://state-college.classivox.com/t/escorts/
-  - http://williamsport.classivox.com/t/escorts/
-  - http://york.classivox.com/t/escorts/
-  - http://abilene.classivox.com/t/escorts/
-  - http://amarillo.classivox.com/t/escorts/
-  - http://austin.classivox.com/t/escorts/
-  - http://beaumont.classivox.com/t/escorts/
-  - http://brownsville.classivox.com/t/escorts/
-  - http://college-station.classivox.com/t/escorts/
-  - http://corpus-christi.classivox.com/t/escorts/
-  - http://dallas-ft-worth.classivox.com/t/escorts/
-  - http://deep-east-tx.classivox.com/t/escorts/
-  - http://del-rio.classivox.com/t/escorts/
-  - http://el-paso.classivox.com/t/escorts/
-  - http://galveston.classivox.com/t/escorts/
-  - http://houston.classivox.com/t/escorts/
-  - http://killeen.classivox.com/t/escorts/
-  - http://laredo.classivox.com/t/escorts/
-  - http://lubbock.classivox.com/t/escorts/
-  - http://mcallen.classivox.com/t/escorts/
-  - http://odessa.classivox.com/t/escorts/
-  - http://san-angelo.classivox.com/t/escorts/
-  - http://san-antonio.classivox.com/t/escorts/
-  - http://san-marcos.classivox.com/t/escorts/
-  - http://southwest-tx.classivox.com/t/escorts/
-  - http://texoma.classivox.com/t/escorts/
-  - http://tyler.classivox.com/t/escorts/
-  - http://victoria-tx.classivox.com/t/escorts/
-  - http://waco.classivox.com/t/escorts/
-  - http://wichita-falls.classivox.com/t/escorts/
-  - http://bend.classivox.com/t/escorts/
-  - http://corvallis.classivox.com/t/escorts/
-  - http://east-oregon.classivox.com/t/escorts/
-  - http://eugene.classivox.com/t/escorts/
-  - http://klamath-falls.classivox.com/t/escorts/
-  - http://medford.classivox.com/t/escorts/
-  - http://oregon-coast.classivox.com/t/escorts/
-  - http://portland.classivox.com/t/escorts/
-  - http://roseburg.classivox.com/t/escorts/
-  - http://salem.classivox.com/t/escorts/
-  - http://charlottesville.classivox.com/t/escorts/
-  - http://danville.classivox.com/t/escorts/
-  - http://fredericksburg-va.classivox.com/t/escorts/
-  - http://hampton-roads.classivox.com/t/escorts/
-  - http://harrisonburg.classivox.com/t/escorts/
-  - http://lynchburg.classivox.com/t/escorts/
-  - http://new-river-valley.classivox.com/t/escorts/
-  - http://richmond.classivox.com/t/escorts/
-  - http://roanoke.classivox.com/t/escorts/
-  - http://southwest-va.classivox.com/t/escorts/
-  - http://winchester.classivox.com/t/escorts/
-  - http://auburn.classivox.com/t/escorts/
-  - http://birmingham-al.classivox.com/t/escorts/
-  - http://dothan.classivox.com/t/escorts/
-  - http://florence-muscle-shoals.classivox.com/t/escorts/
-  - http://gadsden-anniston.classivox.com/t/escorts/
-  - http://huntsville-decatur.classivox.com/t/escorts/
-  - http://mobile.classivox.com/t/escorts/
-  - http://montgomery.classivox.com/t/escorts/
-  - http://tuscaloosa.classivox.com/t/escorts/
-  - http://chattanooga.classivox.com/t/escorts/
-  - http://clarksville.classivox.com/t/escorts/
-  - http://cookeville.classivox.com/t/escorts/
-  - http://jackson-tn.classivox.com/t/escorts/
-  - http://knoxville.classivox.com/t/escorts/
-  - http://memphis.classivox.com/t/escorts/
-  - http://nashville.classivox.com/t/escorts/
-  - http://tri-cities.classivox.com/t/escorts/
-  - http://lawton.classivox.com/t/escorts/
-  - http://northwest-ok.classivox.com/t/escorts/
-  - http://oklahoma-city.classivox.com/t/escorts/
-  - http://stillwater.classivox.com/t/escorts/
-  - http://tulsa.classivox.com/t/escorts/
-  - http://charleston.classivox.com/t/escorts/
-  - http://columbia-sc.classivox.com/t/escorts/
-  - http://florence.classivox.com/t/escorts/
-  - http://greenville.classivox.com/t/escorts/
-  - http://hilton-head.classivox.com/t/escorts/
-  - http://myrtle-beach.classivox.com/t/escorts/
-  - http://bellingham.classivox.com/t/escorts/
-  - http://kennewick.classivox.com/t/escorts/
-  - http://moses-lake.classivox.com/t/escorts/
-  - http://olympic-peninsula.classivox.com/t/escorts/
-  - http://pullman.classivox.com/t/escorts/
-  - http://seattle-tacoma.classivox.com/t/escorts/
-  - http://skagit.classivox.com/t/escorts/
-  - http://spokane.classivox.com/t/escorts/
-  - http://wenatchee.classivox.com/t/escorts/
-  - http://yakima.classivox.com/t/escorts/
-  - http://appleton.classivox.com/t/escorts/
-  - http://eau-claire.classivox.com/t/escorts/
-  - http://green-bay.classivox.com/t/escorts/
-  - http://janesville.classivox.com/t/escorts/
-  - http://kenosha.classivox.com/t/escorts/
-  - http://la-crosse.classivox.com/t/escorts/
-  - http://madison.classivox.com/t/escorts/
-  - http://milwaukee.classivox.com/t/escorts/
-  - http://northern-wi.classivox.com/t/escorts/
-  - http://sheboygan.classivox.com/t/escorts/
-  - http://wausau.classivox.com/t/escorts/
-  - http://northeast-sd.classivox.com/t/escorts/
-  - http://pierre.classivox.com/t/escorts/
-  - http://rapid-city.classivox.com/t/escorts/
-  - http://sioux-falls.classivox.com/t/escorts/
-  - http://south-dakota.classivox.com/t/escorts/
-  - http://logan.classivox.com/t/escorts/
-  - http://ogden.classivox.com/t/escorts/
-  - http://provo.classivox.com/t/escorts/
-  - http://salt-lake-city.classivox.com/t/escorts/
-  - http://st-george.classivox.com/t/escorts/
-  - http://burlington.classivox.com/t/escorts/
-  - http://cheyenne.classivox.com/t/escorts/
-  - http://rhode-island.classivox.com/t/escorts/
-  - http://akron.classivox.com/t/escorts/
-  - http://ashtabula.classivox.com/t/escorts/
-  - http://athens-oh.classivox.com/t/escorts/
-  - http://chillicothe.classivox.com/t/escorts/
-  - http://cincinnati.classivox.com/t/escorts/
-  - http://cleveland.classivox.com/t/escorts/
-  - http://columbus-oh.classivox.com/t/escorts/
-  - http://dayton.classivox.com/t/escorts/
-  - http://lima-oh.classivox.com/t/escorts/
-  - http://mansfield.classivox.com/t/escorts/
-  - http://sandusky.classivox.com/t/escorts/
-  - http://toledo.classivox.com/t/escorts/
-  - http://tuscarawas.classivox.com/t/escorts/
-  - http://youngstown.classivox.com/t/escorts/
-  - http://zanesville.classivox.com/t/escorts/
-  - http://asheville.classivox.com/t/escorts/
-  - http://boone.classivox.com/t/escorts/
-  - http://charlotte.classivox.com/t/escorts/
-  - http://eastern-nc.classivox.com/t/escorts/
-  - http://fayetteville-nc.classivox.com/t/escorts/
-  - http://greensboro.classivox.com/t/escorts/
-  - http://hickory.classivox.com/t/escorts/
-  - http://jacksonville-nc.classivox.com/t/escorts/
-  - http://outer-banks.classivox.com/t/escorts/
-  - http://raleigh.classivox.com/t/escorts/
-  - http://wilmington.classivox.com/t/escorts/
-  - http://winston-salem.classivox.com/t/escorts/
-  - http://new-hampshire.classivox.com/t/escorts/
-  - http://albany.classivox.com/t/escorts/
-  - http://binghamton.classivox.com/t/escorts/
-  - http://buffalo.classivox.com/t/escorts/
-  - http://catskills.classivox.com/t/escorts/
-  - http://chautauqua.classivox.com/t/escorts/
-  - http://elmira.classivox.com/t/escorts/
-  - http://finger-lakes.classivox.com/t/escorts/
-  - http://glens-falls.classivox.com/t/escorts/
-  - http://hudson-valley.classivox.com/t/escorts/
-  - http://ithaca.classivox.com/t/escorts/
-  - http://long-island.classivox.com/t/escorts/
-  - http://manhattan.classivox.com/t/escorts/
-  - http://new-york-city.classivox.com/t/escorts/
-  - http://oneonta.classivox.com/t/escorts/
-  - http://plattsburgh.classivox.com/t/escorts/
-  - http://potsdam.classivox.com/t/escorts/
-  - http://queens.classivox.com/t/escorts/
-  - http://rochester-ny.classivox.com/t/escorts/
-  - http://syracuse.classivox.com/t/escorts/
-  - http://twin-tiers.classivox.com/t/escorts/
-  - http://utica.classivox.com/t/escorts/
-  - http://watertown.classivox.com/t/escorts/
-  - http://bismarck.classivox.com/t/escorts/
-  - http://fargo.classivox.com/t/escorts/
-  - http://grand-forks.classivox.com/t/escorts/
-  - http://north-dakota.classivox.com/t/escorts/
-  - http://elko.classivox.com/t/escorts/
-  - http://las-vegas.classivox.com/t/escorts/
-  - http://reno.classivox.com/t/escorts/
-  - http://central-nj.classivox.com/t/escorts/
-  - http://jersey-shore.classivox.com/t/escorts/
-  - http://north-jersey.classivox.com/t/escorts/
-  - http://south-jersey.classivox.com/t/escorts/
-  - http://albuquerque.classivox.com/t/escorts/
-  - http://clovis.classivox.com/t/escorts/
-  - http://farmington.classivox.com/t/escorts/
-  - http://las-cruces.classivox.com/t/escorts/
-  - http://roswell.classivox.com/t/escorts/
-  - http://santa-fe.classivox.com/t/escorts/
-  - http://columbia.classivox.com/t/escorts/
-  - http://joplin.classivox.com/t/escorts/
-  - http://kansas-city.classivox.com/t/escorts/
-  - http://kirksville.classivox.com/t/escorts/
-  - http://ozarks.classivox.com/t/escorts/
-  - http://southeast-mo.classivox.com/t/escorts/
-  - http://springfield-mo.classivox.com/t/escorts/
-  - http://st-joseph.classivox.com/t/escorts/
-  - http://st-louis.classivox.com/t/escorts/
-  - http://grand-island.classivox.com/t/escorts/
-  - http://lincoln.classivox.com/t/escorts/
-  - http://north-platte.classivox.com/t/escorts/
-  - http://omaha.classivox.com/t/escorts/
-  - http://scottsbluff.classivox.com/t/escorts/
-  - http://bemidji.classivox.com/t/escorts/
-  - http://brainerd.classivox.com/t/escorts/
-  - http://duluth.classivox.com/t/escorts/
-  - http://mankato.classivox.com/t/escorts/
-  - http://minneapolis.classivox.com/t/escorts/
-  - http://rochester.classivox.com/t/escorts/
-  - http://southwest-mn.classivox.com/t/escorts/
-  - http://st-cloud.classivox.com/t/escorts/
-  - http://gulfport.classivox.com/t/escorts/
-  - http://hattiesburg.classivox.com/t/escorts/
-  - http://jackson.classivox.com/t/escorts/
-  - http://meridian.classivox.com/t/escorts/
-  - http://north-ms.classivox.com/t/escorts/
-  - http://southwest-ms.classivox.com/t/escorts/
-  - http://ann-arbor.classivox.com/t/escorts/
-  - http://battle-creek.classivox.com/t/escorts/
-  - http://central-mi.classivox.com/t/escorts/
-  - http://detroit.classivox.com/t/escorts/
-  - http://flint.classivox.com/t/escorts/
-  - http://grand-rapids.classivox.com/t/escorts/
-  - http://holland.classivox.com/t/escorts/
-  - http://jackson.classivox.com/t/escorts/
-  - http://kalamazoo.classivox.com/t/escorts/
-  - http://lansing.classivox.com/t/escorts/
-  - http://monroe-mi.classivox.com/t/escorts/
-  - http://muskegon.classivox.com/t/escorts/
-  - http://northern-mi.classivox.com/t/escorts/
-  - http://port-huron.classivox.com/t/escorts/
-  - http://saginaw.classivox.com/t/escorts/
-  - http://the-thumb.classivox.com/t/escorts/
-  - http://upper-peninsula.classivox.com/t/escorts/
-  - http://boston.classivox.com/t/escorts/
-  - http://cape-cod.classivox.com/t/escorts/
-  - http://south-coast.classivox.com/t/escorts/
-  - http://western-ma.classivox.com/t/escorts/
-  - http://worcester.classivox.com/t/escorts/
-  - http://annapolis.classivox.com/t/escorts/
-  - http://baltimore.classivox.com/t/escorts/
-  - http://eastern-shore.classivox.com/t/escorts/
-  - http://frederick.classivox.com/t/escorts/
-  - http://southern-md.classivox.com/t/escorts/
-  - http://western-md.classivox.com/t/escorts/
-  - http://maine.classivox.com/t/escorts/
-  - http://baton-rouge.classivox.com/t/escorts/
-  - http://central-la.classivox.com/t/escorts/
-  - http://houma.classivox.com/t/escorts/
-  - http://lafayette-la.classivox.com/t/escorts/
-  - http://lake-charles.classivox.com/t/escorts/
-  - http://monroe.classivox.com/t/escorts/
-  - http://new-orleans.classivox.com/t/escorts/
-  - http://shreveport.classivox.com/t/escorts/
-  - http://lawrence.classivox.com/t/escorts/
-  - http://manhattan-ks.classivox.com/t/escorts/
-  - http://northwest-ks.classivox.com/t/escorts/
-  - http://salina.classivox.com/t/escorts/
-  - http://southeast-ks.classivox.com/t/escorts/
-  - http://southwest-ks.classivox.com/t/escorts/
-  - http://topeka.classivox.com/t/escorts/
-  - http://wichita.classivox.com/t/escorts/
-  - http://bowling-green.classivox.com/t/escorts/
-  - http://eastern-ky.classivox.com/t/escorts/
-  - http://lexington.classivox.com/t/escorts/
-  - http://louisville.classivox.com/t/escorts/
-  - http://owensboro.classivox.com/t/escorts/
-  - http://western-ky.classivox.com/t/escorts/
-  - http://bloomington.classivox.com/t/escorts/
-  - http://champaign.classivox.com/t/escorts/
-  - http://chicago.classivox.com/t/escorts/
-  - http://decatur.classivox.com/t/escorts/
-  - http://la-salle.classivox.com/t/escorts/
-  - http://mattoon.classivox.com/t/escorts/
-  - http://peoria.classivox.com/t/escorts/
-  - http://rockford.classivox.com/t/escorts/
-  - http://southern-il.classivox.com/t/escorts/
-  - http://springfield.classivox.com/t/escorts/
-  - http://western-il.classivox.com/t/escorts/
-  - http://bloomington-in.classivox.com/t/escorts/
-  - http://evansville.classivox.com/t/escorts/
-  - http://fort-wayne.classivox.com/t/escorts/
-  - http://indianapolis.classivox.com/t/escorts/
-  - http://kokomo.classivox.com/t/escorts/
-  - http://lafayette.classivox.com/t/escorts/
-  - http://muncie.classivox.com/t/escorts/
-  - http://richmond.classivox.com/t/escorts/
-  - http://south-bend.classivox.com/t/escorts/
-  - http://terre-haute.classivox.com/t/escorts/
-  - http://ames.classivox.com/t/escorts/
-  - http://cedar-rapids.classivox.com/t/escorts/
-  - http://des-moines.classivox.com/t/escorts/
-  - http://dubuque.classivox.com/t/escorts/
-  - http://fort-dodge.classivox.com/t/escorts/
-  - http://iowa-city.classivox.com/t/escorts/
-  - http://mason-city.classivox.com/t/escorts/
-  - http://quad-cities.classivox.com/t/escorts/
-  - http://sioux-city.classivox.com/t/escorts/
-  - http://southeast-ia.classivox.com/t/escorts/
-  - http://waterloo.classivox.com/t/escorts/
-  - http://boise.classivox.com/t/escorts/
-  - http://lewiston.classivox.com/t/escorts/
-  - http://twin-falls.classivox.com/t/escorts/
-  - http://honolulu.classivox.com/t/escorts/
-  - http://broward-county.classivox.com/t/escorts/
-  - http://daytona-beach.classivox.com/t/escorts/
-  - http://florida-keys.classivox.com/t/escorts/
-  - http://fort-lauderdale.classivox.com/t/escorts/
-  - http://gainesville.classivox.com/t/escorts/
-  - http://heartland-fl.classivox.com/t/escorts/
-  - http://jacksonville.classivox.com/t/escorts/
-  - http://lakeland.classivox.com/t/escorts/
-  - http://miami-dade.classivox.com/t/escorts/
-  - http://north-central-fl.classivox.com/t/escorts/
-  - http://ocala.classivox.com/t/escorts/
-  - http://okaloosa.classivox.com/t/escorts/
-  - http://orlando.classivox.com/t/escorts/
-  - http://palm-beach-county.classivox.com/t/escorts/
-  - http://panama-city.classivox.com/t/escorts/
-  - http://pensacola.classivox.com/t/escorts/
-  - http://sarasota.classivox.com/t/escorts/
-  - http://space-coast.classivox.com/t/escorts/
-  - http://st-augustine.classivox.com/t/escorts/
-  - http://tallahassee.classivox.com/t/escorts/
-  - http://tampa-bay.classivox.com/t/escorts/
-  - http://treasure-coast.classivox.com/t/escorts/
-  - http://west-palm-beach.classivox.com/t/escorts/
-  - http://albany-ga.classivox.com/t/escorts/
-  - http://athens.classivox.com/t/escorts/
-  - http://atlanta.classivox.com/t/escorts/
-  - http://augusta.classivox.com/t/escorts/
-  - http://brunswick.classivox.com/t/escorts/
-  - http://columbus.classivox.com/t/escorts/
-  - http://macon.classivox.com/t/escorts/
-  - http://northwest-ga.classivox.com/t/escorts/
-  - http://savannah.classivox.com/t/escorts/
-  - http://statesboro.classivox.com/t/escorts/
-  - http://valdosta.classivox.com/t/escorts/
-  - http://washington-dc.classivox.com/t/escorts/
-  - http://billings.classivox.com/t/escorts/
-  - http://bozeman.classivox.com/t/escorts/
-  - http://butte.classivox.com/t/escorts/
-  - http://great-falls.classivox.com/t/escorts/
-  - http://helena.classivox.com/t/escorts/
-  - http://kalispell.classivox.com/t/escorts/
-  - http://missoula.classivox.com/t/escorts/
-  - http://old-montana.classivox.com/t/escorts/
-  - http://delaware.classivox.com/t/escorts/
-  - http://eastern-ct.classivox.com/t/escorts/
-  - http://hartford.classivox.com/t/escorts/
-  - http://new-haven.classivox.com/t/escorts/
-  - http://northwest-ct.classivox.com/t/escorts/
-  - http://bakersfield.classivox.com/t/escorts/
-  - http://chico.classivox.com/t/escorts/
-  - http://fresno-madera.classivox.com/t/escorts/
-  - http://gold-country.classivox.com/t/escorts/
-  - http://hanford-corcoran.classivox.com/t/escorts/
-  - http://humboldt-county.classivox.com/t/escorts/
-  - http://imperial-county.classivox.com/t/escorts/
-  - http://inland-empire.classivox.com/t/escorts/
-  - http://los-angeles.classivox.com/t/escorts/
-  - http://mendocino-county.classivox.com/t/escorts/
-  - http://merced.classivox.com/t/escorts/
-  - http://modesto.classivox.com/t/escorts/
-  - http://monterey-bay.classivox.com/t/escorts/
-  - http://orange-county.classivox.com/t/escorts/
-  - http://palm-springs.classivox.com/t/escorts/
-  - http://redding.classivox.com/t/escorts/
-  - http://sacramento.classivox.com/t/escorts/
-  - http://san-diego.classivox.com/t/escorts/
-  - http://san-francisco.classivox.com/t/escorts/
-  - http://san-luis-obispo.classivox.com/t/escorts/
-  - http://santa-barbara.classivox.com/t/escorts/
-  - http://santa-maria.classivox.com/t/escorts/
-  - http://siskiyou-county.classivox.com/t/escorts/
-  - http://stockton.classivox.com/t/escorts/
-  - http://susanville.classivox.com/t/escorts/
-  - http://ventura-county.classivox.com/t/escorts/
-  - http://visalia-tulare.classivox.com/t/escorts/
-  - http://yuba-sutter.classivox.com/t/escorts/
-  - http://boulder.classivox.com/t/escorts/
-  - http://colorado-springs.classivox.com/t/escorts/
-  - http://denver.classivox.com/t/escorts/
-  - http://eastern-co.classivox.com/t/escorts/
-  - http://fort-collins.classivox.com/t/escorts/
-  - http://high-rockies.classivox.com/t/escorts/
-  - http://pueblo.classivox.com/t/escorts/
-  - http://western-slope.classivox.com/t/escorts/
-  - http://fayetteville.classivox.com/t/escorts/
-  - http://fort-smith.classivox.com/t/escorts/
-  - http://jonesboro.classivox.com/t/escorts/
-  - http://little-rock.classivox.com/t/escorts/
-  - http://texarkana.classivox.com/t/escorts/
-  - http://anchorage.classivox.com/t/escorts/
-  - http://fairbanks.classivox.com/t/escorts/
-  - http://kenai-peninsula.classivox.com/t/escorts/
-  - http://southeast-alaska.classivox.com/t/escorts/
-  - http://flagstaff-sedona.classivox.com/t/escorts/
-  - http://mohave-county.classivox.com/t/escorts/
-  - http://phoenix.classivox.com/t/escorts/
-  - http://prescott.classivox.com/t/escorts/
-  - http://show-low.classivox.com/t/escorts/
-  - http://sierra-vista.classivox.com/t/escorts/
-  - http://tucson.classivox.com/t/escorts/
-  - http://yuma.classivox.com/t/escorts/
-
-# The regex to pull ad links out of the indexed page
-findadregex: http://.+classivox\.com/t/female-escorts/.+
-
-# How many pagination pages deep to go, given a list of pagination urls 
-paginatenum: 1
-
-# The regex to pull pagination links out of the indexed page
-paginateregex: http://.+classivox\.com/t/escorts/\d+
-
-# Needed or we will get banned (in seconds)
+campaignid: memex
 downloaddelay: 15
-
-# the redis hash key to manage duplicate urls and refresh alerts
-# this should be the same across indexers doing the same site
+engagementid: eng1
+findurlregex: http://.+classivox\.com/t/female-escorts/.+
+paginatenum: 1
+paginateregex: http://.+classivox\.com/t/escorts/\d+
 rediskey: indexer-classivox
+urllist:
+- http://charleston-wv.classivox.com/t/escorts/
+- http://eastern-panhandle.classivox.com/t/escorts/
+- http://huntington.classivox.com/t/escorts/
+- http://morgantown.classivox.com/t/escorts/
+- http://north-panhandle.classivox.com/t/escorts/
+- http://old-west-virginia.classivox.com/t/escorts/
+- http://parkersburg.classivox.com/t/escorts/
+- http://south-wv.classivox.com/t/escorts/
+- http://altoona.classivox.com/t/escorts/
+- http://cumberland.classivox.com/t/escorts/
+- http://erie.classivox.com/t/escorts/
+- http://harrisburg.classivox.com/t/escorts/
+- http://lancaster.classivox.com/t/escorts/
+- http://lehigh-valley.classivox.com/t/escorts/
+- http://meadville.classivox.com/t/escorts/
+- http://philadelphia.classivox.com/t/escorts/
+- http://pittsburgh.classivox.com/t/escorts/
+- http://poconos.classivox.com/t/escorts/
+- http://reading.classivox.com/t/escorts/
+- http://scranton.classivox.com/t/escorts/
+- http://state-college.classivox.com/t/escorts/
+- http://williamsport.classivox.com/t/escorts/
+- http://york.classivox.com/t/escorts/
+- http://abilene.classivox.com/t/escorts/
+- http://amarillo.classivox.com/t/escorts/
+- http://austin.classivox.com/t/escorts/
+- http://beaumont.classivox.com/t/escorts/
+- http://brownsville.classivox.com/t/escorts/
+- http://college-station.classivox.com/t/escorts/
+- http://corpus-christi.classivox.com/t/escorts/
+- http://dallas-ft-worth.classivox.com/t/escorts/
+- http://deep-east-tx.classivox.com/t/escorts/
+- http://del-rio.classivox.com/t/escorts/
+- http://el-paso.classivox.com/t/escorts/
+- http://galveston.classivox.com/t/escorts/
+- http://houston.classivox.com/t/escorts/
+- http://killeen.classivox.com/t/escorts/
+- http://laredo.classivox.com/t/escorts/
+- http://lubbock.classivox.com/t/escorts/
+- http://mcallen.classivox.com/t/escorts/
+- http://odessa.classivox.com/t/escorts/
+- http://san-angelo.classivox.com/t/escorts/
+- http://san-antonio.classivox.com/t/escorts/
+- http://san-marcos.classivox.com/t/escorts/
+- http://southwest-tx.classivox.com/t/escorts/
+- http://texoma.classivox.com/t/escorts/
+- http://tyler.classivox.com/t/escorts/
+- http://victoria-tx.classivox.com/t/escorts/
+- http://waco.classivox.com/t/escorts/
+- http://wichita-falls.classivox.com/t/escorts/
+- http://bend.classivox.com/t/escorts/
+- http://corvallis.classivox.com/t/escorts/
+- http://east-oregon.classivox.com/t/escorts/
+- http://eugene.classivox.com/t/escorts/
+- http://klamath-falls.classivox.com/t/escorts/
+- http://medford.classivox.com/t/escorts/
+- http://oregon-coast.classivox.com/t/escorts/
+- http://portland.classivox.com/t/escorts/
+- http://roseburg.classivox.com/t/escorts/
+- http://salem.classivox.com/t/escorts/
+- http://charlottesville.classivox.com/t/escorts/
+- http://danville.classivox.com/t/escorts/
+- http://fredericksburg-va.classivox.com/t/escorts/
+- http://hampton-roads.classivox.com/t/escorts/
+- http://harrisonburg.classivox.com/t/escorts/
+- http://lynchburg.classivox.com/t/escorts/
+- http://new-river-valley.classivox.com/t/escorts/
+- http://richmond.classivox.com/t/escorts/
+- http://roanoke.classivox.com/t/escorts/
+- http://southwest-va.classivox.com/t/escorts/
+- http://winchester.classivox.com/t/escorts/
+- http://auburn.classivox.com/t/escorts/
+- http://birmingham-al.classivox.com/t/escorts/
+- http://dothan.classivox.com/t/escorts/
+- http://florence-muscle-shoals.classivox.com/t/escorts/
+- http://gadsden-anniston.classivox.com/t/escorts/
+- http://huntsville-decatur.classivox.com/t/escorts/
+- http://mobile.classivox.com/t/escorts/
+- http://montgomery.classivox.com/t/escorts/
+- http://tuscaloosa.classivox.com/t/escorts/
+- http://chattanooga.classivox.com/t/escorts/
+- http://clarksville.classivox.com/t/escorts/
+- http://cookeville.classivox.com/t/escorts/
+- http://jackson-tn.classivox.com/t/escorts/
+- http://knoxville.classivox.com/t/escorts/
+- http://memphis.classivox.com/t/escorts/
+- http://nashville.classivox.com/t/escorts/
+- http://tri-cities.classivox.com/t/escorts/
+- http://lawton.classivox.com/t/escorts/
+- http://northwest-ok.classivox.com/t/escorts/
+- http://oklahoma-city.classivox.com/t/escorts/
+- http://stillwater.classivox.com/t/escorts/
+- http://tulsa.classivox.com/t/escorts/
+- http://charleston.classivox.com/t/escorts/
+- http://columbia-sc.classivox.com/t/escorts/
+- http://florence.classivox.com/t/escorts/
+- http://greenville.classivox.com/t/escorts/
+- http://hilton-head.classivox.com/t/escorts/
+- http://myrtle-beach.classivox.com/t/escorts/
+- http://bellingham.classivox.com/t/escorts/
+- http://kennewick.classivox.com/t/escorts/
+- http://moses-lake.classivox.com/t/escorts/
+- http://olympic-peninsula.classivox.com/t/escorts/
+- http://pullman.classivox.com/t/escorts/
+- http://seattle-tacoma.classivox.com/t/escorts/
+- http://skagit.classivox.com/t/escorts/
+- http://spokane.classivox.com/t/escorts/
+- http://wenatchee.classivox.com/t/escorts/
+- http://yakima.classivox.com/t/escorts/
+- http://appleton.classivox.com/t/escorts/
+- http://eau-claire.classivox.com/t/escorts/
+- http://green-bay.classivox.com/t/escorts/
+- http://janesville.classivox.com/t/escorts/
+- http://kenosha.classivox.com/t/escorts/
+- http://la-crosse.classivox.com/t/escorts/
+- http://madison.classivox.com/t/escorts/
+- http://milwaukee.classivox.com/t/escorts/
+- http://northern-wi.classivox.com/t/escorts/
+- http://sheboygan.classivox.com/t/escorts/
+- http://wausau.classivox.com/t/escorts/
+- http://northeast-sd.classivox.com/t/escorts/
+- http://pierre.classivox.com/t/escorts/
+- http://rapid-city.classivox.com/t/escorts/
+- http://sioux-falls.classivox.com/t/escorts/
+- http://south-dakota.classivox.com/t/escorts/
+- http://logan.classivox.com/t/escorts/
+- http://ogden.classivox.com/t/escorts/
+- http://provo.classivox.com/t/escorts/
+- http://salt-lake-city.classivox.com/t/escorts/
+- http://st-george.classivox.com/t/escorts/
+- http://burlington.classivox.com/t/escorts/
+- http://cheyenne.classivox.com/t/escorts/
+- http://rhode-island.classivox.com/t/escorts/
+- http://akron.classivox.com/t/escorts/
+- http://ashtabula.classivox.com/t/escorts/
+- http://athens-oh.classivox.com/t/escorts/
+- http://chillicothe.classivox.com/t/escorts/
+- http://cincinnati.classivox.com/t/escorts/
+- http://cleveland.classivox.com/t/escorts/
+- http://columbus-oh.classivox.com/t/escorts/
+- http://dayton.classivox.com/t/escorts/
+- http://lima-oh.classivox.com/t/escorts/
+- http://mansfield.classivox.com/t/escorts/
+- http://sandusky.classivox.com/t/escorts/
+- http://toledo.classivox.com/t/escorts/
+- http://tuscarawas.classivox.com/t/escorts/
+- http://youngstown.classivox.com/t/escorts/
+- http://zanesville.classivox.com/t/escorts/
+- http://asheville.classivox.com/t/escorts/
+- http://boone.classivox.com/t/escorts/
+- http://charlotte.classivox.com/t/escorts/
+- http://eastern-nc.classivox.com/t/escorts/
+- http://fayetteville-nc.classivox.com/t/escorts/
+- http://greensboro.classivox.com/t/escorts/
+- http://hickory.classivox.com/t/escorts/
+- http://jacksonville-nc.classivox.com/t/escorts/
+- http://outer-banks.classivox.com/t/escorts/
+- http://raleigh.classivox.com/t/escorts/
+- http://wilmington.classivox.com/t/escorts/
+- http://winston-salem.classivox.com/t/escorts/
+- http://new-hampshire.classivox.com/t/escorts/
+- http://albany.classivox.com/t/escorts/
+- http://binghamton.classivox.com/t/escorts/
+- http://buffalo.classivox.com/t/escorts/
+- http://catskills.classivox.com/t/escorts/
+- http://chautauqua.classivox.com/t/escorts/
+- http://elmira.classivox.com/t/escorts/
+- http://finger-lakes.classivox.com/t/escorts/
+- http://glens-falls.classivox.com/t/escorts/
+- http://hudson-valley.classivox.com/t/escorts/
+- http://ithaca.classivox.com/t/escorts/
+- http://long-island.classivox.com/t/escorts/
+- http://manhattan.classivox.com/t/escorts/
+- http://new-york-city.classivox.com/t/escorts/
+- http://oneonta.classivox.com/t/escorts/
+- http://plattsburgh.classivox.com/t/escorts/
+- http://potsdam.classivox.com/t/escorts/
+- http://queens.classivox.com/t/escorts/
+- http://rochester-ny.classivox.com/t/escorts/
+- http://syracuse.classivox.com/t/escorts/
+- http://twin-tiers.classivox.com/t/escorts/
+- http://utica.classivox.com/t/escorts/
+- http://watertown.classivox.com/t/escorts/
+- http://bismarck.classivox.com/t/escorts/
+- http://fargo.classivox.com/t/escorts/
+- http://grand-forks.classivox.com/t/escorts/
+- http://north-dakota.classivox.com/t/escorts/
+- http://elko.classivox.com/t/escorts/
+- http://las-vegas.classivox.com/t/escorts/
+- http://reno.classivox.com/t/escorts/
+- http://central-nj.classivox.com/t/escorts/
+- http://jersey-shore.classivox.com/t/escorts/
+- http://north-jersey.classivox.com/t/escorts/
+- http://south-jersey.classivox.com/t/escorts/
+- http://albuquerque.classivox.com/t/escorts/
+- http://clovis.classivox.com/t/escorts/
+- http://farmington.classivox.com/t/escorts/
+- http://las-cruces.classivox.com/t/escorts/
+- http://roswell.classivox.com/t/escorts/
+- http://santa-fe.classivox.com/t/escorts/
+- http://columbia.classivox.com/t/escorts/
+- http://joplin.classivox.com/t/escorts/
+- http://kansas-city.classivox.com/t/escorts/
+- http://kirksville.classivox.com/t/escorts/
+- http://ozarks.classivox.com/t/escorts/
+- http://southeast-mo.classivox.com/t/escorts/
+- http://springfield-mo.classivox.com/t/escorts/
+- http://st-joseph.classivox.com/t/escorts/
+- http://st-louis.classivox.com/t/escorts/
+- http://grand-island.classivox.com/t/escorts/
+- http://lincoln.classivox.com/t/escorts/
+- http://north-platte.classivox.com/t/escorts/
+- http://omaha.classivox.com/t/escorts/
+- http://scottsbluff.classivox.com/t/escorts/
+- http://bemidji.classivox.com/t/escorts/
+- http://brainerd.classivox.com/t/escorts/
+- http://duluth.classivox.com/t/escorts/
+- http://mankato.classivox.com/t/escorts/
+- http://minneapolis.classivox.com/t/escorts/
+- http://rochester.classivox.com/t/escorts/
+- http://southwest-mn.classivox.com/t/escorts/
+- http://st-cloud.classivox.com/t/escorts/
+- http://gulfport.classivox.com/t/escorts/
+- http://hattiesburg.classivox.com/t/escorts/
+- http://jackson.classivox.com/t/escorts/
+- http://meridian.classivox.com/t/escorts/
+- http://north-ms.classivox.com/t/escorts/
+- http://southwest-ms.classivox.com/t/escorts/
+- http://ann-arbor.classivox.com/t/escorts/
+- http://battle-creek.classivox.com/t/escorts/
+- http://central-mi.classivox.com/t/escorts/
+- http://detroit.classivox.com/t/escorts/
+- http://flint.classivox.com/t/escorts/
+- http://grand-rapids.classivox.com/t/escorts/
+- http://holland.classivox.com/t/escorts/
+- http://jackson.classivox.com/t/escorts/
+- http://kalamazoo.classivox.com/t/escorts/
+- http://lansing.classivox.com/t/escorts/
+- http://monroe-mi.classivox.com/t/escorts/
+- http://muskegon.classivox.com/t/escorts/
+- http://northern-mi.classivox.com/t/escorts/
+- http://port-huron.classivox.com/t/escorts/
+- http://saginaw.classivox.com/t/escorts/
+- http://the-thumb.classivox.com/t/escorts/
+- http://upper-peninsula.classivox.com/t/escorts/
+- http://boston.classivox.com/t/escorts/
+- http://cape-cod.classivox.com/t/escorts/
+- http://south-coast.classivox.com/t/escorts/
+- http://western-ma.classivox.com/t/escorts/
+- http://worcester.classivox.com/t/escorts/
+- http://annapolis.classivox.com/t/escorts/
+- http://baltimore.classivox.com/t/escorts/
+- http://eastern-shore.classivox.com/t/escorts/
+- http://frederick.classivox.com/t/escorts/
+- http://southern-md.classivox.com/t/escorts/
+- http://western-md.classivox.com/t/escorts/
+- http://maine.classivox.com/t/escorts/
+- http://baton-rouge.classivox.com/t/escorts/
+- http://central-la.classivox.com/t/escorts/
+- http://houma.classivox.com/t/escorts/
+- http://lafayette-la.classivox.com/t/escorts/
+- http://lake-charles.classivox.com/t/escorts/
+- http://monroe.classivox.com/t/escorts/
+- http://new-orleans.classivox.com/t/escorts/
+- http://shreveport.classivox.com/t/escorts/
+- http://lawrence.classivox.com/t/escorts/
+- http://manhattan-ks.classivox.com/t/escorts/
+- http://northwest-ks.classivox.com/t/escorts/
+- http://salina.classivox.com/t/escorts/
+- http://southeast-ks.classivox.com/t/escorts/
+- http://southwest-ks.classivox.com/t/escorts/
+- http://topeka.classivox.com/t/escorts/
+- http://wichita.classivox.com/t/escorts/
+- http://bowling-green.classivox.com/t/escorts/
+- http://eastern-ky.classivox.com/t/escorts/
+- http://lexington.classivox.com/t/escorts/
+- http://louisville.classivox.com/t/escorts/
+- http://owensboro.classivox.com/t/escorts/
+- http://western-ky.classivox.com/t/escorts/
+- http://bloomington.classivox.com/t/escorts/
+- http://champaign.classivox.com/t/escorts/
+- http://chicago.classivox.com/t/escorts/
+- http://decatur.classivox.com/t/escorts/
+- http://la-salle.classivox.com/t/escorts/
+- http://mattoon.classivox.com/t/escorts/
+- http://peoria.classivox.com/t/escorts/
+- http://rockford.classivox.com/t/escorts/
+- http://southern-il.classivox.com/t/escorts/
+- http://springfield.classivox.com/t/escorts/
+- http://western-il.classivox.com/t/escorts/
+- http://bloomington-in.classivox.com/t/escorts/
+- http://evansville.classivox.com/t/escorts/
+- http://fort-wayne.classivox.com/t/escorts/
+- http://indianapolis.classivox.com/t/escorts/
+- http://kokomo.classivox.com/t/escorts/
+- http://lafayette.classivox.com/t/escorts/
+- http://muncie.classivox.com/t/escorts/
+- http://richmond.classivox.com/t/escorts/
+- http://south-bend.classivox.com/t/escorts/
+- http://terre-haute.classivox.com/t/escorts/
+- http://ames.classivox.com/t/escorts/
+- http://cedar-rapids.classivox.com/t/escorts/
+- http://des-moines.classivox.com/t/escorts/
+- http://dubuque.classivox.com/t/escorts/
+- http://fort-dodge.classivox.com/t/escorts/
+- http://iowa-city.classivox.com/t/escorts/
+- http://mason-city.classivox.com/t/escorts/
+- http://quad-cities.classivox.com/t/escorts/
+- http://sioux-city.classivox.com/t/escorts/
+- http://southeast-ia.classivox.com/t/escorts/
+- http://waterloo.classivox.com/t/escorts/
+- http://boise.classivox.com/t/escorts/
+- http://lewiston.classivox.com/t/escorts/
+- http://twin-falls.classivox.com/t/escorts/
+- http://honolulu.classivox.com/t/escorts/
+- http://broward-county.classivox.com/t/escorts/
+- http://daytona-beach.classivox.com/t/escorts/
+- http://florida-keys.classivox.com/t/escorts/
+- http://fort-lauderdale.classivox.com/t/escorts/
+- http://gainesville.classivox.com/t/escorts/
+- http://heartland-fl.classivox.com/t/escorts/
+- http://jacksonville.classivox.com/t/escorts/
+- http://lakeland.classivox.com/t/escorts/
+- http://miami-dade.classivox.com/t/escorts/
+- http://north-central-fl.classivox.com/t/escorts/
+- http://ocala.classivox.com/t/escorts/
+- http://okaloosa.classivox.com/t/escorts/
+- http://orlando.classivox.com/t/escorts/
+- http://palm-beach-county.classivox.com/t/escorts/
+- http://panama-city.classivox.com/t/escorts/
+- http://pensacola.classivox.com/t/escorts/
+- http://sarasota.classivox.com/t/escorts/
+- http://space-coast.classivox.com/t/escorts/
+- http://st-augustine.classivox.com/t/escorts/
+- http://tallahassee.classivox.com/t/escorts/
+- http://tampa-bay.classivox.com/t/escorts/
+- http://treasure-coast.classivox.com/t/escorts/
+- http://west-palm-beach.classivox.com/t/escorts/
+- http://albany-ga.classivox.com/t/escorts/
+- http://athens.classivox.com/t/escorts/
+- http://atlanta.classivox.com/t/escorts/
+- http://augusta.classivox.com/t/escorts/
+- http://brunswick.classivox.com/t/escorts/
+- http://columbus.classivox.com/t/escorts/
+- http://macon.classivox.com/t/escorts/
+- http://northwest-ga.classivox.com/t/escorts/
+- http://savannah.classivox.com/t/escorts/
+- http://statesboro.classivox.com/t/escorts/
+- http://valdosta.classivox.com/t/escorts/
+- http://washington-dc.classivox.com/t/escorts/
+- http://billings.classivox.com/t/escorts/
+- http://bozeman.classivox.com/t/escorts/
+- http://butte.classivox.com/t/escorts/
+- http://great-falls.classivox.com/t/escorts/
+- http://helena.classivox.com/t/escorts/
+- http://kalispell.classivox.com/t/escorts/
+- http://missoula.classivox.com/t/escorts/
+- http://old-montana.classivox.com/t/escorts/
+- http://delaware.classivox.com/t/escorts/
+- http://eastern-ct.classivox.com/t/escorts/
+- http://hartford.classivox.com/t/escorts/
+- http://new-haven.classivox.com/t/escorts/
+- http://northwest-ct.classivox.com/t/escorts/
+- http://bakersfield.classivox.com/t/escorts/
+- http://chico.classivox.com/t/escorts/
+- http://fresno-madera.classivox.com/t/escorts/
+- http://gold-country.classivox.com/t/escorts/
+- http://hanford-corcoran.classivox.com/t/escorts/
+- http://humboldt-county.classivox.com/t/escorts/
+- http://imperial-county.classivox.com/t/escorts/
+- http://inland-empire.classivox.com/t/escorts/
+- http://los-angeles.classivox.com/t/escorts/
+- http://mendocino-county.classivox.com/t/escorts/
+- http://merced.classivox.com/t/escorts/
+- http://modesto.classivox.com/t/escorts/
+- http://monterey-bay.classivox.com/t/escorts/
+- http://orange-county.classivox.com/t/escorts/
+- http://palm-springs.classivox.com/t/escorts/
+- http://redding.classivox.com/t/escorts/
+- http://sacramento.classivox.com/t/escorts/
+- http://san-diego.classivox.com/t/escorts/
+- http://san-francisco.classivox.com/t/escorts/
+- http://san-luis-obispo.classivox.com/t/escorts/
+- http://santa-barbara.classivox.com/t/escorts/
+- http://santa-maria.classivox.com/t/escorts/
+- http://siskiyou-county.classivox.com/t/escorts/
+- http://stockton.classivox.com/t/escorts/
+- http://susanville.classivox.com/t/escorts/
+- http://ventura-county.classivox.com/t/escorts/
+- http://visalia-tulare.classivox.com/t/escorts/
+- http://yuba-sutter.classivox.com/t/escorts/
+- http://boulder.classivox.com/t/escorts/
+- http://colorado-springs.classivox.com/t/escorts/
+- http://denver.classivox.com/t/escorts/
+- http://eastern-co.classivox.com/t/escorts/
+- http://fort-collins.classivox.com/t/escorts/
+- http://high-rockies.classivox.com/t/escorts/
+- http://pueblo.classivox.com/t/escorts/
+- http://western-slope.classivox.com/t/escorts/
+- http://fayetteville.classivox.com/t/escorts/
+- http://fort-smith.classivox.com/t/escorts/
+- http://jonesboro.classivox.com/t/escorts/
+- http://little-rock.classivox.com/t/escorts/
+- http://texarkana.classivox.com/t/escorts/
+- http://anchorage.classivox.com/t/escorts/
+- http://fairbanks.classivox.com/t/escorts/
+- http://kenai-peninsula.classivox.com/t/escorts/
+- http://southeast-alaska.classivox.com/t/escorts/
+- http://flagstaff-sedona.classivox.com/t/escorts/
+- http://mohave-county.classivox.com/t/escorts/
+- http://phoenix.classivox.com/t/escorts/
+- http://prescott.classivox.com/t/escorts/
+- http://show-low.classivox.com/t/escorts/
+- http://sierra-vista.classivox.com/t/escorts/
+- http://tucson.classivox.com/t/escorts/
+- http://yuma.classivox.com/t/escorts/
