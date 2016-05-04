@@ -330,7 +330,8 @@
     - spark_worker_enabled: false
     - dfs_namenode_host: "{{ groups['hadoop-namenode-node'][0] }}"
     - yarn_historyserver_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
-  roles: [ spark ]
+  roles:
+    - spark
   tags:
     - site-spark
     - deps-spark
@@ -342,7 +343,8 @@
     - spark_worker_enabled: true
     - dfs_namenode_host: "{{ groups['hadoop-namenode-node'][0] }}"
     - yarn_historyserver_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
-  roles: [ spark ]
+  roles: 
+    - spark
   tags:
     - site-spark
     - deps-spark
