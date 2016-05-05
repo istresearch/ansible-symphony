@@ -14,7 +14,6 @@ Ansible Symphony allows developer and production level `Ansible <http://ansible.
     topics/production
     private_topics/ist_quickstart
     private_topics/pulse_deployment
-    private_topics/gdk_setup
     private_topics/private_roles/index
 
 Getting Started
@@ -49,9 +48,6 @@ IST Specific
 
 :doc:`private_topics/pulse_deployment`
     Information about Pulse deployments
-
-:doc:`private_topics/gdk_setup`
-    Information about deploying Pulse on a GDK laptop
 
 :doc:`private_topics/private_roles/index`
     Explains the individual IST custom ansible roles
