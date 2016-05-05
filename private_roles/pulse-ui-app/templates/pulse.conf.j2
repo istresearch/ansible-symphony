@@ -1,4 +1,4 @@
-<VirtualHost *:80>
+<VirtualHost *:{{ pulse_listen_port | default('80') }}>
     ServerName {{ pulse_url_host }}
     {% if pulse_self_signed_ssl==true %}
     SSLEngine On

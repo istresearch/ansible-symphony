@@ -3,6 +3,7 @@
 pulse_titan_pw: "{{ vault_pulse_password }}"
 pulse_db_password: "{{ vault_pulse_password }}"
 pulse_url_host: demo.istresearch.com
+pulse_listen_port: 80
 
 pulse_self_signed_ssl: false
 pulse_local_install: false
