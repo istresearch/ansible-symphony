@@ -1,8 +1,12 @@
 <VirtualHost *:{{ pulse_listen_port | default('80') }}>
     ServerName {{ pulse_url_host }}
+    {% if pulse_self_signed_ssl==true %}
     SSLEngine On
     SSLCertificateFile /etc/apache2/ssl/pulse.crt
     SSLCertificateKeyFile /etc/apache2/ssl/pulse.key
+    {% else %}
+    SSLEngine Off
+    {% endif %}
 
   ProxyRequests Off
   <Proxy *>
@@ -23,11 +27,11 @@
 
   DocumentRoot /var/www
   <Directory />
-    Options +FollowSymLinks
+    Options -Indexes +FollowSymLinks
     AllowOverride None
   </Directory>
   <Directory /var/www/>
-    Options +Indexes +FollowSymLinks -MultiViews
+    Options -Indexes +FollowSymLinks -MultiViews
     AllowOverride all
     Order allow,deny
     allow from all

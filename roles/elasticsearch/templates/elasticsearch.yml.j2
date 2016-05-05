@@ -109,7 +109,7 @@ network.publish_host: {{ inventory_hostname }}
 # Set the bind address to a specific IP (IPv4 or IPv6):
 #
 # network.host: 192.168.0.1
-network.host: {{ inventory_hostname }}
+network.host: ["{{ inventory_hostname }}", "127.0.0.1"]
 #
 # Set a custom port for the node to node communication (9300 by default):
 #

@@ -1,3 +1,4 @@
+SENTRY_SECRET = "{{ traptor_sentry_secret }}"
 LOG_LEVEL = "{{ traptor_log_level }}"
 
 KAFKA_HOSTS = "{% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}"

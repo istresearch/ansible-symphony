@@ -1,0 +1,32 @@
+#   - Comments begin with the '#' character
+#   - Blank lines are ignored
+#   - Groups of hosts are delimited by [header] elements
+#   - You can enter hostnames or ip addresses
+#   - A hostname/ip can be a member of multiple groups
+
+[all:vars]
+repository_host=repo.istresearch.com
+
+[kibi-demo-nodes:children]
+servers
+
+[aws:children]
+servers
+
+[servers]
+#127.0.0.1 host_alias=localhost
+# This group is 
+# Kibi Demo Server on AWS 
+kibi-demo.istresearch.com host_alias=kibi-demo.istresearch.com
+
+[elasticsearch-master-nodes]
+
+[elasticsearch-data-nodes]
+kibi-demo.istresearch.com elasticsearch_is_master=true
+
+[elasticsearch-client-nodes]
+
+[elasticsearch-nodes:children]
+elasticsearch-master-nodes
+elasticsearch-data-nodes
+elasticsearch-client-nodes
