@@ -3,6 +3,7 @@ pulse_db_legacy_setup: false
 pulse_db_table_prefix: pulse_
 pulse_db_webapp_table_prefix: webapp_
 pulse_db_name: pulse
+pulse_rds_dbhost: "{{ inventory_hostname }}"
 
 pulse_db_titan_user: "{{ pulse_titan_user | default('pulse-admin') }}"
 pulse_db_titan_email: "{{ pulse_titan_email | default('pulse.feedback@istresearch.com') }}"
@@ -12,7 +13,7 @@ pulse_mysql_databases:
   - { name: "{{ pulse_db_name }}", collation: utf8_general_ci, encoding: utf8, replicate: 0 }
 
 pulse_mysql_users:
-  - { name: "{{ pulse_db_user_name }}", host: "{{ inventory_hostname }}" , password: "{{ pulse_db_password }}", priv: "{{ pulse_db_user_name }}.*:ALL" }
+  - { name: "{{ pulse_db_user_name }}", host: "{{ pulse_url_host }}" , password: "{{ pulse_db_password }}", priv: "{{ pulse_db_user_name }}.*:ALL" }
 
 pulse_install_language_settings: true
 pulse_install_language_json: "\"install_language_settings\": {{ pulse_install_language_settings }}"
