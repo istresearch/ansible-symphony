@@ -3,11 +3,11 @@
 pulse_titan_pw: "{{ vault_pulse_password }}"
 pulse_db_password: "{{ vault_pulse_password }}"
 pulse_rds_password: "{{ vault_rds_password }}"
-#pulse_rds_dbhost: pulse-dev-db.istresearch.com
+pulse_rds_dbhost: pulse-dev-db.istresearch.com
 pulse_url_host: demo-dev.istresearch.com
-#pulse_install_database: true
+pulse_install_database: true
 
-#pulse_install_db_conn_json: "\"install_db_conn_files\": {{ pulse_install_db_conn_files }}, \"webapp_dbhost\": \"{{ pulse_rds_dbhost }}\", \"webapp_dbname\": \"{{ pulse_db_name }}\", \"webapp_dbuser\": \"{{ pulse_db_user_name }}\", \"webapp_dbpwrd\": \"{{ pulse_rds_password }}\", \"pulse_dbhost\": \"{{ pulse_rds_dbhost }}\", \"pulse_dbname\": \"{{ pulse_db_name }}\", \"pulse_dbuser\": \"{{ pulse_db_user_name }}\", \"pulse_dbpwrd\": \"{{ pulse_rds_password }}\""
+pulse_install_db_conn_json: "\"install_db_conn_files\": {{ pulse_install_db_conn_files }}, \"webapp_dbhost\": \"{{ pulse_rds_dbhost }}\", \"webapp_dbname\": \"{{ pulse_db_name }}\", \"webapp_dbuser\": \"{{ pulse_db_user_name }}\", \"webapp_dbpwrd\": \"{{ pulse_rds_password }}\", \"pulse_dbhost\": \"{{ pulse_rds_dbhost }}\", \"pulse_dbname\": \"{{ pulse_db_name }}\", \"pulse_dbuser\": \"{{ pulse_db_user_name }}\", \"pulse_dbpwrd\": \"{{ pulse_rds_password }}\""
 pulse_self_signed_ssl: false
 pulse_local_install: false
 mysql_root_password: "{{ vault_mysql_root_password }}"
