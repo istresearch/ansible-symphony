@@ -156,3 +156,6 @@ travis-trusty
 
 [mysql-node]
 travis-trusty
+
+[tarsnap-nodes]
+travis-trusty

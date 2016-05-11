@@ -29,6 +29,7 @@ env:
   - TAGS='mysql'
   - TAGS='deps-traptor'
   - TAGS='site-es-hadoop'
+  - TAGS='site-tarsnap'
 
 matrix:
   fast_finish: true

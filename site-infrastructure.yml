@@ -364,3 +364,11 @@
   tags:
     - site-traptor
     - deps-traptor
+
+# ---------------------------------- Tarsnap --------------------------------
+
+- name: Tarsnap
+  hosts: tarsnap-nodes
+  roles: [ tarsnap ]
+  tags:
+    - site-tarsnap
