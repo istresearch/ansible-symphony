@@ -28,6 +28,11 @@
     - common
     - resolvconf
 
+- include: sshd.yml
+  tags:
+    - common
+    - sshd
+
 - name: Set fact common_has_run
   set_fact:
     common_has_run: true
