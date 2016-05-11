@@ -1,5 +1,5 @@
 ---
 - name: restart traptor
   supervisorctl:
-    name={{ traptor_name }}
+    name="{{ traptor_name }}:"
     state=restarted

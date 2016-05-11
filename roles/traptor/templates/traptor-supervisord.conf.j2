@@ -1,8 +1,8 @@
 {% if inventory_hostname in groups['traptor-track-nodes'] %}
-[program:traptor_track]
+[program:traptor]
 command={{ traptor_miniconda_env }}/bin/python {{ traptor_install_dir }}/default/traptor.py --info --delay=5 --type=track --key=%(process_num)02d --id=%(process_num)02d
 directory={{ traptor_install_dir }}/default
-process_name=%(process_num)02d
+process_name=track_%(process_num)02d
 numprocs={{ traptor_track_count }}
 autostart=true
 autorestart=true
@@ -16,10 +16,10 @@ stderr_logfile_maxbytes={{ traptor_stderr_logfile_maxbytes }}
 {% endif %}
 
 {% if inventory_hostname in groups['traptor-follow-nodes'] %}
-[program:traptor_follow]
+[program:traptor]
 command={{ traptor_miniconda_env }}/bin/python {{ traptor_install_dir }}/default/traptor.py --info --delay=5 --type=follow --key=%(process_num)02d --id=%(process_num)02d
 directory={{ traptor_install_dir }}/default
-process_name=%(process_num)02d
+process_name=follow_%(process_num)02d
 numprocs={{ traptor_follow_count }}
 autostart=true
 autorestart=true
@@ -33,10 +33,10 @@ stderr_logfile_maxbytes={{ traptor_stderr_logfile_maxbytes }}
 {% endif %}
 
 {% if inventory_hostname in groups['traptor-location-nodes'] %}
-[program:traptor_location]
+[program:traptor]
 command={{ traptor_miniconda_env }}/bin/python {{ traptor_install_dir }}/default/traptor.py --info --delay=5 --type=location --key=%(process_num)02d --id=%(process_num)02d
 directory={{ traptor_install_dir }}/default
-process_name=%(process_num)02d
+process_name=location_%(process_num)02d
 numprocs={{ traptor_location_count }}
 autostart=true
 autorestart=true
