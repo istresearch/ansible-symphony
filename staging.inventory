@@ -125,6 +125,9 @@ scrapy-cluster-indexer-nodes
 [logstash-nodes]
 vagrant-ist-01
 
+[hue-nodes]
+vagrant-as-02
+
 #
 # Applications topology
 #

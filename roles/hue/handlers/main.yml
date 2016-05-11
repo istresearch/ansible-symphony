@@ -1,0 +1,6 @@
+---
+
+- name: restart hue
+  supervisorctl:
+    name=hue
+    state=restarted
