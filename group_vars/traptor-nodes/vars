@@ -7,6 +7,10 @@ traptor_kafka_topic: "{{ vault_traptor_kafka_topic }}"
 
 apikeys: "{{ vault_apikeys }}"
 
+traptor_track_apikeys: "{{ vault_traptor_track_apikeys }}"
+traptor_follow_apikeys: "{{ vault_traptor_follow_apikeys }}"
+traptor_location_apikeys: "{{ vault_traptor_location_apikeys }}"
+
 # Only for production memex cluster.  For vagrant testing, host_vars is used
 traptor_es_port: 59200
 traptor_log_level: "INFO"
