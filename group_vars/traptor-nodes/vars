@@ -5,7 +5,9 @@ traptor_sentry_secret: "{{ vault_traptor_sentry_secret }}"
 
 traptor_kafka_topic: "{{ vault_traptor_kafka_topic }}"
 
-apikeys: "{{ vault_apikeys }}"
+traptor_track_count: 2
+traptor_follow_count: 2
+traptor_location_count: 6
 
 traptor_track_apikeys: "{{ vault_traptor_track_apikeys }}"
 traptor_follow_apikeys: "{{ vault_traptor_follow_apikeys }}"
