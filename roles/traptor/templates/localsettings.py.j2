@@ -24,7 +24,7 @@ APIKEYS = (
 
 {% if inventory_hostname in groups['traptor-follow-nodes'] %}
 APIKEYS = (
-{% for key in groups['traptor-follow-nodes'] %}
+{% for key in traptor_follow_apikeys %}
     {
         'CONSUMER_KEY': "{{ traptor_follow_apikeys[loop.index - 1]['consumer_key'] }}",
         'CONSUMER_SECRET': "{{ traptor_follow_apikeys[loop.index - 1]['consumer_secret'] }}",
@@ -38,7 +38,7 @@ APIKEYS = (
 
 {% if inventory_hostname in groups['traptor-location-nodes'] %}
 APIKEYS = (
-{% for key in groups['traptor-location-nodes'] %}
+{% for key in traptor_location_apikeys %}
     {
         'CONSUMER_KEY': "{{ traptor_location_apikeys[loop.index - 1]['consumer_key'] }}",
         'CONSUMER_SECRET': "{{ traptor_location_apikeys[loop.index - 1]['consumer_secret'] }}",
