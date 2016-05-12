@@ -22,6 +22,8 @@ traptor_track_count: 2
 traptor_follow_count: 1
 traptor_location_count: 1
 
+traptor_redis_pubsub: "traptor-notify"
+
 # Traptor localsettings.py
 traptor_kafka_topic: "traptor"
 
