@@ -9,8 +9,6 @@ REDIS_PORT = {{ traptor_redis_port }}
 REDIS_DB = {{ traptor_redis_db }}
 REDIS_PUBSUB_CHANNEL = "{{ traptor_redis_pubsub }}"
 
-KAFKA_TOPIC = "{{ traptor_kafka_topic }}"
-
 # Twitter API Keys
 {% if inventory_hostname in groups['traptor-track-nodes'] %}
 APIKEYS = (
