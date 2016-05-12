@@ -1,8 +1,9 @@
-[program:{{ traptor_name }}]
-command={{ traptor_miniconda_env }}/bin/python {{ traptor_install_dir }}/default/traptor.py --info --delay=5
+{% if inventory_hostname in groups['traptor-track-nodes'] %}
+[program:traptor]
+command={{ traptor_miniconda_env }}/bin/python {{ traptor_install_dir }}/default/traptor.py --info --delay=5 --type=track --key=%(process_num)02d --id=%(process_num)02d
 directory={{ traptor_install_dir }}/default
-process_name=%(program_name)s
-numprocs={{ traptor_num_procs }}
+process_name=track_%(process_num)02d
+numprocs={{ traptor_track_count }}
 autostart=true
 autorestart=true
 exitcodes=0,2,3
@@ -12,3 +13,40 @@ stopsignal=KILL
 redirect_stderr=true
 stderr_logfile=AUTO
 stderr_logfile_maxbytes={{ traptor_stderr_logfile_maxbytes }}
+{% endif %}
+
+{% if inventory_hostname in groups['traptor-follow-nodes'] %}
+[program:traptor]
+command={{ traptor_miniconda_env }}/bin/python {{ traptor_install_dir }}/default/traptor.py --info --delay=5 --type=follow --key=%(process_num)02d --id=%(process_num)02d
+directory={{ traptor_install_dir }}/default
+process_name=follow_%(process_num)02d
+numprocs={{ traptor_follow_count }}
+autostart=true
+autorestart=true
+exitcodes=0,2,3
+startsecs={{ traptor_start_secs }}
+startretries={{ traptor_start_retries }}
+stopsignal=KILL
+redirect_stderr=true
+stderr_logfile=AUTO
+stderr_logfile_maxbytes={{ traptor_stderr_logfile_maxbytes }}
+{% endif %}
+
+{% if inventory_hostname in groups['traptor-location-nodes'] %}
+[program:traptor]
+command={{ traptor_miniconda_env }}/bin/python {{ traptor_install_dir }}/default/traptor.py --info --delay=5 --type=location --key=%(process_num)02d --id=%(process_num)02d
+directory={{ traptor_install_dir }}/default
+process_name=location_%(process_num)02d
+numprocs={{ traptor_location_count }}
+autostart=true
+autorestart=true
+exitcodes=0,2,3
+startsecs={{ traptor_start_secs }}
+startretries={{ traptor_start_retries }}
+stopsignal=KILL
+redirect_stderr=true
+stderr_logfile=AUTO
+stderr_logfile_maxbytes={{ traptor_stderr_logfile_maxbytes }}
+{% endif %}
+
+

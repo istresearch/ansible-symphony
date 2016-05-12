@@ -8,7 +8,6 @@ traptor_miniconda_path: "/opt/miniconda/envs/traptor/lib/python2.7/site-packages
 miniconda_install_dir: "/opt/miniconda"
 
 # Supervisor config
-traptor_num_procs: 1
 traptor_start_secs: 5
 traptor_start_retries: 100
 traptor_stderr_logfile_maxbytes: 50MB
@@ -19,15 +18,30 @@ traptor_log_file: "{{ traptor_name }}.log"
 traptor_log_max_bytes: 25000000
 traptor_log_backups: 5
 
+traptor_track_count: 2
+traptor_follow_count: 1
+traptor_location_count: 1
+
 # Traptor localsettings.py
 traptor_kafka_topic: "traptor"
-traptor_type: "track"
 
-apikeys:
+traptor_track_apikeys:
+  - consumer_key: 'a'
+    consumer_secret: 'a'
+    access_token: 'a'
+    access_token_secret: 'a'
+  - consumer_key: 'b'
+    consumer_secret: 'b'
+    access_token: 'b'
+    access_token_secret: 'b'
+
+traptor_follow_apikeys:
   - consumer_key: ''
     consumer_secret: ''
     access_token: ''
     access_token_secret: ''
+
+traptor_location_apikeys:
   - consumer_key: ''
     consumer_secret: ''
     access_token: ''
