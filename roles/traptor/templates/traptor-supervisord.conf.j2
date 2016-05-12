@@ -34,7 +34,7 @@ stderr_logfile_maxbytes={{ traptor_stderr_logfile_maxbytes }}
 
 {% if inventory_hostname in groups['traptor-location-nodes'] %}
 [program:traptor]
-command={{ traptor_miniconda_env }}/bin/python {{ traptor_install_dir }}/default/traptor.py --info --delay=5 --type=location --key=%(process_num)02d --id=%(process_num)02d
+command={{ traptor_miniconda_env }}/bin/python {{ traptor_install_dir }}/default/traptor.py --info --delay=5 --type=locations --key=%(process_num)02d --id=%(process_num)02d
 directory={{ traptor_install_dir }}/default
 process_name=location_%(process_num)02d
 numprocs={{ traptor_location_count }}
