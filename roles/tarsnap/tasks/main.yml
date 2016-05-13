@@ -1,0 +1,183 @@
+---
+# file: roles/tarsnap/tasks/main.yml
+
+# Tarsnap installation instructions:
+# https://www.tarsnap.com/compiling.html
+# https://www.tarsnap.com/gettingstarted.html
+
+- name: Determine if tarsnap {{ tarsnap_version }} is installed
+  command: tarsnap --version
+  register: tarsnap_version_cmd
+
+  # Some older versions of tarsnap (incorrectly) use an exit code of 1 for
+  # `$ tarsnap  --version`. Thus the command module throwing a failure here
+  # doesn't necessarily mean the `tarsnap` command does not exist, the host may
+  # just have an older version of tarsnap.
+  failed_when: false
+  changed_when: false
+  tags:
+    - tarsnap
+    - tarsnap-install
+    - tarsnap-genkey
+    - tarsnap-conf
+
+- name: Determine if tarsnap is managed by Ansible
+  stat: path={{ tarsnap_default_symlink_path }}
+  register: tarsnap_symlink
+  tags:
+    - tarsnap
+    - tarsnap-install
+    - tarsnap-genkey
+    - tarsnap-conf
+
+###################################################
+# Install tarsnap
+###################################################
+- block:
+    - include: setup-{{ ansible_os_family}}.yml
+
+    - name: Create tarsnap installation directory
+      file:
+        path={{ tarsnap_install_dir }}
+        state=directory
+
+    - name: Download tarsnap tar
+      get_url:
+        url=https://www.tarsnap.com/download/tarsnap-autoconf-{{ tarsnap_version }}.tgz
+        dest={{ tarsnap_install_dir }}/tarsnap-autoconf-{{ tarsnap_version }}.tgz
+        checksum=sha256:{{ tarsnap_tar_sha256 }}
+
+    - name: Untar tarsnap
+      unarchive:
+        src={{ tarsnap_source_dir }}.tgz
+        dest={{ tarsnap_install_dir }}
+        copy=no
+
+    - name: Download Tarsnap-Generations script
+      get_url:
+        url=https://raw.githubusercontent.com/Gestas/Tarsnap-generations/029d130e6e7efa5f0ad1238667349d88d97b485a/tarsnap-generations.sh
+        dest={{ tarsnap_install_dir }}/tarsnap-generations.sh
+        mode=744
+
+    - name: Create default tarsnap symlink
+      file:
+        src={{ tarsnap_source_dir }}
+        dest={{ tarsnap_default_symlink_path }}
+        state=link
+
+    - name: Retrieve tarsnap executable filenames
+      find: paths={{ tarsnap_executable_dir }}
+      register: tarsnap_executable_dir_files
+
+    # Only compile if this hasn't been built yet (as indicated by no executable
+    # files found)
+    - name: Build tarsnap from source
+      command: "{{ item }}"
+      args:
+        chdir: "{{ tarsnap_source_dir }}"
+      with_items:
+        - ./configure --prefix={{ tarsnap_source_dir }}
+        - make install
+      when: tarsnap_executable_dir_files.matched == 0
+
+    - name: Create PATH-accessible symlinks to tarsnap executables
+      file:
+        src={{ tarsnap_default_symlink_path }}/bin/{{ item.path|basename }}
+        dest={{ tarsnap_executable_symlink_dest }}/{{ item.path|basename }}
+        state=link
+      with_items: "{{ tarsnap_executable_dir_files.files }}"
+
+  # Use |default to prevent KeyError in the case stdout doesn't exist (which
+  # implies the tarsnap command was not on the host at all)
+  when:
+    tarsnap_version_cmd.stdout|default("") != "tarsnap {{ tarsnap_version }}" or
+    tarsnap_symlink.stat.islnk is not defined
+  tags:
+    - tarsnap
+    - tarsnap-install
+
+###################################################
+# Move/Generate tarsnap keys
+###################################################
+- block:
+    # Previous installations of tarsnap existed at /root.
+    - name: Find existing tarsnap key
+      find:
+          paths:
+            - "{{ tarsnap_previous_key_dir }}/"
+            - "{{ tarsnap_install_dir }}/"
+          patterns: "*tarsnap*.key"
+      register: tarsnap_key
+
+    - name: Rename tarsnap key if it exists
+      command:
+        mv "{{ (tarsnap_key.files|first).path }}" "{{ tarsnap_conf_keyfile_path }}"
+        creates="{{ tarsnap_conf_keyfile_path }}"
+      when: tarsnap_key.matched == 1
+
+    - name: Generate tarsnap key if it does not exist
+      shell: "{{ tarsnap_executable_dir }}/tarsnap-keygen --keyfile {{ tarsnap_conf_keyfile_path }} --user {{ tarsnap_credentials.username }} --machine {{ ansible_nodename}} <<< {{ tarsnap_credentials.password }}"
+      args:
+        executable: /bin/bash # required for <<< syntax
+      when: tarsnap_key.matched == 0 and tarsnap_credentials is defined
+  tags:
+    - tarsnap
+    - tarsnap-genkey
+
+###################################################
+# Configuration / Cron
+###################################################
+- block:
+    - name: Copy tarsnap configuration file
+      template:
+        src=tarsnap.conf.j2
+        dest={{ tarsnap_config_path }}
+        mode=0644
+
+    - name: Create tarsnap configuration directory symlink
+      file:
+        src={{ tarsnap_config_dir }}
+        dest={{ tarsnap_config_symlink }}
+        state=link
+
+    - name: Create tarsnap cache directory
+      file:
+        path={{ tarsnap_conf_cache_dir }}
+        state=directory
+
+    - name: Remove pre-ansible Tarsnap-Generations crontab entry
+      lineinfile:
+        regexp="tarsnap-generations"
+        dest=/etc/crontab
+        state=absent
+
+    - name: Populate tarsnap backup folders list
+      lineinfile:
+        dest={{ tarsnap_folders_list }}
+        state=present
+        create=yes
+        line={{ item }}
+      with_items: "{{ tarsnap_backup_dirs }}"
+
+    - name: Create Tarsnap-Generations crontab entry
+      cron:
+        name: "Tarsnap backup via Tarsnap-Generations"
+        cron_file: tarsnap
+        user: root
+        minute: "{{ tarsnap_cron.minute }}"
+        hour: "{{ tarsnap_cron.hour }}"
+        day: "{{ tarsnap_cron.day_of_month }}"
+        month: "{{ tarsnap_cron.month }}"
+        weekday: "{{ tarsnap_cron.day_of_week }}"
+        job:
+            nice -n 20 {{ tarsnap_install_dir }}/tarsnap-generations.sh
+            -f {{ tarsnap_folders_list }}
+            -h {{ tarsnap_num_backups.hourly }}
+            -d {{ tarsnap_num_backups.daily }}
+            -w {{ tarsnap_num_backups.weekly }}
+            -m {{ tarsnap_num_backups.monthly }}
+            -q
+      when: tarsnap_credentials is defined
+  tags:
+    - tarsnap
+    - tarsnap-conf
