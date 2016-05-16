@@ -73,3 +73,11 @@
     - '172.27.43.81 in-slave08.nj.istresearch.com'
   tags:
     - internap
+
+- name: Set Swappiness to 1
+  sysctl:
+    name=vm.swappiness
+    value=1
+    state=present
+  tags:
+    - internap

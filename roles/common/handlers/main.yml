@@ -10,3 +10,13 @@
 
 - name: update resolvconf
   command: resolvconf -u
+
+- name: restart sshd Debian
+  service:
+    name=ssh
+    state=restarted
+
+- name: restart sshd RedHat
+  service:
+    name=sshd
+    state=restarted
