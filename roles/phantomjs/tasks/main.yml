@@ -33,7 +33,7 @@
   file:
     path: "{{ phantomjs_install_dir }}/"
     state: directory
-    mode: 0744
+    mode: 0755
     owner: "{{ phantomjs_user }}"
     group: "{{ phantomjs_group }}"
   tags: phantomjs
@@ -76,6 +76,14 @@
   file:
     path: "{{ phantomjs_install_dir }}/"
     recurse: yes
+    owner: "{{ phantomjs_user }}"
+    group: "{{ phantomjs_group }}"
+  tags: phantomjs
+
+- name: Change phantomjs file permissions
+  file:
+    path: "{{ phantomjs_install_dir }}/{{ phantomjs_version_name }}/bin/phantomjs"
+    mode: 0755
     owner: "{{ phantomjs_user }}"
     group: "{{ phantomjs_group }}"
   tags: phantomjs
