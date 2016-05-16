@@ -63,7 +63,6 @@ vagrant-as-01
 
 [spark-worker-nodes]
 vagrant-as-01
-vagrant-as-02
 
 [spark-nodes:children]
 spark-master-node
