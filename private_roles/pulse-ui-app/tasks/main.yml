@@ -78,6 +78,45 @@
   ignore_errors: yes
   tags: pulse-ui-app
 
+- name: Check for existing pulse ui install
+  stat: path={{ pulse_install_dir }}/pulse-{{ pulse_version }}/ui
+  register: pulse_ui_dir
+  tags: pulse-ui-app
+
+- name: Create pulse-ui3 directory
+  file:
+    path={{ pulse_install_dir }}/pulse-{{ pulse_version }}/ui
+    state=directory
+    mode=0755
+  when: not pulse_ui_dir.stat.exists
+  tags: pulse-ui-app
+
+- name: Download Pulse UI3
+  get_url:
+    url={{ pulse_repo_location }}/pulse-ui3/{{ pulse_ui_name }}-{{ pulse_ui_version }}.tar.gz
+    dest=/tmp/{{ pulse_ui_name }}-{{ pulse_ui_version }}.tar.gz
+    mode=0755
+    validate_certs=no
+    url_username={{ pulse_repo_user }}
+    url_password={{ pulse_repo_password }}
+  when: not pulse_ui_dir.stat.exists
+  tags: pulse-ui-app
+
+- name: Extract Pulse UI3
+  unarchive:
+    src=/tmp/{{ pulse_ui_name }}-{{ pulse_ui_version }}.tar.gz
+    dest={{ pulse_install_dir }}/pulse-{{ pulse_version }}/ui
+    copy=no
+  when: not pulse_ui_dir.stat.exists
+  tags: pulse-ui-app
+
+- name: Delete temporary Pulse UI3 file
+  file:
+    path=/tmp/{{ pulse_ui_name}}-{{ pulse_ui_version }}.tar.gz
+    state=absent
+  ignore_errors: yes
+  tags: pulse-ui-app
+
 - name: Check if Pollster directory exists
   stat:
     path={{ pulse_install_dir }}/pulse-{{ pulse_version }}/res/files
