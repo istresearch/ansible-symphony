@@ -5,6 +5,18 @@
     - phantomjs
   when: ansible_os_family == 'Debian'
   
+- name: setup required apt repositories
+  apt_repository:
+    repo={{ item }}
+    state=present
+  with_items:
+   - "deb http://archive.ubuntu.com/ubuntu trusty multiverse"
+   - "deb-src http://archive.ubuntu.com/ubuntu trusty multiverse"
+   - "deb http://archive.ubuntu.com/ubuntu trusty-updates multiverse"
+   - "deb-src http://archive.ubuntu.com/ubuntu trusty-updates multiverse"
+  tags: phantomjs
+  when: ansible_os_family == 'Debian'
+  
 - name: install required packages
   apt:
     name={{ item }}
@@ -13,6 +25,7 @@
    - fontconfig
    - ttf-mscorefonts-installer
   tags: phantomjs
+  when: ansible_os_family == 'Debian'
   
 - name: Configuring group
   group:
