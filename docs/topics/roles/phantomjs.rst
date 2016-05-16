@@ -1,7 +1,7 @@
 PhantomJS
 =======
 
-Installs `PhantomJS <http://phantomjs.org/>`, a headless WebKit browser.
+Installs `PhantomJS <http://phantomjs.org/>`_, a headless WebKit browser.
 
 
 Dependencies
