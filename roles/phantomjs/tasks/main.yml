@@ -1,0 +1,91 @@
+---
+- name: Accept the MS TrueType fonts installer EULA
+  command: echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections
+  tags:
+    - phantomjs
+  when: ansible_os_family == 'Debian'
+  
+- name: install required packages
+  apt:
+    name={{ item }}
+    state=latest
+  with_items:
+   - fontconfig
+   - ttf-mscorefonts-installer
+  tags: phantomjs
+  
+- name: Configuring group
+  group:
+    name: "{{ phantomjs_group }}"
+  tags:
+    - phantomjs
+
+- name: Configuring user
+  user:
+    name: "{{ phantomjs_user }}"
+    group: "{{ phantomjs_group }}"
+    createhome: no
+    shell: "/bin/bash"
+  tags:
+    - phantomjs
+
+- name: create phantomjs install directory
+  file:
+    path: "{{ phantomjs_install_dir }}/"
+    state: directory
+    mode: 0744
+    owner: "{{ phantomjs_user }}"
+    group: "{{ phantomjs_group }}"
+  tags: phantomjs
+
+- name: check for existing phantomjs install
+  stat:
+    path: "{{ phantomjs_install_dir }}/{{ phantomjs_version_name }}"
+  register: phantomjs
+  tags: phantomjs
+
+- name: download phantomjs
+  get_url:
+    url: "{{ repository_infrastructure }}/{{ phantomjs_archive }}"
+    dest: "/tmp/{{ phantomjs_archive }}"
+    mode: 0644
+    owner: "{{ phantomjs_user }}"
+    group: "{{ phantomjs_group }}"
+    validate_certs: no
+  when: phantomjs.stat.isdir is not defined
+  tags: phantomjs
+
+- name: extract phantomjs
+  unarchive:
+    src: "/tmp/{{ phantomjs_archive }}"
+    dest: "{{ phantomjs_install_dir }}/"
+    copy: no
+    owner: "{{ phantomjs_user }}"
+    group: "{{ phantomjs_group }}"
+  when: phantomjs.stat.isdir is not defined
+  tags: phantomjs
+
+- name: delete temporary phantomjs file
+  file:
+    path: "/tmp/{{ phantomjs_archive }}"
+    state: absent
+  ignore_errors: yes
+  tags: phantomjs
+
+- name: Change phantomjs file permissions
+  file:
+    path: "{{ phantomjs_install_dir }}/"
+    recurse: yes
+    owner: "{{ phantomjs_user }}"
+    group: "{{ phantomjs_group }}"
+  tags: phantomjs
+
+- name: create phantomjs symlink
+  file:
+    path: "{{ phantomjs_install_dir }}/default"
+    state: link
+    src: "{{ phantomjs_install_dir }}/{{ phantomjs_version_name }}"
+    owner: "{{ phantomjs_user }}"
+    group: "{{ phantomjs_group }}"
+  tags: phantomjs
+  

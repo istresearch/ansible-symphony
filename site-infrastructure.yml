@@ -372,3 +372,11 @@
   roles: [ tarsnap ]
   tags:
     - site-tarsnap
+
+# ---------------------------------- PhantomJS --------------------------------
+
+- name: PhantomJS
+  hosts: phantomjs-nodes
+  roles: [ phantomjs ]
+  tags:
+    - site-phantomjs
