@@ -96,5 +96,17 @@
     <name>hbase.zookeeper.property.clientPort</name>
     <value>{{ zookeeper_client_port|default(2181) }}</value>
   </property>
+  
+{% if hbase_snappy_compression %}
+  <property>
+    <name>hbase.master.check.compression</name>
+    <value>true</value>
+  </property>
 
+  <property>
+    <name>hbase.regionserver.codecs</name>
+    <value>snappy</value>
+  </property>
+  
+{% endif %}
 </configuration>
