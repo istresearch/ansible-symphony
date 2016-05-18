@@ -1,6 +1,6 @@
 [program:kafka]
 command={{ kafka_install_dir }}/default/bin/kafka-server-start.sh {{ kafka_config_dir }}/server.properties
-environment= KAFKA_HEAP_OPTS="-Xmx4G -Xms4G"
+environment= KAFKA_HEAP_OPTS="-Xmx{{ kafka_heap }} -Xms{{ kafka_heap }}"
 autostart=true
 autorestart=true
 startsecs=5
