@@ -11,14 +11,14 @@
   tags: kafka
 
 - name: check for existing install
-  stat: path={{ kafka_install_dir }}/kafka_{{ kafka_version }}
+  stat: path={{ kafka_install_dir }}/kafka_{{ kafka_scala_version }}-{{ kafka_version }}
   register: kafka
   tags: kafka
 
 - name: download kafka
   get_url:
-    url="{{ repository_infrastructure }}/kafka_{{ kafka_scala_version}}-{{ kafka_version }}.tgz"
-    dest="/tmp/kafka_{{ kafka_scala_version}}-{{ kafka_version }}.tgz"
+    url="{{ repository_infrastructure }}/kafka_{{ kafka_scala_version }}-{{ kafka_version }}.tgz"
+    dest="/tmp/kafka_{{ kafka_scala_version }}-{{ kafka_version }}.tgz"
     mode=0644
     validate_certs=no
   when: kafka.stat.isdir is not defined
@@ -26,7 +26,7 @@
 
 - name: extract kafka
   unarchive:
-    src="/tmp/kafka_{{ kafka_scala_version}}-{{ kafka_version }}.tgz"
+    src="/tmp/kafka_{{ kafka_scala_version }}-{{ kafka_version }}.tgz"
     dest={{ kafka_install_dir }}
     copy=no
   when: kafka.stat.isdir is not defined
@@ -34,7 +34,7 @@
 
 - name: delete temporary kafka file
   file:
-    path="/tmp/kafka_{{ kafka_scala_version}}-{{ kafka_version }}.tgz"
+    path="/tmp/kafka_{{ kafka_scala_version }}-{{ kafka_version }}.tgz"
     state=absent
   ignore_errors: yes
   tags: kafka
@@ -43,7 +43,7 @@
   file:
     path="{{ kafka_install_dir }}/default"
     state=link
-    src="{{ kafka_install_dir }}/kafka_{{ kafka_scala_version}}-{{ kafka_version }}"
+    src="{{ kafka_install_dir }}/kafka_{{ kafka_scala_version }}-{{ kafka_version }}"
   tags: kafka
 
 - name: configure kafka brokers
