@@ -126,7 +126,7 @@ scrapy-cluster-indexer-nodes
 vagrant-ist-01
 
 [hue-nodes]
-vagrant-as-02
+vagrant-ist-02
 
 #
 # Applications topology
