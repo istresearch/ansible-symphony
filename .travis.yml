@@ -30,6 +30,7 @@ env:
   - TAGS='deps-traptor'
   - TAGS='site-es-hadoop'
   - TAGS='site-tarsnap'
+  - TAGS='site-phantomjs'
 
 matrix:
   fast_finish: true
