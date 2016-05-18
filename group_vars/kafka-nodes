@@ -5,7 +5,7 @@
 
 # Internap slaves have 6 data disks, striping data across them.
 kafka_data_log_dir:
-  - '/data/1/kafka/topic-logs' 
+  - '/data/1/kafka/topic-logs'
   - '/data/2/kafka/topic-logs'
   - '/data/3/kafka/topic-logs'
   - '/data/4/kafka/topic-logs'
@@ -14,3 +14,4 @@ kafka_data_log_dir:
 
 # According to Apache Docs, num io threads should be at least equal number of disks.
 kafka_num_io_threads: 6
+kafka_heap: 4G
