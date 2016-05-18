@@ -173,7 +173,6 @@ vagrant-ist-02
 vagrant-ist-01
 
 [mysql-node]
-<<<<<<< HEAD
 vagrant-ist-01
 
 [pulse-ui-node]
@@ -181,10 +180,7 @@ vagrant-ist-01
 
 [pulse-mysql-es-host]
 vagrant-ist-01
-=======
-vagrant-as-01
 
 [phantomjs-nodes:children]
 storm-nodes
 spark-nodes
->>>>>>> upstream/master
