@@ -7,6 +7,12 @@ input {
   }
 }
 
+filter {
+    if 'topologies' in [tags] and [message] == "Tuple Emit" {
+      drop {}
+    }
+}
+
 output {
 {% if groups['elasticsearch-nodes'] is defined and (groups['elasticsearch-nodes']|length > 0) %}
   if 'topologies' in [tags]{
@@ -15,7 +21,7 @@ output {
       template => "{{ logstash_template_dir|default('/etc/logstash.d/templates') }}/pulse-logs-template.json"
       template_name => "logs-*"
       template_overwrite => true
-      index => "logs-topologies-%{+YYYY.MM}"
+      index => "logs-topologies-%{+YYYY.MM.dd}"
       document_type => "%{[logger]}"
     }
   }
