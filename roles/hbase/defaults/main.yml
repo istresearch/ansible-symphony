@@ -40,4 +40,8 @@ hbase_thriftserver_port: 9090
 hbase_thriftserver_info_port: 9095
 hbase_jmx_remote_port: 10102
 
+hbase_snappy_compression: true
+hbase_native_arch: Linux-amd64-64
+hbase_native_arch_dir: "{{ hbase_install_dir }}/default/lib/native/{{ hbase_native_arch }}"
+
 repository_infrastructure: "{{ apache_mirror }}/hbase/{{ hbase_version }}"

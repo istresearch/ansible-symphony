@@ -1,0 +1,37 @@
+---
+- name: install snappy compression
+  apt:
+    name={{ item }}
+    state=latest
+  with_items:
+   - libsnappy1
+  tags: 
+   - hbase
+   - snappy
+   
+- name: create hbase native lib directory
+  file:
+    path: "{{ hbase_native_arch_dir }}"
+    state: directory
+    mode: 0744
+    owner: "{{ hbase_user }}"
+    group: "{{ hbase_group }}"
+  tags: 
+   - hbase
+   - snappy
+  
+- name: create native lib symlinks
+  file:
+    path: "{{ item.path }}"
+    src: "{{ item.src }}"
+    state: link
+    mode: 0744
+    owner: "{{ hbase_user }}"
+    group: "{{ hbase_group }}"
+  with_items:
+    - { path: "{{ hbase_native_arch_dir }}/libhadoop.so", src: "{{ hdfs_install_dir|default('/opt/hadoop') }}/default/lib/native/libhadoop.so" }
+    - { path: "{{ hbase_native_arch_dir }}/libsnappy.so", src: "/usr/lib/libsnappy.so.1" }
+  tags: 
+   - hbase
+   - snappy
+  
