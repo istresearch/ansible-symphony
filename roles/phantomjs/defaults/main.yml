@@ -1,0 +1,10 @@
+---
+
+phantomjs_install_dir: /opt/phantomjs
+phantomjs_user: phantomjs
+phantomjs_group: phantomjs
+phantomjs_version: 2.1.1
+phantomjs_version_name: "phantomjs-{{ phantomjs_version }}-linux-x86_64"
+phantomjs_archive: "{{ phantomjs_version_name }}.tar.bz2"
+
+repository_infrastructure: "https://bitbucket.org/ariya/phantomjs/downloads"

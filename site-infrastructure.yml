@@ -281,6 +281,13 @@
     - site-hbase
     - deps-hbase
 
+# --------------------------------- Hue ------------------------------------
+- name: Hue Nodes
+  hosts: hue-nodes
+  roles: [ hue ]
+  tags:
+    - site-hue
+
 # --------------------------------- Spark ------------------------------------
 # Requires Hadoop and HDFS
 
@@ -357,3 +364,19 @@
   tags:
     - site-traptor
     - deps-traptor
+
+# ---------------------------------- Tarsnap --------------------------------
+
+- name: Tarsnap
+  hosts: tarsnap-nodes
+  roles: [ tarsnap ]
+  tags:
+    - site-tarsnap
+
+# ---------------------------------- PhantomJS --------------------------------
+
+- name: PhantomJS
+  hosts: phantomjs-nodes
+  roles: [ phantomjs ]
+  tags:
+    - site-phantomjs

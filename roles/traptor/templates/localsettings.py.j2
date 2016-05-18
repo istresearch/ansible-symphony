@@ -5,45 +5,46 @@ REDIS_HOST = "{{ groups['redis-master-node'][0] }}"
 REDIS_PORT = {{ traptor_redis_port }}
 REDIS_DB = {{ traptor_redis_db }}
 
-{% if inventory_hostname in groups['traptor-follow-nodes'] %}
-# Twitter Streaming API 'follow'
-{% for host in groups['traptor-follow-nodes'] %}
-{%- if host == inventory_hostname -%}
-
-TRAPTOR_ID = {{ loop.index - 1}}
-{%- endif -%}
-{% endfor %}
-
-TRAPTOR_TYPE = 'follow'
-{% endif %}
-
-
-{% if inventory_hostname in groups['traptor-track-nodes'] %}
-# Twitter Streaming API 'track'
-{% for host in groups['traptor-track-nodes'] %}
-{%- if host == inventory_hostname -%}
-
-TRAPTOR_ID = {{ loop.index - 1}}
-{%- endif -%}
-{% endfor %}
-
-TRAPTOR_TYPE = 'track'
-{% endif %}
-
 KAFKA_TOPIC = "{{ traptor_kafka_topic }}"
 
 # Twitter API Keys
-{% for host in groups['traptor-nodes'] %}
-{% if loop.index <= groups['traptor-nodes'] | length %}
-{%- if host == inventory_hostname -%}
+{% if inventory_hostname in groups['traptor-track-nodes'] %}
 APIKEYS = (
+{% for key in traptor_track_apikeys %}
     {
-        'CONSUMER_KEY': "{{ apikeys[loop.index - 1]['consumer_key'] }}",
-        'CONSUMER_SECRET': "{{ apikeys[loop.index - 1]['consumer_secret'] }}",
-        'ACCESS_TOKEN': "{{ apikeys[loop.index - 1]['access_token'] }}",
-        'ACCESS_TOKEN_SECRET': "{{ apikeys[loop.index - 1]['access_token_secret'] }}"
+        'CONSUMER_KEY': "{{ traptor_track_apikeys[loop.index - 1]['consumer_key'] }}",
+        'CONSUMER_SECRET': "{{ traptor_track_apikeys[loop.index - 1]['consumer_secret'] }}",
+        'ACCESS_TOKEN': "{{ traptor_track_apikeys[loop.index - 1]['access_token'] }}",
+        'ACCESS_TOKEN_SECRET': "{{ traptor_track_apikeys[loop.index - 1]['access_token_secret'] }}"
     },
-)
-{%- endif -%}
-{% endif %}
 {% endfor %}
+)
+{% endif %}
+
+
+{% if inventory_hostname in groups['traptor-follow-nodes'] %}
+APIKEYS = (
+{% for key in traptor_follow_apikeys %}
+    {
+        'CONSUMER_KEY': "{{ traptor_follow_apikeys[loop.index - 1]['consumer_key'] }}",
+        'CONSUMER_SECRET': "{{ traptor_follow_apikeys[loop.index - 1]['consumer_secret'] }}",
+        'ACCESS_TOKEN': "{{ traptor_follow_apikeys[loop.index - 1]['access_token'] }}",
+        'ACCESS_TOKEN_SECRET': "{{ traptor_follow_apikeys[loop.index - 1]['access_token_secret'] }}"
+    },
+{% endfor %}
+)
+{% endif %}
+
+
+{% if inventory_hostname in groups['traptor-location-nodes'] %}
+APIKEYS = (
+{% for key in traptor_location_apikeys %}
+    {
+        'CONSUMER_KEY': "{{ traptor_location_apikeys[loop.index - 1]['consumer_key'] }}",
+        'CONSUMER_SECRET': "{{ traptor_location_apikeys[loop.index - 1]['consumer_secret'] }}",
+        'ACCESS_TOKEN': "{{ traptor_location_apikeys[loop.index - 1]['access_token'] }}",
+        'ACCESS_TOKEN_SECRET': "{{ traptor_location_apikeys[loop.index - 1]['access_token_secret'] }}"
+    },
+{% endfor %}
+)
+{% endif %}

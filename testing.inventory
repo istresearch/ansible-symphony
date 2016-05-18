@@ -156,3 +156,10 @@ travis-trusty
 
 [mysql-node]
 travis-trusty
+
+[tarsnap-nodes]
+travis-trusty
+
+[phantomjs-nodes:children]
+storm-nodes
+spark-nodes

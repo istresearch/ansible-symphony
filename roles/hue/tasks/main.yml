@@ -1,0 +1,77 @@
+---
+# file: roles/hue/tasks/main.yml
+
+- name: apt install git
+  apt:
+    name: git
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
+  tags: 
+    - git
+    - hue
+
+#- name: add repository for java
+#  apt_repository:
+#    repo='ppa:webupd8team/java'
+#    state=present
+#  tags:
+#    - hue
+
+- name: install required packages
+  apt:
+    name={{ item }}
+    state=latest
+  with_items:
+   - ant
+   - gcc
+   - g++
+   - libkrb5-dev
+   - libffi-dev
+   - libmysqlclient-dev
+   - libssl-dev
+   - libsasl2-dev
+   - libsasl2-modules-gssapi-mit
+   - libsqlite3-dev
+   - libtidy-0.99-0
+   - libxml2-dev
+   - libxslt-dev
+   - make
+   - libldap2-dev
+   - maven
+   - python-dev
+   - python-setuptools
+   - libgmp3-dev
+#   - oracle-java7-installer
+#   - oracle-java7-set-default
+  tags: 
+    - hue-packages
+    - hue
+
+- name: download hue
+  git: 
+    repo=https://github.com/cloudera/hue.git
+    dest=/opt/hue
+  tags:
+    - hue
+
+- name: Build Hue
+  command: make apps
+  args:
+    chdir: /opt/hue
+
+- name: copy supervisord config
+  template:
+    src: hue-supervisord.conf.j2
+    dest: "{{ supervisord_programs_dir }}/hue-supervisord.conf"
+    mode: 0644
+  notify:
+    - reread supervisord
+    - restart hue
+  tags: hue
+
+- name: add hue to supervisord
+  supervisorctl:
+    name: hue
+    state: present
+  tags: hue

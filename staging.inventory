@@ -111,6 +111,9 @@ vagrant-as-01
 [logstash-nodes]
 vagrant-as-01
 
+[hue-nodes]
+vagrant-as-02
+
 #
 # Applications topology
 #
@@ -154,3 +157,7 @@ vagrant-as-02
 
 [mysql-node]
 vagrant-as-01
+
+[phantomjs-nodes:children]
+storm-nodes
+spark-nodes

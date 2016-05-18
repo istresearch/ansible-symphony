@@ -1,0 +1,12 @@
+---
+- name: Install tarsnap required packages via yum
+  yum:
+    name={{ item }}
+    state=latest
+  with_items:
+    - gcc
+    - make
+    - glibc-devel
+    - openssl-devel
+    - zlib-devel
+    - e2fsprogs-devel

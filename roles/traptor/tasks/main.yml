@@ -16,7 +16,7 @@
   tags: traptor
 
 - name: miniconda pip install Traptor
-  command: "{{ traptor_miniconda_env }}/bin/pip install -U traptor"
+  command: "{{ traptor_miniconda_env }}/bin/pip install traptor"
   tags: traptor
 
 - name: check if the Traptor install folder exists
