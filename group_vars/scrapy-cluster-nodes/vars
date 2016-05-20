@@ -8,6 +8,7 @@ sc_crawling_queue_hits: 60
 sc_crawling_kafka_appid_topics: True
 sc_crawling_kafka_base_64: True
 sc_crawling_num_procs: 10
+sc_crawling_interface: tun0
 
 # kafka monitor
 sc_kafka_monitor_plugins:

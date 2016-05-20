@@ -5,3 +5,4 @@
 traptor_es_port: 9200
 crawler_es_port: 9200
 monitis: false
+sc_crawling_interface: eth0

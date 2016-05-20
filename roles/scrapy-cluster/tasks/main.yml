@@ -96,6 +96,16 @@
   become_user: root
   tags: scrapy-cluster
 
+- name: install pre-scutils
+  pip:
+    name: "scutils"
+    version: "{{  sc_scutils_version }}"
+    virtualenv: "{{ sc_virtualenv_path }}"
+    extra_args: "--pre"
+  become: yes
+  become_user: root
+  tags: scrapy-cluster
+
 - name: chown venv folder
   file:
     path: "{{ sc_virtualenv_path }}"

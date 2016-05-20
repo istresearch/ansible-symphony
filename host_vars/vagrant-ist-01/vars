@@ -32,3 +32,5 @@ pulse_url_host: "{{ inventory_hostname }}"
 pulse_listen_port: 443
 
 kafka_heap: 1G
+
+sc_crawling_interface: eth0

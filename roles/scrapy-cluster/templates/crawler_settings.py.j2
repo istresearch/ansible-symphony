@@ -50,6 +50,10 @@ SCHEDULER_IP_ENABLED = {{ sc_crawling_ip_enabled }}
 # how many times to retry getting an item from the queue before the spider is considered idle
 SCHEUDLER_ITEM_RETRIES = {{ sc_crawling_item_retries }}
 
+# interface to listen on, typically `eth0`, but may be `eth1`, or `tun0`, etc
+INTERFACE = '{{ sc_crawling_interface }}'
+INTERFACE_PORT = {{ sc_crawling_interface_port }}
+
 # log setup scrapy cluster crawler
 SC_LOGGER_NAME = '{{ sc_crawling_logger_name }}'
 SC_LOG_DIR = '{{ sc_crawling_log_dir }}'

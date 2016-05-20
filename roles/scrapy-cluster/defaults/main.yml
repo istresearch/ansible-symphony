@@ -1,7 +1,7 @@
 ---
 sc_install_dir: /opt/scrapy-cluster
-sc_build_version: 41
-sc_build_branch: master
+sc_build_version: 65
+sc_build_branch: dev
 sc_install_version: "scrapy-cluster-ist-{{ sc_build_version }}-{{ sc_build_branch }}"
 
 sc_is_crawler: False
@@ -15,6 +15,7 @@ sc_virtualenv_path: "{{ sc_install_dir }}/venv"
 
 sc_kafka_master_topic_prefix: demo
 sc_redis_master_db: 0
+sc_scutils_version: 1.2.0.dev2
 
 # CRAWLER SPECIFIC SETTINGS -----------------------
 
@@ -85,6 +86,9 @@ sc_crawling_stats_times:
 
 sc_crawling_logging_before_pipeline_rank: 1
 sc_crawling_logging_after_pipeline_rank: 101
+
+sc_crawling_interface: eth0
+sc_crawling_interface_port: 0
 
 # KAFKA MONITOR SPECIFIC SETTINGS --------------------
 
