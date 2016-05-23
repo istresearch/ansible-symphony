@@ -44,6 +44,10 @@
     return_content: yes
     validate_certs: no
     timeout: 60
+  register: http_response
+  until: http_response.status == 200
+  retries: 3
+  delay: 5
   when: not pulse_db_legacy_setup and not pulse_self_signed_ssl
   tags: pulse-ui-db-app
 
@@ -56,6 +60,10 @@
     return_content: yes
     validate_certs: no
     timeout: 60
+  register: http_response
+  until: http_response.status == 200
+  retries: 3
+  delay: 5
   when: not pulse_db_legacy_setup and pulse_self_signed_ssl
   tags: pulse-ui-db-app
 
