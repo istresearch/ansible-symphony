@@ -1,5 +1,5 @@
 .vagrant
-id_rsa.pub
+id_rsa*
 vault.passwd
 *.retry
 

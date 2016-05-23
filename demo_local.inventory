@@ -98,6 +98,10 @@ storm-nimbus-node
 storm-ui-node
 storm-supervisor-nodes
 
+[phantomjs-nodes:children]
+storm-nodes
+spark-nodes
+
 [elasticsearch-master-nodes]
 
 [elasticsearch-data-nodes]

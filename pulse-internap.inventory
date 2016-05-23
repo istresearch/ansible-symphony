@@ -89,3 +89,7 @@ crew08.istresearch.com
 storm-nimbus-node
 storm-ui-node
 storm-supervisor-nodes
+
+[phantomjs-nodes:children]
+storm-nodes
+spark-nodes
