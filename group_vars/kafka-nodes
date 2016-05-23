@@ -14,4 +14,7 @@ kafka_data_log_dir:
 
 # According to Apache Docs, num io threads should be at least equal number of disks.
 kafka_num_io_threads: 6
+
 kafka_heap: 4G
+
+kafka_log_retention_hours: 96
