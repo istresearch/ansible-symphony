@@ -178,6 +178,8 @@ elasticsearch-client-nodes
 
 [scrapy-cluster-kafka-monitor-node]
 ist-crawler01.istresearch.com
+ist-crawler03.istresearch.com
+ist-crawler05.istresearch.com
 
 [scrapy-cluster-redis-monitor-node]
 ist-crawler01.istresearch.com
