@@ -3,7 +3,7 @@ pulse_db_legacy_setup: false
 pulse_db_table_prefix: pulse_
 pulse_db_webapp_table_prefix: webapp_
 pulse_db_name: pulse
-pulse_rds_dbhost: "{{ inventory_hostname }}"
+pulse_db_host: "{{ inventory_hostname }}"
 
 pulse_db_titan_user: "{{ pulse_titan_user | default('pulse-admin') }}"
 pulse_db_titan_email: "{{ pulse_titan_email | default('pulse.feedback@istresearch.com') }}"
@@ -19,7 +19,7 @@ pulse_install_language_settings: true
 pulse_install_language_json: "\"install_language_settings\": {{ pulse_install_language_settings }}"
 
 pulse_install_db_conn_files: true
-pulse_install_db_conn_json: "\"install_db_conn_files\": {{ pulse_install_db_conn_files }}, \"webapp_dbhost\": \"{{ inventory_hostname }}\", \"webapp_dbname\": \"{{ pulse_db_name }}\", \"webapp_dbuser\": \"{{ pulse_db_user_name }}\", \"webapp_dbpwrd\": \"{{ pulse_db_password }}\", \"pulse_dbhost\": \"{{ inventory_hostname }}\", \"pulse_dbname\": \"{{ pulse_db_name }}\", \"pulse_dbuser\": \"{{ pulse_db_user_name }}\", \"pulse_dbpwrd\": \"{{ pulse_db_password }}\""
+pulse_install_db_conn_json: "\"install_db_conn_files\": {{ pulse_install_db_conn_files }}, \"webapp_dbhost\": \"{{ pulse_db_host }}\", \"webapp_dbname\": \"{{ pulse_db_name }}\", \"webapp_dbuser\": \"{{ pulse_db_user_name }}\", \"webapp_dbpwrd\": \"{{ pulse_db_password }}\", \"pulse_dbhost\": \"{{ pulse_db_host }}\", \"pulse_dbname\": \"{{ pulse_db_name }}\", \"pulse_dbuser\": \"{{ pulse_db_user_name }}\", \"pulse_dbpwrd\": \"{{ pulse_db_password }}\""
 
 pulse_install_database: true
 pulse_install_database_json: "\"install_database\": {{ pulse_install_database }}"

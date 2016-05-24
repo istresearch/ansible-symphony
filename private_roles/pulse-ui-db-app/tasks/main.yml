@@ -2,9 +2,12 @@
 - name: Create MySQL db
   mysql_db:
     name: "{{ item.name }}"
+    state: present
+    login_host: "{{ pulse_db_host }}"
+    login_user: "{{ pulse_db_user_name }}"
+    login_password: "{{ pulse_db_password }}"
     collation: "{{ item.collation | default('utf8_general_ci') }}"
     encoding: "{{ item.encoding | default('utf8') }}"
-    state: present
   with_items: pulse_mysql_databases
   tags: pulse-ui-db-app
 
@@ -17,6 +20,7 @@
     state: present
   with_items: pulse_mysql_users
   tags: pulse-ui-db-app
+
 
 # ####################################################################
 # Start updated database setup process for newer versions of Pulse
