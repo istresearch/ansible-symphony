@@ -1,3 +1,5 @@
 ---
 
-elasticsearch_heap_size: 16g 
+elasticsearch_heap_size: 16g
+script_inline: true
+script_indexed: true 
