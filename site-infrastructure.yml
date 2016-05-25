@@ -7,7 +7,6 @@
   tasks:
     - name: get the command
       shell: ps -o user -o command | grep ansible-playboo[k]
-      become: no
       register: the_command
       run_once: true
       when: inventory_file != "staging.inventory"
