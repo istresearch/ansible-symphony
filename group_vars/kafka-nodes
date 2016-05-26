@@ -17,4 +17,4 @@ kafka_num_io_threads: 6
 
 kafka_heap: 4G
 
-kafka_log_retention_hours: 96
+kafka_log_retention_hours: 24
