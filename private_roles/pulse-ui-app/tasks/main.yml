@@ -272,3 +272,26 @@
     state: restarted
   tags: pulse-ui-app
 
+- name: Download Joka Nuke
+  get_url:
+    url={{ pulse_repo_location }}/pulse/joka-nuke/joka_nuke.zip
+    dest=/tmp/joka_nuke.zip
+    mode=0755
+    validate_certs=no
+    url_username={{ pulse_repo_user }}
+    url_password={{ pulse_repo_password }}
+  tags: pulse-ui-app
+
+- name: Extract Joka Nuke
+  unarchive:
+    src=/tmp/joka_nuke.zip
+    dest=/opt
+    copy=no
+  tags: pulse-ui-app
+
+- name: Delete temporary Joka Nuke files
+  file:
+    path=/tmp/joka_nuke.zip
+    state=absent
+  ignore_errors: yes
+  tags: pulse-ui-app
