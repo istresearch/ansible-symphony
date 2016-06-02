@@ -4,6 +4,8 @@ pulse_db_table_prefix: pulse_
 pulse_db_webapp_table_prefix: webapp_
 pulse_db_name: pulse
 pulse_db_host: "{{ inventory_hostname }}"
+pulse_db_login_user: "{{ pulse_db_user_name }}"
+pulse_db_login_password: "{{ pulse_db_password }}"
 
 pulse_db_titan_user: "{{ pulse_titan_user | default('pulse-admin') }}"
 pulse_db_titan_email: "{{ pulse_titan_email | default('pulse.feedback@istresearch.com') }}"

@@ -4,8 +4,8 @@
     name: "{{ item.name }}"
     state: present
     login_host: "{{ pulse_db_host }}"
-    login_user: "{{ pulse_db_user_name }}"
-    login_password: "{{ pulse_db_password }}"
+    login_user: "{{ pulse_db_login_user }}"
+    login_password: "{{ pulse_db_login_password }}"
     collation: "{{ item.collation | default('utf8_general_ci') }}"
     encoding: "{{ item.encoding | default('utf8') }}"
   with_items: pulse_mysql_databases
