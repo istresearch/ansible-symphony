@@ -34,3 +34,5 @@ pulse_listen_port: 443
 kafka_heap: 1G
 
 sc_crawling_interface: eth0
+
+elasticsearch_heap_size: 1g

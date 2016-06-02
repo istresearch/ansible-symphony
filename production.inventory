@@ -178,6 +178,8 @@ elasticsearch-client-nodes
 
 [scrapy-cluster-kafka-monitor-node]
 ist-crawler01.istresearch.com
+ist-crawler03.istresearch.com
+ist-crawler05.istresearch.com
 
 [scrapy-cluster-redis-monitor-node]
 ist-crawler01.istresearch.com
@@ -227,13 +229,13 @@ memex-hclient.istresearch.com
 
 
 [traptor-follow-nodes]
-ist-crawler01.istresearch.com
+traptor01.istresearch.com
 
 [traptor-location-nodes]
-ist-crawler02.istresearch.com
+traptor02.istresearch.com
 
 [traptor-track-nodes]
-ist-crawler03.istresearch.com
+traptor03.istresearch.com
 
 [traptor-nodes:children]
 traptor-follow-nodes

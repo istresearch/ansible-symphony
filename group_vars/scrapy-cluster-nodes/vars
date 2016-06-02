@@ -4,7 +4,7 @@ sc_kafka_master_topic_prefix: crawl
 sc_redis_master_db: 2
 
 # crawling
-sc_crawling_queue_hits: 60
+sc_crawling_queue_hits: 120
 sc_crawling_kafka_appid_topics: True
 sc_crawling_kafka_base_64: True
 sc_crawling_num_procs: 10
