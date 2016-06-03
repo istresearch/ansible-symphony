@@ -13,7 +13,7 @@ pulse_mysql_admin_login:
 
 
 
-pulse_url_host: demo-box-dev.istresearch.com
+pulse_url_host: demo-dev.istresearch.com
 pulse_install_database: true
 
 pulse_self_signed_ssl: false
