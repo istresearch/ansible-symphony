@@ -9,7 +9,7 @@ pulse_db_user_name: pulse-demo-dev
 pulse_db_login_user: pulse
 pulse_db_login_password: "{{ vault_rds_login_password }}"
 
-pulse_url_host: demo-dev.istresearch.com
+pulse_url_host: demo-box-dev.istresearch.com
 pulse_install_database: true
 
 pulse_self_signed_ssl: false
