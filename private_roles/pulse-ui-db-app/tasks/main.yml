@@ -13,6 +13,9 @@
 
 - name: Ensure MySQL users are present
   mysql_user:
+    login_host: "{{ pulse_db_host }}"
+    login_user: "{{ pulse_db_login_user }}"
+    login_password: "{{ pulse_db_login_password }}"
     name: "{{ item.name }}"
     state: present
     login_host: "{{ pulse_db_host }}"
