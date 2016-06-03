@@ -29,6 +29,7 @@
     - /dev/sdg
   tags:
     - internap
+  ignore_errors: yes
 
 - name: mount directories to volumes
   mount:
@@ -45,6 +46,7 @@
     - { dir: '/data/6', vol: '/dev/sdg' }
   tags:
     - internap
+  ignore_errors: yes
 
 - name: Add all internap hosts with local ips
   lineinfile:
@@ -61,6 +63,8 @@
     - '172.27.43.70 crew06.istresearch.com'
     - '172.27.43.71 crew07.istresearch.com'
     - '172.27.43.84 crew08.istresearch.com'
+    - '172.27.43.66 backup01.nj.istresearch.com'
+    - '172.27.43.64 backup02.nj.istresearch.com'
     - '172.27.43.72 in-namenode01.nj.istresearch.com'
     - '172.27.43.73 in-namenode02.nj.istresearch.com'
     - '172.27.43.74 in-slave01.nj.istresearch.com'
