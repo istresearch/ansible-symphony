@@ -64,7 +64,7 @@
     - '172.27.43.71 crew07.istresearch.com'
     - '172.27.43.84 crew08.istresearch.com'
     - '172.27.43.66 backup01.nj.istresearch.com'
-    - '172.27.43.64 backup02.nj.istresearch.com'
+    - '172.27.43.89 backup02.nj.istresearch.com'
     - '172.27.43.72 in-namenode01.nj.istresearch.com'
     - '172.27.43.73 in-namenode02.nj.istresearch.com'
     - '172.27.43.74 in-slave01.nj.istresearch.com'
