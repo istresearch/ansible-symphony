@@ -1,4 +1,11 @@
 ---
+# ---------------------------------- DataDog --------------------------------
+
+- name: Run Datadog monitor roles
+  hosts: dd-agent-nodes
+  roles: [ datadog-monitors ]
+  tags:
+    - site-datadog-monitors
 
 # ------------------------------- Elastalert ---------------------------------
 - name: Run Elastalert role

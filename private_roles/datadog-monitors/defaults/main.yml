@@ -1,0 +1,27 @@
+---
+###########################################################################
+# Referrenced external variables:
+#     * datadog_api_key
+#     * repository_infrastructure
+#     * ddagent_dir
+#     * additional_checksd_dir
+############################################################################
+
+datadog_monitor_version: 0.0.3
+datadog_monitor_install_dir: "{{ ddagent_dir }}/monitors"
+datadog_monitor_custom_monitors_dir: "{{ datadog_monitor_install_dir }}/ist-sysadmin-ddagent_conf_vars/datadog"
+
+####################################################################################
+# View available monitors
+# https://github.com/istresearch/ist-sysadmin/blob/master/datadog/datadog-vars.yml.sample
+#
+# You must define the following variables for each monitor:
+# enabled: Whether the monitor should be enabled
+# is_custom_check: Whether this monitor is corresponding to an agent check python
+#                  script in the ist-sysadmin repo under datadog/checks-available
+####################################################################################
+datadog_monitors:
+  supervisord:
+    enabled: true
+    is_custom_check: false
+    server_name: '{{ inventory_hostname }}'
