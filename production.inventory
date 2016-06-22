@@ -118,6 +118,8 @@ captain01.istresearch.com
 crew06.istresearch.com
 crew07.istresearch.com
 crew08.istresearch.com
+backup01.nj.istresearch.com
+backup02.nj.istresearch.com
 
 [storm-nodes:children]
 storm-nimbus-node

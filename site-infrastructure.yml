@@ -60,6 +60,8 @@
     - add-users
   tags: site-add-users
 
+# ----------------------------- Virtualenv -----------------------------------
+
 - name: Run virtualenv role
   hosts: all
   roles:
@@ -67,6 +69,8 @@
   tags:
     - virtual-env
     - deps-scrapy-cluster
+
+# ----------------------------- Miniconda -----------------------------------
 
 - name: Run miniconda role
   hosts: all
@@ -138,6 +142,7 @@
     - ELK
     - deps-pulse
 
+# ------------------------------ Logstash ------------------------------------
 - name: Run logstash role
   hosts: logstash-nodes
   roles: [ logstash ]
@@ -463,7 +468,7 @@
   tags:
     - site-dd-agent
 
-# -------------------------------- Traptor -----------------------------------
+# ---------------------------------- Traptor --------------------------------
 # TODO also test traptor-track-nodes and traptor-location-nodes
 
 - name: Run Traptor role

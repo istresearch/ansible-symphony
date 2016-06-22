@@ -1,0 +1,73 @@
+---
+#########################################################
+# Downloads and file setup
+#########################################################
+- block:
+    - name: Start logstash
+      supervisorctl:
+        name=logstash
+        state=started
+
+    - name: create logstash datadog install directory
+      file:
+        path={{ logstash_datadog_install_dir }}/
+        state=directory
+        mode=0744
+
+    - name: check for existing logstash-datadog install
+      stat: path={{ logstash_datadog_install_dir }}/logstash-output-datadog_gauge-ist-{{ logstash_datadog_version }}
+      register: logstash_dd
+
+    - name: download logstash-datadog
+      get_url:
+        url={{ repository_infrastructure }}/logstash-datadog-{{ logstash_datadog_version }}.zip
+        dest=/tmp/logstash-datadog-{{ logstash_datadog_version }}.zip
+        mode=0644
+        validate_certs=no
+      when: logstash_dd.stat.isdir is not defined
+
+    - name: extract logstash-datadog
+      unarchive:
+        src=/tmp/logstash-datadog-{{ logstash_datadog_version }}.zip
+        dest={{ logstash_datadog_install_dir }}/
+        copy=no
+      when: logstash_dd.stat.isdir is not defined
+
+    - name: delete temporary logstash-datadog file
+      file:
+        path=/tmp/logstash-datadog-{{ logstash_datadog_version }}.zip
+        state=absent
+      ignore_errors: yes
+
+    - name: create logstash-datadog symlink
+      file:
+        path={{ logstash_datadog_install_dir }}/default
+        src={{ logstash_datadog_install_dir }}/logstash-output-datadog_gauge-ist-{{ logstash_datadog_version }}
+        state=link
+  tags: logstash-datadog
+
+#########################################################
+# logstash-datadog plugin installation
+#########################################################
+- block:
+    - name: add logstash-datadog to logstash Gemfile
+      lineinfile:
+        dest={{ logstash_install_dir }}/default/Gemfile
+        state=present
+        line="gem \"logstash-output-datadog_gauge\", :path => \"{{ logstash_datadog_install_dir }}/default\""
+
+    - name: install logstash-datadog plugin
+      command: "{{ logstash_install_dir }}/default/bin/logstash-plugin install --no-verify"
+      register: logstash_plugin_cmd
+
+    - name: add logstash-datadog configuration
+      template:
+        src: logstash-datadog-gauge.conf.j2
+        dest: "{{ logstash_conf_dir }}/logstash-datadog-gauge.conf"
+        mode: 0644
+
+    - name: restart logstash
+      supervisorctl:
+        name=logstash
+        state=restarted
+  tags: logstash-datadog
