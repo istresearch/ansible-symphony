@@ -1,0 +1,4 @@
+---
+dependencies:
+  - { role: pip, when: "pip_has_run is not defined" }
+  - { role: dd-agent, when: "dd_agent_has_run is not defined" }
