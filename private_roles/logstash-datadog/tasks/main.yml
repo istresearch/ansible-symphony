@@ -50,6 +50,10 @@
 # logstash-datadog plugin installation
 #########################################################
 - block:
+    - name: uninstall previous logstash-datadog plugin
+      command: "{{ logstash_install_dir }}/default/bin/logstash-plugin uninstall logstash-output-datadog_gauge"
+      ignore_errors: yes
+
     - name: add logstash-datadog to logstash Gemfile
       lineinfile:
         dest={{ logstash_install_dir }}/default/Gemfile
