@@ -31,6 +31,12 @@
   roles: [ gnip-monitor ]
   tags: site-gnip-monitor
 
+# ----------------------------- Logstash Monitor -----------------------------
+- name: Run logstash datadog role
+  hosts: logstash-nodes
+  roles: [ logstash-datadog ]
+  tags: site-logstash-datadog
+
 # -------------------------------- Traptor ----------------------------------
 - name: Run Traptor role
   hosts: traptor-nodes

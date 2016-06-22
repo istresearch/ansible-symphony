@@ -6,6 +6,7 @@ apache_mirror: http://archive.apache.org/dist
 slackbot: "{{ vault_slackbot }}"
 repository_un: "{{ vault_repository_un }}"
 repository_pwd: "{{ vault_repository_pwd }}"
+datadog_api_key: "{{ vault_datadog_api_key }}"
 
 repository_infrastructure: "https://{{ repository_un }}:{{ repository_pwd }}@{{ repository_host }}/infrastructure"
 repository_pip: "https://{{ repository_un }}:{{ repository_pwd }}@{{ repository_host }}/pip/prod/simple"
@@ -21,3 +22,4 @@ logstash_crawler_name:  crawler-*
 iptables: false
 es_hadoop_install_dir: /opt/elasticsearch-hadoop
 es_hadoop_version: 2.2.0
+
