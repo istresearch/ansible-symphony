@@ -65,5 +65,9 @@
         src: logstash-datadog-gauge.conf.j2
         dest: "{{ logstash_conf_dir }}/logstash-datadog-gauge.conf"
         mode: 0644
-      notify: restart logstash
+
+    - name: restart logstash
+      supervisorctl:
+        name=logstash
+        state=restarted
   tags: logstash-datadog

@@ -4,5 +4,6 @@ output {
         queue_size => {{ logstash_datadog_max_queue_size }}
         timeframe => {{ logstash_datadog_flush_interval_s }}
         api_key => "{{ datadog_api_key }}"
+        host => "{{ inventory_hostname }}"
     }
 }
