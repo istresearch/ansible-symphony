@@ -12,7 +12,7 @@
       when: inventory_file != "staging.inventory"
     - name: Push to Slack
       slack:
-        channel: "#ansible-announce"
+        channel: "#monitoring-ansible"
         username: "Ansible"
         token: "{{ vault_slackbot_ansible }}"
         msg: "```{{ the_command['stdout_lines'][0] }}```"
