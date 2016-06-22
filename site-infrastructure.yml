@@ -5,17 +5,22 @@
   hosts: all
   become: no
   tasks:
-    - name: get the command
-      shell: ps -o user -o command | grep ansible-playboo[k]
-      register: the_command
-      run_once: true
-      when: inventory_file != "staging.inventory"
-    - name: Push to Slack
-      slack:
-        channel: "#monitoring-ansible"
-        username: "Ansible"
-        token: "{{ vault_slackbot_ansible }}"
-        msg: "```{{ the_command['stdout_lines'][0] }}```"
+    - block:
+      - name: get the command
+        shell: ps -o user -o command | grep ansible-playboo[k]
+        register: the_command
+
+      - name: get the current branch
+        shell: git symbolic-ref --short HEAD
+        register: git_branch
+
+      - name: Push to Slack
+        slack:
+          channel: "#monitoring-ansible"
+          username: "Ansible"
+          token: "{{ vault_slackbot_ansible }}"
+          msg: "```(On branch {{ git_branch.stdout }}) {{ the_command['stdout_lines'][0] }}```"
+
       run_once: true
       when: inventory_file != "staging.inventory"
   tags:
