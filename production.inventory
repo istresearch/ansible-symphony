@@ -126,7 +126,7 @@ storm-ui-node
 storm-supervisor-nodes
 
 [phantomjs-nodes:children]
-storm-nodes
+storm-supervisor-nodes
 spark-nodes
 
 [elasticsearch-master-nodes]
