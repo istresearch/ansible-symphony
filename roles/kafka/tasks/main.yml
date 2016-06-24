@@ -101,4 +101,13 @@
     line: "export KAFKA={{ kafka_install_dir }}/default"
   tags: env
 
+- name: set owner and group of kafka directory and files
+  file:
+    path={{ kafka_install_dir }}
+    state=directory
+    recurse=yes
+    owner={{ kafka_user }}
+    group={{ kafka_group }}
+  tags: kafka
+
 # - cron: name="clear old kafka app logs" job="find /opt/kafka/default/logs -mtime +7 -exec rm {} \; > /dev/null" minute="0"
