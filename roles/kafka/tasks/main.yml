@@ -10,6 +10,19 @@
     - "{{ kafka_data_log_dir }}"
   tags: kafka
 
+- name: Configuring group
+  group:
+    name: "{{ kafka_group }}"
+  tags: kafka
+
+- name: create kafka user and group
+  user:
+    name={{ kafka_user }}
+    group={{ kafka_group }}
+    shell=/usr/sbin/nologin
+    createhome=no
+  tags: kafka
+
 - name: check for existing install
   stat: path={{ kafka_install_dir }}/kafka_{{ kafka_scala_version }}-{{ kafka_version }}
   register: kafka
