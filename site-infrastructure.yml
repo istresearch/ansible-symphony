@@ -14,6 +14,12 @@
   tags: site-common
   strategy: free
 
+- name: Run supervisord role
+  hosts: all
+  roles:
+    - supervisord
+  tags: site-supervisord
+
 - name: Run virtualenv role
   hosts: all
   roles:
