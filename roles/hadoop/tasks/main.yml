@@ -9,6 +9,7 @@
   user:
     name: "{{ hdfs_user }}"
     group: "{{ hdfs_group }}"
+    shell: /bin/bash
     createhome: no
   tags:
     - hadoop
