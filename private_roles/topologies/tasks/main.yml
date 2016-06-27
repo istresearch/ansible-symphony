@@ -14,6 +14,19 @@
     - topologies
     - topologies-packages
 
+- name: Configuring group
+  group:
+    name: "{{ topologies_group }}"
+  tags: topologies
+
+- name: create streamparse user and group
+  user:
+    name={{ topologies_user }}
+    group={{ topologies_group }}
+    shell=/bin/bash
+    createhome=yes
+  tags: topologies
+
 - name: create log directory
   file:
     path: "{{ topologies_log_dir }}"

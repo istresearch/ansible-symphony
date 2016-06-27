@@ -19,8 +19,8 @@
   user:
     name={{ kafka_user }}
     group={{ kafka_group }}
-    shell=/usr/sbin/nologin
-    createhome=no
+    shell=/bin/bash
+    createhome=yes
   tags: kafka
 
 - name: check for existing install
