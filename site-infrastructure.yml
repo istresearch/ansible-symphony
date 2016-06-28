@@ -1,4 +1,31 @@
 ---
+# --------------------------- Slack Integration -----------------------------
+- name: Slack
+  connection: local
+  hosts: all
+  become: no
+  tasks:
+    - block:
+      - name: get the command
+        shell: ps -o user -o command | grep ansible-playboo[k]
+        register: the_command
+
+      - name: get the current branch
+        shell: git symbolic-ref --short HEAD
+        register: git_branch
+
+      - name: Push to Slack
+        slack:
+          channel: "#monitoring-ansible"
+          username: "Ansible"
+          token: "{{ vault_slackbot_ansible }}"
+          msg: "```(On branch {{ git_branch.stdout }}) {{ the_command['stdout_lines'][0] }}```"
+
+      run_once: true
+      when: inventory_file != "staging.inventory"
+  tags:
+    - always
+
 # ------------------------------ Common roles -------------------------------
 
 - name: Run common role
@@ -355,7 +382,7 @@
     - spark_worker_enabled: true
     - dfs_namenode_host: "{{ groups['hadoop-namenode-node'][0] }}"
     - yarn_historyserver_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
-  roles: 
+  roles:
     - spark
   tags:
     - site-spark
