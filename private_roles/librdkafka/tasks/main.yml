@@ -7,12 +7,6 @@
   tags:
     - librdkafka
 
-- name: Set fact if librdkafka is already installed
-  set_fact:
-    librdkafka_installed: is_installed.rc == 0 and is_installed.stdout.find('{{ librdkafka_version }}') != -1
-  tags:
-    - librdkafka
-
 - block:
   - name: Download librdkafka source
     get_url:
@@ -23,6 +17,7 @@
     unarchive:
       src="/tmp/librdkafka-{{ librdkafka_version }}.tar.gz"
       dest="/tmp"
+      copy=no
     
   - name: Build librdkafka from source
     shell: "{{ item }}"
@@ -47,6 +42,6 @@
     set_fact:
       librdkafka_installed: true
       
-  when: not librdkafka_installed
+  when: is_installed.rc != 0 or is_installed.stdout.find('{{ librdkafka_version }}') == -1
   tags:
     - librdkafka

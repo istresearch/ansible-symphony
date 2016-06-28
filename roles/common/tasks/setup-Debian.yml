@@ -55,7 +55,7 @@
     regexp="^127\.0\.1\.1\s+{{ inventory_hostname }}.*$"
     state=absent
   tags: common
-  when: remove_hostname_loopback
+  when: remove_hostname_loopback is defined and remove_hostname_loopback
 
 - name: Template out auto upgrade .conf
   template:
