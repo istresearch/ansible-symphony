@@ -36,11 +36,9 @@ redis-sentinel-nodes
 vagrant-ist-01
 
 [hadoop-secondary-namenode-node]
-vagrant-ist-02
 
 [hadoop-datanode-nodes]
 vagrant-ist-01
-vagrant-ist-02
 
 [hadoop-nodes:children]
 hadoop-namenode-node
@@ -52,7 +50,6 @@ vagrant-ist-01
 
 [hbase-regionserver-nodes]
 vagrant-ist-01
-vagrant-ist-02
 
 [hbase-nodes:children]
 hbase-master-node
@@ -89,7 +86,6 @@ storm-supervisor-nodes
 vagrant-ist-01 elasticsearch_is_master=true
 
 [elasticsearch-client-nodes]
-vagrant-ist-02
 
 [elasticsearch-nodes:children]
 elasticsearch-master-nodes
@@ -97,24 +93,16 @@ elasticsearch-data-nodes
 elasticsearch-client-nodes
 
 [kibana-node]
-vagrant-ist-01
 
 [tor-proxy]
-vagrant-ist-01
 
 [scrapy-cluster-kafka-monitor-node]
-vagrant-ist-01
 
 [scrapy-cluster-redis-monitor-node]
-vagrant-ist-01
 
 [scrapy-cluster-crawler-nodes]
-vagrant-ist-01
-vagrant-ist-02
 
 [scrapy-cluster-indexer-nodes]
-vagrant-ist-01
-vagrant-ist-02
 
 [scrapy-cluster-nodes:children]
 scrapy-cluster-kafka-monitor-node
@@ -123,32 +111,24 @@ scrapy-cluster-crawler-nodes
 scrapy-cluster-indexer-nodes
 
 [logstash-nodes]
-vagrant-ist-01
 
 [hue-nodes]
-vagrant-ist-02
 
 #
 # Applications topology
 #
 
 [scrapy-indexer-nodes]
-vagrant-ist-02
 
 [gnip-monitor-node]
-vagrant-ist-02
 
 [gdelt-monitor-node]
-vagrant-ist-02
 
 [elastalert-nodes]
-vagrant-ist-01
 
 [traptor-follow-nodes]
-vagrant-ist-01
 
 [traptor-track-nodes]
-vagrant-ist-02
 
 [traptor-location-nodes]
 
@@ -158,31 +138,22 @@ traptor-track-nodes
 traptor-location-nodes
 
 [docker-engine]
-vagrant-ist-01
 
 [googler-nodes]
-vagrant-ist-02
 
 [neo4j-node]
-vagrant-ist-02
 
 [tangelo-node]
-vagrant-ist-02
 
 [apache-node]
-vagrant-ist-01
 
 [mysql-node]
-vagrant-ist-01
 
 [pulse-ui-node]
-vagrant-ist-01
 
 [pulse-mysql-es-host]
-vagrant-ist-01
 
 [dd-agent-nodes]
-vagrant-ist-01
 
 [phantomjs-nodes:children]
 storm-supervisor-nodes
