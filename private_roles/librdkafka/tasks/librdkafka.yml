@@ -1,0 +1,49 @@
+---
+- name: Query package manager for librdkafka
+  command: dpkg-query -l librdkafka
+  register: is_installed
+  failed_when: is_installed.rc > 1
+  changed_when: no
+
+- name: Set fact if librdkafka is already installed
+  set_fact:
+    librdkafka_installed: true
+  when: is_installed.rc == 0 and is_installed.stdout.find('{{ librdkafka_version }}') != -1
+
+- block:
+  - name: Download librdkafka source
+    get_url:
+      url="{{ librdkafka_source }}"
+      dest="/tmp/librdkafka-{{ librdkafka_version }}.tar.gz"
+
+  - name: Extract librdkafka source
+    unarchive:
+      src="/tmp/librdkafka-{{ librdkafka_version }}.tar.gz"
+      dest="/tmp'
+    
+  - name: Build librdkafka from source
+    shell: "{{ item }}"
+    args:
+      chdir: "/tmp/librdkafka-{{ librdkafka_version }}"
+    with_items:
+      - "./configure"
+      - "make"
+      - "checkinstall -y"
+      - "ldconfig"
+
+  - name: Delete temporary files
+    file:
+      path="{{ item }}"
+      state=absent
+    ignore_errors: yes
+    with_items:
+      - "/tmp/librdkafka-{{ librdkafka_version }}"
+      - "/tmp/librdkafka-{{ librdkafka_version }}.tar.gz"
+
+  - name: Set fact librdkafka_installed
+    set_fact:
+      librdkafka_installed: true
+      
+  when: not librdkafka_installed
+  tags:
+    - librdkafka
