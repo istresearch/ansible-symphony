@@ -4,11 +4,15 @@
   register: is_installed
   failed_when: is_installed.rc > 1
   changed_when: no
+  tags:
+    - librdkafka
 
 - name: Set fact if librdkafka is already installed
   set_fact:
     librdkafka_installed: true
   when: is_installed.rc == 0 and is_installed.stdout.find('{{ librdkafka_version }}') != -1
+  tags:
+    - librdkafka
 
 - block:
   - name: Download librdkafka source
