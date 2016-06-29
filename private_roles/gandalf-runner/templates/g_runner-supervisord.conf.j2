@@ -1,0 +1,18 @@
+{% for item in runner_settings %}
+[program:g_runner_{{ item.uid }}]
+command=python g_runner.py run -s settings_{{ item.uid }}.py
+directory={{ runner_install_dir }}/default
+environment=PATH="{{ runner_venv_dir }}/bin"
+process_name=gandalf_{{ item.uid }}_%(process_num)02d
+numprocs={{ item.np }}
+autostart={{ runner_autostart }}
+autorestart={{ runner_autorestart }}
+startsecs={{ runner_start_secs }}
+startretries={{ runner_start_retries }}
+redirect_stderr={{ runner_redirect_stderr }}
+stdout_logfile={{ runner_stdout_logfile }}
+stdout_logfile_maxbytes={{ runner_stdout_logfile_maxbytes }}
+stderr_logfile={{ runner_stderr_logfile }}
+stderr_logfile_maxbytes={{ runner_stderr_logfile_maxbytes }}
+
+{% endfor %}

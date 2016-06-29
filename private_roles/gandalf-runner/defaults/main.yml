@@ -1,0 +1,98 @@
+---
+runner_gandalf_version: 0.0.64
+runner_build_branch: master
+runner_build_version: 14
+runner_install_version: "gandalf-runner-{{ runner_build_version }}-{{ runner_build_branch }}"
+runner_install_dir: /opt/gandalf-runner
+runner_venv_dir: "{{ runner_install_dir }}/default/venv"
+runner_group: gandalfrunner
+runner_user: gandalfrunner
+
+# generic kafka setup
+# the gandalf runner may not depend on vanilla kafka installed,
+# hence why we need to explicity define it here because we
+# can point to up to 3 different kafka installations
+runner_kafka_consumer_hosts:
+  - vagrant-ist-01
+runner_kafka_consumer_hosts_port: 9092
+runner_kafka_producer_hosts:
+  - vagrant-ist-01
+runner_kafka_producer_hosts_port: 9092
+runner_kafka_siphon_hosts:
+  - vagrant-ist-01
+runner_kafka_siphon_hosts_port: 9092
+runner_kafka_consumer_auto_offset_reset: earliest
+runner_consumer_timeout: 50
+runner_consumer_commit_interval_ms: 5000
+runner_consumer_auto_commit_enable: True
+runner_consumer_fetch_message_max_bytes: 10485760
+runner_kafka_producer_batch_linger_ms: 25
+runner_kafka_producer_buffer_bytes: 4194304
+
+# things that dont change often between configurations
+runner_processors_settings_dir: configs
+runner_log_dir: /var/log/gandalf-runner
+runner_log_max_bytes: 10485760
+runner_log_backups: 5
+runner_log_stdout: False
+runner_log_json: True
+runner_log_level: INFO
+
+# supervisor settings
+runner_autostart: True
+runner_autorestart: True
+runner_start_secs: 5
+runner_start_retries: 100
+runner_redirect_stderr: True
+runner_stdout_logfile: AUTO
+runner_stdout_logfile_maxbytes: 50MB
+runner_stderr_logfile: AUTO
+runner_stderr_logfile_maxbytes: 50MB
+
+# things that do change between configurations
+# abbreviations:
+#   kct: kafka consumer topic
+#   kcg: kafka consumer group
+#   kpt: kafka producer topic
+#   kst: kafka siphon topic
+#   uid: unique idenfier for your g_runner instance
+#        this must be unique!
+#   np: number of processes for max throughput
+#   so: kafka siphon on
+# You need all of these AND a `processors` list that define the
+# processors you wish to run. Each object needs to contain
+#   module - the gandalf module
+#   class - the gandalf class
+#   rank - lowest first will process data
+#   settings - the settings file contained within
+#              {{ runner_processors_settings_dir }}
+runner_settings:
+  - uid: traptor
+    np: 3
+    kct: demo.objects
+    kcg: demo-group
+    kpt: demo.results
+    kst: siphon.results
+    so: True
+    processors:
+      - module: gandalf.normalizers
+        class: NormalizeTraptor
+        rank: 000
+        settings: settings_normalize_traptor.py
+  - uid: sms
+    np: 1
+    kct: demosms.objects
+    kcg: demosms-group
+    kpt: demosms.results
+    kst: siphonsms.results
+    so: False
+    processors:
+      - module: gandalf.normalizers
+        class: NormalizeSMS
+        rank: 000
+        settings: settings_normalize_sms.py
+      - module: gandalf.processors
+        class: ExtractAge
+        rank: 001
+        settings: settings_age.py
+

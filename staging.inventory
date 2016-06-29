@@ -187,3 +187,6 @@ vagrant-ist-01
 [phantomjs-nodes:children]
 storm-supervisor-nodes
 spark-nodes
+
+[gandalf-runner-node]
+vagrant-ist-02

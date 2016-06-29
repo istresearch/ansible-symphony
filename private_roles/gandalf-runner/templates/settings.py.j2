@@ -1,0 +1,40 @@
+# Kafka consumer server information ------------
+KAFKA_CONSUMER_HOSTS = [{% for host in runner_kafka_consumer_hosts %}'{{ host }}:{{ runner_kafka_consumer_hosts_port }}'{% if not loop.last %},{% endif %}{% endfor %}]
+KAFKA_INCOMING_TOPIC = '{{ item.kct }}'
+KAFKA_GROUP = '{{ item.kcg }}'
+
+KAFKA_CONSUMER_AUTO_OFFSET_RESET = '{{ runner_kafka_consumer_auto_offset_reset }}'
+KAFKA_CONSUMER_TIMEOUT = {{ runner_consumer_timeout }}
+KAFKA_CONSUMER_COMMIT_INTERVAL_MS = {{ runner_consumer_commit_interval_ms }}
+KAFKA_CONSUMER_AUTO_COMMIT_ENABLE = {{ runner_consumer_auto_commit_enable }}
+KAFKA_CONSUMER_FETCH_MESSAGE_MAX_BYTES = {{ runner_consumer_fetch_message_max_bytes }}
+
+# Kafka producer server information ------------
+KAFKA_PRODUCER_HOSTS = [{% for host in runner_kafka_producer_hosts %}'{{ host }}:{{ runner_kafka_producer_hosts_port }}'{% if not loop.last %},{% endif %}{% endfor %}]
+KAFKA_PRODUCER_TOPIC = '{{ item.kpt }}'
+KAFKA_PRODUCER_BATCH_LINGER_MS = {{ runner_kafka_producer_batch_linger_ms }}
+KAFKA_PRODUCER_BUFFER_BYTES = {{ runner_kafka_producer_buffer_bytes }}
+
+# Kafka siphon server information --------------
+SIPHON_ON = {{ item.so }}
+SIPHON_KAFKA_HOSTS = [{% for host in runner_kafka_siphon_hosts %}'{{ host }}:{{ runner_kafka_siphon_hosts_port }}'{% if not loop.last %},{% endif %}{% endfor %}]
+SIPHON_KAFKA_PRODUCER_TOPIC = '{{ item.kst }}'
+SIPHON_KAFKA_PRODUCER_BATCH_LINGER_MS = {{ runner_kafka_producer_batch_linger_ms }}
+SIPHON_KAFKA_PRODUCER_BUFFER_BYTES = {{ runner_kafka_producer_buffer_bytes }}
+
+# gandalf processor setup and rank
+PROCESSORS_SETTINGS_DIR = '{{ runner_processors_settings_dir }}'
+PROCESSORS = [
+    {% for p in item.processors %}('{{ p.module }}', '{{ p.class }}', {{ p.rank }}, '{{ p.settings }}'),
+    {% endfor %}
+]
+
+# logging setup
+LOGGER_NAME = 'gandalf-runner-{{ item.uid }}'
+LOG_DIR = '{{ runner_log_dir }}'
+LOG_FILE = 'gandalf_runner_{{ item.uid }}.log'
+LOG_MAX_BYTES = {{ runner_log_max_bytes }}
+LOG_BACKUPS = {{ runner_start_secs }}
+LOG_STDOUT = {{ runner_log_stdout }}
+LOG_JSON = {{ runner_log_json }}
+LOG_LEVEL = '{{ runner_log_level }}'
