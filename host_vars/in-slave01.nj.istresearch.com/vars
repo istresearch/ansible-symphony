@@ -1,0 +1,17 @@
+datadog_monitors:
+  supervisord:
+    enabled: true
+    is_custom_check: false
+    server_name: '{{ inventory_hostname }}'
+  elastic:
+    enabled: true
+    is_custom_check: false
+    es_instances:
+        - url: http://localhost:9200
+          tag: cluster:0
+        - url: http://localhost:19200
+          tag: cluster:1
+        - url: http://localhost:29200
+          tag: cluster:2
+        - url: http://localhost:39200
+          tag: cluster:3
