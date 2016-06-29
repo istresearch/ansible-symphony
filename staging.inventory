@@ -181,6 +181,9 @@ vagrant-ist-01
 [pulse-mysql-es-host]
 vagrant-ist-01
 
+[dd-agent-nodes]
+vagrant-ist-01
+
 [phantomjs-nodes:children]
-storm-nodes
+storm-supervisor-nodes
 spark-nodes

@@ -8,10 +8,12 @@ kafka_config_dir: /opt/kafka/default/config
 kafka_log_dir: /var/log/kafka
 kafka_log_rolling_retention_count: 10
 kafka_log_rolling_max_size: 25MB
+
 kafka_data_log_dir:
   - "/opt/kafka/topic-logs"
 
 kafka_user: kafka
+kafka_group: kafka
 kafka_port: 9092
 kafka_message_max: 10000000
 kafka_replica_fetch_max_bytes: 15000000
@@ -19,6 +21,9 @@ kafka_consumer_message_max: 16777216
 kafka_num_partitions: "{{ groups['kafka-nodes'] | length }}"
 kafka_replication_factor: "{{ groups['kafka-nodes'] | length }}"
 kafka_log_retention_hours: 168
+kafka_offsets_topic_num_partitions: 50
+kafka_offsets_topic_replication_factor: 3
+kafka_offsets_topic_segmant_bytes: 104857600
 kafka_num_io_threads: 8
 kafka_heap: 1G
 

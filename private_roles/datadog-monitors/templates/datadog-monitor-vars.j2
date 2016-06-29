@@ -1,0 +1,5 @@
+{% for monitor_name, monitor_config in datadog_monitors.iteritems() %}
+{% if monitor_config.enabled %}
+{{ {monitor_name: monitor_config} | to_nice_yaml }}
+{% endif %}
+{% endfor %}

@@ -72,3 +72,7 @@
     name=datadog-agent
     state=started
     enabled=yes
+
+- name: Set fact dd_agent_has_run
+  set_fact:
+    dd_agent_has_run: true

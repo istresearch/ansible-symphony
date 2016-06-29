@@ -1,0 +1,125 @@
+---
+#########################################################
+# Downloads and file setup
+#########################################################
+- block:
+    - name: install jinja2
+      pip:
+        name: jinja2
+      become: yes
+      become_user: root
+
+    - name: create datadog monitors install directory
+      file:
+        path={{ datadog_monitor_install_dir }}/
+        state=directory
+        mode=0744
+        owner=dd-agent
+
+    - name: check for existing datadog monitor install
+      stat: path={{ datadog_monitor_install_dir }}/ist-sysadmin-{{ datadog_monitor_version }}
+      register: dd_monitors
+
+    - name: download datadog monitors
+      get_url:
+        url={{ repository_infrastructure }}/ist-sysadmin-{{ datadog_monitor_version }}.zip
+        dest=/tmp/ist-sysadmin-{{ datadog_monitor_version }}.zip
+        mode=0644
+        validate_certs=no
+      when: dd_monitors.stat.isdir is not defined
+
+    - name: extract datadog monitors
+      unarchive:
+        src=/tmp/ist-sysadmin-{{ datadog_monitor_version }}.zip
+        dest={{ datadog_monitor_install_dir }}/
+        copy=no
+      when: dd_monitors.stat.isdir is not defined
+
+    - name: delete temporary datadog monitors file
+      file:
+        path=/tmp/ist-sysadmin-{{ datadog_monitor_version }}.zip
+        state=absent
+      ignore_errors: yes
+
+    - name: create datadog monitors symlink
+      file:
+        path={{ datadog_monitor_install_dir }}/custom_monitors
+        src={{ datadog_monitor_install_dir }}/ist-sysadmin-{{ datadog_monitor_version }}/datadog
+        state=link
+        owner=dd-agent
+  tags:
+    - datadog-monitors
+    - datadog-monitors-install
+
+###########################################################################
+# Datadog check vars creation
+# Note: Standard symlink conventions cannot be employed here because the
+# dd-agent script will choke on symlinks. Real directories and files are
+# required, so we do a lot of moving/copying here.
+###########################################################################
+- block:
+    - name: remove previously generated conf.d files
+      shell: 'rm {{ datadog_monitor_install_dir }}/custom_monitors/dd-agent/conf.d/*'
+      args:
+        executable: /bin/bash # required for glob expansion
+      ignore_errors: yes
+
+    - name: populate datadog monitors var file
+      template:
+        src=datadog-monitor-vars.j2
+        dest={{ datadog_monitor_install_dir }}/custom_monitors/datadog-vars.yml
+
+    ########################################################################
+    # Do this now so we can fail fast if there are errors with variables
+    ########################################################################
+    - name: poulate custom monitor configs from var file
+      command: python {{ datadog_monitor_install_dir }}/custom_monitors/create_configs.py
+
+    - name: ensure checks-enabled directory exists
+      file:
+        path={{ ddagent_dir }}/checks-enabled
+        state=directory
+        owner=dd-agent
+
+    - name: remove checks-enabled symlinks
+      shell: 'rm {{ ddagent_dir }}/checks-enabled/*'
+      args:
+        executable: /bin/bash # required for glob expansion
+      ignore_errors: yes
+
+    - name: create checks-enabled symlinks
+      file:
+        path={{ ddagent_dir }}/checks-enabled/{{ item.key }}.py
+        src={{ datadog_monitor_install_dir }}/custom_monitors/dd-agent/checks-available/{{ item.key }}.py
+        state=link
+        owner=dd-agent
+      with_dict: '{{ datadog_monitors }}'
+      when: item.value.enabled and item.value.is_custom_check
+
+    - name: backup existing conf.d directory
+      command: mv {{ ddagent_dir }}/conf.d {{ ddagent_dir }}/conf.d-backup
+      when: ddagent_confd_dir.stat.isdir is defined and ddagent_confd_dir.stat.isdir
+      ignore_errors: yes
+
+    - name: remove existing conf.d directory
+      file:
+        path={{ ddagent_dir }}/conf.d
+        state=absent
+
+    - name: copy custom_monitor conf.d directory
+      command: cp -r {{ datadog_monitor_install_dir }}/custom_monitors/dd-agent/conf.d {{ ddagent_dir }}/conf.d
+  tags:
+    - datadog-monitors
+    - datadog-monitors-vars
+
+#########################################################
+# Restart Datadog agent
+#########################################################
+- name: restart dd-agent
+  service:
+    name=datadog-agent
+    state=restarted
+  tags:
+    - datadog-monitors
+    - datadog-monitors-install
+    - datadog-monitors-vars

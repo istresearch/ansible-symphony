@@ -1,4 +1,38 @@
 ---
+# --------------------------- Slack Integration -----------------------------
+- name: Slack
+  connection: local
+  hosts: all
+  become: no
+  tasks:
+    - block:
+      - name: get the command
+        shell: ps -o user -o command | grep ansible-playboo[k]
+        register: the_command
+
+      - name: get the current branch
+        shell: git symbolic-ref --short HEAD
+        register: git_branch
+
+      - name: Push to Slack
+        slack:
+          channel: "#monitoring-ansible"
+          username: "Ansible"
+          token: "{{ vault_slackbot_ansible }}"
+          msg: "```(On branch {{ git_branch.stdout }}) {{ the_command['stdout_lines'][0] }}```"
+
+      run_once: true
+      when: inventory_file != "staging.inventory"
+  tags:
+    - always
+
+# ---------------------------------- DataDog --------------------------------
+
+- name: Run Datadog monitor roles
+  hosts: dd-agent-nodes
+  roles: [ datadog-monitors ]
+  tags:
+    - site-datadog-monitors
 
 # ------------------------------- Elastalert ---------------------------------
 - name: Run Elastalert role
@@ -23,6 +57,12 @@
   hosts: gnip-monitor-node
   roles: [ gnip-monitor ]
   tags: site-gnip-monitor
+
+# ----------------------------- Logstash Monitor -----------------------------
+- name: Run logstash datadog role
+  hosts: logstash-nodes
+  roles: [ logstash-datadog ]
+  tags: site-logstash-datadog
 
 # -------------------------------- Traptor ----------------------------------
 - name: Run Traptor role
@@ -100,7 +140,7 @@
     - private_roles/pulse-ui-app/defaults/main.yml
     - roles/kibana4/defaults/main.yml
   roles: [ pulse-ui-db-app]
-  tags: 
+  tags:
     - site-pulse-app
     - site-pulse-app-with-connector
     - site-pulse-db
@@ -110,7 +150,7 @@
   vars_files:
     - private_roles/pulse-ui-db-app/defaults/main.yml
   roles: [ mysql-es-connector ]
-  tags: 
+  tags:
     - site-pulse-app-with-connector
     - site-pulse-es-conn
 

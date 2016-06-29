@@ -1,0 +1,15 @@
+---
+###########################################################################
+# Referrenced external variables:
+#     * logstash_install_dir
+#     * logstash_conf_dir
+#     * datadog_api_key
+#     * repository_infrastructure
+###########################################################################
+
+logstash_datadog_install_dir: "{{ logstash_install_dir }}/logstash-datadog"
+logstash_datadog_version: 0.0.2
+
+logstash_datadog_metric_name: "logstash_logs.count"
+logstash_datadog_max_queue_size: 100000
+logstash_datadog_flush_interval_s: 60
