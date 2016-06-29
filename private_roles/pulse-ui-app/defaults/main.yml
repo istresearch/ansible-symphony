@@ -1,4 +1,4 @@
-pulse_version: 2.1.7
+pulse_version: 2.1.8
 
 pulse_name: pulse
 pulse_install_dir: /opt/pulse
@@ -10,11 +10,11 @@ pulse_analysis_iframe_url: "http://{{ inventory_hostname }}:{{ kibana4_port | de
 pulse_repo_location: "http://{{ repository_host }}/pulse"
 
 pulse_ui_name: pulse-ui
-pulse_ui_version: 3.0.7
+pulse_ui_version: 3.0.8
 
 pollster_name: appPollsterPrime
 pollster_build_type: release
-pollster_version: 5.3.7
+pollster_version: 5.3.8
 
 # logstash config
 pulse_logstash_template: pulse-template.json
