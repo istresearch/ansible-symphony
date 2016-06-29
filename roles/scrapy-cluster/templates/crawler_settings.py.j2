@@ -110,6 +110,8 @@ SPIDER_MIDDLEWARES = {
 }
 
 DOWNLOADER_MIDDLEWARES = {
+    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+    'scrapy_fake_useragent.middleware.RandomUserAgentMiddleware': 400,
     # Handle timeout retries with the redis scheduler and logger
     'scrapy.contrib.downloadermiddleware.retry.RetryMiddleware' : None,
     '{{ sc_crawling_bot_name }}.redis_retry_middleware.RedisRetryMiddleware': 510,
