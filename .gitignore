@@ -2,6 +2,7 @@
 id_rsa*
 vault.passwd
 *.retry
+local.inventory
 
 # docs
 _build
