@@ -1,6 +1,7 @@
 {% for item in runner_settings %}
 [program:g_runner_{{ item.uid }}]
-command=python g_runner.py run -s settings_{{ item.uid }}.py
+command=python g_runner.py run -s settings_{{ item.uid }}.py {% if item.co %}-co{% endif %}
+
 directory={{ runner_install_dir }}/default
 environment=PATH="{{ runner_venv_dir }}/bin"
 process_name=gandalf_{{ item.uid }}_%(process_num)02d

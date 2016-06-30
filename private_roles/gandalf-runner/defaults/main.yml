@@ -7,6 +7,7 @@ runner_install_dir: /opt/gandalf-runner
 runner_venv_dir: "{{ runner_install_dir }}/default/venv"
 runner_group: gandalfrunner
 runner_user: gandalfrunner
+restore_kibana_visualization: False
 
 # generic kafka setup
 # the gandalf runner may not depend on vanilla kafka installed,
@@ -59,6 +60,7 @@ runner_stderr_logfile_maxbytes: 50MB
 #        this must be unique!
 #   np: number of processes for max throughput
 #   so: kafka siphon on
+#   co: consume only, do not produce data
 # You need all of these AND a `processors` list that define the
 # processors you wish to run. Each object needs to contain
 #   module - the gandalf module
@@ -74,6 +76,7 @@ runner_settings:
     kpt: demo.results
     kst: siphon.results
     so: True
+    co: True
     processors:
       - module: gandalf.normalizers
         class: NormalizeTraptor
@@ -86,6 +89,7 @@ runner_settings:
     kpt: demosms.results
     kst: siphonsms.results
     so: False
+    co: True
     processors:
       - module: gandalf.normalizers
         class: NormalizeSMS
@@ -95,4 +99,32 @@ runner_settings:
         class: ExtractAge
         rank: 001
         settings: settings_age.py
-
+  - uid: crawl
+    np: 1
+    kct: crawl.crawled_firehose
+    kcg: crawl-group
+    kpt: void
+    kst: void
+    so: False
+    co: True
+    processors:
+      - module: gandalf.normalizers
+        class: NormalizeCrawl
+        rank: 000
+        settings: settings_normalize_crawl.py
+      - module: gandalf.processors
+        class: ExtractEmail
+        rank: 001
+        settings: settings_email.py
+      - module: gandalf.processors
+        class: ExtractWeight
+        rank: 002
+        settings: settings_weight.py
+      - module: gandalf.processors
+        class: ExtractAge
+        rank: 010
+        settings: settings_age.py
+      - module: gandalf.processors
+        class: ElasticSearchProcessor
+        rank: 020
+        settings: settings_elasticsearch.py

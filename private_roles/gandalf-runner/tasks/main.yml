@@ -147,3 +147,49 @@
   with_items: "{{ runner_settings }}"
   tags:
     - gandalf-runner
+
+- name: add the logstash configuration
+  template:
+    src: g-runner-logstash.conf.j2
+    dest: "{{ logstash_conf_dir|default('/etc/logstash.d') }}/g-runner-logstash.conf"
+    mode: 0644
+  notify:
+    - restart logstash
+  tags:
+    - gandalf-runner
+
+- name: start logstash
+  supervisorctl:
+    name: logstash
+    state: started
+  tags:
+    - gandalf-runner
+
+- block:
+  - name: Copy over Kibana4 backup folder
+    unarchive:
+      src=backup.tar
+      dest=/tmp/
+
+  - name: Copy over Kibana4 restore script
+    copy:
+      src=restore_kibana_index.sh
+      dest=/tmp/
+      mode=755
+
+  - name: restore Kibana4 visualizations
+    shell: "./restore_kibana_index.sh {{ groups['elasticsearch-nodes'][0] }} {{ elasticsearch_network_http_port|default(9200) }} backup.tar"
+    args:
+      chdir: "/tmp/"
+
+  - name: Remove Kibana tmp files
+    file:
+      path=/tmp/{{ item }}
+      state=absent
+    with_items:
+      - "restore_kibana_index.sh"
+      - "backup.tar"
+  run_once: true
+  when: restore_kibana_visualization
+  tags:
+    - gandalf-runner
