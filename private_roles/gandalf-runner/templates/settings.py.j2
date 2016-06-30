@@ -28,6 +28,7 @@ PROCESSORS = [
     {% for p in item.processors %}('{{ p.module }}', '{{ p.class }}', {{ p.rank }}, '{{ p.settings }}'),
     {% endfor %}
 ]
+SLEEP_TIME = {{ runner_sleep_time }}
 
 # logging setup
 LOGGER_NAME = 'gandalf-runner-{{ item.uid }}'

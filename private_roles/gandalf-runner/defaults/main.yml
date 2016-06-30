@@ -1,13 +1,14 @@
 ---
 runner_gandalf_version: 0.0.64
 runner_build_branch: master
-runner_build_version: 14
+runner_build_version: 15
 runner_install_version: "gandalf-runner-{{ runner_build_version }}-{{ runner_build_branch }}"
 runner_install_dir: /opt/gandalf-runner
 runner_venv_dir: "{{ runner_install_dir }}/default/venv"
 runner_group: gandalfrunner
 runner_user: gandalfrunner
 restore_kibana_visualization: False
+runner_sleep_time: 1
 
 # generic kafka setup
 # the gandalf runner may not depend on vanilla kafka installed,
