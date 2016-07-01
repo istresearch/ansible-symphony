@@ -2,7 +2,7 @@
 command={{ spark_install_dir }}/{{ spark_pkg_name }}/bin/spark-class org.apache.spark.deploy.master.Master
 autostart=true
 autorestart=true
-stopsignal=SIGTERM
+stopsignal=TERM
 stopwaitsecs=600
 redirect_stderr=true
 stderr_logfile=AUTO

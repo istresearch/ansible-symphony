@@ -5,6 +5,6 @@ autorestart=true
 user={{ hdfs_user }}
 startsecs={{ hdfs_start_secs }}
 startretries={{ hdfs_start_retries }}
-stopsignal=SIGTERM
+stopsignal=TERM
 stopwaitsecs=600
 environment = {{ hdfs_env_vars }}

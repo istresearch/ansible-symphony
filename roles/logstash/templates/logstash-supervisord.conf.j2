@@ -2,7 +2,7 @@
 command={{ logstash_install_dir }}/logstash-{{ logstash_version }}/bin/logstash -f {{ logstash_conf_dir }}/ --quiet
 autostart={{ logstash_auto_start }}
 autorestart=true
-stopsignal=SIGTERM
+stopsignal=TERM
 stopwaitsecs=600
 redirect_stderr=true
 stderr_logfile=AUTO

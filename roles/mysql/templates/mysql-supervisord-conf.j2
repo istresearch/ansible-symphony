@@ -2,7 +2,7 @@
 command=/usr/sbin/mysqld --pid-file={{ mysql_pid_file }}
 autostart=true
 autorestart=true
-stopsignal=SIGTERM
+stopsignal=TERM
 stopwaitsecs=600
 user=mysql
 startsecs=15
