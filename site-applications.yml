@@ -22,7 +22,7 @@
           msg: "```(On branch {{ git_branch.stdout }}) {{ the_command['stdout_lines'][0] }}```"
 
       run_once: true
-      when: inventory_file != "staging.inventory"
+      when: (slack_report is not defined or slack_report | bool == true) and not ansible_check_mode
   tags:
     - always
 

@@ -7,6 +7,7 @@
 
 [all:vars]
 repository_host=repo.istresearch.com
+slack_report=false
 
 #
 # Infrastructure and software topology
