@@ -175,3 +175,11 @@
     - logstash_auto_start: True
   roles: [ topologies ]
   tags: site-topologies
+
+# ---------------------------------- Gandalf Runner ---------------------------
+- name: Run the Gandalf Runner role
+  hosts: gandalf-runner-node
+  roles: [ gandalf-runner ]
+  vars:
+    - logstash_auto_start: True
+  tags: site-gandalf-runner

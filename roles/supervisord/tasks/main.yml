@@ -1,12 +1,15 @@
 ---
 - name: ensure supervisord is installed
-  pip: 
-    name=supervisor
+  pip:
+    name={{ item }}
     state=latest
+  with_items:
+    - supervisor
+    - supervisor-wildcards
   tags: supervisord
 
 - name: ensure directories are created
-  file: 
+  file:
     state=directory
     dest={{ item }}
     mode=0755

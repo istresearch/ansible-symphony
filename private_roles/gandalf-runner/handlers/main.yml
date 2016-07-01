@@ -1,0 +1,5 @@
+---
+- name: restart gandalf-runner
+  shell: "supervisorctl update && supervisorctl mrestart g_runner*"
+  become: yes
+  become_user: root

@@ -1,0 +1,533 @@
+---
+runner_gandalf_version: 0.0.64
+runner_build_branch: master
+runner_build_version: 15
+runner_install_version: "gandalf-runner-{{ runner_build_version }}-{{ runner_build_branch }}"
+runner_install_dir: /opt/gandalf-runner
+runner_venv_dir: "{{ runner_install_dir }}/default/venv"
+runner_group: gandalfrunner
+runner_user: gandalfrunner
+restore_kibana_visualization: False
+runner_sleep_time: 1
+
+# generic kafka setup
+# the gandalf runner may not depend on vanilla kafka installed,
+# hence why we need to explicity define it here because we
+# can point to up to 3 different kafka installations
+runner_kafka_consumer_hosts:
+  - vagrant-ist-01
+runner_kafka_consumer_hosts_port: 9092
+runner_kafka_producer_hosts:
+  - vagrant-ist-01
+runner_kafka_producer_hosts_port: 9092
+runner_kafka_siphon_hosts:
+  - vagrant-ist-01
+runner_kafka_siphon_hosts_port: 9092
+runner_kafka_consumer_auto_offset_reset: earliest
+runner_consumer_timeout: 50
+runner_consumer_commit_interval_ms: 5000
+runner_consumer_auto_commit_enable: True
+runner_consumer_fetch_message_max_bytes: 10485760
+runner_kafka_producer_batch_linger_ms: 25
+runner_kafka_producer_buffer_bytes: 4194304
+
+# things that dont change often between configurations
+runner_processors_settings_dir: configs
+runner_log_dir: /var/log/gandalf-runner
+runner_log_max_bytes: 10485760
+runner_log_backups: 5
+runner_log_stdout: False
+runner_log_json: True
+runner_log_level: INFO
+
+# supervisor settings
+runner_autostart: True
+runner_autorestart: True
+runner_start_secs: 5
+runner_start_retries: 100
+runner_redirect_stderr: True
+runner_stdout_logfile: AUTO
+runner_stdout_logfile_maxbytes: 50MB
+runner_stderr_logfile: AUTO
+runner_stderr_logfile_maxbytes: 50MB
+
+# processor variables used later on
+# this is modelled very similar to the Shepherd Configuration
+aliases:
+    - &def-module gandalf.processors
+    - &norm-module gandalf.normalizers
+processors:
+    - &crawl-submitter
+      class: CrawlSubmitter
+      module: *def-module
+      settings: settings_crawl_submitter.py
+
+    - &entity-influence
+      class: EntityInfluence
+      module: *def-module
+      settings: settings_entity_influence.py
+
+    - &doc-rfs-mentions
+      class: DocRfsMentions
+      module: *def-module
+      settings: settings_doc_rfs_mentions.py
+
+    - &entity-class-by-doc
+      class: EntityClassByDoc
+      module: *def-module
+      settings: settings_entity_class_by_doc.py
+
+    - &extract-address
+      class: ExtractAddress
+      module: *def-module
+      settings: settings_address.py
+
+    - &extract-age
+      class: ExtractAge
+      module: *def-module
+      settings: settings_age.py
+
+    - &extract-author-geo-place
+      class: ExtractAuthorGeoPlace
+      module: *def-module
+      settings: settings_author_geo_place.py
+
+    - &extract-author-id
+      class: ExtractAuthorId
+      module: *def-module
+      settings: settings_author_id.py
+
+    - &extract-author-id-original
+      class: ExtractAuthorIdOriginal
+      module: *def-module
+      settings: settings_author_id_original.py
+
+    - &extract-author-language
+      class: ExtractAuthorLanguage
+      module: *def-module
+      settings: settings_author_language.py
+
+    - &extract-author-original
+      class: ExtractAuthorOriginal
+      module: *def-module
+      settings: settings_author_original.py
+
+    - &extract-author-uid
+      class: ExtractAuthorUid
+      module: *def-module
+      settings: settings_author_uid.py
+
+    - &extract-author-uid-original
+      class: ExtractAuthorUidOriginal
+      module: *def-module
+      settings: settings_author_uid_original.py
+
+    - &extract-body-language
+      class: ExtractBodyLanguage
+      module: *def-module
+      settings: settings_body_language.py
+
+    - &extract-counter-report
+      class: CounterReport
+      module: *def-module
+      settings: settings_counter_report.py
+
+    - &extract-document-uid
+      class: ExtractDocumentUid
+      module: *def-module
+      settings: settings_document_uid.py
+
+    - &extract-email
+      class: ExtractEmail
+      module: *def-module
+      settings: settings_email.py
+
+    - &extract-ethnicity
+      class: ExtractEthnicity
+      module: *def-module
+      settings: settings_ethnicity.py
+
+    - &extract-followers-count
+      class: ExtractFollowersCount
+      module: *def-module
+      settings: settings_followers_count.py
+
+    - &extract-friends-count
+      class: ExtractFriendsCount
+      module: *def-module
+      settings: settings_friends_count.py
+
+    - &extract-geo-place
+      class: ExtractGeoPlace
+      module: *def-module
+      settings: settings_geo_place.py
+
+    - &extract-geo-point
+      class: ExtractGeoPoint
+      module: *def-module
+      settings: settings_geo_point.py
+
+    - &extract-height
+      class: ExtractHeight
+      module: *def-module
+      settings: settings_height.py
+
+    - &extract-image-links
+      class: ImageLinks
+      module: *def-module
+      settings: settings_images.py
+
+    - &image-archiver
+      class: ImageArchiver
+      module: *def-module
+      settings: settings_image_archiver.py
+
+    - &extract-keywords
+      class: ExtractKeywords
+      module: *def-module
+      settings: settings_keywords.py
+
+    - &extract-links
+      class: ExtractLinks
+      module: *def-module
+      settings: settings_links.py
+
+    - &extract-name
+      class: ExtractName
+      module: *def-module
+      settings: settings_name.py
+
+    - &extract-phone
+      class: ExtractPhoneNumber
+      module: *def-module
+      settings: settings_phonenumber.py
+
+    - &extract-rate
+      class: ExtractRate
+      module: *def-module
+      settings: settings_rate.py
+
+    - &extract-relates-to
+      class: ExtractRelatesTo
+      module: *def-module
+      settings: settings_relates_to.py
+
+    - &extract-relates-to-uid
+      class: ExtractRelatesToUid
+      module: *def-module
+      settings: settings_relates_to_uid.py
+
+    - &extract-repost-count
+      class: ExtractRepostCount
+      module: *def-module
+      settings: settings_repost_count.py
+
+    - &extract-twitter-hashtag
+      class: ExtractTwitterHashtag
+      module: *def-module
+      settings: settings_hashtag.py
+
+    - &extract-twitter-username
+      class: ExtractTwitterUsername
+      module: *def-module
+      settings: settings_username.py
+
+    - &extract-website
+      class: ExtractWebsite
+      module: *def-module
+      settings: settings_website.py
+
+    - &extract-weight
+      class: ExtractWeight
+      module: *def-module
+      settings: settings_weight.py
+
+    - &follow-rule-by-tweet
+      class: FollowRuleByTweet
+      module: *def-module
+      settings: settings_follow_rule_by_tweet.py
+
+    - &fortia
+      class: FortiaProcessor
+      module: *def-module
+      settings: settings_fortia.py
+
+    - &page-render
+      class: PageRenderer
+      module: *def-module
+      settings: settings_render.py
+
+    - &twitter-rule-matcher
+      class: TweetMultiRuleMatcher
+      module: *def-module
+      settings: settings_tweet_multi_rule_matcher.py
+
+    - &hbase
+      class: HbaseProcessor
+      module: *def-module
+      settings: settings_hbase.py
+
+    - &elasticsearch
+      class: ElasticSearchProcessor
+      module: *def-module
+      settings: settings_elasticsearch.py
+
+    - &normalize-crawl
+      class: NormalizeCrawl
+      module: *norm-module
+      settings: settings_normalize_crawl.py
+
+    - &normalize-fbgraph
+      class: NormalizeGraph
+      module: *norm-module
+      settings: settings_normalize_fbgraph.py
+
+    - &normalize-sms
+      class: NormalizeSMS
+      module: *norm-module
+      settings: settings_normalize_sms.py
+
+    - &normalize-telegraptor-history
+      class: NormalizeTelegraptorHistory
+      module: *norm-module
+      settings: settings_normalize_telegraptor_history.py
+
+    - &normalize-telegraptor-stream
+      class: NormalizeTelegraptorStream
+      module: *norm-module
+      settings: settings_normalize_telegraptor_stream.py
+
+    - &normalize-traptor
+      class: NormalizeTraptor
+      module: *norm-module
+      settings: settings_normalize_traptor.py
+
+# things that do change between configurations
+# abbreviations:
+#   kct: kafka consumer topic
+#   kcg: kafka consumer group
+#   kpt: kafka producer topic
+#   kst: kafka siphon topic
+#   uid: unique idenfier for your g_runner instance
+#        this must be unique!
+#   np: number of processes for max throughput
+#   so: kafka siphon on
+#   co: consume only, do not produce data
+# You need all of these AND a `processors` list that define the
+# processors you wish to run. Each object needs to contain
+#   module - the gandalf module
+#   class - the gandalf class
+#   rank - lowest first will process data
+#   settings - the settings file contained within
+#              {{ runner_processors_settings_dir }}
+runner_settings:
+  - uid: fbgraph
+    np: 1
+    kct: 'crawler.graph'
+    kcg: 'crawler-graph'
+    kpt: void
+    kst: void
+    so: False
+    co: True
+    processors:
+      - <<: *normalize-fbgraph
+        rank: 000
+      - <<: *extract-author-uid
+        rank: 100
+      - <<: *extract-author-uid-original
+        rank: 200
+      - <<: *extract-document-uid
+        rank: 300
+      - <<: *extract-links
+        rank: 400
+      - <<: *crawl-submitter
+        rank: 500
+      - <<: *extract-email
+        rank: 600
+      - <<: *extract-weight
+        rank: 700
+      - <<: *extract-height
+        rank: 800
+      - <<: *extract-age
+        rank: 900
+      - <<: *extract-phone
+        rank: 1000
+      - <<: *hbase
+        rank: 1100
+      - <<: *elasticsearch
+        rank: 1200
+  - uid: sms
+    np: 1
+    kct: 'pulse.sms'
+    kcg: 'pulse-sms'
+    kpt: void
+    kst: void
+    so: False
+    co: True
+    processors:
+      - <<: *normalize-sms
+        rank: 000
+      - <<: *extract-twitter-username
+        rank: 100
+      - <<: *extract-links
+        rank: 200
+      - <<: *crawl-submitter
+        rank: 300
+      - <<: *extract-email
+        rank: 400
+      - <<: *extract-keywords
+        rank: 500
+      - <<: *extract-weight
+        rank: 600
+      - <<: *extract-height
+        rank: 700
+      - <<: *extract-age
+        rank: 800
+      - <<: *extract-phone
+        rank: 900
+      - <<: *hbase
+        rank: 1000
+      - <<: *elasticsearch
+        rank: 1100
+  - uid: crawl
+    np: 1
+    kct: 'crawl.crawled_firehose'
+    kcg: 'scrape-group'
+    kpt: void
+    kst: void
+    so: False
+    co: True
+    processors:
+      - <<: *normalize-crawl
+        rank: 000
+      - <<: *extract-twitter-username
+        rank: 100
+      - <<: *extract-email
+        rank: 200
+      - <<: *extract-weight
+        rank: 300
+      - <<: *extract-height
+        rank: 400
+      - <<: *extract-age
+        rank: 500
+      - <<: *extract-phone
+        rank: 600
+      - <<: *extract-image-links
+        rank: 700
+      - <<: *image-archiver
+        rank: 800
+      - <<: *hbase
+        rank: 900
+      - <<: *elasticsearch
+        rank: 1000
+  - uid: tweet
+    np: 1
+    kct: 'traptor.cooper_prod'
+    kcg: 'traptor-group'
+    kpt: void
+    kst: void
+    so: False
+    co: True
+    processors:
+      - <<: *normalize-traptor
+        rank: 000
+      - <<: *twitter-rule-matcher
+        rank: 100
+      - <<: *extract-author-geo-place
+        rank: 200
+      - <<: *extract-author-id
+        rank: 300
+      - <<: *extract-author-id-original
+        rank: 400
+      - <<: *extract-author-language
+        rank: 500
+      - <<: *extract-author-original
+        rank: 600
+      - <<: *extract-author-uid
+        rank: 700
+      - <<: *extract-author-uid-original
+        rank: 800
+      - <<: *extract-body-language
+        rank: 900
+      - <<: *extract-document-uid
+        rank: 1000
+      - <<: *extract-followers-count
+        rank: 1100
+      - <<: *extract-friends-count
+        rank: 1200
+      - <<: *extract-geo-place
+        rank: 1300
+      - <<: *extract-geo-point
+        rank: 1400
+      - <<: *extract-relates-to
+        rank: 1500
+      - <<: *extract-relates-to-uid
+        rank: 1600
+      - <<: *extract-repost-count
+        rank: 1700
+      - <<: *extract-twitter-hashtag
+        rank: 1800
+      - <<: *entity-class-by-doc
+        rank: 1900
+      - <<: *entity-influence
+        rank: 2000
+      - <<: *extract-counter-report
+        rank: 2100
+      - <<: *extract-twitter-username
+        rank: 2200
+      - <<: *extract-image-links
+        rank: 2300
+      - <<: *image-archiver
+        rank: 2400
+      - <<: *extract-links
+        rank: 2500
+      - <<: *crawl-submitter
+        rank: 2600
+      - <<: *extract-email
+        rank: 2700
+      - <<: *extract-keywords
+        rank: 2800
+      - <<: *extract-weight
+        rank: 2900
+      - <<: *extract-height
+        rank: 3000
+      - <<: *extract-age
+        rank: 3100
+      - <<: *extract-phone
+        rank: 3200
+      - <<: *doc-rfs-mentions
+        rank: 3300
+      - <<: *hbase
+        rank: 3400
+      - <<: *elasticsearch
+        rank: 3500
+  - uid: telegram_stream
+    np: 1
+    kct: 'telegraptor.stream'
+    kcg: 'telegraptors-group'
+    kpt: void
+    kst: void
+    so: False
+    co: True
+    processors:
+      - <<: *normalize-telegraptor-stream
+        rank: 000
+      - <<: *hbase
+        rank: 100
+      - <<: *elasticsearch
+        rank: 200
+  - uid: telegram_history
+    np: 1
+    kct: 'telegraptor.history'
+    kcg: 'telegraptorh-group'
+    kpt: void
+    kst: void
+    so: False
+    co: True
+    processors:
+      - <<: *normalize-telegraptor-history
+        rank: 000
+      - <<: *hbase
+        rank: 100
+      - <<: *elasticsearch
+        rank: 200
