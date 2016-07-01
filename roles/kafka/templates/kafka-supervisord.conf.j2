@@ -4,4 +4,5 @@ environment= KAFKA_HEAP_OPTS="-Xmx{{ kafka_heap }} -Xms{{ kafka_heap }}"
 autostart=true
 autorestart=true
 startsecs=5
-stopsignal=KILL
+stopsignal=SIGTERM
+stopwaitsecs=600
