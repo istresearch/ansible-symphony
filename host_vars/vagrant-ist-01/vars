@@ -1,7 +1,12 @@
 ---
 
 pulse_titan_pw: "{{ vault_pulse_password }}"
+
 pulse_db_password: "{{ vault_pulse_password }}"
+
+pulse_mysql_admin_login:
+  user: "{{ mysql_root_username }}"
+  password: "{{ mysql_root_password }}"
 
 pulse_self_signed_ssl: true
 pulse_local_install: false

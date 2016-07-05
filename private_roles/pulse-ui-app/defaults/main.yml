@@ -1,4 +1,4 @@
-pulse_version: 2.1.6.1
+pulse_version: 2.1.8
 
 pulse_name: pulse
 pulse_install_dir: /opt/pulse
@@ -10,11 +10,11 @@ pulse_analysis_iframe_url: "http://{{ inventory_hostname }}:{{ kibana4_port | de
 pulse_repo_location: "http://{{ repository_host }}/pulse"
 
 pulse_ui_name: pulse-ui
-pulse_ui_version: 3.0.6.2
+pulse_ui_version: 3.0.8
 
 pollster_name: appPollsterPrime
 pollster_build_type: release
-pollster_version: 5.3.5
+pollster_version: 5.3.8
 
 # logstash config
 pulse_logstash_template: pulse-template.json
@@ -32,4 +32,4 @@ pulse_deploy_log_file: deploy_survey.log
 
 pulse_kibana_backup: backup.tar
 
-pulse_self_signed_ssl: "{{ pulse_self_signed_url | default('false') }}"
+pulse_self_signed_ssl: "{{ pulse_self_signed_url | default(false) }}"

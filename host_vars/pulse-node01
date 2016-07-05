@@ -24,3 +24,7 @@ pulse_local_install: false
 mysql_db_host: pulse-node01
 pulse_url_host: "{{ inventory_hostname }}"
 pulse_listen_port: 443
+
+pulse_mysql_admin_login:
+  user: "{{ mysql_root_username }}"
+  password: "{{ mysql_root_password }}"
