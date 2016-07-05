@@ -1,0 +1,195 @@
+---
+- name: Configuring group
+  group:
+    name: "{{ runner_group }}"
+  tags:
+    - gandalf-runner
+
+- name: Configuring user
+  user:
+    name: "{{ runner_user }}"
+    group: "{{ runner_group }}"
+    createhome: no
+  tags:
+    - gandalf-runner
+
+- name: Add gandalf runner user to group
+  user:
+    append: yes
+    name: "{{ runner_user }}"
+    groups: "{{ runner_group | default('gandalfrunner') }}"
+    state: present
+  tags:
+    - gandalf-runner
+
+- name: create gandalf runner install directory
+  file:
+    path: "{{ runner_install_dir }}"
+    state: directory
+    mode: 0744
+    owner: "{{ runner_user }}"
+    group: "{{ runner_group }}"
+  tags: gandalf-runner
+
+- name: check for existing install
+  stat:
+    path: "{{ runner_install_dir }}/{{ runner_install_version }}"
+  register: runner
+  tags: gandalf-runner
+
+- name: download gandalf runner
+  get_url:
+    url: "{{ repository_infrastructure }}/gandalf-runner/{{ runner_install_version }}.tar.gz"
+    dest: "/tmp/{{ runner_install_version }}.tgz"
+    mode: 0644
+    validate_certs: no
+  when: runner.stat.isdir is not defined
+  tags: gandalf-runner
+
+- name: extract gandalf runner
+  unarchive:
+    src: "/tmp/{{ runner_install_version }}.tgz"
+    dest: "{{ runner_install_dir }}"
+    copy: no
+    owner: "{{ runner_user }}"
+    group: "{{ runner_group }}"
+  when: runner.stat.isdir is not defined
+  tags: gandalf-runner
+
+- name: delete temporary gandalf runner file
+  file:
+    path: "/tmp/{{ runner_install_version }}.tgz"
+    state: absent
+  ignore_errors: yes
+  tags: gandalf-runner
+
+- name: create gandalf runner symlink
+  file:
+    path: "{{ runner_install_dir }}/default"
+    state: link
+    src: "{{ runner_install_dir }}/{{ runner_install_version }}"
+  tags: gandalf-runner
+
+- name: install gandalf packages
+  apt:
+    name={{ item }}
+    state=latest
+  with_items:
+    - libjpeg-dev
+    - zlib1g-dev
+    - libblas-dev
+    - liblapack-dev
+    - libatlas-base-dev
+    - gfortran
+  tags:
+    - gandalf-runner
+
+- name: install pip packages
+  pip:
+    name: "gandalf"
+    virtualenv: "{{ runner_venv_dir }}"
+    version: "{{ runner_gandalf_version }}"
+  become: yes
+  become_user: root
+  tags: gandalf-runner
+
+- name: chown venv folder
+  file:
+    path: "{{ runner_venv_dir }}"
+    owner: "{{ runner_user }}"
+    group: "{{ runner_group }}"
+  tags:
+    - gandalf-runner
+
+- name: create gandalf runner log directory
+  file:
+    path: "{{ runner_log_dir }}"
+    state: directory
+    mode: 0755
+    group: "{{ runner_group }}"
+    owner: "{{ runner_user }}"
+  tags:
+    - gandalf-runner
+
+- name: generate gandalf runner settings
+  template:
+    src: settings.py.j2
+    dest: "{{ runner_install_dir }}/default/settings_{{ item.uid }}.py"
+    mode: 0644
+  with_items: runner_settings
+  notify:
+    - restart gandalf-runner
+  tags:
+    - gandalf-runner
+
+- name: generate supervisord config
+  template:
+    src: g_runner-supervisord.conf.j2
+    dest: "{{ supervisord_programs_dir|default('/etc/supervisor/conf.d') }}/g_runner-supervisord.conf"
+    mode: 0644
+  notify:
+    - reread supervisord
+  tags:
+    - gandalf-runner
+
+- name: add runners to supervisord
+  supervisorctl:
+    name: "g_runner_{{ item.uid }}:"
+    state: present
+  with_items: "{{ runner_settings }}"
+  tags:
+    - gandalf-runner
+
+- name: ensure gandalf runner is started
+  supervisorctl:
+    name: "g_runner_{{ item.uid }}:"
+    state: started
+  with_items: "{{ runner_settings }}"
+  tags:
+    - gandalf-runner
+
+- name: add the logstash configuration
+  template:
+    src: g-runner-logstash.conf.j2
+    dest: "{{ logstash_conf_dir|default('/etc/logstash.d') }}/g-runner-logstash.conf"
+    mode: 0644
+  notify:
+    - restart logstash
+  tags:
+    - gandalf-runner
+
+- name: start logstash
+  supervisorctl:
+    name: logstash
+    state: started
+  tags:
+    - gandalf-runner
+
+- block:
+  - name: Copy over Kibana4 backup folder
+    unarchive:
+      src=backup.tar
+      dest=/tmp/
+
+  - name: Copy over Kibana4 restore script
+    copy:
+      src=restore_kibana_index.sh
+      dest=/tmp/
+      mode=755
+
+  - name: restore Kibana4 visualizations
+    shell: "./restore_kibana_index.sh {{ groups['elasticsearch-nodes'][0] }} {{ elasticsearch_network_http_port|default(9200) }} backup.tar"
+    args:
+      chdir: "/tmp/"
+
+  - name: Remove Kibana tmp files
+    file:
+      path=/tmp/{{ item }}
+      state=absent
+    with_items:
+      - "restore_kibana_index.sh"
+      - "backup.tar"
+  run_once: true
+  when: restore_kibana_visualization
+  tags:
+    - gandalf-runner

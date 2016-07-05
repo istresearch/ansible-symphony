@@ -1,0 +1,7 @@
+---
+dependencies:
+  - { role: prerequisites, when: "package_update_has_run is not defined"}
+  - { role: pip, when: "pip_has_run is not defined" }
+  - { role: supervisord, when: "supervisord_has_run is not defined" }
+  - { role: virtualenv, when: "virtualenv_has_run is not defined" }
+  - { role: logger-app, when: "logger_app_has_run is not defined" }

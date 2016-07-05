@@ -7,6 +7,7 @@
 
 [all:vars]
 repository_host=repo.istresearch.com
+slack_report=false
 
 #
 # Infrastructure and software topology
@@ -187,3 +188,6 @@ vagrant-ist-01
 [phantomjs-nodes:children]
 storm-supervisor-nodes
 spark-nodes
+
+[gandalf-runner-node]
+vagrant-ist-02
