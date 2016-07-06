@@ -44,6 +44,12 @@
   tags: internap-customize
   strategy: free
 
+- name: Run supervisord role
+  hosts: all
+  roles:
+    - supervisord
+  tags: site-supervisord
+
 # ------------------------------ Customize AWS ------------------------
 
 - name: Run AWS customize

@@ -31,6 +31,7 @@ env:
   - TAGS='site-es-hadoop'
   - TAGS='site-tarsnap'
   - TAGS='site-phantomjs'
+  - TAGS='site-supervisord'
 
 matrix:
   fast_finish: true

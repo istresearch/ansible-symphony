@@ -50,6 +50,12 @@
     state: started
   tags: supervisord
 
+- name: ensure supervisord starts on boot
+  service:
+    name: supervisord
+    enabled: yes
+  tags: supervisord
+
 - name: Set fact supervisord_has_run
   set_fact:
     supervisord_has_run: true

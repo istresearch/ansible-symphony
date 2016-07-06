@@ -24,7 +24,7 @@ serverurl=unix://{{ supervisord_sock }} ; use a unix:// URL  for a unix socket
 files={{ supervisord_programs_dir }}/*.conf
 
 [inet_http_server]
-port = *:9001
+port={{ supervisord_inet_http_server }}
 
 [ctlplugin:wildcards]
 supervisor.ctl_factory = supervisorwildcards.controllerplugin:make_wildcards_controllerplugin
