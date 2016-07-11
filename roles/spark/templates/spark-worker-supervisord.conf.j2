@@ -2,7 +2,8 @@
 command={{ spark_install_dir }}/{{ spark_pkg_name }}/bin/spark-class org.apache.spark.deploy.worker.Worker spark://{{ groups['spark-master-node'][0] }}:{{ spark_master_port }} --work-dir {{ spark_worker_dir }}
 autostart=true
 autorestart=true
-stopsignal=KILL
+stopsignal=TERM
+stopwaitsecs=600
 redirect_stderr=true
 stderr_logfile=AUTO
 stderr_logfile_maxbytes={{ spark_stderr_logfile_maxbytes }}
