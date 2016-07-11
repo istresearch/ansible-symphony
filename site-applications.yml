@@ -26,6 +26,12 @@
   tags:
     - always
 
+# ---------------------------------- Pip ---------------------------
+- name: Run the pip role
+  hosts: all
+  roles: [ pip ]
+  tags: site-pip
+
 # ---------------------------------- DataDog --------------------------------
 
 - name: Run Datadog monitor roles

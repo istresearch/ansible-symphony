@@ -20,3 +20,5 @@ traptor_redis_port: 6379
 traptor_redis_db: 1
 
 traptor_type: 'track'
+
+traptor_ist_es: "{{ vault_traptor_ist_es }}"
