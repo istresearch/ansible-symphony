@@ -1,0 +1,25 @@
+cooper_rulemanager_version: 0.20.0.107
+
+cooper_rulemanager_name: rule_manager
+cooper_rulemanager_install_dir: /opt/{{ cooper_rulemanager_name }}
+cooper_rulemanager_miniconda_path: "{{ miniconda_install_dir|default('/opt/miniconda') }}/lib/python2.7/site-packages/{{ cooper_rulemanager_name }}"
+cooper_rulemanager_virtualenv_path: "{{ cooper_rulemanager_install_dir }}/venv"
+cooper_rulemanager_repo_location: "http://{{ repository_host }}/pip/prod"
+cooper_rulemanager_build_version: 107
+cooper_rulemanager_build_branch: master
+cooper_rulemanager_install_version: "{{ cooper_rulemanager_build_version }}-{{ cooper_rulemanager_build_branch }}"
+
+cooper_rulemanager_logger_name: "{{ cooper_rulemanager_name }}"
+cooper_rulemanager_log_dir: /var/log
+cooper_rulemanager_log_file: "{{ cooper_rulemanager_name }}.log"
+cooper_rulemanager_log_max_bytes: '50MB'
+cooper_rulemanager_log_backups: 5
+cooper_rulemanager_log_stdout: True
+cooper_rulemanager_log_json: False
+cooper_rulemanager_log_level: 'INFO'
+
+# Supervisor config
+cooper_rulemanager_num_procs: 1
+cooper_rulemanager_start_secs: 5
+cooper_rulemanager_start_retries: 100
+cooper_rulemanager_stderr_logfile_maxbytes: 50MB

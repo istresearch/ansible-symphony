@@ -133,6 +133,9 @@ vagrant-ist-02
 # Applications topology
 #
 
+[cooper-node]
+vagrant-ist-01
+
 [scrapy-indexer-nodes]
 vagrant-ist-02
 

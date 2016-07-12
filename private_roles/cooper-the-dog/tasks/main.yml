@@ -1,0 +1,96 @@
+---
+- name: Install Miniconda packages
+  shell: "{{ miniconda_install_dir|default('/opt/miniconda') }}/bin/conda install {{ item }} --yes"
+  with_items:
+    - pip
+  tags:
+    - cooper-the-dog
+    - miniconda
+
+- name: install python mysql bindings
+  apt: name=libmysqlclient-dev state=installed
+  become: yes
+  become_method: sudo
+
+- name: Miniconda pip install packages
+  shell: "{{ miniconda_install_dir|default('/opt/miniconda') }}/bin/pip install {{ item }} --ignore-installed --upgrade"
+  with_items:
+    - MySQL-python
+    - elasticsearch
+    - flask
+    - flask-mysqldb
+    - flask-mysql
+    - flask-login
+    - flask-admin
+#    - flask-bcrypt
+    - flask-jsonschema    
+    - flask-security
+    - flask-sqlalchemy
+    - sqlalchemy
+#    - chromium-compact-language-detector
+    - twython
+    - wtforms
+    - kafka-python
+    - xmltodict
+    - raven
+    - scutils
+  tags:
+    - cooper-the-dog
+    - miniconda
+
+- name: Miniconda pip install cooper-the-dog
+  shell: "{{ miniconda_install_dir|default('/opt/miniconda') }}/bin/pip install --extra-index-url {{ repository_pip }} cooper-the-dog --ignore-installed --upgrade"
+  tags: cooper-the-dog
+
+- name: create cooper-the-dog symlink
+  file:
+    src={{ cooper_the_dog_miniconda_path }}
+    path={{ cooper_the_dog_install_dir }}
+    state=link
+    force=yes
+    mode=0744
+  tags: cooper-the-dog
+
+- name: create cooper_the_dog log directory
+  file:
+    path={{ cooper_the_dog_log_dir }}/
+    state=directory
+    mode=0755
+  tags: cooper-the-dog
+
+- name: copy supervisord config
+  template:
+    src={{ cooper_the_dog_name }}-supervisord.conf.j2
+    dest={{ supervisord_programs_dir }}/{{ cooper_the_dog_name }}-supervisord.conf
+    mode=0644
+  notify:
+    - reread supervisord
+  tags: cooper-the-dog
+
+- name: copy cooper_the_dog settings
+  template:
+    src=localsettings.py.j2
+    dest={{ cooper_the_dog_miniconda_path }}/localsettings.py
+    mode=0644
+  notify:
+    - restart cooper_the_dog
+  tags: cooper-the-dog
+
+- name: copy cooper_the_dog settings.json
+  template:
+    src=settings.json
+    dest={{ cooper_the_dog_miniconda_path }}/settings.json
+    mode=0644
+  notify:
+    - restart cooper_the_dog
+  tags: cooper-the-dog
+
+- name: copy cooper_the_dog flask config.py
+  template:
+    src=config.py
+    dest={{ cooper_the_dog_miniconda_path }}/config.py
+    mode=0644
+  notify:
+    - restart cooper_the_dog
+  tags: cooper-the-dog
+
