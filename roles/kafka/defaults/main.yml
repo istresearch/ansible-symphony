@@ -9,6 +9,8 @@ kafka_log_dir: /var/log/kafka
 kafka_log_rolling_retention_count: 10
 kafka_log_rolling_max_size: 25MB
 
+kafka_data_dir:
+  - "/opt/kafka"
 kafka_data_log_dir:
   - "/opt/kafka/topic-logs"
 
