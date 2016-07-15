@@ -1,5 +1,18 @@
 ---
 
+- name: Configuring group
+  group:
+    name: "{{ kafka_group }}"
+  tags: kafka
+
+- name: create kafka user and group
+  user:
+    name={{ kafka_user }}
+    group={{ kafka_group }}
+    shell=/bin/bash
+    createhome=yes
+  tags: kafka
+
 - name: create kafka directories
   file:
     path={{ item }}
@@ -8,6 +21,7 @@
   with_items:
     - "{{ kafka_install_dir }}"
     - "{{ kafka_data_log_dir }}"
+    - "{{ kafka_log_dir }}"
   tags: kafka
 
 - name: check for existing install
@@ -87,5 +101,18 @@
     dest: "/root/.bashrc"
     line: "export KAFKA={{ kafka_install_dir }}/default"
   tags: env
+
+- name: set owner and group of kafka directory and files
+  file:
+    path={{ item }}
+    state=directory
+    recurse=yes
+    owner={{ kafka_user }}
+    group={{ kafka_group }}
+  with_items:
+    - "{{ kafka_install_dir }}"
+    - "{{ kafka_data_dir }}"
+    - "{{ kafka_log_dir }}"
+  tags: kafka
 
 # - cron: name="clear old kafka app logs" job="find /opt/kafka/default/logs -mtime +7 -exec rm {} \; > /dev/null" minute="0"
