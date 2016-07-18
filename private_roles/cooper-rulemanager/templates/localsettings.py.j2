@@ -1,5 +1,5 @@
 redis_settings = {
-    'HOST': 'memex-services.istresearch.com',
+    'HOST': '',
     'PORT': 6379,
     'DB': 1
 }
@@ -38,7 +38,7 @@ rule_cleaning_interval = {
 }
 
 es_settings = {
-    'HOSTS': "{{cooper_es_un}}:{{cooper_es_pw}}@ist-es.istresearch.com:9200",
+    'HOSTS': "{{cooper_es_un}}:{{cooper_es_pw}}@ES_HOST:9200",
     'USERNAME': '',
     'PASSWORD': '',
     'RULE_INDEX': 'collection-rules',
