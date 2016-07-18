@@ -9,6 +9,7 @@ pulse_mysql_admin_login:
   password: "{{ mysql_root_password }}"
 
 pulse_self_signed_ssl: true
+pulse_self_signed_url: true
 pulse_local_install: false
 mysql_root_password: "{{ vault_mysql_root_password }}"
 elasticsearch_heap_size: 2g
