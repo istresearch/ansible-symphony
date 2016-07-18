@@ -54,7 +54,7 @@
   until: http_response.status == 200
   retries: 3
   delay: 5
-  when: not pulse_db_legacy_setup and not pulse_self_signed_ssl
+  when: not pulse_db_legacy_setup and not pulse_self_signed_url
   tags: pulse-ui-db-app
 
 - name: DB setup NOT using SSL
@@ -70,7 +70,7 @@
   until: http_response.status == 200
   retries: 3
   delay: 5
-  when: not pulse_db_legacy_setup and pulse_self_signed_ssl
+  when: not pulse_db_legacy_setup and pulse_self_signed_url
   tags: pulse-ui-db-app
 
 - name: Revert directory permissions after install

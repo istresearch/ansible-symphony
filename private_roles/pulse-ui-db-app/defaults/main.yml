@@ -1,4 +1,5 @@
 pulse_db_legacy_setup: false
+pulse_self_signed_url: false
 
 pulse_db_table_prefix: pulse_
 pulse_db_webapp_table_prefix: webapp_
