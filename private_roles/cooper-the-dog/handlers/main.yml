@@ -1,0 +1,5 @@
+---
+- name: restart cooper the dog
+  supervisorctl:
+    name={{ cooper_the_dog_name }}
+    state=restarted

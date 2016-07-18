@@ -40,11 +40,17 @@
   roles: [ elastalert ]
   tags: site-elastalert
 
-# -------------------------------- Cooper ------------------------------------
-- name: Run Cooper role
+# -------------------------------- Cooper the Dog ------------------------------------
+- name: Run Cooper the Dog role
   hosts: cooper-node
-  roles: [ cooper ]
-  tags: site-cooper
+  roles: [ cooper-the-dog ]
+  tags: cooper-the-dog
+
+# -------------------------------- Cooper Rule Manager ------------------------------------
+- name: Run Cooper Rulemanager role
+  hosts: cooper-node
+  roles: [ cooper-rulemanager ]
+  tags: cooper-rulemanager
 
 # ------------------------------- Gdelt Monitor ------------------------------
 - name: Run Gdelt monitor role

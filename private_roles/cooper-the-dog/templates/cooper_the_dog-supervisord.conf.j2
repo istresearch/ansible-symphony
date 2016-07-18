@@ -1,0 +1,18 @@
+[program:{{ cooper_the_dog_name }}]
+command={{ miniconda_install_dir|default('/opt/miniconda') }}/bin/python {{ cooper_the_dog_install_dir }}/cooper.py
+directory={{ cooper_the_dog_install_dir }}
+process_name=%(program_name)s
+numprocs={{ cooper_the_dog_num_procs }}
+autostart=true
+autorestart=false
+exitcodes=0,2,3
+startsecs={{ cooper_the_dog_start_secs }}
+startretries={{ cooper_the_dog_start_retries }}
+stopsignal=KILL
+redirect_stderr=true
+stderr_logfile=AUTO
+stdout_logfile = AUTO
+stderr_logfile_maxbytes={{ cooper_the_dog_stderr_logfile_maxbytes }}
+stdout_logfile_maxbytes = {{ cooper_the_dog_stderr_logfile_maxbytes }}
+
+environment=PATH="/root/cooper/bin"

@@ -1,5 +1,0 @@
----
-- name: restart cooper
-  supervisorctl:
-    name={{ cooper_name }}
-    state=restarted

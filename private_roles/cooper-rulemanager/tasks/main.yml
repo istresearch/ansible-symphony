@@ -1,0 +1,77 @@
+---
+- name: Install Miniconda packages
+  shell: "{{ miniconda_install_dir|default('/opt/miniconda') }}/bin/conda install {{ item }} --yes"
+  with_items:
+    - pip
+  tags:
+    - cooper-rulemanager
+    - miniconda
+
+- name: install python mysql bindings
+  apt: name=libmysqlclient-dev state=installed
+  become: yes
+  become_method: sudo
+
+- name: Miniconda pip install packages
+  shell: "{{ miniconda_install_dir|default('/opt/miniconda') }}/bin/pip install {{ item }} --ignore-installed --upgrade"
+  with_items:
+    - MySQL-python
+    - elasticsearch
+    - flask
+    - flask-mysqldb
+    - flask-mysql
+    - flask-login
+    - flask-admin
+#    - flask-bcrypt
+    - flask-jsonschema    
+    - flask-security
+    - flask-sqlalchemy
+    - sqlalchemy
+#    - chromium-compact-language-detector
+    - twython
+    - wtforms
+    - kafka-python
+    - xmltodict
+    - raven
+    - scutils
+  tags:
+    - cooper-rulemanager
+    - miniconda
+
+- name: Miniconda pip install rule-manager
+  shell: "{{ miniconda_install_dir|default('/opt/miniconda') }}/bin/pip install --extra-index-url {{ repository_pip }} rule-manager --ignore-installed --upgrade"
+  tags: cooper-rulemanager
+
+- name: create rule-manager symlink
+  file:
+    src={{ cooper_rulemanager_miniconda_path }}
+    path={{ cooper_rulemanager_install_dir }}
+    state=link
+    force=yes
+    mode=0744
+  tags: cooper-rulemanager
+
+- name: create cooper_rulemanager log directory
+  file:
+    path={{ cooper_rulemanager_log_dir }}/
+    state=directory
+    mode=0755
+  tags: cooper-rulemanager
+
+- name: copy supervisord config
+  template:
+    src={{ cooper_rulemanager_name }}-supervisord.conf.j2
+    dest={{ supervisord_programs_dir }}/{{ cooper_rulemanager_name }}-supervisord.conf
+    mode=0644
+  notify:
+    - reread supervisord
+  tags: cooper-rulemanager
+
+- name: copy cooper_rulemanager settings
+  template:
+    src=localsettings.py.j2
+    dest={{ cooper_rulemanager_miniconda_path }}/localsettings.py
+    mode=0644
+  notify:
+    - restart cooper_rulemanager
+  tags: cooper-rulemanager
