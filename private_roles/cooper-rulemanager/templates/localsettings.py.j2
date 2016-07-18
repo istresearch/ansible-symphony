@@ -1,11 +1,3 @@
-mysql_settings = {
-    'HOST': 'localhost',
-    'PORT': 3306,
-    'USER': 'test',
-    'PASSWD': '',
-    'DB': 'test'
-}
-
 redis_settings = {
     'HOST': 'memex-services.istresearch.com',
     'PORT': 6379,
@@ -27,9 +19,29 @@ sentry_settings = {
 }
 
 rule_refresh_settings = {
-    'RULE_REFRESH_TIME': 900
+    'RULE_REFRESH_RATE': 900
 }
 
 traptor_pubsub_settings = {
     'CHANNEL_NAME': 'traptor-notify'
 }
+
+twitter_settings = {
+     "OAUTH_TOKEN_SECRET": "{{ cooper_twitter_token_secret }}",
+     "APP_SECRET": "{{ cooper_twitter_app_secret }}",
+     "OAUTH_TOKEN": "{{ cooper_twitter_token }}",
+     "APP_KEY": "{{ cooper_twitter_app_key }}"
+}
+
+rule_cleaning_interval = {
+    'RULE_CLEANING_INTERVAL': 900
+}
+
+es_settings = {
+    'HOSTS': "{{cooper_es_un}}:{{cooper_es_pw}}@ist-es.istresearch.com:9200",
+    'USERNAME': '',
+    'PASSWORD': '',
+    'RULE_INDEX': 'collection-rules',
+    'RULE_DOC_TYPE': 'document'
+}
+
