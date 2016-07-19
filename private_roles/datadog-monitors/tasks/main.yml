@@ -47,6 +47,12 @@
         src={{ datadog_monitor_install_dir }}/ist-sysadmin-{{ datadog_monitor_version }}/datadog
         state=link
         owner=dd-agent
+
+    # Using command here instead of the pip module for the `--target` option.
+    # This is required because the embedded python for the datadog agent does
+    # not read the system-level packages
+    - name: install custom monitor python modules
+      command: pip install -r {{ datadog_monitor_install_dir }}/custom_monitors/requirements.txt --target {{ datadog_embedded_python_lib_dir }}
   tags:
     - datadog-monitors
     - datadog-monitors-install

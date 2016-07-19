@@ -1,0 +1,64 @@
+datadog_monitors:
+  supervisord:
+    enabled: true
+    is_custom_check: false
+    server_name: '{{ inventory_hostname }}'
+  es_doc_count:
+    enabled: true
+    is_custom_check: true
+    es_instances:
+      - user: '{{ traptor_ist_es.user }}'
+        password: '{{ traptor_ist_es.password }}'
+        host: '{{ traptor_ist_es.host }}'
+        port: '{{ traptor_ist_es.port }}'
+        doctypes:
+
+          -  doc_type: tweet_traptor
+             index: pulse-default-default
+             metric_name: tweet_traptor.geo.europe.count
+             timestamp_field: system_timestamp
+             query:
+               bool:
+                 must:
+                  - match:
+                      doc.traptor.rule_tag: QCR.cscc
+
+          -  doc_type: tweet_traptor
+             index: pulse-default-default
+             metric_name: tweet_traptor.geo.asia.count
+             timestamp_field: system_timestamp
+             query:
+               bool:
+                 must:
+                  - match:
+                      doc.traptor.rule_tag: Pulse.asia
+
+          -  doc_type: tweet_traptor
+             index: pulse-default-default
+             metric_name: tweet_traptor.geo.south_america.count
+             timestamp_field: system_timestamp
+             query:
+               bool:
+                 must:
+                  - match:
+                      doc.traptor.rule_tag: Pulse.south_america
+
+          -  doc_type: tweet_traptor
+             index: pulse-default-default
+             metric_name: tweet_traptor.geo.africa.count
+             timestamp_field: system_timestamp
+             query:
+               bool:
+                 must:
+                  - match:
+                      doc.traptor.rule_tag: Pulse.africa
+
+          -  doc_type: tweet_traptor
+             index: pulse-default-default
+             metric_name: tweet_traptor.geo.australia.count
+             timestamp_field: system_timestamp
+             query:
+               bool:
+                 must:
+                  - match:
+                      doc.traptor.rule_tag: Pulse.australia
