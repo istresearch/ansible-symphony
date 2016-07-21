@@ -36,7 +36,7 @@ datadog_monitors:
                       doc.traptor.id: 1
           -  doc_type: tweet_traptor
              index: pulse-default-default
-             metric_name: tweet_traptor.track.track1.count
+             metric_name: tweet_traptor.track.track2.count
              timestamp_field: system_timestamp
              query:
                bool:
