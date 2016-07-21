@@ -34,14 +34,14 @@ datadog_monitors:
                       doc.traptor.rule_type: track
                   - match:
                       doc.traptor.id: 1
-            -  doc_type: tweet_traptor
-                index: pulse-default-default
-                metric_name: tweet_traptor.track.track1.count
-                timestamp_field: system_timestamp
-                query:
-                  bool:
-                    must:
-                     - match:
-                         doc.traptor.rule_type: track
-                     - match:
-                         doc.traptor.id: 2
+          -  doc_type: tweet_traptor
+             index: pulse-default-default
+             metric_name: tweet_traptor.track.track1.count
+             timestamp_field: system_timestamp
+             query:
+               bool:
+                 must:
+                  - match:
+                      doc.traptor.rule_type: track
+                  - match:
+                      doc.traptor.id: 2
