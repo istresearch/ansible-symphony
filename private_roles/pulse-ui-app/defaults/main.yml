@@ -32,4 +32,4 @@ pulse_deploy_log_file: deploy_survey.log
 
 pulse_kibana_backup: backup.tar
 
-pulse_self_signed_ssl: "{{ pulse_self_signed_url | default(false) }}"
+pulse_self_signed_ssl: false

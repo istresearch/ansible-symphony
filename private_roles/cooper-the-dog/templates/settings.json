@@ -1,0 +1,42 @@
+{
+    "twitter": {
+        "OAUTH_TOKEN_SECRET": "{{ cooper_twitter_token_secret }}",
+        "APP_SECRET": "{{ cooper_twitter_app_secret }}",
+        "OAUTH_TOKEN": "{{ cooper_twitter_token }}",
+        "APP_KEY": "{{ cooper_twitter_app_key }}"
+        },
+    "GNIP": {
+        "PWD": "{{ cooper_gnip_pwd }}",
+        "UN": "{{ cooper_gnip_un }}",
+        "ACCOUNT": "Timbr",
+        "STREAMS": ["dev-darpa", "prod-darpa"]
+        },
+    "SQL": {
+        "PWD": "{{ cooper_sql_pwd }}",
+        "UN": "{{ cooper_sql_un }}",
+        "DATABASE": "memex_cooper_prod",
+        "HOST": "memex-db.istresearch.com"
+        },
+    "ES": {
+        "URL": "https://{{ cooper_es_un }}:{{ cooper_es_pw }}@els.istresearch.com:59200",
+        "INDEX": "traptor-cooper-1"
+        },
+    "FLASK": {
+        "CONFIG_PATH": "/opt/cooper_the_dog/config.py"
+        },
+    "KAFKA": {
+        "HOST":
+            "crew04.istresearch.com:9092,crew05.istresearch.com:9092,crew06.istresearch.com:9092",
+        "TOPIC": "crawled_cooper_dev"
+    },
+    "THRESHOLDS": {
+        "TWEETS_PER_SECOND": 1.0
+    },
+    "TWITTER_API_URLS": {
+        "RATE_LIMIT_URL": "https://api.twitter.com/1.1/application/rate_limit_status.json",
+        "SEARCH_API_URL": "https://api.twitter.com/1.1/search/tweets.json"
+    },
+    "FACEBOOK_SCRAPERS": {
+        "GRAPH_SCRAPER_API_URL": "https://{{ cooper_fb_un }}:{{ cooper_fb_pw }}@memexdev.istresearch.com/graph/api/graph/"
+    }
+}

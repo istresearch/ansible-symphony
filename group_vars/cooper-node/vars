@@ -1,0 +1,28 @@
+---
+# file: group_vars/cooper/vars
+
+cooper_twitter_token_secret: "{{ vault_cooper_twitter_token_secret }}"
+cooper_twitter_app_secret: "{{ vault_cooper_twitter_app_secret }}"
+cooper_twitter_token: "{{ vault_cooper_twitter_token }}"
+cooper_twitter_app_key: "{{ vault_cooper_twitter_app_key }}"
+
+cooper_gnip_pwd: "{{ vault_cooper_gnip_pwd }}"
+cooper_gnip_un: "{{ vault_cooper_gnip_un }}"
+
+cooper_sql_pwd: "{{ vault_cooper_sql_pwd }}"
+cooper_sql_un: "{{ vault_cooper_sql_un }}"
+
+cooper_flask_pw_hash: "{{ vault_cooper_flask_pw_hash }}" 
+cooper_flask_pw_salt: "{{ vault_cooper_flask_pw_salt }}"
+
+cooper_es_un: "{{ vault_cooper_es_un }}"
+cooper_es_pw: "{{ vault_cooper_es_pw }}"
+
+cooper_fb_un: "{{ vault_cooper_fb_un }}" 
+cooper_fb_pw: "{{ vault_cooper_fb_pw }}"
+
+cooper_rules_un: "{{ vault_cooper_rules_un }}"
+cooper_rules_pw: "{{ vault_cooper_rules_pw }}"
+
+cooper_sentry_un: "{{ vault_cooper_sentry_un }}"
+cooper_sentry_pw: "{{ vault_cooper_sentry_pw }}"

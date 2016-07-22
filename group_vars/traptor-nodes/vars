@@ -5,7 +5,7 @@ traptor_sentry_secret: "{{ vault_traptor_sentry_secret }}"
 
 traptor_kafka_topic: "{{ vault_traptor_kafka_topic }}"
 
-traptor_track_count: 2
+traptor_track_count: 3
 traptor_follow_count: 2
 traptor_location_count: 6
 
@@ -20,3 +20,5 @@ traptor_redis_port: 6379
 traptor_redis_db: 1
 
 traptor_type: 'track'
+
+traptor_ist_es: "{{ vault_traptor_ist_es }}"

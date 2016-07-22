@@ -1,0 +1,47 @@
+redis_settings = {
+    'HOST': '',
+    'PORT': 6379,
+    'DB': 1
+}
+
+cooper_settings = {
+    'RULES_URL': 'https://{{ cooper_rules_un }}:{{ cooper_rules_pw }}@memex-dev.istresearch.com/cooper/rules/list',
+    'TEST_DB_HOST': 'TEST_DB_HOST_HERE',
+    'TEST_DB_PORT': 3306,
+    'TEST_DB_USER': 'TEST_DB_USER_HERE',
+    'TEST_DB_PASSWORD': 'TEST_DB_PASSWORD_HERE',
+    'TEST_DB': 'TEST_DB_NAME_HERE'
+}
+
+sentry_settings = {
+    'USE_SENTRY': 'False',
+    'SENTRY_URL': 'https://{{ cooper_sentry_pw }}:{{ cooper_sentry_un }}@app.getsentry.com/5525'
+}
+
+rule_refresh_settings = {
+    'RULE_REFRESH_RATE': 900
+}
+
+traptor_pubsub_settings = {
+    'CHANNEL_NAME': 'traptor-notify'
+}
+
+twitter_settings = {
+     "OAUTH_TOKEN_SECRET": "{{ cooper_twitter_token_secret }}",
+     "APP_SECRET": "{{ cooper_twitter_app_secret }}",
+     "OAUTH_TOKEN": "{{ cooper_twitter_token }}",
+     "APP_KEY": "{{ cooper_twitter_app_key }}"
+}
+
+rule_cleaning_interval = {
+    'RULE_CLEANING_INTERVAL': 900
+}
+
+es_settings = {
+    'HOSTS': "{{cooper_es_un}}:{{cooper_es_pw}}@ES_HOST:9200",
+    'USERNAME': '',
+    'PASSWORD': '',
+    'RULE_INDEX': 'collection-rules',
+    'RULE_DOC_TYPE': 'document'
+}
+
