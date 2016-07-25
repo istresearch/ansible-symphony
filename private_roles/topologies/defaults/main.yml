@@ -4,3 +4,4 @@ topologies_log_dir: "/var/log/topologies"
 topologies_streamparse_log_dir: "/var/log/streamparse"
 topologies_user: streamparse
 topologies_group: streamparse
+topologies_logstash_flush_size: 10000

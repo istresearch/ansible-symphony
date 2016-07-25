@@ -23,6 +23,7 @@ output {
       template_overwrite => true
       index => "logs-topologies-%{+YYYY.MM.dd}"
       document_type => "%{[logger]}"
+      flush_size => {{ topologies_logstash_flush_size }}
     }
   }
 {% endif %}
