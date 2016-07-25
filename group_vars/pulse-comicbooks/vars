@@ -4,7 +4,7 @@
 
 pulse_repo_user: "{{ vault_comicbooks_repository_un }}"
 pulse_repo_password: "{{ vault_comicbooks_repository_pwd }}"
-pulse_repo_location: "https://{{ repository_host }}"
+pulse_repo_location: "https://{{ repository_host }}/pulse"
 
 repository_un: "{{ vault_comicbooks_repository_un }}"
 repository_pwd: "{{ vault_comicbooks_repository_pwd }}"

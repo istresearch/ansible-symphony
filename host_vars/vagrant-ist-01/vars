@@ -41,5 +41,7 @@ kafka_heap: 1G
 
 sc_crawling_interface: eth0
 
-elasticsearch_heap_size: 1g
+elasticsearch_heap_size: 2g
+elasticsearch_is_master: "true"
+elasticsearch_is_data: "true"
 datadog_api_key: "{{ vault_datadog_api_key }}"
