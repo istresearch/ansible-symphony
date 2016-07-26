@@ -13,11 +13,20 @@ slack_report=false
 # Infrastructure and software topology
 #
 
+[pulse-comicbooks:children]
+elasticsearch-nodes
+kibana-node
+docker-engine
+apache-node
+mysql-node
+pulse-ui-node
+pulse-mysql-es-host
+
 [elasticsearch-master-nodes]
 # data node serves as master also
 
 [elasticsearch-data-nodes]
-pulse-comicbooks elasticsearch_is_master=true
+comic-books.istresearch.com elasticsearch_is_master=true
 
 [elasticsearch-client-nodes]
 
@@ -28,19 +37,19 @@ elasticsearch-data-nodes
 elasticsearch-client-nodes
 
 [kibana-node]
-pulse-comicbooks
+comic-books.istresearch.com
 
 [docker-engine]
-pulse-comicbooks
+comic-books.istresearch.com
 
 [apache-node]
-pulse-comicbooks
+comic-books.istresearch.com
 
 [mysql-node]
-pulse-comicbooks
+comic-books.istresearch.com
 
 [pulse-ui-node]
-pulse-comicbooks
+comic-books.istresearch.com
 
 [pulse-mysql-es-host]
-pulse-comicbooks
+comic-books.istresearch.com
