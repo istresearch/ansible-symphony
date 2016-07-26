@@ -12,5 +12,5 @@ datadog_monitors:
     is_custom_check: false
     es_instances:
         - url: http://localhost:9200
-          tag: ist-es-cluster
+          tag: "es-cluster:ist"
 
