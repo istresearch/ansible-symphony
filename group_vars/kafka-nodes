@@ -12,6 +12,14 @@ kafka_data_log_dir:
   - '/data/5/kafka/topic-logs'
   - '/data/6/kafka/topic-logs'
 
+kafka_data_dir:
+  - '/data/1/kafka'
+  - '/data/2/kafka'
+  - '/data/3/kafka'
+  - '/data/4/kafka'
+  - '/data/5/kafka'
+  - '/data/6/kafka'
+
 # According to Apache Docs, num io threads should be at least equal number of disks.
 kafka_num_io_threads: 6
 
