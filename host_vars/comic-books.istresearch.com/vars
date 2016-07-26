@@ -1,0 +1,11 @@
+---
+# file: host_vars/comic-books.istresearch.com
+# Override group_vars for local vagrant testing
+
+pulse_repo_user: "{{ vault_comicbooks_repository_un }}"
+pulse_repo_password: "{{ vault_comicbooks_repository_pwd }}"
+pulse_repo_location: "https://{{ repository_host }}"
+
+repository_un: "{{ vault_comicbooks_repository_un }}"
+repository_pwd: "{{ vault_comicbooks_repository_pwd }}"
+repository_infrastructure: "https://{{ repository_un }}:{{ repository_pwd }}@{{ repository_host }}/infrastructure"
