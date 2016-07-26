@@ -8,27 +8,38 @@
 repository_host=repo.istresearch.com
 
 [dd-agent-nodes:children]
-servers
+elasticsearch-nodes
 
 [dig-elasticsearch-nodes:children]
 servers
 
+[aws:children]
+elasticsearch-master-nodes
+elasticsearch-data-nodes
+
 [servers]
 #127.0.0.1 host_alias=localhost
 # This group is 
-# Dig Servers on AWS 
-dig-es01.istresearch.com host_alias=dig-es01.istresearch.com
-dig-es02.istresearch.com host_alias=dig-es02.istresearch.com
-dig-es03.istresearch.com host_alias=dig-es03.istresearch.com
-dig-es04.istresearch.com host_alias=dig-es04.istresearch.com
-dig-es05.istresearch.com host_alias=dig-es05.istresearch.com
-dig-es06.istresearch.com host_alias=dig-es06.istresearch.com
-dig-es07.istresearch.com host_alias=dig-es07.istresearch.com
-dig-es08.istresearch.com host_alias=dig-es08.istresearch.com
-dig-es09.istresearch.com host_alias=dig-es09.istresearch.com
-dig-es10.istresearch.com host_alias=dig-es10.istresearch.com
+# Dig Servers on AWS
+dig-es01.istresearch.com 
+dig-es02.istresearch.com 
+dig-es03.istresearch.com
+dig-es04.istresearch.com
+dig-es05.istresearch.com
+dig-es06.istresearch.com
+dig-es07.istresearch.com
+dig-es08.istresearch.com
+dig-es09.istresearch.com
+dig-es10.istresearch.com
+dig-es11.istresearch.com
+dig-es12.istresearch.com
+dig-es13.istresearch.com
+dig-es14.istresearch.com
 
 [elasticsearch-master-nodes]
+dig-es-m01.istresearch.com
+dig-es-m02.istresearch.com
+dig-es-m03.istresearch.com
 
 [elasticsearch-data-nodes]
 dig-es01.istresearch.com elasticsearch_is_master=true
@@ -41,6 +52,10 @@ dig-es07.istresearch.com elasticsearch_is_master=true
 dig-es08.istresearch.com elasticsearch_is_master=true
 dig-es09.istresearch.com elasticsearch_is_master=true
 dig-es10.istresearch.com elasticsearch_is_master=true
+dig-es11.istresearch.com elasticsearch_is_data=true
+dig-es12.istresearch.com elasticsearch_is_data=true
+dig-es13.istresearch.com elasticsearch_is_data=true
+dig-es14.istresearch.com elasticsearch_is_data=true
 
 [elasticsearch-client-nodes]
 
