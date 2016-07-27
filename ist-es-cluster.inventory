@@ -12,20 +12,10 @@ elasticsearch_heap_size=16g
 elasticsearch-nodes
 
 [ist-elasticsearch-nodes:children]
-servers
+elasticsearch-nodes
 
 [aws:children]
 elasticsearch-nodes
-
-[servers]
-#127.0.0.1 host_alias=localhost
-# This group is 
-# IST Servers on AWS 
-ist-es01.istresearch.com
-ist-es02.istresearch.com
-ist-es03.istresearch.com
-ist-es04.istresearch.com
-ist-es05.istresearch.com
 
 [elasticsearch-master-nodes]
 ist-es-m01.istresearch.com
