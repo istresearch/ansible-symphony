@@ -1,7 +1,5 @@
 ---
 
-elasticsearch_heap_size: 16g 
-
 datadog_monitors:
   supervisord:
     enabled: true

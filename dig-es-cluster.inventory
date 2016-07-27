@@ -42,20 +42,20 @@ dig-es-m02.istresearch.com
 dig-es-m03.istresearch.com
 
 [elasticsearch-data-nodes]
-dig-es01.istresearch.com elasticsearch_is_master=true
-dig-es02.istresearch.com elasticsearch_is_master=true
-dig-es03.istresearch.com elasticsearch_is_master=true
-dig-es04.istresearch.com elasticsearch_is_master=true
-dig-es05.istresearch.com elasticsearch_is_master=true
-dig-es06.istresearch.com elasticsearch_is_master=true
-dig-es07.istresearch.com elasticsearch_is_master=true
-dig-es08.istresearch.com elasticsearch_is_master=true
-dig-es09.istresearch.com elasticsearch_is_master=true
-dig-es10.istresearch.com elasticsearch_is_master=true
-dig-es11.istresearch.com elasticsearch_is_data=true
-dig-es12.istresearch.com elasticsearch_is_data=true
-dig-es13.istresearch.com elasticsearch_is_data=true
-dig-es14.istresearch.com elasticsearch_is_data=true
+dig-es01.istresearch.com
+dig-es02.istresearch.com
+dig-es03.istresearch.com
+dig-es04.istresearch.com
+dig-es05.istresearch.com
+dig-es06.istresearch.com
+dig-es07.istresearch.com
+dig-es08.istresearch.com
+dig-es09.istresearch.com
+dig-es10.istresearch.com
+dig-es11.istresearch.com
+dig-es12.istresearch.com
+dig-es13.istresearch.com
+dig-es14.istresearch.com
 
 [elasticsearch-client-nodes]
 
