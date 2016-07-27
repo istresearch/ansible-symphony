@@ -11,30 +11,11 @@ repository_host=repo.istresearch.com
 elasticsearch-nodes
 
 [dig-elasticsearch-nodes:children]
-servers
+elasticsearch-nodes
 
 [aws:children]
 elasticsearch-master-nodes
 elasticsearch-data-nodes
-
-[servers]
-#127.0.0.1 host_alias=localhost
-# This group is 
-# Dig Servers on AWS
-dig-es01.istresearch.com 
-dig-es02.istresearch.com 
-dig-es03.istresearch.com
-dig-es04.istresearch.com
-dig-es05.istresearch.com
-dig-es06.istresearch.com
-dig-es07.istresearch.com
-dig-es08.istresearch.com
-dig-es09.istresearch.com
-dig-es10.istresearch.com
-dig-es11.istresearch.com
-dig-es12.istresearch.com
-dig-es13.istresearch.com
-dig-es14.istresearch.com
 
 [elasticsearch-master-nodes]
 dig-es-m01.istresearch.com

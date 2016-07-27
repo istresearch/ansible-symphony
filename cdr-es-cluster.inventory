@@ -11,25 +11,10 @@ repository_host=repo.istresearch.com
 elasticsearch-nodes
 
 [cdr-elasticsearch-nodes:children]
-servers
+elasticsearch-nodes
 
 [aws:children]
 elasticsearch-nodes
-
-[servers]
-#127.0.0.1 host_alias=localhost
-
-# CDR Servers on AWS 
-cdr-es01.istresearch.com
-cdr-es02.istresearch.com
-cdr-es03.istresearch.com
-cdr-es04.istresearch.com
-cdr-es05.istresearch.com
-cdr-es06.istresearch.com
-cdr-es07.istresearch.com
-cdr-es08.istresearch.com
-cdr-es09.istresearch.com
-cdr-es10.istresearch.com
 
 [elasticsearch-master-nodes]
 cdr-es-m01.istresearch.com
