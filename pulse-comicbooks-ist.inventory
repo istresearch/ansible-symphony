@@ -1,0 +1,55 @@
+#   - Comments begin with the '#' character
+#   - Blank lines are ignored
+#   - Groups of hosts are delimited by [header] elements
+#   - You can enter hostnames or ip addresses
+#   - A hostname/ip can be a member of multiple groups
+
+
+[all:vars]
+repository_host=cyto.istresearch.com/comicbooks
+slack_report=false
+
+#
+# Infrastructure and software topology
+#
+
+[pulse-comicbooks:children]
+elasticsearch-nodes
+kibana-node
+docker-engine
+apache-node
+mysql-node
+pulse-ui-node
+pulse-mysql-es-host
+
+[elasticsearch-master-nodes]
+# data node serves as master also
+
+[elasticsearch-data-nodes]
+comic-books.istresearch.com elasticsearch_is_master=true
+
+[elasticsearch-client-nodes]
+
+
+[elasticsearch-nodes:children]
+elasticsearch-master-nodes
+elasticsearch-data-nodes
+elasticsearch-client-nodes
+
+[kibana-node]
+comic-books.istresearch.com
+
+[docker-engine]
+comic-books.istresearch.com
+
+[apache-node]
+comic-books.istresearch.com
+
+[mysql-node]
+comic-books.istresearch.com
+
+[pulse-ui-node]
+comic-books.istresearch.com
+
+[pulse-mysql-es-host]
+comic-books.istresearch.com

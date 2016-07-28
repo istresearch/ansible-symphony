@@ -1,3 +1,13 @@
 ---
 
-elasticsearch_heap_size: 16g 
+datadog_monitors:
+  supervisord:
+    enabled: true
+    is_custom_check: false
+    server_name: '{{ inventory_hostname }}'
+  elastic:
+    enabled: true
+    is_custom_check: false
+    es_instances:
+        - url: http://localhost:9200
+          tag: "es-cluster:cdr"

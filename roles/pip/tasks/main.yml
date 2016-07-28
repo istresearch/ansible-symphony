@@ -24,6 +24,7 @@
     src: pip.conf.j2
     dest: /etc/pip.conf
     mode: 0775
+  when: pip_local
   tags: pip
 
 - name: pip environment configuration

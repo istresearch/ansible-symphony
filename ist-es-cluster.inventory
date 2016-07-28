@@ -9,22 +9,18 @@ repository_host=repo.istresearch.com
 elasticsearch_heap_size=16g
 
 [dd-agent-nodes:children]
-servers
+elasticsearch-nodes
 
 [ist-elasticsearch-nodes:children]
-servers
+elasticsearch-nodes
 
-[servers]
-#127.0.0.1 host_alias=localhost
-# This group is 
-# IST Servers on AWS 
-ist-es01.istresearch.com host_alias=ist-es01.istresearch.com
-ist-es02.istresearch.com host_alias=ist-es02.istresearch.com
-ist-es03.istresearch.com host_alias=ist-es03.istresearch.com
-ist-es04.istresearch.com host_alias=ist-es04.istresearch.com
-ist-es05.istresearch.com host_alias=ist-es05.istresearch.com
+[aws:children]
+elasticsearch-nodes
 
 [elasticsearch-master-nodes]
+ist-es-m01.istresearch.com
+ist-es-m02.istresearch.com
+ist-es-m03.istresearch.com
 
 [elasticsearch-data-nodes]
 ist-es01.istresearch.com elasticsearch_is_master=true

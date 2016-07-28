@@ -18,6 +18,7 @@
     - ntp
 
 - include: swap.yml
+  when: swap_run
   tags:
     - common
     - swap_file

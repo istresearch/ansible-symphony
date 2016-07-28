@@ -1,3 +1,5 @@
 127.0.0.1        localhost
-192.168.33.111   vagrant-ist-01                vist01  ubuntu
-192.168.33.112   vagrant-ist-02                vist02  ubuntu
+192.168.33.111   vagrant-ist-01                vist01    ubuntu
+192.168.33.112   vagrant-ist-02                vist02    ubuntu
+192.168.33.113   pulse-node01                  pnode-01  ubuntu
+192.168.33.114   pulse-comicbooks              pbooks    ubuntu

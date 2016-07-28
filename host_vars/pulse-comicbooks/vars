@@ -1,7 +1,19 @@
 ---
-# file: host_vars/pulse-node01
+# file: group_vars/pulse-comicbooks
 # Override group_vars for local vagrant testing
 
+pulse_repo_user: "{{ vault_comicbooks_repository_un }}"
+pulse_repo_password: "{{ vault_comicbooks_repository_pwd }}"
+pulse_repo_location: "https://{{ repository_host }}"
+
+repository_un: "{{ vault_comicbooks_repository_un }}"
+repository_pwd: "{{ vault_comicbooks_repository_pwd }}"
+repository_infrastructure: "https://{{ repository_un }}:{{ repository_pwd }}@{{ repository_host }}/infrastructure"
+
+swap_run: false
+pip_local: false
+
+elasticsearch_heap_size: 2g
 gnip_monitor_autostart: "false"
 gnip_monitor_data_dir: /tmp
 gnip_monitor_es_port: 9200
@@ -24,7 +36,7 @@ pulse_self_signed_ssl: true
 pulse_self_signed_url: true
 pulse_local_install: false
 
-mysql_db_host: pulse-node01
+mysql_db_host: pulse-comicbooks
 pulse_mysql_admin_login:
   user: "{{ mysql_root_username }}"
   password: "{{ mysql_root_password }}"
