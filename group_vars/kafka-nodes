@@ -26,3 +26,5 @@ kafka_num_io_threads: 6
 kafka_heap: 8G
 
 kafka_log_retention_hours: 24
+kafka_num_partitions: 3
+kafka_replication_factor: 3

@@ -23,11 +23,16 @@ ist-es-m02.istresearch.com
 ist-es-m03.istresearch.com
 
 [elasticsearch-data-nodes]
-ist-es01.istresearch.com elasticsearch_is_master=true
-ist-es02.istresearch.com elasticsearch_is_master=true
-ist-es03.istresearch.com elasticsearch_is_master=true
-ist-es04.istresearch.com elasticsearch_is_master=true
-ist-es05.istresearch.com elasticsearch_is_master=true
+ist-es01.istresearch.com
+ist-es02.istresearch.com
+ist-es03.istresearch.com
+ist-es04.istresearch.com
+ist-es05.istresearch.com
+ist-es06.istresearch.com
+ist-es07.istresearch.com
+ist-es08.istresearch.com
+ist-es09.istresearch.com
+ist-es10.istresearch.com
 
 [elasticsearch-client-nodes]
 

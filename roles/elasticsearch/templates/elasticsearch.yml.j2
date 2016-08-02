@@ -73,7 +73,7 @@ path.conf: {{ elasticsearch_conf_dir }}
 # Path to directory where to store the data (separate multiple locations by comma):
 #
 # path.data: /path/to/data
-path.data: {{ elasticsearch_data_dir }}_{{ conf_name }}
+path.data: {% for path in elasticsearch_data_dir %}{{ path }}_{{ conf_name }}{% if not loop.last %},{% endif %}{% endfor %}
 
 # path.work: /path/to/work
 path.work: {{ elasticsearch_work_dir }}_{{ conf_name }}
