@@ -7,8 +7,8 @@
     mode: 0644
   notify:
     - reread supervisord
-    - restart yarn historyserver
-    - wait for yarn historyserver port
+    - restart yarn history server
+    - wait for yarn history server port
   tags: hadoop
 
 - name: add historyserver to supervisord

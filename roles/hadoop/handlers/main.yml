@@ -35,7 +35,7 @@
     state=started
   when: hdfs_datanode_enabled
 
-- name: restart yarn resourcemanager
+- name: restart yarn resource manager
   supervisorctl:
     name=hadoop-yarn-resourcemanager
     state=restarted
@@ -60,7 +60,7 @@
     state=started
   when: yarn_nodemanager_enabled
 
-- name: restart yarn historyserver
+- name: restart yarn history server
   supervisorctl:
     name=hadoop-yarn-historyserver
     state=restarted
@@ -73,7 +73,7 @@
     state=started
   when: yarn_historyserver_enabled
 
-- name: restart mapreduce historyserver
+- name: restart mapreduce history server
   supervisorctl:
     name=hadoop-mapreduce-historyserver
     state=restarted

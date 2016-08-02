@@ -20,7 +20,7 @@
     mode: 0644
   notify:
     - reread supervisord
-    - restart yarn nodemanager
+    - restart yarn node manager
     - wait for yarn node manager port
   tags: hadoop
 
