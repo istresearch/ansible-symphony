@@ -220,24 +220,6 @@
     - pulse-ui-app
     - kibana4-app
 
-- name: Extract the Kibana4 backup folder
-  unarchive:
-    src=/tmp/{{ pulse_kibana_backup }}
-    dest=/tmp/
-    copy=no
-  tags:
-    - pulse-ui-app
-    - kibana4-app
-
-- name: Clean up Kibana Backup file
-  file:
-    path=/tmp/{{ pulse_kibana_backup }}
-    state=absent
-  ignore_errors: yes
-  tags:
-    - pulse-ui-app
-    - kibana4-app
-
 - name: Copy over Kibana4 restore script
   copy:
     src=restore_kibana_index.sh

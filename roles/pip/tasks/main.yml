@@ -31,6 +31,8 @@
   lineinfile:
     dest: /etc/environment
     line: "export PIP_CONFIG_FILE=/etc/pip.conf"
+  when: pip_local
+  tags: pip
 
 - name: Set fact pip_has_run
   set_fact:
