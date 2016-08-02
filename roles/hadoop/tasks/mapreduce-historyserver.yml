@@ -7,11 +7,11 @@
     mode: 0644
   notify:
     - reread supervisord
-    - restart mapreduce historyserver
-    - wait for mapreduce historyserver port
+    - restart mapreduce history server
+    - wait for mapreduce history server port
   tags: hadoop
 
-- name: add historyserver to supervisord
+- name: add history server to supervisord
   supervisorctl:
     name: hadoop-mapreduce-historyserver
     state: present
