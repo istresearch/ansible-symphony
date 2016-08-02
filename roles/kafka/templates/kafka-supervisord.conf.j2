@@ -5,4 +5,5 @@ autostart=true
 autorestart=true
 startsecs=5
 user={{ kafka_user }}
-stopsignal=KILL
+stopsignal=TERM
+stopwaitsecs=600
