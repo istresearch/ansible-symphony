@@ -9,6 +9,7 @@ kafka_data_log_dir:
   - "/opt/kafka/topic-logs"
 crawler_es_port: 9200
 monitis: false
+elasticsearch_heap_size: 2g
 elastalert_autostart: false
 elastalert_es1_port: 9200
 elastalert_es2_port: 9200
