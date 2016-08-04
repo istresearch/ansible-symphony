@@ -1,0 +1,14 @@
+[program:grawler]
+command={{ grawler_miniconda_env }}/bin/python {{ grawler_install_dir }}/default/grawler.py --id %(process_num)02d
+directory=/opt/grawler/default
+process_name=%(process_num)02d
+numprocs={{ grawler_num_procs }}
+autostart=true
+autorestart=true
+exitcodes=3
+startsecs={{ grawler_start_secs }}
+startretries={{ grawler_start_retries }}
+stopsignal=KILL
+redirect_stderr=true
+stderr_logfile=AUTO
+stderr_logfile_maxbytes=50MB

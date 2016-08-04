@@ -1,0 +1,5 @@
+---
+- name: restart grawler
+  supervisorctl:
+    name="{{ grawler_name }}:"
+    state=restarted

@@ -1,0 +1,8 @@
+---
+# file: group_vars/grawler/vars
+
+grawler_fb_app_id_1: "{{ vault_grawler_fb_app_id_1 }}"
+grawler_fb_app_secret_1: "{{ vault_grawler_fb_app_secret_1 }}"
+
+grawler_fb_app_id_2: "{{ vault_grawler_fb_app_id_2 }}"
+grawler_fb_app_secret_2: "{{ vault_grawler_fb_app_secret_2 }}"
