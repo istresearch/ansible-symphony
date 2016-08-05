@@ -1,0 +1,10 @@
+---
+
+# Defaults...
+oozie_version: 4.2.0
+oozie_install_dir: /opt/oozie
+oozie_user: oozie
+oozie_group: oozie
+
+
+repository_infrastructure: "{{ apache_mirror }}/oozie/{{ oozie_version }}"
