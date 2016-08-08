@@ -256,6 +256,8 @@
 - name: Oozie Install
   hosts: oozie-node
   roles: [ oozie ]
+  vars:
+    - dfs_namenode_host: "{{ groups['hadoop-namenode-node'][0] }}"
   tags:
     - site-oozie
 

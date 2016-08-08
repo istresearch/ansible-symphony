@@ -84,7 +84,23 @@
         dest="{{ oozie_pom_xmlconfig }}"
         owner="{{ oozie_user }}"
         group="{{ oozie_user }}"
+
+    - name: add oozie proxyuser to hadoop core-site.xml
+      blockinfile:
+        dest: "{{ hdfs_conf_dir }}/core-site.xml"
+        marker: "<!-- {mark} ANSIBLE MANAGED OOZIE BLOCK -->"
+        insertbefore: "</configuration>"
+        content: |
+          <property>
+            <name>hadoop.proxyuser.{{ oozie_user }}.hosts</name>
+            <value>{{ inventory_hostname }}</value>
+          </property>
+          <property>
+            <name>hadoop.proxyuser.{{ oozie_user }}.groups</name>
+            <value>*</value>
+          </property>
   tags: oozie-build
+
 
 #   - name: build oozie (long running task)
 #     command: "{{ oozie_install_dir }}/default/bin/mkdistro.sh"
