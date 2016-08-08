@@ -5,6 +5,17 @@ oozie_version: 4.2.0
 oozie_install_dir: /opt/oozie
 oozie_user: oozie
 oozie_group: oozie
+oozie_pom_xmlconfig: "{{ oozie_install_dir }}/default/pom.xml"
 
 
 repository_infrastructure: "{{ apache_mirror }}/oozie/{{ oozie_version }}"
+
+oozie_external_vars2:
+  hdfs_version: "{{ hdfs_version }}"
+  spark_version: "{{ spark_version }}"
+  hbase_version: "{{ hbase_version }}"
+
+oozie_external_vars:
+  hdfs_version: "2.5.2"
+  spark_version: "1.6.1"
+  hbase_version: "1.1.3"

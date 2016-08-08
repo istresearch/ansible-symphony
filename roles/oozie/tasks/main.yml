@@ -1,69 +1,94 @@
 ---
+###################################################
+# Download/symlink oozie
+###################################################
+- block:
+    - name: install oozie required packages
+      apt:
+        name={{ item }}
+        state=latest
+      with_items:
+       - maven
 
-- name: Configuring group
-  group:
-    name: "{{ oozie_group }}"
-  tags:
-    - oozie
+    - name: Configuring group
+      group:
+        name: "{{ oozie_group }}"
 
-- name: Configuring user
-  user:
-    name: "{{ oozie_user }}"
-    group: "{{ oozie_group }}"
-    shell: /bin/bash
-    createhome: yes
-  tags:
-    - oozie
+    - name: Configuring user
+      user:
+        name: "{{ oozie_user }}"
+        group: "{{ oozie_group }}"
+        shell: /bin/bash
+        createhome: yes
 
-- name: create install directory
-  file:
-    path={{ item }}
-    state=directory
-    mode=0755
-    owner={{ oozie_user }}
-    group={{ oozie_group }}
-  with_items:
-    - "{{ oozie_install_dir }}"
-  tags:
-    - oozie
+    - name: create installation directories
+      file:
+        path={{ item }}
+        state=directory
+        mode=0755
+        owner={{ oozie_user }}
+        group={{ oozie_group }}
+      with_items:
+        - "{{ oozie_install_dir }}"
 
-- name: check for existing install
-  stat: path="{{ oozie_install_dir }}/oozie-{{ oozie_version }}"
-  register: oozie
-  tags: oozie
+    - name: check for existing install
+      stat: path="{{ oozie_install_dir }}/oozie-{{ oozie_version }}"
+      register: oozie
 
-- name: download oozie
-  get_url:
-    url: "{{ repository_infrastructure }}/oozie-{{ oozie_version }}.tar.gz"
-    dest: /tmp/oozie-{{ oozie_version }}.tgz
-    mode: 0644
-    validate_certs: no
-  when: oozie.stat.isdir is not defined
-  tags: oozie
+    - name: download oozie
+      get_url:
+        url: "{{ repository_infrastructure }}/oozie-{{ oozie_version }}.tar.gz"
+        dest: /tmp/oozie-{{ oozie_version }}.tgz
+        mode: 0644
+        validate_certs: no
+      when: oozie.stat.isdir is not defined
 
-- name: extract oozie
-  unarchive:
-    src: /tmp/oozie-{{ oozie_version }}.tgz
-    dest: "{{ oozie_install_dir }}"
-    copy: no
-    owner: "{{ oozie_user }}"
-    group: "{{ oozie_group }}"
-  when: oozie.stat.isdir is not defined
-  tags: oozie
+    - name: extract oozie
+      unarchive:
+        src: /tmp/oozie-{{ oozie_version }}.tgz
+        dest: "{{ oozie_install_dir }}"
+        copy: no
+        owner: "{{ oozie_user }}"
+        group: "{{ oozie_group }}"
+      when: oozie.stat.isdir is not defined
 
-- name: delete temporary oozie file
-  file:
-    path: /tmp/oozie-{{ oozie_version }}.tgz
-    state: absent
-  ignore_errors: yes
-  tags: oozie
+    - name: delete temporary oozie file
+      file:
+        path: /tmp/oozie-{{ oozie_version }}.tgz
+        state: absent
+      ignore_errors: yes
 
-- name: create oozie symlink
-  file:
-    path: "{{ oozie_install_dir }}/default"
-    state: link
-    src: "{{ oozie_install_dir }}/oozie-{{ oozie_version }}"
-  tags: oozie
+    - name: create oozie symlink
+      file:
+        path: "{{ oozie_install_dir }}/default"
+        state: link
+        src: "{{ oozie_install_dir }}/oozie-{{ oozie_version }}"
+  tags: oozie-download
+
+###################################################
+# Configure/build oozie
+###################################################
+- block:
+    - name: check for original pom.xml file
+      stat:
+        path="{{ oozie_pom_xmlconfig }}.orig"
+      register: oozie_pom_orig
+
+    - name: backup default pom.xml file
+      command: cp "{{ oozie_pom_xmlconfig }}" "{{ oozie_pom_xmlconfig }}.orig"
+      when: not oozie_pom_orig.stat.exists
+
+    - name: populate pom.xml file
+      template:
+        src=pom.xml.j2
+        dest="{{ oozie_pom_xmlconfig }}"
+        owner="{{ oozie_user }}"
+        group="{{ oozie_user }}"
+  tags: oozie-build
+
+#   - name: build oozie (long running task)
+#     command: "{{ oozie_install_dir }}/default/bin/mkdistro.sh"
+# mvn install:install-file -Dfile=hbase-common-1.1.3.jar -DgroupId=org.apache.hbase -DartifactId=hbase -Dversion=1.1.3 -Dpackaging=jar
 
 #- name: restart oozie to apply configuration changes
 #  set_fact: oozie_config_changed={{ oozie_config.changed or (oozie_config_changed is defined and oozie_config_changed) }}

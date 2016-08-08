@@ -2,4 +2,6 @@
 dependencies:
   - { role: supervisord, when: "supervisord_has_run is not defined"}
   - { role: java, when: "java_has_run is not defined"}
-  - { role: es-hadoop, when: "es_hadoop_has_run is not defined"}
+  - { role: hadoop, when: "hadoop_has_run is not defined"}
+  - { role: hbase, when: "hbase_has_run is not defined"}
+  - { role: spark, when: "spark_has_run is not defined"}
