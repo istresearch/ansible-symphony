@@ -1,0 +1,9 @@
+[program:oozie]
+command={{ oozie_install_dir }}/default/oozie_build/bin/oozie-run.sh
+autostart=true
+autorestart=true
+user={{ oozie_user }}
+startsecs=10
+startretries=3
+startsecs=10
+redirect_stderr=true

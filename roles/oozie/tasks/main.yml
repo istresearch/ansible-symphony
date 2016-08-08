@@ -87,29 +87,84 @@
 
     - name: add oozie proxyuser to hadoop core-site.xml
       blockinfile:
-        dest: "{{ hdfs_conf_dir }}/core-site.xml"
+        dest: "{{ oozie_external_vars.hdfs_conf_dir }}/core-site.xml"
         marker: "<!-- {mark} ANSIBLE MANAGED OOZIE BLOCK -->"
         insertbefore: "</configuration>"
         content: |
           <property>
-            <name>hadoop.proxyuser.{{ hdfs_user }}.hosts</name>
+            <name>hadoop.proxyuser.{{ oozie_external_vars.hdfs_user }}.hosts</name>
             <value>{{ inventory_hostname }}</value>
           </property>
           <property>
-            <name>hadoop.proxyuser.{{ hdfs_user }}.groups</name>
+            <name>hadoop.proxyuser.{{ oozie_external_vars.hdfs_user }}.groups</name>
             <value>*</value>
           </property>
+
+    - name: create local hbase maven repo
+      command: >
+        mvn install:install-file
+        -Dfile="{{ oozie_external_vars.hbase_install_dir }}/hbase-{{ oozie_external_vars.hbase_version }}/lib/hbase-common-{{ oozie_external_vars.hbase_version }}.jar"
+        -DgroupId=org.apache.hbase
+        -DartifactId=hbase
+        -Dversion="{{ oozie_external_vars.hbase_version }}"
+        -Dpackaging=jar
+
+    - name: make oozie distro (long running)
+      command: bin/mkdistro.sh -DskipTests -Puber
+      args:
+        chdir: "{{ oozie_install_dir }}/default"
+
+    # oozie's resulting build directory is a bit silly
+    - name: create oozie distro symlink
+      file:
+        path={{ oozie_install_dir }}/default/oozie_build
+        src={{ oozie_install_dir }}/default/distro/target/oozie-{{ oozie_version }}-distro/oozie-{{ oozie_version }}
+        owner={{ oozie_user }}
+        group={{ oozie_group }}
+        state=link
+
+    - name: create libext directory
+      file:
+        path={{ oozie_install_dir }}/default/oozie_build/libext
+        state=directory
+        mode=0755
+        owner={{ oozie_user }}
+        group={{ oozie_group }}
+
+    - name: download extjs
+      get_url:
+        url: "{{ extjs_download_url }}"
+        dest: "{{ oozie_install_dir }}/default/oozie_build/libext"
+
+    - name: build oozie
+      command: bin/oozie-setup.sh prepare-war
+      args:
+        chdir: "{{ oozie_install_dir }}/default/oozie_build"
   tags: oozie-build
 
+###################################################
+# Setup and run
+###################################################
+- block:
+    - name: set oozie directory owner
+      file:
+        path={{ oozie_install_dir }}
+        owner={{ oozie_user }}
+        group={{ oozie_group }}
+        state=directory
+        recurse=yes
 
-#   - name: build oozie (long running task)
-#     command: "{{ oozie_install_dir }}/default/bin/mkdistro.sh"
-# mvn install:install-file -Dfile=hbase-common-1.1.3.jar -DgroupId=org.apache.hbase -DartifactId=hbase -Dversion=1.1.3 -Dpackaging=jar
+    - name: initialize oozie db
+      command: bin/ooziedb.sh create -sqlfile oozie.sql
+      args:
+        chdir: "{{ oozie_install_dir }}/default/oozie_build"
 
-#- name: restart oozie to apply configuration changes
-#  set_fact: oozie_config_changed={{ oozie_config.changed or (oozie_config_changed is defined and oozie_config_changed) }}
-#  notify:
-#    - restart oozie
-#    - wait for oozie port
-#  changed_when: oozie_config_changed
-#  tags: oozie
+    - name: copy oozie supervisord config
+      template:
+        src: oozie-supervisord.conf.j2
+        dest: "{{ supervisord_programs_dir }}/oozie-supervisord.conf"
+        mode: 0644
+      notify:
+        - reread supervisord
+        - restart oozie
+  tags: oozie-setup
