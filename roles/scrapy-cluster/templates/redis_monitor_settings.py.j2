@@ -8,6 +8,10 @@ KAFKA_TOPIC_PREFIX = '{{ sc_redis_monitor_kafka_prefix }}'
 KAFKA_CONN_TIMEOUT = {{ sc_redis_monitor_conn_timeout }}
 KAFKA_APPID_TOPICS = {{ sc_redis_monitor_kafka_appids }}
 
+ZOOKEEPER_ASSIGN_PATH = "{{ sc_redis_monitor_zookeeper_dir }}"
+ZOOKEEPER_ID = "{{ sc_redis_monitor_zookeeper_id }}"
+ZOOKEEPER_HOSTS = "{% for host in groups['zookeeper-nodes'] %}{{ host }}:{{ zookeeper_port|default(2181) }}{% if not loop.last %},{% endif %}{% endfor %}"
+
 PLUGIN_DIR = "{{ sc_redis_monitor_plugin_dir }}/"
 PLUGINS = {
 {% for item in sc_redis_monitor_plugins %}

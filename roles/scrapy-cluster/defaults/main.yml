@@ -1,6 +1,6 @@
 ---
 sc_install_dir: /opt/scrapy-cluster
-sc_build_version: 69
+sc_build_version: 78
 sc_build_branch: dev
 sc_install_version: "scrapy-cluster-ist-{{ sc_build_version }}-{{ sc_build_branch }}"
 
@@ -15,7 +15,7 @@ sc_virtualenv_path: "{{ sc_install_dir }}/venv"
 
 sc_kafka_master_topic_prefix: demo
 sc_redis_master_db: 0
-sc_scutils_version: 1.2.0.dev2
+sc_scutils_version: 1.2.0.dev4
 
 # CRAWLER SPECIFIC SETTINGS -----------------------
 
@@ -49,6 +49,7 @@ sc_crawling_ip_refresh: 60
 sc_crawling_type_enabled: "True"
 sc_crawling_ip_enabled: "True"
 sc_crawling_item_retries: 3
+sc_crawling_queue_timeout: 3600
 sc_crawling_kafka_appid_topics: False
 sc_crawling_kafka_base_64: False
 sc_crawling_dns_cache: True
@@ -162,6 +163,8 @@ sc_redis_monitor_log_level: "INFO"
 sc_redis_monitor_supervisor_name: "{{ sc_redis_monitor_name }}"
 sc_redis_monitor_kafka_prefix: "{{ sc_kafka_master_topic_prefix }}"
 sc_redis_monitor_kafka_appids: False
+sc_redis_monitor_zookeeper_dir: "{{ sc_crawling_zookeeper_dir }}"
+sc_redis_monitor_zookeeper_id: "{{ sc_crawling_zookeeper_id }}"
 
 sc_redis_monitor_stats_total: True
 sc_redis_monitor_stats_plugins: True
