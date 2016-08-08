@@ -257,7 +257,12 @@
   hosts: oozie-node
   roles: [ oozie ]
   vars:
+    - spark_master_enabled: true
+    - spark_worker_enabled: false
     - dfs_namenode_host: "{{ groups['hadoop-namenode-node'][0] }}"
+    - yarn_resourcemanager_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
+    - yarn_historyserver_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
+    - zookeeper_host_list: "{{ groups['zookeeper-nodes'] }}"
   tags:
     - site-oozie
 

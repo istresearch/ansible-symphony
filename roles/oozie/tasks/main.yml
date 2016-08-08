@@ -92,11 +92,11 @@
         insertbefore: "</configuration>"
         content: |
           <property>
-            <name>hadoop.proxyuser.{{ oozie_user }}.hosts</name>
+            <name>hadoop.proxyuser.{{ hdfs_user }}.hosts</name>
             <value>{{ inventory_hostname }}</value>
           </property>
           <property>
-            <name>hadoop.proxyuser.{{ oozie_user }}.groups</name>
+            <name>hadoop.proxyuser.{{ hdfs_user }}.groups</name>
             <value>*</value>
           </property>
   tags: oozie-build
