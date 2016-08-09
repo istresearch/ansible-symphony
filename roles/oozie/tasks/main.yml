@@ -146,6 +146,11 @@
 # Setup and run
 ###################################################
 - block:
+    - name: initialize oozie db
+      command: bin/ooziedb.sh create -sqlfile oozie.sql
+      args:
+        chdir: "{{ oozie_install_dir }}/default/oozie_build"
+
     - name: set oozie directory owner
       file:
         path={{ oozie_install_dir }}
@@ -153,11 +158,6 @@
         group={{ oozie_group }}
         state=directory
         recurse=yes
-
-    - name: initialize oozie db
-      command: bin/ooziedb.sh create -sqlfile oozie.sql
-      args:
-        chdir: "{{ oozie_install_dir }}/default/oozie_build"
 
     - name: copy oozie supervisord config
       template:
