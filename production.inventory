@@ -36,11 +36,7 @@ storm-nodes
 [aws:children]
 redis-nodes
 scrapy-cluster-nodes
-kibana-node
-gnip-monitor-node
-gdelt-monitor-node
 traptor-nodes
-elastalert-nodes
 tor-proxy
 
 [internap-backup]
@@ -157,21 +153,9 @@ scrapy-cluster-indexer-nodes
 [googler-nodes]
 ist-crawler[04:06].istresearch.com
 
-[kibana-node]
-memex-hclient.istresearch.com
-
-[gnip-monitor-node]
-memex-hclient.istresearch.com
-
-[gdelt-monitor-node]
-memex-hclient.istresearch.com
-
 [tor-proxy]
 memex-services.istresearch.com
 tor.istresearch.com
-
-[elastalert-nodes]
-memex-hclient.istresearch.com
 
 [traptor-follow-nodes]
 traptor01.istresearch.com
