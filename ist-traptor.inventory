@@ -8,13 +8,21 @@
 repository_host=repo.istresearch.com
 
 [dd-agent-nodes:children]
-servers
+traptor-nodes
 
-[ist-crawlers:children]
-scrapy-cluster-nodes
+[ist-traptor:children]
+traptor-nodes
 
-[scrapy-cluster-nodes]
-#127.0.0.1 host_alias=localhost
-# This group is 
-# IST Crawler Servers on AWS 
-ist-crawler[01:06].istresearch.com
+[traptor-nodes]
+traptor-follow-nodes
+traptor-location-nodes
+traptor-track-nodes
+
+[traptor-follow-nodes]
+traptor01.istresearch.com
+
+[traptor-location-nodes]
+traptor02.istresearch.com
+
+[traptor-track-nodes]
+traptor03.istresearch.com

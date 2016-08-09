@@ -1,0 +1,73 @@
+---
+
+#### HADOOP VARS ####
+dfs_internap: true
+dfs_replication: 2
+dfs_block_size: 67109888
+dfs_webhdfs_enabled: true
+dfs_datanode_data_dir:
+   - /data/1/dfs/dn
+   - /data/2/dfs/dn
+   - /data/3/dfs/dn
+   - /data/4/dfs/dn
+   - /data/5/dfs/dn
+   - /data/6/dfs/dn
+yarn_nodemanager_local_dirs:
+   - /data/1/yarn/local
+   - /data/2/yarn/local
+   - /data/3/yarn/local
+   - /data/4/yarn/local
+   - /data/5/yarn/local
+   - /data/6/yarn/local
+yarn_nodemanager_log_dirs:
+   - /data/1/yarn/logs
+   - /data/2/yarn/logs
+   - /data/3/yarn/logs
+   - /data/4/yarn/logs
+   - /data/5/yarn/logs
+   - /data/6/yarn/logs
+
+#### HBASE VARS ####
+hbase_heap_size: 8192
+
+#### ZOOKEEPER VARS ####
+zookeeper_maxClientCnxns: 120
+
+#### KAFKA VARS
+# Internap slaves have 6 data disks, striping data across them.
+kafka_data_log_dir:
+  - '/data/1/kafka/topic-logs'
+  - '/data/2/kafka/topic-logs'
+  - '/data/3/kafka/topic-logs'
+  - '/data/4/kafka/topic-logs'
+  - '/data/5/kafka/topic-logs'
+  - '/data/6/kafka/topic-logs'
+
+kafka_data_dir:
+  - '/data/1/kafka'
+  - '/data/2/kafka'
+  - '/data/3/kafka'
+  - '/data/4/kafka'
+  - '/data/5/kafka'
+  - '/data/6/kafka'
+
+# According to Apache Docs, num io threads should be at least equal number of disks.
+kafka_num_io_threads: 6
+
+kafka_heap: 8G
+
+kafka_log_retention_hours: 24
+kafka_num_partitions: 3
+kafka_replication_factor: 3
+
+#### SPARK VARS ####
+spark_worker_memory: 96g
+spark_worker_cores: 24
+
+#### STORM VARS ####
+storm_worker_ports: [6701, 6702, 6703, 6704, 6705, 6706, 6707, 6708, 6709, 6710, 6711, 6712, 6713, 6714, 6715, 6716, 6717, 6718, 6719, 6720, 6721, 6722, 6723, 6724, 6725, 6726, 6727, 6728, 6729, 6730, 6731, 6732, 6733, 6734, 6735, 6736, 6737, 6738, 6739, 6740, 6741, 6742, 6743, 6744, 6745, 6746, 6747, 6748]
+
+storm_worker_extra_config:
+    worker.childopts: "-Xmx1280m -XX:PermSize=128m -XX:MaxPermSize=256m -Xms256m -XX:+UseConcMarkSweepGC -Dcom.sun.management.jmxremote"
+    supervisor.worker.timeout.secs: 60
+

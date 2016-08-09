@@ -10,28 +10,23 @@ repository_host=repo.istresearch.com
 [dd-agent-nodes:children]
 elasticsearch-nodes
 
-[cdr-elasticsearch-nodes:children]
+[cdr-nodes:children]
 elasticsearch-nodes
+
+[cdr-data-nodes:children]
+elasticsearch-data-nodes
+
+[cdr-master-nodes:children]
+elasticsearch-master-nodes
 
 [aws:children]
 elasticsearch-nodes
 
 [elasticsearch-master-nodes]
-cdr-es-m01.istresearch.com
-cdr-es-m02.istresearch.com
-cdr-es-m03.istresearch.com
+cdr-es-m[01:03].istresearch.com
 
 [elasticsearch-data-nodes]
-cdr-es01.istresearch.com
-cdr-es02.istresearch.com
-cdr-es03.istresearch.com
-cdr-es04.istresearch.com
-cdr-es05.istresearch.com
-cdr-es06.istresearch.com
-cdr-es07.istresearch.com
-cdr-es08.istresearch.com
-cdr-es09.istresearch.com
-cdr-es10.istresearch.com
+cdr-es[01:10].istresearch.com
 
 [elasticsearch-client-nodes]
 

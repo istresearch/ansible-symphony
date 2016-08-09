@@ -20,16 +20,11 @@ spark-nodes
 storm-nodes
 
 [zookeeper-nodes]
-crew01.istresearch.com
-crew02.istresearch.com
-crew03.istresearch.com
+crew[01:03].istresearch.com
 
 [kafka-nodes]
-crew06.istresearch.com
-crew07.istresearch.com
-crew08.istresearch.com
-backup01.nj.istresearch.com
-backup02.nj.istresearch.com
+crew[06:08].istresearch.com
+backup[01:02].nj.istresearch.com
 
 [hadoop-namenode-node]
 captain01.istresearch.com
@@ -38,11 +33,7 @@ captain01.istresearch.com
 captain02.istresearch.com
 
 [hadoop-datanode-nodes]
-crew01.istresearch.com
-crew02.istresearch.com
-crew03.istresearch.com
-crew04.istresearch.com
-crew05.istresearch.com
+crew[01:05].istresearch.com
 
 [hadoop-nodes:children]
 hadoop-namenode-node
@@ -52,11 +43,7 @@ hadoop-datanode-nodes
 captain01.istresearch.com
 
 [hbase-regionserver-nodes]
-crew01.istresearch.com
-crew02.istresearch.com
-crew03.istresearch.com
-crew04.istresearch.com
-crew05.istresearch.com
+crew[01:05].istresearch.com
 
 [hbase-nodes:children]
 hbase-master-node
@@ -66,11 +53,7 @@ hbase-regionserver-nodes
 captain01.istresearch.com
 
 [spark-worker-nodes]
-crew01.istresearch.com
-crew02.istresearch.com
-crew03.istresearch.com
-crew04.istresearch.com
-crew05.istresearch.com
+crew[01:05].istresearch.com
 
 [spark-nodes:children]
 spark-master-node
@@ -83,9 +66,8 @@ captain01.istresearch.com
 captain01.istresearch.com
 
 [storm-supervisor-nodes]
-crew06.istresearch.com
-crew07.istresearch.com
-crew08.istresearch.com
+crew[01:08].istresearch.com
+backup[01:02].nj.istresearch.com
 
 [storm-nodes:children]
 storm-nimbus-node

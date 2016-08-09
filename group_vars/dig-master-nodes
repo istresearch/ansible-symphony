@@ -1,0 +1,7 @@
+---
+
+elasticsearch_heap_size: 4g
+
+elasticsearch_is_master: "true"
+elasticsearch_is_data: "false"
+elasticsearch_discovery_zen_minimum_master_nodes: 2
