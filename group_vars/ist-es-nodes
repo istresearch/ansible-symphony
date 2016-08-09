@@ -1,5 +1,7 @@
 ---
 
+## PUT VARIABLES THAT PERTAIN TO BOTH MASTER AND DATA NODES IN THIS FILE
+
 datadog_monitors:
   supervisord:
     enabled: true

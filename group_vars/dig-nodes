@@ -1,6 +1,7 @@
 ---
 
-elasticsearch_heap_size: 16g
+## PUT VARIABLES THAT PERTAIN TO BOTH MASTER AND DATA NODES IN THIS FILE
+
 script_inline: true
 script_indexed: true 
 
