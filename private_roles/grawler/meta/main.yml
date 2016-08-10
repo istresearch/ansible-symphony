@@ -1,0 +1,5 @@
+---
+dependencies:
+  - { role: pip }
+  - { role: supervisord }
+  - { role: miniconda }

@@ -1,0 +1,19 @@
+---
+
+- name: Start grawling!
+  hosts: grawler-nodes
+  sudo: yes
+  tasks:
+    - include_vars: private_roles/grawler/defaults/main.yml
+    
+    - name: start grawling facebook
+      shell: "{{ grawler_miniconda_env }}/bin/python {{ grawler_install_dir }}/default/config/file_pusher.py -f {{ item.value.yml }} -i {{ item.value.id }} -z {{ groups['zookeeper-nodes'][0] }}"
+      args:
+        chdir: "{{ grawler_install_dir }}/default/config/"
+      with_dict: grawler_config_dict
+      run_once: true
+      tags:
+        - grawler
+        - refresh-grawler
+        
+       

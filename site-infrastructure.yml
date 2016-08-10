@@ -85,6 +85,7 @@
   tags:
     - miniconda
     - deps-traptor
+    - deps-grawler
 
 # -------------------------- Zookeeper and Kafka -----------------------------
 - name: Run zookeeper role
@@ -101,6 +102,7 @@
     - deps-spark
     - deps-scrapy-cluster
     - deps-traptor
+    - deps-grawler
 
 - name: Run kafka role
   hosts: kafka-nodes
@@ -113,6 +115,7 @@
     - deps-kafka
     - deps-scrapy-cluster
     - deps-traptor
+    - deps-grawler
 
 # ------------------------------ ELK stack ------------------------------------
 - name: Run elasticsearch master role
@@ -173,7 +176,8 @@
     - deps-scrapy-cluster
     - scrapy-services
     - deps-traptor
-
+    - deps-grawler 
+    
 - name: Run tor role
   hosts: tor-proxy
   roles: [ tor ]
@@ -499,3 +503,14 @@
   roles: [ phantomjs ]
   tags:
     - site-phantomjs
+
+# ---------------------------------- Grawler --------------------------------
+
+- name: Run Grawler role
+  hosts: grawler-nodes
+  roles: [ grawler ]
+  tags:
+    - site-grawler
+    - deps-grawler
+
+    

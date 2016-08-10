@@ -195,3 +195,9 @@
   vars:
     - logstash_auto_start: True
   tags: site-gandalf-runner
+
+# -------------------------------- Grawler ----------------------------------
+- name: Run Grawler role
+  hosts: grawler-nodes
+  roles: [ grawler ]
+  tags: site-grawler
