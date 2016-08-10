@@ -416,10 +416,12 @@ runner_settings:
         rank: 700
       - <<: *image-archiver
         rank: 800
-      - <<: *hbase
+      - <<: *page-render
         rank: 900
-      - <<: *elasticsearch
+      - <<: *hbase
         rank: 1000
+      - <<: *elasticsearch
+        rank: 1100
   - uid: tweet
     np: 1
     kct: 'traptor.cooper_prod'
