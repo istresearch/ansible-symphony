@@ -67,11 +67,13 @@
 
 - name: create elasticsearch data directory
   file:
-    path: "{{ elasticsearch_data_dir }}_{{ conf_name }}/"
+    path: "{{ item }}_{{ conf_name }}/"
     state: directory
     mode: 0744
     owner: "{{ elasticsearch_user }}"
     group: "{{ elasticsearch_group }}"
+  with_items:
+    - "{{ elasticsearch_data_dir }}"
   tags: elasticsearch
 
 - name: check for existing elasticsearch install

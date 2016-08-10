@@ -49,3 +49,4 @@ elasticsearch_heap_size: 2g
 elasticsearch_is_master: "true"
 elasticsearch_is_data: "true"
 datadog_api_key: "{{ vault_datadog_api_key }}"
+elasticsearch_discovery_zen_minimum_master_nodes: 1

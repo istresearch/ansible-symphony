@@ -1,0 +1,74 @@
+---
+# Installation config
+grawler_name: grawler
+grawler_version: 0.1
+grawler_install_dir: "/opt/{{ grawler_name }}"
+#grawler_miniconda_path: "{{ miniconda_install_dir|default('/opt/miniconda') }}/lib/python2.7/site-packages/grawler"
+
+grawler_miniconda_env: "/opt/miniconda/envs/{{ grawler_name }}"
+grawler_miniconda_path: "/opt/miniconda/envs/grawler/lib/python2.7/site-packages/{{ grawler_name }}"
+miniconda_install_dir: "/opt/miniconda"
+
+# Supervisor config
+grawler_start_secs: 5
+grawler_start_retries: 100
+grawler_stderr_logfile_maxbytes: 50MB
+
+grawler_logger_name: "{{ grawler_name }}"
+grawler_log_dir: /var/log
+grawler_log_file: "{{ grawler_name }}.log"
+grawler_log_max_bytes: 25000000
+grawler_log_backups: 5
+grawler_log_json: "False"
+grawler_log_stdout: "True"
+grawler_log_level: "INFO"
+
+# grawler localsettings.py
+grawler_kafka_topic: "graph_crawler"
+grawler_kafka_consumer: "graph_consumer"
+
+grawler_queue: "graph_q"
+grawler_shared_queue: "shared_graph_q"
+grawler_cache_key: "cache"
+
+grawler_redis_port: 6379
+grawler_redis_db: 5
+
+grawler_sleep_time: 5
+grawler_crawl_interval: 30 * 60
+grawler_cache_depth: 3
+grawler_feed_engagement_base: 3
+
+grawler_zookeeper_dir: "/grawler/instance"
+
+grawler_num_procs: 2
+
+# Add grawler configs here.  There are {{ grawler_num_procs }} number
+# of process id's per {{ groups['grawler-nodes'] }}
+grawler_config_dict:
+  grawl1:
+    yml: grawler_config1.yml
+    id: 100
+  grawl2:
+    yml: grawler_config2.yml
+    id: 101
+## When scaling up/out
+#  grawl3:
+#    yml: grawler_config3.yml
+#    id: 102
+#  grawl4:
+#    yml: grawler_config4.yml
+#    id: 103
+#  grawl5:
+#    yml: grawler_config5.yml
+#    id: 200
+#  grawl6:
+#    yml: grawler_config6.yml
+#    id: 201
+#  grawl7:
+#    yml: grawler_config7.yml
+#    id: 202
+#  grawl8:
+#    yml: grawler_config8.yml
+#    id: 203
+    

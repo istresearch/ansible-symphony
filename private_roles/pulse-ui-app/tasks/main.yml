@@ -54,8 +54,8 @@
 
 - name: Download pulse
   get_url:
-    url={{ pulse_repo_location }}/joka/pulse-{{ pulse_version }}.zip
-    dest=/tmp/pulse-{{ pulse_version }}.zip
+    url={{ pulse_repo_location }}/joka/joka-{{ pulse_version }}.zip
+    dest=/tmp/joka-{{ pulse_version }}.zip
     mode=0755
     validate_certs=no
     url_username={{ pulse_repo_user }}
@@ -65,7 +65,7 @@
 
 - name: Extract pulse
   unarchive:
-    src=/tmp/pulse-{{ pulse_version }}.zip
+    src=/tmp/joka-{{ pulse_version }}.zip
     dest={{ pulse_install_dir }}/
     copy=no
   when: pulse.stat.isdir is not defined
@@ -73,7 +73,7 @@
 
 - name: Delete temporary pulse file
   file:
-    path=/tmp/pulse-{{ pulse_version }}.zip
+    path=/tmp/joka-{{ pulse_version }}.zip
     state=absent
   ignore_errors: yes
   tags: pulse-ui-app
@@ -217,24 +217,6 @@
     url_username={{ pulse_repo_user }}
     url_password={{ pulse_repo_password }}
   tags: 
-    - pulse-ui-app
-    - kibana4-app
-
-- name: Extract the Kibana4 backup folder
-  unarchive:
-    src=/tmp/{{ pulse_kibana_backup }}
-    dest=/tmp/
-    copy=no
-  tags:
-    - pulse-ui-app
-    - kibana4-app
-
-- name: Clean up Kibana Backup file
-  file:
-    path=/tmp/{{ pulse_kibana_backup }}
-    state=absent
-  ignore_errors: yes
-  tags:
     - pulse-ui-app
     - kibana4-app
 

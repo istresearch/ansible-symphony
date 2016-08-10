@@ -109,8 +109,12 @@
   notify:
     - restart hdfs namenode
     - wait for hdfs namenode port
+    - restart hdfs secondary namenode
+    - wait for hdfs secondary namenode port
     - restart hdfs datanode
     - wait for hdfs datanode port
+    - restart mapreduce history server
+    - wait for mapreduce history server port
     - restart yarn resource manager
     - wait for yarn resource manager port
     - restart yarn node manager
