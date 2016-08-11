@@ -12,9 +12,6 @@ pulse_self_signed_ssl: true
 pulse_self_signed_url: true
 pulse_local_install: false
 mysql_root_password: "{{ vault_mysql_root_password }}"
-elasticsearch_heap_size: 2g
-kafka_data_log_dir:
-   - /data/kafka/topic-logs
 dfs_internap: false
 dfs_replication: 1
 dfs_block_size: 67109888
