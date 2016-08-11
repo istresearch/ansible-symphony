@@ -15,4 +15,11 @@ datadog_monitors:
     es_instances:
         - url: http://localhost:9200
           tag: "es-cluster:dig"
-
+  disk:
+    enabled: true
+    is_custom_check: false
+    use_mount: no
+  network:
+    enabled: true
+    is_custom_check: false
+    collect_connection_state: yes
