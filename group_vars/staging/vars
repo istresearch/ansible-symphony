@@ -25,7 +25,7 @@ storm_worker_extra_config:
 zookeeper_data_dir: /data/zookeeper
 
 #### KAFKA VARS ####
-kafka_heap: 1G
+kafka_heap: 2G
 kafka_data_log_dir:
   - '/data/kafka/topic-logs'
 kafka_data_dir:
@@ -44,6 +44,8 @@ elasticsearch_heap_size: 2g
 elasticsearch_is_master: "true"
 elasticsearch_is_data: "true"
 elasticsearch_discovery_zen_minimum_master_nodes: 1
+elasticsearch_data_dir:
+  - /data/elasticsearch
 
 #### PULSE UI NODE ####
 pulse_user: "{{ vault_pulse_user }}"
