@@ -45,9 +45,9 @@ storm_worker_extra_config:
 storm_worker_ports: [6701, 6702, 6703, 6704, 6705, 6706, 6707, 6708, 6709, 6710]
 
 # Grunner overrides
-runner_gandalf_version: 0.0.74
-runner_build_branch: demo-dev-config
-runner_build_version: 95
+runner_gandalf_version: 0.0.74.dev2226-0
+runner_build_branch: demo-dev-config-2226
+runner_build_version: 99
 restore_kibana_visualization: True
 runner_kafka_consumer_hosts:
   - demo-box-dev.istresearch.com

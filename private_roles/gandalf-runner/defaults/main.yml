@@ -302,6 +302,11 @@ processors:
       module: *norm-module
       settings: settings_normalize_traptor.py
 
+    - &shepherd
+      class: Shepherd
+      module: *def-module
+      settings: settings_shepherd.py
+
 # things that do change between configurations
 # abbreviations:
 #   kct: kafka consumer topic
@@ -332,6 +337,8 @@ runner_settings:
     processors:
       - <<: *normalize-fbgraph
         rank: 000
+      - <<: *shepherd
+        rank: 050
       - <<: *extract-author-uid
         rank: 100
       - <<: *extract-author-uid-original
@@ -367,6 +374,8 @@ runner_settings:
     processors:
       - <<: *normalize-sms
         rank: 000
+      - <<: *shepherd
+        rank: 050
       - <<: *extract-twitter-username
         rank: 100
       - <<: *extract-links
@@ -400,6 +409,8 @@ runner_settings:
     processors:
       - <<: *normalize-crawl
         rank: 000
+      - <<: *shepherd
+        rank: 050
       - <<: *extract-twitter-username
         rank: 100
       - <<: *extract-email
@@ -435,6 +446,8 @@ runner_settings:
         rank: 000
       - <<: *twitter-rule-matcher
         rank: 100
+      - <<: *shepherd
+        rank: 150
       - <<: *extract-author-geo-place
         rank: 200
       - <<: *extract-author-id
@@ -514,6 +527,8 @@ runner_settings:
     processors:
       - <<: *normalize-telegraptor-stream
         rank: 000
+      - <<: *shepherd
+        rank: 050
       - <<: *hbase
         rank: 100
       - <<: *elasticsearch
@@ -529,6 +544,8 @@ runner_settings:
     processors:
       - <<: *normalize-telegraptor-history
         rank: 000
+      - <<: *shepherd
+        rank: 050
       - <<: *hbase
         rank: 100
       - <<: *elasticsearch
