@@ -15,3 +15,11 @@ datadog_monitors:
           tag: cluster:2
         - url: http://localhost:39200
           tag: cluster:3
+  disk:
+    enabled: true
+    is_custom_check: false
+    use_mount: no
+  network:
+    enabled: true
+    is_custom_check: false
+    collect_connection_state: yes
