@@ -172,6 +172,11 @@ processors:
       module: *def-module
       settings: settings_height.py
 
+    - &extract-fbgraph-photos
+      class: GraphPhotos
+      module: *def-module
+      settings: settings_graph_photos.py
+
     - &extract-image-links
       class: ImageLinks
       module: *def-module
@@ -345,6 +350,10 @@ runner_settings:
         rank: 200
       - <<: *extract-document-uid
         rank: 300
+      - <<: *extract-fbgraph-photos
+        rank: 350
+      - <<: *image-archiver
+        rank: 375
       - <<: *extract-links
         rank: 400
       - <<: *crawl-submitter
