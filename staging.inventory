@@ -225,3 +225,6 @@ spark-nodes
 
 [gandalf-runner-node]
 vagrant-ist-02
+
+[grawler-nodes]
+vagrant-ist-01

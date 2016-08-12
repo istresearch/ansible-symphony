@@ -34,3 +34,11 @@ datadog_monitors:
                       doc.traptor.rule_type: follow
                   - match:
                       doc.traptor.id: 1
+  disk:
+    enabled: true
+    is_custom_check: false
+    use_mount: no
+  network:
+    enabled: true
+    is_custom_check: false
+    collect_connection_state: yes

@@ -8,7 +8,7 @@
 repository_host=repo.istresearch.com
 
 [dd-agent-nodes:children]
-servers
+scrapy-cluster-nodes
 
 [ist-crawlers:children]
 scrapy-cluster-nodes

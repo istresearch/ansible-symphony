@@ -1,6 +1,18 @@
 ---
 
 #### HADOOP VARS ####
+pulse_titan_pw: "{{ vault_pulse_password }}"
+
+pulse_db_password: "{{ vault_pulse_password }}"
+
+pulse_mysql_admin_login:
+  user: "{{ mysql_root_username }}"
+  password: "{{ mysql_root_password }}"
+
+pulse_self_signed_ssl: true
+pulse_self_signed_url: true
+pulse_local_install: false
+mysql_root_password: "{{ vault_mysql_root_password }}"
 dfs_internap: false
 dfs_replication: 1
 dfs_block_size: 67109888
@@ -26,6 +38,8 @@ zookeeper_data_dir: /data/zookeeper
 
 #### KAFKA VARS ####
 kafka_heap: 2G
+kafka_num_partitions: 1
+kafka_replication_factor: 1
 kafka_data_log_dir:
   - '/data/kafka/topic-logs'
 kafka_data_dir:
@@ -43,11 +57,12 @@ sc_crawling_interface: eth0
 elasticsearch_heap_size: 2g
 elasticsearch_is_master: "true"
 elasticsearch_is_data: "true"
+<<<<<<< HEAD:group_vars/staging/vars
 elasticsearch_discovery_zen_minimum_master_nodes: 1
 elasticsearch_data_dir:
   - /data/elasticsearch
 
-#### PULSE UI NODE ####
+#### PULSE STUFF ####
 pulse_user: "{{ vault_pulse_user }}"
 pulse_password: "{{ vault_pulse_password }}"
 
@@ -65,5 +80,21 @@ pulse_db_password: "{{ vault_pulse_password }}"
 mysql_root_username: "{{ vault_mysql_root_username }}"
 mysql_root_password: "{{ vault_mysql_root_password }}"
 
+pulse_titan_pw: "{{ vault_pulse_password }}"
+
+pulse_db_password: "{{ vault_pulse_password }}"
+
+pulse_mysql_admin_login:
+  user: "{{ mysql_root_username }}"
+  password: "{{ mysql_root_password }}"
+
+pulse_self_signed_ssl: true
+pulse_self_signed_url: true
+pulse_local_install: false
+mysql_root_password: "{{ vault_mysql_root_password }}"
+
 #### PULSE MYSQL ES HOST ####
 ql_db_host: vagrant-ist-01
+
+#### DATADOG ####
+datadog_api_key: "{{ vault_datadog_api_key }}"
