@@ -28,7 +28,6 @@ scrapy-cluster-nodes
 logstash-nodes
 hue-nodes
 cooper-node
-scrapy-indexer-nodes
 gnip-monitor-node
 gdelt-monitor-node
 elastalert-nodes
