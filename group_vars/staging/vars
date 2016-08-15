@@ -45,7 +45,6 @@ sc_crawling_interface: eth0
 elasticsearch_heap_size: 2g
 elasticsearch_is_master: "true"
 elasticsearch_is_data: "true"
-<<<<<<< HEAD:group_vars/staging/vars
 elasticsearch_discovery_zen_minimum_master_nodes: 1
 elasticsearch_data_dir:
   - /data/elasticsearch
