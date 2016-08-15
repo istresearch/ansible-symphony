@@ -58,8 +58,8 @@ vagrant-as-02
 hbase-master-node
 hbase-regionserver-nodes
 
-[oozie-node]
-vagrant-as-01
+[oozie-node:children]
+hadoop-namenode-node
 
 [spark-master-node]
 vagrant-as-01
