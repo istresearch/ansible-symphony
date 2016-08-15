@@ -85,20 +85,20 @@
         owner="{{ oozie_user }}"
         group="{{ oozie_user }}"
 
-    - name: add oozie proxyuser to hadoop core-site.xml
-      blockinfile:
-        dest: "{{ oozie_external_vars.hdfs_conf_dir }}/core-site.xml"
-        marker: "<!-- {mark} ANSIBLE MANAGED OOZIE BLOCK -->"
-        insertbefore: "</configuration>"
-        content: |
-          <property>
-            <name>hadoop.proxyuser.{{ oozie_external_vars.hdfs_user }}.hosts</name>
-            <value>{{ inventory_hostname }}</value>
-          </property>
-          <property>
-            <name>hadoop.proxyuser.{{ oozie_external_vars.hdfs_user }}.groups</name>
-            <value>*</value>
-          </property>
+    # - name: add oozie proxyuser to hadoop core-site.xml
+    #   blockinfile:
+    #     dest: "{{ oozie_external_vars.hdfs_conf_dir }}/core-site.xml"
+    #     marker: "<!-- {mark} ANSIBLE MANAGED OOZIE BLOCK -->"
+    #     insertbefore: "</configuration>"
+    #     content: |
+    #       <property>
+    #         <name>hadoop.proxyuser.{{ oozie_external_vars.hdfs_user }}.hosts</name>
+    #         <value>{{ inventory_hostname }}</value>
+    #       </property>
+    #       <property>
+    #         <name>hadoop.proxyuser.{{ oozie_external_vars.hdfs_user }}.groups</name>
+    #         <value>*</value>
+    #       </property>
 
     - name: create local hbase maven repo
       command: >
