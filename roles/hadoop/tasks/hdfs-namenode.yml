@@ -35,17 +35,12 @@
 - name: add jmx namenode environment variables
   set_fact:
     hdfs_env_vars: >
-      HADOOP_NAMENODE_OPTS="
-        -Dcom.sun.management.jmxremote
-        -Dcom.sun.management.jmxremote.authenticate={{ jmx_namenode_options.authenticate }}
-        -Dcom.sun.management.jmxremote.ssl={{ jmx_namenode_options.ssl }}
-        -Dcom.sun.management.jmxremote.port={{ jmx_namenode_options.port }}",
-        {{ hdfs_env_vars }}
+      HADOOP_NAMENODE_OPTS="-Dcom.sun.management.jmxremote
+      -Dcom.sun.management.jmxremote.authenticate={{ jmx_namenode_options.authenticate|lower }}
+      -Dcom.sun.management.jmxremote.ssl={{ jmx_namenode_options.ssl|lower}}
+      -Dcom.sun.management.jmxremote.port={{ jmx_namenode_options.port }}",
+      {{ hdfs_env_vars }}
   when: jmx_namenode_options.enabled
-  tags: hadoop-test
-
-- name: doit
-  debug: var=hdfs_env_vars
   tags: hadoop-test
 
 - name: copy supervisord config
@@ -83,5 +78,3 @@
   become: yes
   become_user: "{{ hdfs_user }}"
   tags: hadoop
-
-- name
