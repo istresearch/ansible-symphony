@@ -20,6 +20,18 @@ hdfs_stdout_logfile_maxbytes: 50MB
 hdfs_stderr_logfile_maxbytes: 50MB
 hdfs_env_vars: 'JAVA_HOME="{{ java_home }}", HADOOP_HOME="{{ hdfs_install_dir }}/default", YARN_HOME="{{ hdfs_install_dir }}/default", HADOOP_PREFIX="/opt/hadoop/default"'
 
+jmx_namenode_options:
+  enabled: false
+  authenticate: false
+  ssl: false
+  port: 8004
+
+jmx_datanode_options:
+  enabled: false
+  authenticate: false
+  ssl: false
+  port: 8008
+
 hdfs_datanode_enabled: false
 hdfs_namenode_enabled: false
 hdfs_secondary_namenode_enabled: false
