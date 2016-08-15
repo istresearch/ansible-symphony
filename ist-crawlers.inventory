@@ -13,8 +13,22 @@ scrapy-cluster-nodes
 [ist-crawlers:children]
 scrapy-cluster-nodes
 
-[scrapy-cluster-nodes]
-#127.0.0.1 host_alias=localhost
-# This group is 
-# IST Crawler Servers on AWS 
+[scrapy-cluster-kafka-monitor-node]
+ist-crawler01.istresearch.com
+ist-crawler03.istresearch.com
+ist-crawler05.istresearch.com
+
+[scrapy-cluster-redis-monitor-node]
+ist-crawler01.istresearch.com
+
+[scrapy-cluster-crawler-nodes]
 ist-crawler[01:06].istresearch.com
+
+[scrapy-cluster-indexer-nodes]
+ist-crawler[01:06].istresearch.com
+
+[scrapy-cluster-nodes:children]
+scrapy-cluster-kafka-monitor-node
+scrapy-cluster-redis-monitor-node
+scrapy-cluster-crawler-nodes
+scrapy-cluster-indexer-nodes
