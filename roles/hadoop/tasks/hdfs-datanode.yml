@@ -13,6 +13,17 @@
     - hadoop
     - hdfs_datanode
 
+- name: add jmx datanode environment variables
+  set_fact:
+    hdfs_env_vars: >
+      HADOOP_NAMENODE_OPTS="-Dcom.sun.management.jmxremote
+      -Dcom.sun.management.jmxremote.authenticate={{ jmx_datanode_options.authenticate|lower }}
+      -Dcom.sun.management.jmxremote.ssl={{ jmx_datanode_options.ssl|lower}}
+      -Dcom.sun.management.jmxremote.port={{ jmx_datanode_options.port }}",
+      {{ hdfs_env_vars }}
+  when: jmx_datanode_options.enabled
+  tags: hadoop-test
+
 - name: copy supervisord config
   template:
     src: hadoop-datanode-supervisord.conf.j2
