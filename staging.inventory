@@ -59,6 +59,9 @@ vagrant-ist-02
 hbase-master-node
 hbase-regionserver-nodes
 
+[oozie-node:children]
+hadoop-namenode-node
+
 [spark-master-node]
 vagrant-ist-01
 
