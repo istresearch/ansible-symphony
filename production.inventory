@@ -94,6 +94,9 @@ crew05.istresearch.com
 hbase-master-node
 hbase-regionserver-nodes
 
+[oozie-node:children]
+hadoop-namenode-node
+
 [spark-master-node]
 captain01.istresearch.com
 
