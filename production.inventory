@@ -263,6 +263,9 @@ crew06.istresearch.com
 crew07.istresearch.com
 crew08.istresearch.com
 
+[docker-engine]
+docker.dev.istresearch.com
+
 [other]
 in-namenode01.nj.istresearch.com
 memexdev.istresearch.com
