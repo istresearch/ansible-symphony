@@ -46,6 +46,14 @@
   notify:
     - restart docker-engine
 
+- name: Install docker-py and docker-compose
+  pip:
+    name: "{{ item.name }}"
+    state: latest
+  with_items:
+    - { name: docker-py, version: "{{ docker_py_version }}" }
+    - { name: docker-compose, version: "{{ docker_compose_version }}" }
+
 #- name: stop docker service
 #  service:
 #    name: docker
@@ -78,14 +86,6 @@
 #    owner: "{{ docker_user }}"
 #    group: "{{ docker_group }}"
 #    mode: 0755
-#
-#- name: Install docker-py and docker-compose
-#  pip:
-#    name: "{{ item.name }}"
-#    state: latest
-#  with_items:
-#    - { name: docker-py, version: "{{ docker_py_version }}" }
-#    - { name: docker-compose, version: "{{ docker_compose_version }}" }
 #
 #- name: Check if /etc/updatedb.conf exists
 #  stat:
