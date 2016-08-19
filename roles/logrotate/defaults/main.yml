@@ -1,0 +1,11 @@
+logrotate_conf_dir: "/etc/logrotate.d/"
+logrotate_scripts:
+  - name: supervisord
+    path: /var/log/supervisor/*.log
+    options:
+      - size 50M
+      - rotate 5
+      - missingok
+      - compress
+      - delaycompress
+      - copytruncate
