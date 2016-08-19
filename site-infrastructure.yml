@@ -480,7 +480,7 @@
 
 # ---------------------------------- DataDog --------------------------------
 
-- hosts: dd-agent-nodes
+- hosts: all
   roles: [ dd-agent ]
   tags:
     - site-dd-agent

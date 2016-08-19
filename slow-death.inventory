@@ -8,11 +8,6 @@
 [all:vars]
 repository_host=repo.istresearch.com
 
-[dd-agent-nodes:children]
-internap
-aws
-other
-
 #
 # Memex infrastructure and software topology
 #

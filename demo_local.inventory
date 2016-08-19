@@ -28,9 +28,6 @@ traptor-nodes
 elastalert-nodes
 tor-proxy
 
-[dd-agent-nodes]
-vagrant-ist-01
-
 [zookeeper-nodes]
 vagrant-ist-01
 
