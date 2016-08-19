@@ -34,6 +34,17 @@
     - common
     - sshd
 
+- name: create common data directory
+  file:
+    path: "{{ common_data_dir }}/"
+    state: directory
+    mode: 0755
+    owner: "{{ common_data_user }}"
+    group: "{{ common_data_group }}"
+  tags: common
+
+
 - name: Set fact common_has_run
   set_fact:
     common_has_run: true
+
