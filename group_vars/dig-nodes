@@ -5,6 +5,8 @@
 script_inline: true
 script_indexed: true 
 
+elasticsearch_discovery_zen_minimum_master_nodes: 2
+
 datadog_monitors:
   supervisord:
     enabled: true

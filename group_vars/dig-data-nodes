@@ -4,6 +4,5 @@ elasticsearch_heap_size: 16g
 
 elasticsearch_is_master: "false"
 elasticsearch_is_data: "true"
-elasticsearch_discovery_zen_minimum_master_nodes: 2
 elasticsearch_data_dir:
   - /data/elasticsearch
