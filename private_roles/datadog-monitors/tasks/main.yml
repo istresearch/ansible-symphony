@@ -3,11 +3,14 @@
 # Downloads and file setup
 #########################################################
 - block:
-    - name: install jinja2
+    - name: install requried system-wide python modules
       pip:
-        name: jinja2
+        name: '{{ item }}'
       become: yes
       become_user: root
+      with_items:
+        - jinja2
+        - pyaml
 
     - name: create datadog monitors install directory
       file:
