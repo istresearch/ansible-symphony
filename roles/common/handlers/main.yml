@@ -7,3 +7,16 @@
 - name: synchronize clock
   shell: "service {{ ntp_daemon }} stop; ntpdate {{ ntp_server_host }}; service {{ ntp_daemon }} start"
   when: inventory_hostname != ntp_server_host
+
+- name: update resolvconf
+  command: resolvconf -u
+
+- name: restart sshd Debian
+  service:
+    name=ssh
+    state=restarted
+
+- name: restart sshd RedHat
+  service:
+    name=sshd
+    state=restarted
