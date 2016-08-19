@@ -15,4 +15,4 @@ datadog_monitors:
   hdfs_namenode:
     enabled: true
     is_custom_check: false
-    jmx_uri: 'http://localhost:{{dfs_namenode_http_address_port|default(50070)}}'
+    jmx_uri: 'http://localhost:{{dfs_namenode_secondary_http_address_port|default(50090)}}'
