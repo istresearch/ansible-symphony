@@ -32,6 +32,7 @@ env:
   - TAGS='site-tarsnap'
   - TAGS='site-phantomjs'
   - TAGS='site-supervisord'
+  - TAGS='site-oozie'
 
 matrix:
   fast_finish: true

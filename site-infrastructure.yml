@@ -327,6 +327,13 @@
     - deps-hbase
     - deps-spark
 
+# --------------------------------- Oozie ------------------------------------
+- name: Oozie Install
+  hosts: oozie-node
+  roles: [ oozie ]
+  tags:
+    - site-oozie
+
 # --------------------------------- HBase ------------------------------------
 - name: HBase Master Node
   hosts: hbase-master-node
