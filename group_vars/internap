@@ -28,7 +28,7 @@ yarn_nodemanager_log_dirs:
    - /data/6/yarn/logs
 
 #### HBASE VARS ####
-hbase_heap_size: 8192
+hbase_heap_size: 20480
 
 #### ZOOKEEPER VARS ####
 zookeeper_maxClientCnxns: 120
