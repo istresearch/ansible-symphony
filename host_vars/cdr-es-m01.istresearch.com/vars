@@ -1,0 +1,48 @@
+---
+datadog_monitors:
+  supervisord:
+    enabled: true
+    is_custom_check: false
+    server_name: '{{ inventory_hostname }}'
+  elastic:
+    enabled: true
+    is_custom_check: false
+    es_instances:
+        - url: http://localhost:9200
+          tag: "es-cluster:cdr"
+  disk:
+    enabled: true
+    is_custom_check: false
+    use_mount: no
+  network:
+    enabled: true
+    is_custom_check: false
+    collect_connection_state: yes
+  cdr_cht:
+    enabled: true
+    is_custom_check: true
+    check_interval_s: 21600
+    metric_name: cdr.cht
+    elasticsearch:
+      protocol: https
+      host: cdr-es.istresearch.com
+      port: 9200
+      index: memex-domains
+      auth:
+        user: '{{ cdr_es_creds.user }}'
+        password: '{{ cdr_es_creds.password }}'
+    domains:
+      - backpage.com
+      - escortphonelist.com
+      - escortsincollege.com
+      - escortsinthe.us
+      - escortads.xxx
+      - eroticmugshots.com
+      - asexyservice.com
+      - escortsin.ca
+      - backpage.mx
+      - classivox.com
+      - myproviderguide.com
+      - massagetroll.com
+      - www.usasexguide.info
+      - cityvibe.com
