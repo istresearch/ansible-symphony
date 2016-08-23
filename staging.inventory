@@ -40,7 +40,6 @@ apache-node
 mysql-node
 pulse-ui-node
 pulse-mysql-es-host
-dd-agent-nodes
 phantomjs-nodes
 gandalf-runner-node
 
@@ -217,9 +216,6 @@ vagrant-ist-01
 vagrant-ist-01
 
 [pulse-mysql-es-host]
-vagrant-ist-01
-
-[dd-agent-nodes]
 vagrant-ist-01
 
 [phantomjs-nodes:children]

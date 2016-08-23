@@ -28,9 +28,6 @@ traptor-nodes
 elastalert-nodes
 tor-proxy
 
-[dd-agent-nodes]
-demo-box-dev.istresearch.com
-
 [zookeeper-nodes]
 demo-box-dev.istresearch.com host_alias=demo-box-dev.istresearch.com
 

@@ -1,0 +1,18 @@
+---
+datadog_monitors:
+  supervisord:
+    enabled: true
+    is_custom_check: false
+    server_name: '{{ inventory_hostname }}'
+  disk:
+    enabled: true
+    is_custom_check: false
+    use_mount: no
+  network:
+    enabled: true
+    is_custom_check: false
+    collect_connection_state: yes
+  hdfs_namenode:
+    enabled: true
+    is_custom_check: false
+    jmx_uri: 'http://localhost:{{dfs_namenode_http_address_port|default(50070)}}'
