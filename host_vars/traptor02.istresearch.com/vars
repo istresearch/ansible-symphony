@@ -62,3 +62,11 @@ datadog_monitors:
                  must:
                   - match:
                       doc.traptor.rule_tag: Pulse.australia
+  disk:
+    enabled: true
+    is_custom_check: false
+    use_mount: no
+  network:
+    enabled: true
+    is_custom_check: false
+    collect_connection_state: yes

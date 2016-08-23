@@ -1,3 +1,8 @@
+---
+## PUT VARIABLES THAT PERTAIN TO BOTH MASTER AND DATA NODES IN THIS FILE
+
+elasticsearch_discovery_zen_minimum_master_nodes: 2
+
 datadog_monitors:
   supervisord:
     enabled: true
@@ -8,13 +13,7 @@ datadog_monitors:
     is_custom_check: false
     es_instances:
         - url: http://localhost:9200
-          tag: cluster:0
-        - url: http://localhost:19200
-          tag: cluster:1
-        - url: http://localhost:29200
-          tag: cluster:2
-        - url: http://localhost:39200
-          tag: cluster:3
+          tag: "es-cluster:cdr"
   disk:
     enabled: true
     is_custom_check: false

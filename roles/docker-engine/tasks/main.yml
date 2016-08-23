@@ -46,39 +46,6 @@
   notify:
     - restart docker-engine
 
-- name: stop docker service
-  service:
-    name: docker
-    state: stopped
-    enabled: no
-
-- name: Set docker daemon options
-  copy:
-    content: "DOCKER_OPTS=\"{{ docker_opts.rstrip('\n') }}\""
-    dest: /etc/default/docker
-    owner: root
-    group: root
-    mode: 0644
-  notify:
-    - restart docker-engine
-  when: docker_opts != ""
-
-- name: create pidproxy folder
-  file:
-    path: "{{ docker_pidproxy_install_dir }}/"
-    state: directory
-    mode: 0744
-    owner: "{{ docker_user }}"
-    group: "{{ docker_group }}"
-
-- name: copy over new pidproxy.py file
-  copy:
-    src: pidproxy.py
-    dest: "{{ docker_pidproxy_install_dir }}"
-    owner: "{{ docker_user }}"
-    group: "{{ docker_group }}"
-    mode: 0755
-
 - name: Install docker-py and docker-compose
   pip:
     name: "{{ item.name }}"
@@ -87,16 +54,49 @@
     - { name: docker-py, version: "{{ docker_py_version }}" }
     - { name: docker-compose, version: "{{ docker_compose_version }}" }
 
-- name: Check if /etc/updatedb.conf exists
-  stat:
-    path: /etc/updatedb.conf
-  register: updatedb_conf_exists
-
-- name: copy supervisord config
-  template:
-    src: docker-supervisord.conf.j2
-    dest: "{{ supervisord_programs_dir }}/docker-supervisord.conf"
-    mode: 0644
-  notify:
-    - reread supervisord
-    - restart docker-engine
+#- name: stop docker service
+#  service:
+#    name: docker
+#    state: stopped
+#    enabled: no
+#
+#- name: Set docker daemon options
+#  copy:
+#    content: "DOCKER_OPTS=\"{{ docker_opts.rstrip('\n') }}\""
+#    dest: /etc/default/docker
+#    owner: root
+#    group: root
+#    mode: 0644
+#  notify:
+#    - restart docker-engine
+#  when: docker_opts != ""
+#
+#- name: create pidproxy folder
+#  file:
+#    path: "{{ docker_pidproxy_install_dir }}/"
+#    state: directory
+#    mode: 0744
+#    owner: "{{ docker_user }}"
+#    group: "{{ docker_group }}"
+#
+#- name: copy over new pidproxy.py file
+#  copy:
+#    src: pidproxy.py
+#    dest: "{{ docker_pidproxy_install_dir }}"
+#    owner: "{{ docker_user }}"
+#    group: "{{ docker_group }}"
+#    mode: 0755
+#
+#- name: Check if /etc/updatedb.conf exists
+#  stat:
+#    path: /etc/updatedb.conf
+#  register: updatedb_conf_exists
+#
+#- name: copy supervisord config
+#  template:
+#    src: docker-supervisord.conf.j2
+#    dest: "{{ supervisord_programs_dir }}/docker-supervisord.conf"
+#    mode: 0644
+#  notify:
+#    - reread supervisord
+#    - restart docker-engine

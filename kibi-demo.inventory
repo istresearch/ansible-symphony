@@ -8,16 +8,10 @@
 repository_host=repo.istresearch.com
 
 [kibi-demo-nodes:children]
-servers
+elasticsearch-nodes
 
 [aws:children]
-servers
-
-[servers]
-#127.0.0.1 host_alias=localhost
-# This group is 
-# Kibi Demo Server on AWS 
-kibi-demo.istresearch.com host_alias=kibi-demo.istresearch.com
+elasticsearch-nodes
 
 [elasticsearch-master-nodes]
 

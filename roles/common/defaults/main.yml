@@ -1,7 +1,9 @@
 ---
 
 ntp_server_host: pool.ntp.org
-
+common_data_dir: /data
+common_data_user: root
+common_data_group: root
 swap_run: true
 swap_file: /var/swap
 swap_size: 2000000000

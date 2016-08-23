@@ -17,6 +17,9 @@ other
 # Memex infrastructure and software topology
 #
 
+[ist-crawlers:children]
+scrapy-cluster-nodes
+
 [internap:children]
 zookeeper-nodes
 kafka-nodes
@@ -40,16 +43,6 @@ tor-proxy
 # Replacement3 - 63.251.114.50
 # Replacement4 - 63.251.114.51
 
-
-[zookeeper-nodes]
-memex-zookeeper01.istresearch.com
-memex-zookeeper02.istresearch.com
-memex-zookeeper03.istresearch.com
-
-[kafka-nodes]
-memex-kafka01.istresearch.com
-memex-kafka02.istresearch.com
-memex-kafka03.istresearch.com
 
 [redis-master-node]
 memex-services.istresearch.com
@@ -100,14 +93,7 @@ in-namenode02.nj.istresearch.com
 in-namenode02.nj.istresearch.com
 
 [storm-supervisor-nodes]
-in-slave01.nj.istresearch.com
-in-slave02.nj.istresearch.com
-in-slave03.nj.istresearch.com
-in-slave04.nj.istresearch.com
-in-slave05.nj.istresearch.com
-in-slave06.nj.istresearch.com
-in-slave07.nj.istresearch.com
-in-slave08.nj.istresearch.com
+in-slave[01:08].nj.istresearch.com
 
 [storm-nodes:children]
 storm-nimbus-node
@@ -135,20 +121,10 @@ memex-services.istresearch.com
 memex-services.istresearch.com
 
 [scrapy-crawler-nodes]
-memex-crawler01.istresearch.com
-memex-crawler02.istresearch.com
-memex-crawler03.istresearch.com
-memex-crawler04.istresearch.com
-memex-crawler05.istresearch.com
-memex-crawler06.istresearch.com
+memex-crawler[01:08].istresearch.com
 
 [scrapy-indexer-nodes]
-memex-crawler01.istresearch.com
-memex-crawler02.istresearch.com
-memex-crawler03.istresearch.com
-memex-crawler04.istresearch.com
-memex-crawler05.istresearch.com
-memex-crawler06.istresearch.com
+memex-crawler[01:06].istresearch.com
 
 [scrapy-cluster:children]
 scrapy-kafka-monitor-node

@@ -44,4 +44,3 @@ sc_indexer_stats_times:
     - 'SECONDS_1_HOUR'
     - 'SECONDS_6_HOUR'
     - 'SECONDS_12_HOUR'
-

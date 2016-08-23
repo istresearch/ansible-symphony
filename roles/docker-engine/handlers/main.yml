@@ -1,5 +1,5 @@
 ---
 - name: restart docker-engine
-  supervisorctl:
-    name=docker-engine
+  service:
+    name=docker
     state=restarted
