@@ -69,6 +69,9 @@ spark_worker_memory: 4g
 spark_worker_cores: 8
 
 # Crawlers
+sc_kafka_master_topic_prefix: crawl
+sc_redis_master_db: 2
+sc_crawling_queue_hits: 60
 sc_crawling_kafka_appid_topics: False
 sc_crawling_kafka_base_64: True
 sc_crawling_num_procs: 5
@@ -80,6 +83,7 @@ sc_kafka_monitor_plugins:
     - "'plugins.action_handler.ActionHandler': 200"
     - "'plugins.stats_handler.StatsHandler': 300"
     - "'plugins.keyword_handler.KeywordHandler': 400"
+    - "'plugins.zookeeper_handler.ZookeeperHandler': 500"
 sc_kafka_monitor_stats_times:
     - 'SECONDS_15_MINUTE'
     - 'SECONDS_1_HOUR'
