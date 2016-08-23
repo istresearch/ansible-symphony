@@ -1,0 +1,8 @@
+---
+
+elasticsearch_heap_size: 16g
+
+elasticsearch_is_master: "false"
+elasticsearch_is_data: "true"
+elasticsearch_data_dir:
+  - /data/elasticsearch

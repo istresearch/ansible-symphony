@@ -1,5 +1,12 @@
 ---
 
+## PUT VARIABLES THAT PERTAIN TO BOTH MASTER AND DATA NODES IN THIS FILE
+
+script_inline: true
+script_indexed: true 
+
+elasticsearch_discovery_zen_minimum_master_nodes: 2
+
 datadog_monitors:
   supervisord:
     enabled: true
@@ -10,7 +17,7 @@ datadog_monitors:
     is_custom_check: false
     es_instances:
         - url: http://localhost:9200
-          tag: "es-cluster:cdr"
+          tag: "es-cluster:dig"
   disk:
     enabled: true
     is_custom_check: false

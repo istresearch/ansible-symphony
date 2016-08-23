@@ -13,6 +13,37 @@ slack_report=false
 # Infrastructure and software topology
 #
 
+[staging:children]
+zookeeper-nodes
+kafka-nodes
+redis-nodes
+storm-nodes
+spark-nodes
+hadoop-nodes
+hbase-nodes
+elasticsearch-nodes
+kibana-node
+tor-proxy
+scrapy-cluster-nodes
+logstash-nodes
+hue-nodes
+cooper-node
+gnip-monitor-node
+gdelt-monitor-node
+elastalert-nodes
+traptor-nodes
+docker-engine
+googler-nodes
+neo4j-node
+tangelo-node
+apache-node
+mysql-node
+pulse-ui-node
+pulse-mysql-es-host
+dd-agent-nodes
+phantomjs-nodes
+gandalf-runner-node
+
 [zookeeper-nodes]
 vagrant-ist-01
 

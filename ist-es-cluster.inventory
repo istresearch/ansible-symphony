@@ -6,33 +6,21 @@
 
 [all:vars]
 repository_host=repo.istresearch.com
-elasticsearch_heap_size=16g
 
 [dd-agent-nodes:children]
 elasticsearch-nodes
 
-[ist-elasticsearch-nodes:children]
+[ist-es-nodes:children]
 elasticsearch-nodes
 
 [aws:children]
 elasticsearch-nodes
 
 [elasticsearch-master-nodes]
-ist-es-m01.istresearch.com
-ist-es-m02.istresearch.com
-ist-es-m03.istresearch.com
+ist-es-m[01:03].istresearch.com
 
 [elasticsearch-data-nodes]
-ist-es01.istresearch.com
-ist-es02.istresearch.com
-ist-es03.istresearch.com
-ist-es04.istresearch.com
-ist-es05.istresearch.com
-ist-es06.istresearch.com
-ist-es07.istresearch.com
-ist-es08.istresearch.com
-ist-es09.istresearch.com
-ist-es10.istresearch.com
+ist-es[01:10].istresearch.com
 
 [elasticsearch-client-nodes]
 

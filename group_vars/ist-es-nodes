@@ -1,8 +1,8 @@
 ---
 
-elasticsearch_heap_size: 16g
-script_inline: true
-script_indexed: true 
+## PUT VARIABLES THAT PERTAIN TO BOTH MASTER AND DATA NODES IN THIS FILE
+
+elasticsearch_discovery_zen_minimum_master_nodes: 2
 
 datadog_monitors:
   supervisord:
@@ -14,7 +14,7 @@ datadog_monitors:
     is_custom_check: false
     es_instances:
         - url: http://localhost:9200
-          tag: "es-cluster:dig"
+          tag: "es-cluster:ist"
   disk:
     enabled: true
     is_custom_check: false
