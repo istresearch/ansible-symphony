@@ -143,7 +143,7 @@ demo-box-dev.istresearch.com
 [traptor-location-nodes]
 
 [traptor-follow-nodes]
-demo-box-dev.istresearch.com
+#demo-box-dev.istresearch.com
 
 [traptor-track-nodes]
 demo-box-dev.istresearch.com
@@ -151,6 +151,7 @@ demo-box-dev.istresearch.com
 [traptor-nodes:children]
 traptor-follow-nodes
 traptor-track-nodes
+
 
 [kibana-node]
 demo-box-dev.istresearch.com

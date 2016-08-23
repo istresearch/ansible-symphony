@@ -61,6 +61,8 @@ kafka_heap: 2G
 kafka_log_retention_hours: 24
 kafka_data_log_dir:
    - /data/kafka/topic-logs
+kafka_num_partitions: 1
+kafka_replication_factor: 1
 
 # Spark
 spark_worker_memory: 4g
@@ -89,3 +91,15 @@ sc_indexer_parallelism: 10
 sc_indexer_stats_times:
     - 'SECONDS_15_MINUTE'
     - 'SECONDS_1_HOUR'
+
+# Traptor
+traptor_kafka_topic: "{{ vault_traptor_kafka_topic }}"
+
+traptor_track_count: 2
+traptor_follow_count: 0
+traptor_location_count: 0
+
+traptor_track_apikeys: "{{ vault_traptor_track_apikeys }}"
+traptor_follow_apikeys: "{{ vault_traptor_follow_apikeys }}"
+traptor_location_apikeys: "{{ vault_traptor_location_apikeys }}"
+traptor_redis_db: 1
