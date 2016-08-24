@@ -102,7 +102,7 @@ captain01.istresearch.com
 
 [storm-supervisor-nodes]
 crew[01:08].istresearch.com
-backup[01:08].nj.istresearch.com
+backup[01:02].nj.istresearch.com
 
 [storm-nodes:children]
 storm-nimbus-node
