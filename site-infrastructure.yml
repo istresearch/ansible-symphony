@@ -87,6 +87,13 @@
     - deps-traptor
     - deps-grawler
 
+- name: Run logrotate role
+  hosts: all
+  roles:
+    - logrotate
+  tags:
+    - site-logrotate
+
 # -------------------------- Zookeeper and Kafka -----------------------------
 - name: Run zookeeper role
   hosts: zookeeper-nodes
