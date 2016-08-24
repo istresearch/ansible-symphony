@@ -12,12 +12,7 @@ repository_host=repo.istresearch.com
 # Memex infrastructure and software topology
 #
 
-[ist-crawlers:children]
-scrapy-cluster-nodes
-
 [internap:children]
-zookeeper-nodes
-kafka-nodes
 hadoop-nodes
 hbase-nodes
 spark-nodes
