@@ -46,6 +46,12 @@
   roles: [ elastalert ]
   tags: site-elastalert
 
+# ------------------------------- Logrotate ---------------------------------
+- name: Run Logrotate role
+  hosts: all
+  roles: [ logrotate ]
+  tags: site-logrotate
+
 # -------------------------------- Cooper the Dog ------------------------------------
 - name: Run Cooper the Dog role
   hosts: cooper-node
