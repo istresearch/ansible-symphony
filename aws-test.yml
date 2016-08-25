@@ -1,0 +1,35 @@
+---
+
+# ----------------------------- Add TechOps Users -----------------------------------
+- name: Add TechOps Users
+  hosts: 
+    - tag_Environment_Production
+  gather_facts: true
+  roles:
+    - add-users
+  tags: 
+    - site-add-users
+    - site-add-techops-users
+
+# ----------------------------- Add Development Users -----------------------------------
+
+- name: Add Developer Users
+  hosts: tags_environment_development
+  roles:
+    - add-users
+  tags: 
+    - site-add-users
+    - site-add-dev-users
+
+# ----------------------------- Third-Party users -----------------------------------
+
+- name: Run Third-Party Users
+  hosts: 
+    - tags_environment_production
+    - tags_environment_development
+  roles:
+    - add-users
+  tags: 
+    - site-add-users
+    - site-add-thirdparty-users
+
