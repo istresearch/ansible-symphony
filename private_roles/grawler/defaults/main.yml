@@ -24,7 +24,7 @@ grawler_log_stdout: "True"
 grawler_log_level: "INFO"
 
 # grawler localsettings.py
-grawler_kafka_topic: "graph_crawler"
+grawler_kafka_topic: "crawler.graph"
 grawler_kafka_consumer: "graph_consumer"
 
 grawler_queue: "graph_q"
@@ -36,12 +36,12 @@ grawler_redis_db: 5
 
 grawler_sleep_time: 5
 grawler_crawl_interval: 30 * 60
-grawler_cache_depth: 3
+grawler_crawl_depth: 5
 grawler_feed_engagement_base: 3
 
 grawler_zookeeper_dir: "/grawler/instance"
 
-grawler_num_procs: 2
+grawler_num_procs: 1
 
 # Add grawler configs here.  There are {{ grawler_num_procs }} number
 # of process id's per {{ groups['grawler-nodes'] }}
@@ -51,7 +51,7 @@ grawler_config_dict:
     id: 100
   grawl2:
     yml: grawler_config2.yml
-    id: 101
+    id: 200
 ## When scaling up/out
 #  grawl3:
 #    yml: grawler_config3.yml

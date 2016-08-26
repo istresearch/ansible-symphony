@@ -269,3 +269,7 @@ dockerva.istresearch.com
 nypd-kibana.istresearch.com
 phoenix-backend.istresearch.com
 qcr-dev.istresearch.com
+
+[grawler-nodes] 
+ist-crawler01.istresearch.com 
+ist-crawler02.istresearch.com

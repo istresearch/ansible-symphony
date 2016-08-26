@@ -24,7 +24,7 @@ ZOOKEEPER_HOSTS = "{% for host in groups['zookeeper-nodes'] %}{{ host }}:{{ zook
 WORKER_SLEEP_TIME = {{ grawler_sleep_time }}
 #seconds
 CRAWL_INTERVAL = {{ grawler_crawl_interval }}
-MAX_CRAWL_DEPTH = {{ grawler_cache_depth }}
+MAX_CRAWL_DEPTH = {{ grawler_crawl_depth }}
 
 # Graph Scoring
 GRAPH_FEED_ENGAGEMENT_BASE = {{ grawler_feed_engagement_base }}
