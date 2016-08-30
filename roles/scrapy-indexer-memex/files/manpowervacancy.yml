@@ -1,9 +1,10 @@
----
-urllist:
- - http://manpowervacancy.com/index.php?page=job
- - http://manpowervacancy.com/index.php?page=directory
-findadregex:
- - index\.php\?page=job\_detail\S*id=\d+$
- - index\.php\?page=directory\S*id=\d+$
+campaignid: memex
 downloaddelay: 10
+engagementid: eng1
+findurlregex:
+- index\.php\?page=job\_detail\S*id=\d+$
+- index\.php\?page=directory\S*id=\d+$
 rediskey: indexer-manpowervacancy
+urllist:
+- http://manpowervacancy.com/index.php?page=job
+- http://manpowervacancy.com/index.php?page=directory

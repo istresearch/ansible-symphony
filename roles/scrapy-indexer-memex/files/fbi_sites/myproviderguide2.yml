@@ -1,16 +1,7 @@
----
-# The seed urls to index
-urllist:
-# A small subset of all of the myproviderguide escort urls
-# - http://myproviderguide.com/auburn/escorts
- - http://myproviderguide.com/washington-dc/escorts
-
-# The regex to pull ad links out fo the indexed page
-findadregex: http://myproviderguide.com/\S+/escorts/\d+
-
-# Needed or we will get banned (in seconds)
+campaignid: memex
 downloaddelay: 10
-
-# the redis hash key to manage duplicate urls and refresh alerts
-# this should be the same across indexers doing the same site
+engagementid: eng1
+findurlregex: http://myproviderguide.com/\S+/escorts/\d+
 rediskey: indexer-myproviderguide
+urllist:
+- http://myproviderguide.com/washington-dc/escorts

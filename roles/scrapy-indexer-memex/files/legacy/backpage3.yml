@@ -1,0 +1,57 @@
+---
+rediskey: indexer-backpage-atf
+downloaddelay: 30
+urllist:
+ - http://alabama.backpage.com/SportsEquipForSale/
+ - http://alaska.backpage.com/SportsEquipForSale/
+ - http://arizona.backpage.com/SportsEquipForSale/
+ - http://arkansas.backpage.com/SportsEquipForSale/
+ - http://california.backpage.com/SportsEquipForSale/
+ - http://colorado.backpage.com/SportsEquipForSale/
+ - http://connecticut.backpage.com/SportsEquipForSale/
+ - http://delaware.backpage.com/SportsEquipForSale/
+ - http://florida.backpage.com/SportsEquipForSale/
+ - http://georgia.backpage.com/SportsEquipForSale/
+ - http://hawaii.backpage.com/SportsEquipForSale/
+ - http://idaho.backpage.com/SportsEquipForSale/
+ - http://illinois.backpage.com/SportsEquipForSale/
+ - http://indiana.backpage.com/SportsEquipForSale/
+ - http://iowa.backpage.com/SportsEquipForSale/
+ - http://kansas.backpage.com/SportsEquipForSale/
+ - http://kentucky.backpage.com/SportsEquipForSale/
+ - http://louisiana.backpage.com/SportsEquipForSale/
+ - http://maine.backpage.com/SportsEquipForSale/
+ - http://maryland.backpage.com/SportsEquipForSale/
+ - http://massachusetts.backpage.com/SportsEquipForSale/
+ - http://michigan.backpage.com/SportsEquipForSale/
+ - http://minnesota.backpage.com/SportsEquipForSale/
+ - http://mississippi.backpage.com/SportsEquipForSale/
+ - http://missouri.backpage.com/SportsEquipForSale/
+ - http://montana.backpage.com/SportsEquipForSale/
+ - http://nebraska.backpage.com/SportsEquipForSale/
+ - http://nevada.backpage.com/SportsEquipForSale/
+ - http://newhampshire.backpage.com/SportsEquipForSale/
+ - http://newjersey.backpage.com/SportsEquipForSale/
+ - http://newmexico.backpage.com/SportsEquipForSale/
+ - http://newyork.backpage.com/SportsEquipForSale/
+ - http://northcarolina.backpage.com/SportsEquipForSale/
+ - http://northdakota.backpage.com/SportsEquipForSale/
+ - http://ohio.backpage.com/SportsEquipForSale/
+ - http://oklahoma.backpage.com/SportsEquipForSale/
+ - http://oregon.backpage.com/SportsEquipForSale/
+ - http://pennsylvania.backpage.com/SportsEquipForSale/
+ - http://rhodeisland.backpage.com/SportsEquipForSale/
+ - http://southcarolina.backpage.com/SportsEquipForSale/
+ - http://southdakota.backpage.com/SportsEquipForSale/
+ - http://tennessee.backpage.com/SportsEquipForSale/
+ - http://texas.backpage.com/SportsEquipForSale/
+ - http://utah.backpage.com/SportsEquipForSale/
+ - http://vermont.backpage.com/SportsEquipForSale/
+ - http://virginia.backpage.com/SportsEquipForSale/
+ - http://washington.backpage.com/SportsEquipForSale/
+ - http://westvirginia.backpage.com/SportsEquipForSale/
+ - http://wisconsin.backpage.com/SportsEquipForSale/
+ - http://wyoming.backpage.com/SportsEquipForSale/
+ - http://puertorico.backpage.com/SportsEquipForSale/
+findadregex:
+ - http:\/\/\w+\.backpage.com\/SportsEquipForSale\/[^/]+\/\d+

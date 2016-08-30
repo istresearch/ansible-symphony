@@ -1,19 +1,20 @@
----
-rediskey: indexer-dadi360
+campaignid: memex
 downloaddelay: 30
-findadregex: \/c\/posts\/list\/\S+\.page
-paginateregex: \/c\/forums\/show\/\d+\/\d+\.page
+engagementid: eng1
+findurlregex: \/c\/posts\/list\/\S+\.page
 paginatenum: 100
+paginateregex: \/c\/forums\/show\/\d+\/\d+\.page
+rediskey: indexer-dadi360
 urllist:
- - http://c.dadi360.com/c/forums/show//29.page
- - http://c.dadi360.com/c/forums/show//52.page
- - http://c.dadi360.com/c/forums/show//70.page
- - http://c.dadi360.com/c/forums/show//78.page
- - http://c.dadi360.com/c/forums/show//57.page
- - http://c.dadi360.com/c/forums/show//56.page
- - http://c.dadi360.com/c/forums/show//66.page
- - http://c.dadi360.com/c/forums/show/28.page
- - http://c.dadi360.com/c/forums/show/42.page
- - http://c.dadi360.com/c/forums/show/85.page
- - http://c.dadi360.com/c/forums/show/55.page
- - http://c.dadi360.com/c/forums/show/34.page
+- http://c.dadi360.com/c/forums/show//29.page
+- http://c.dadi360.com/c/forums/show//52.page
+- http://c.dadi360.com/c/forums/show//70.page
+- http://c.dadi360.com/c/forums/show//78.page
+- http://c.dadi360.com/c/forums/show//57.page
+- http://c.dadi360.com/c/forums/show//56.page
+- http://c.dadi360.com/c/forums/show//66.page
+- http://c.dadi360.com/c/forums/show/28.page
+- http://c.dadi360.com/c/forums/show/42.page
+- http://c.dadi360.com/c/forums/show/85.page
+- http://c.dadi360.com/c/forums/show/55.page
+- http://c.dadi360.com/c/forums/show/34.page

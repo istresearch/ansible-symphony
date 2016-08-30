@@ -1,0 +1,10 @@
+---
+urllist:
+ - http://asia.cityxguide.com/
+ - http://europe.cityxguide.com/
+ - http://south-america.cityxguide.com/
+ - http://north-america.cityxguide.com/
+findadregex:
+ - http:\/\/cityxguide.com\/\S+
+downloaddelay: 10
+rediskey: indexer-cityxguide

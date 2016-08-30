@@ -1,18 +1,19 @@
----
-rediskey: indexer-theoutdoorstrader
+campaignid: memex
 downloaddelay: 30
+engagementid: eng1
+findurlregex:
+- \/threads\/[^"]+
+rediskey: indexer-theoutdoorstrader
 urllist:
- - http://www.theoutdoorstrader.com/forums/handguns.72/
- - http://www.theoutdoorstrader.com/forums/revolvers.288/
- - http://www.theoutdoorstrader.com/forums/shotguns.258/
- - http://www.theoutdoorstrader.com/forums/rifles.73/
- - http://www.theoutdoorstrader.com/forums/ammunition.70/
- - http://www.theoutdoorstrader.com/forums/accessories.259/
- - http://www.theoutdoorstrader.com/forums/class-iii.285/
- - http://www.theoutdoorstrader.com/forums/dealer-listings-firearms-accessories.115/
- - http://www.theoutdoorstrader.com/forums/firearms-accessories-national.204/
- - http://www.theoutdoorstrader.com/forums/want-to-buy-ads.229/
- - http://www.theoutdoorstrader.com/forums/steals-deals.192/
- - http://www.theoutdoorstrader.com/forums/professional-services.155/
-findadregex:
- - \/threads\/[^"]+
+- http://www.theoutdoorstrader.com/forums/handguns.72/
+- http://www.theoutdoorstrader.com/forums/revolvers.288/
+- http://www.theoutdoorstrader.com/forums/shotguns.258/
+- http://www.theoutdoorstrader.com/forums/rifles.73/
+- http://www.theoutdoorstrader.com/forums/ammunition.70/
+- http://www.theoutdoorstrader.com/forums/accessories.259/
+- http://www.theoutdoorstrader.com/forums/class-iii.285/
+- http://www.theoutdoorstrader.com/forums/dealer-listings-firearms-accessories.115/
+- http://www.theoutdoorstrader.com/forums/firearms-accessories-national.204/
+- http://www.theoutdoorstrader.com/forums/want-to-buy-ads.229/
+- http://www.theoutdoorstrader.com/forums/steals-deals.192/
+- http://www.theoutdoorstrader.com/forums/professional-services.155/

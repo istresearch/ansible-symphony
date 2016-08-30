@@ -1,21 +1,22 @@
----
-rediskey: indexer-go8po
+campaignid: memex
 downloaddelay: 30
-findadregex: http:\/\/city\.go8po\.com\/forums\/topic\/[a-z0-9%]+\/
-paginateregex: http:\/\/city\.go8po\.com\/forums\S+\/page\/\d+
+engagementid: eng1
+findurlregex: http:\/\/city\.go8po\.com\/forums\/topic\/[a-z0-9%]+\/
 paginatenum: 150
+paginateregex: http:\/\/city\.go8po\.com\/forums\S+\/page\/\d+
+rediskey: indexer-go8po
 urllist:
- - http://city.go8po.com/forums/forum/san_francisco/sf_job/
- - http://city.go8po.com/forums/forum/san_francisco/sf_life_service/
- - http://city.go8po.com/forums/forum/vancouver/vc_night_life/
- - http://city.go8po.com/forums/forum/vancouver/vc_job/
- - http://city.go8po.com/forums/forum/toronto/to_night_life/
- - http://city.go8po.com/forums/forum/toronto/to_job/
- - http://city.go8po.com/forums/forum/china_mainland/cn_certificate/
- - http://city.go8po.com/forums/forum/new_york/ny_job/ny_other_hire/
- - http://city.go8po.com/forums/forum/new_york/ny_job/ny_massage_hire/
- - http://city.go8po.com/forums/forum/new_york/ny_job/ny_beauty_hire/
- - http://city.go8po.com/forums/forum/new_york/ny_other/ny_other_life_service/
- - http://city.go8po.com/forums/forum/new_york/ny_other/ny_night_life/
- - http://city.go8po.com/forums/forum/new_york/ny_other/ny_travel/
- - http://city.go8po.com/forums/forum/new_york/ny_other/ny_blind_date/
+- http://city.go8po.com/forums/forum/san_francisco/sf_job/
+- http://city.go8po.com/forums/forum/san_francisco/sf_life_service/
+- http://city.go8po.com/forums/forum/vancouver/vc_night_life/
+- http://city.go8po.com/forums/forum/vancouver/vc_job/
+- http://city.go8po.com/forums/forum/toronto/to_night_life/
+- http://city.go8po.com/forums/forum/toronto/to_job/
+- http://city.go8po.com/forums/forum/china_mainland/cn_certificate/
+- http://city.go8po.com/forums/forum/new_york/ny_job/ny_other_hire/
+- http://city.go8po.com/forums/forum/new_york/ny_job/ny_massage_hire/
+- http://city.go8po.com/forums/forum/new_york/ny_job/ny_beauty_hire/
+- http://city.go8po.com/forums/forum/new_york/ny_other/ny_other_life_service/
+- http://city.go8po.com/forums/forum/new_york/ny_other/ny_night_life/
+- http://city.go8po.com/forums/forum/new_york/ny_other/ny_travel/
+- http://city.go8po.com/forums/forum/new_york/ny_other/ny_blind_date/

@@ -1,0 +1,11 @@
+---
+rediskey: indexer-windplum
+downloaddelay: 30
+findadregex: forum\.php\?mod=viewthread\S+\d
+paginateregex: forum\.php\?\S+page=\d+
+paginatenum: 60
+urllist:
+ - http://wx.windplum.com/forum.php?mod=forumdisplay&fid=2&filter=typeid&typeid=6
+ - http://wx.windplum.com/forum.php?mod=forumdisplay&fid=2&filter=typeid&typeid=4
+ - http://wx.windplum.com/forum.php?mod=forumdisplay&fid=2&filter=typeid&typeid=1
+ - http://wx.windplum.com/forum.php?mod=forumdisplay&fid=2&filter=typeid&typeid=5
