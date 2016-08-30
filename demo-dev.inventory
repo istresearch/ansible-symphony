@@ -164,3 +164,6 @@ demo-box-dev.istresearch.com
 
 [pulse-mysql-es-host]
 demo-box-dev.istresearch.com
+
+[grawler-nodes]
+demo-box-dev.istresearch.com
