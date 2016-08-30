@@ -38,7 +38,7 @@ tor-proxy
 backup[01:02].nj.istresearch.com
 
 [zookeeper-nodes]
-crew[01:02].istresearch.com
+crew[01:03].istresearch.com
 
 [kafka-nodes]
 crew[06:08].istresearch.com
