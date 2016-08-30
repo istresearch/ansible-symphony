@@ -17,6 +17,7 @@ kafka_data_log_dir:
 kafka_user: kafka
 kafka_group: kafka
 kafka_port: 9092
+kafka_jmx_port: 9999
 kafka_message_max: 10000000
 kafka_replica_fetch_max_bytes: 15000000
 kafka_consumer_message_max: 16777216
