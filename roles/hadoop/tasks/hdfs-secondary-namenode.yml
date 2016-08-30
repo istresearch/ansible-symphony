@@ -1,12 +1,45 @@
 ---
 
+- name: create data directories
+  file:
+    path={{ item }}
+    state=directory
+    mode=0755
+    owner={{ hdfs_user }}
+    group={{ hdfs_group }}
+  with_items:
+    - "{{ dfs_namenode_name_dir }}"
+    - "{{ dfs_tmp_dir }}"
+  tags:
+    - hadoop
+    - hdfs_secondary_namenode
+
 - name: copy supervisord config
   template:
     src: hadoop-secondary-namenode-supervisord.conf.j2
-    dest: "{{ supervisord_programs_dir }}/hadoop-namenode-supervisord.conf"
+    dest: "{{ supervisord_programs_dir }}/hadoop-secondary-namenode-supervisord.conf"
     mode: 0644
   notify:
     - reread supervisord
     - restart hdfs secondary namenode
     - wait for hdfs secondary namenode port
+  tags: hadoop
+
+- name: add namenode to supervisord
+  supervisorctl:
+    name: hadoop-hdfs-secondary-namenode
+    state: present
+  tags: hadoop
+
+- name: ensure namenode is started
+  supervisorctl:
+    name: hadoop-hdfs-secondary-namenode
+    state: started
+  notify:
+    - wait for hdfs secondary namenode port
+  tags: hadoop
+
+- name: wait for hdfs secondary namenode port
+  wait_for:
+    port: "{{ dfs_namenode_secondary_http_address_port }}"
   tags: hadoop
