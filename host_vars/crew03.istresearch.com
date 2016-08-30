@@ -14,8 +14,8 @@ datadog_monitors:
     enabled: true
     is_custom_check: false
     collect_connection_state: yes
-  zk:
+  ist_zookeeper:
     enabled: true
-    is_custom_check: false
+    is_custom_check: true
     host: localhost
     port: "{{ zookeeper_client_port | default(2181) }}"
