@@ -6,3 +6,9 @@ grawler_fb_app_secret_1: "{{ vault_grawler_fb_app_secret_1 }}"
 
 grawler_fb_app_id_2: "{{ vault_grawler_fb_app_id_2 }}"
 grawler_fb_app_secret_2: "{{ vault_grawler_fb_app_secret_2 }}"
+
+grawler_fb_app_id_3: "{{ vault_grawler_fb_app_id_3 }}"
+grawler_fb_app_secret_3: "{{ vault_grawler_fb_app_secret_3 }}"
+
+grawler_fb_app_id_4: "{{ vault_grawler_fb_app_id_4 }}"
+grawler_fb_app_secret_4: "{{ vault_grawler_fb_app_secret_4 }}"
