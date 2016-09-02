@@ -28,7 +28,7 @@
 # Start updated database setup process for newer versions of Pulse
 # ####################################################################
 - name: Retrieve passwd
-  shell: cat {{ pulse_install_dir }}/pulse-{{ pulse_version }}/install.pw
+  shell: cat {{ pulse_install_dir }}/joka-{{ pulse_version }}/install.pw
   register: passwd
   when: not pulse_db_legacy_setup
   tags: pulse-ui-db-app
@@ -87,7 +87,7 @@
 - name: Move dbconn-webapp template over
   template:
     src=dbconn-webapp.ini.j2
-    dest={{ pulse_install_dir }}/pulse-{{ pulse_version }}/app/configs/anyhost/dbconn-webapp.ini
+    dest={{ pulse_install_dir }}/joka-{{ pulse_version }}/app/configs/anyhost/dbconn-webapp.ini
     mode=0755
   notify:
     - restart apache
@@ -97,7 +97,7 @@
 - name: Move dbconn-pulse template over
   template:
     src=dbconn-pulse.ini.j2
-    dest={{ pulse_install_dir }}/pulse-{{ pulse_version }}/app/configs/anyhost/dbconn-pulse.ini
+    dest={{ pulse_install_dir }}/joka-{{ pulse_version }}/app/configs/anyhost/dbconn-pulse.ini
     mode=0755
   notify:
     - restart apache
@@ -107,7 +107,7 @@
 - name: Move Settings.php template over
   template:
     src=Settings.php.j2
-    dest={{ pulse_install_dir }}/pulse-{{ pulse_version }}/app/configs/anyhost/Settings.php
+    dest={{ pulse_install_dir }}/joka-{{ pulse_version }}/app/configs/anyhost/Settings.php
     mode=0755
   notify:
     - restart apache
@@ -117,7 +117,7 @@
 - name: Move I18N.php over
   copy:
     src=I18N.php
-    dest={{ pulse_install_dir }}/pulse-{{ pulse_version }}/app/configs/anyhost/
+    dest={{ pulse_install_dir }}/joka-{{ pulse_version }}/app/configs/anyhost/
     mode=0755
   when: pulse_db_legacy_setup
   tags: pulse-ui-db-app

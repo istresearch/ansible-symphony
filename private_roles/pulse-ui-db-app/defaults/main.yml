@@ -40,4 +40,4 @@ pulse_install_first_account_json: "\"install_first_account\": {{ pulse_install_f
 
 pulse_db_setup_json: "{{ pulse_install_language_json }}, {{ pulse_install_db_conn_json }}, {{ pulse_install_database_json }}, {{ pulse_install_settings_class_json }}, {{ pulse_install_config_settings_json }}, {{ pulse_install_first_account_json }}"
 
-pulse_configs_dir: "{{ pulse_install_dir | default('/opt/pulse') }}/pulse-{{ pulse_version | default('2.1.5') }}/app/configs"
+pulse_configs_dir: "{{ pulse_install_dir | default('/opt/pulse') }}/joka-{{ pulse_version | default('2.1.11.1') }}/app/configs"
