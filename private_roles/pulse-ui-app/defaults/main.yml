@@ -1,4 +1,4 @@
-pulse_version: 2.1.9
+pulse_version: 2.1.11.1
 
 pulse_name: pulse
 pulse_install_dir: /opt/pulse
@@ -10,11 +10,16 @@ pulse_analysis_iframe_url: "http://{{ inventory_hostname }}:{{ kibana4_port | de
 pulse_repo_location: "https://{{ repository_host }}/pulse"
 
 pulse_ui_name: pulse-ui
-pulse_ui_version: 3.0.9
+pulse_ui_version: 3.0.11
 
 pollster_name: appPollsterPrime
-pollster_build_type: release
-pollster_version: 5.3.9
+pollster_version: 5.3.11
+pollster_build_types:
+  - { name: post23-release }
+  - { name: pre23-release }
+pollster_symlinks:
+  - { name: Pollster.Android5.apk, build_type: pre23-release }
+  - { name: Pollster.Android6.apk, build_type: post23-release }
 
 # logstash config
 pulse_logstash_template: pulse-template.json
