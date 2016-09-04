@@ -41,7 +41,7 @@ grawler_feed_engagement_base: 3
 
 grawler_zookeeper_dir: "/grawler/instance"
 
-grawler_num_procs: 1
+grawler_num_procs: 2
 
 # Add grawler configs here.  There are {{ grawler_num_procs }} number
 # of process id's per {{ groups['grawler-nodes'] }}
@@ -59,16 +59,16 @@ grawler_config_dict:
     yml: grawler_config4.yml
     id: 400
 ## When scaling up/out
-#  grawl5:
-#    yml: grawler_config5.yml
-#    id: 200
-#  grawl6:
-#    yml: grawler_config6.yml
-#    id: 201
-#  grawl7:
-#    yml: grawler_config7.yml
-#    id: 202
-#  grawl8:
-#    yml: grawler_config8.yml
-#    id: 203
+  grawl5:
+    yml: grawler_config5.yml
+    id: 500
+  grawl6:
+    yml: grawler_config6.yml
+    id: 600
+  grawl7:
+    yml: grawler_config7.yml
+    id: 101
+  grawl8:
+    yml: grawler_config8.yml
+    id: 201
     

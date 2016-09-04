@@ -12,3 +12,15 @@ grawler_fb_app_secret_3: "{{ vault_grawler_fb_app_secret_3 }}"
 
 grawler_fb_app_id_4: "{{ vault_grawler_fb_app_id_4 }}"
 grawler_fb_app_secret_4: "{{ vault_grawler_fb_app_secret_4 }}"
+
+grawler_fb_app_id_5: "{{ vault_grawler_fb_app_id_5 }}"
+grawler_fb_app_secret_5: "{{ vault_grawler_fb_app_secret_5 }}"
+
+grawler_fb_app_id_6: "{{ vault_grawler_fb_app_id_6 }}"
+grawler_fb_app_secret_6: "{{ vault_grawler_fb_app_secret_6 }}"
+
+grawler_fb_app_id_7: "{{ vault_grawler_fb_app_id_7 }}"
+grawler_fb_app_secret_7: "{{ vault_grawler_fb_app_secret_7 }}"
+
+grawler_fb_app_id_8: "{{ vault_grawler_fb_app_id_8 }}"
+grawler_fb_app_secret_8: "{{ vault_grawler_fb_app_secret_8 }}"
