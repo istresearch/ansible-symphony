@@ -28,6 +28,7 @@ yarn_nodemanager_enabled: false
 yarn_historyserver_enabled: false
 mapreduce_historyserver_enabled: false
 
+dfs_datanode_opts: "-Dhadoop.security.logger=ERROR,RFAS $HADOOP_DATANODE_OPTS"
 dfs_datanode_address_port: 50010
 dfs_datanode_http_address_port: 50075
 dfs_datanode_https_address_port: 50475
@@ -36,11 +37,13 @@ dfs_webhdfs_enabled: false
 dfs_journalnode_rpc_address_port: 8485
 dfs_journalnode_http_address_port: 8480
 dfs_journalnode_https_address_port: 8481
+dfs_namenode_opts: "-Dhadoop.security.logger=${HADOOP_SECURITY_LOGGER:-INFO,RFAS} -Dhdfs.audit.logger=${HDFS_AUDIT_LOGGER:-INFO,NullAppender} $HADOOP_NAMENODE_OPTS"
 dfs_namenode_backup_address_port: 50100
 dfs_namenode_backup_http_address_port: 50105
 dfs_namenode_http_address_port: 50070
 dfs_namenode_https_address_port: 50470
 dfs_namenode_port: 8020
+dfs_namenode_secondary_opts: "{{ dfs_namenode_opts }}"
 dfs_namenode_secondary_http_address_port: 50090
 dfs_namenode_secondary_https_address_port: 50091
 
