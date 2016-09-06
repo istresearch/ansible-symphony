@@ -24,14 +24,19 @@
     <value>hdfs://{{ dfs_namenode_host }}:{{ dfs_namenode_port|default(8020) }}</value>
   </property>
 
+{% for proxyuser in hadoop_proxyusers %}
+{% if proxyuser.groups is defined %}
   <property>
-    <name>hadoop.proxyuser.mapred.groups</name>
-    <value>*</value>
+      <name>hadoop.proxyuser.{{ proxyuser.user }}.groups</name>
+      <value>{{ proxyuser.groups }}</value>
   </property>
-
+{% endif %}
+{% if proxyuser.hosts is defined %}
   <property>
-    <name>hadoop.proxyuser.mapred.hosts</name>
-    <value>*</value>
+      <name>hadoop.proxyuser.{{ proxyuser.user }}.hosts</name>
+      <value>{{ proxyuser.hosts }}</value>
   </property>
+{% endif %}
+{% endfor %}
 
 </configuration>
