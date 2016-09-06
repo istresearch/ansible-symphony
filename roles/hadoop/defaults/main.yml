@@ -20,6 +20,11 @@ hdfs_stdout_logfile_maxbytes: 50MB
 hdfs_stderr_logfile_maxbytes: 50MB
 hdfs_env_vars: 'JAVA_HOME="{{ java_home }}", HADOOP_HOME="{{ hdfs_install_dir }}/default", YARN_HOME="{{ hdfs_install_dir }}/default", HADOOP_PREFIX="/opt/hadoop/default"'
 
+hadoop_proxyusers:
+  - user: 'mapred'
+    hosts: '*'
+    groups: '*'
+
 hdfs_datanode_enabled: false
 hdfs_namenode_enabled: false
 hdfs_secondary_namenode_enabled: false
