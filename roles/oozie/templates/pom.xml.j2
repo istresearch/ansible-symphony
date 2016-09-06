@@ -1780,8 +1780,8 @@
                 <activeByDefault>false</activeByDefault>
             </activation>
             <properties>
-                <hadoop.version>2.4.0</hadoop.version>
-                <hadoop.majorversion>2</hadoop.majorversion>
+                <hadoop.version>{{ oozie_external_vars.hdfs_version }}</hadoop.version>
+                <hadoop.majorversion>{{ oozie_external_vars.hdfs_version.split('.')[0] }}</hadoop.majorversion>
                 <pig.classifier>h2</pig.classifier>
                 <sqoop.classifier>hadoop200</sqoop.classifier>
                 <jackson.version>1.9.13</jackson.version>
