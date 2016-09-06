@@ -45,7 +45,9 @@ dfs_namenode_secondary_http_address_port: 50090
 dfs_namenode_secondary_https_address_port: 50091
 
 dfs_namenode_name_dir: /data/dfs/nn
-dfs_datanode_data_dir: /data/dfs/dn
+dfs_datanode_data_dir: 
+   - "/data/dfs/dn"
+dfs_tmp_dir: /data/dfs/tmp/hdfs-checkpoints
 dfs_replication: 3
 dfs_block_size: 134217728
 dfs_datanode_max_transfer_threads: 8192
@@ -65,8 +67,10 @@ yarn_nodemanager_address_port: 8041
 yarn_nodemanager_localizer_address: 8040
 yarn_nodemanager_webapp_address_port: 8042
 
-yarn_nodemanager_local_dirs: /data/yarn/local
-yarn_nodemanager_log_dirs: /data/yarn/logs
+yarn_nodemanager_local_dirs:
+   - /data/yarn/local
+yarn_nodemanager_log_dirs:
+   - /data/yarn/logs
 yarn_nodemanager_remote_app_log_dir: /var/log/hadoop-yarn/apps
 
 yarn_resourcemanager_address_port: 8032
