@@ -68,7 +68,4 @@ grawler_config_dict:
   grawl7:
     yml: grawler_config7.yml
     id: 101
-  grawl8:
-    yml: grawler_config8.yml
-    id: 201
     
