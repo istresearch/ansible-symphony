@@ -39,4 +39,9 @@
 {% endif %}
 {% endfor %}
 
+  <property>
+    <name>hadoop.tmp.dir</name>
+    <value>file://{{ dfs_tmp_dir }}</value>
+  </property>
+
 </configuration>
