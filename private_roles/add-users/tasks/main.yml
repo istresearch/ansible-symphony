@@ -5,6 +5,7 @@
   tags:
   - sudo
   - add-users
+
 - name: Make sure passwordless sudo is enabled for users with sudo
   sudo: yes
   lineinfile: "dest=/etc/sudoers state=present regexp='^%sudo' line='%sudo ALL=(ALL) NOPASSWD: ALL'"
@@ -12,20 +13,56 @@
     - sudo
     - add-users
 
-- include: techops.yml
+- name: TechOps User
+  sudo: yes
+  user: name="{{ item.name }}" shell=/bin/bash groups=sudo append=yes
+  with_items: 
+    - "{{ techops }}"
   when: people == "techops"
   tags:
-    - techops-users
-    - add-users
+    - add-techops-users
 
-- include: dev.yml
+- name: Add TechOps Users Key
+  sudo: yes
+  authorized_key: user="{{ item.name }}" key="{{ item.key }}"
+  with_items: 
+    - "{{ techops }}"
+  when: people == "techops"
+  tags:
+    - add-techops-users
+
+- name: Developers
+  sudo: yes
+  user: name="{{ item.name }}" shell=/bin/bash groups=sudo append=yes
+  with_items: 
+    - "{{ dev }}"
+  when: people == "devs"
+  tags:
+    - add-dev-users
+
+- name: Add Developers Key
+  sudo: yes
+  authorized_key: user="{{ item.name }}" key="{{ item.key }}"
+  with_items: 
+    - "{{ dev }}"
   when: people == "dev"
   tags:
-    - dev-users
-    - add-users
+    - add-dev-users
 
-- include: third-party.yml
+- name: Third Party
+  sudo: yes
+  user: name="{{ item.name }}" shell=/bin/bash groups=sudo append=yes
+  with_items: 
+    - "{{ third_party }}"
   when: people == "third_party"
   tags:
-    - hadoop
-    - hdfs_namenode
+    - add-third-party-users
+
+- name: Add Third Party Users Key
+  sudo: yes
+  authorized_key: user="{{ item.name }}" key="{{ item.key }}"
+  with_items: 
+    - "{{ third_party }}"
+  when: people == "third_party"
+  tags:
+    - add-third-party-users

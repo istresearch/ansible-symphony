@@ -63,6 +63,7 @@
 - name: Add TechOps Users
   hosts: 
     - tag_Environment_Production
+    - tag_Environment_Development
     - internap
   roles:
     - add-users
@@ -75,7 +76,6 @@
 - name: Add Developer Users
   hosts: 
     - tag_Environment_Development
-    - development
   roles:
     - add-users
   tags: 
@@ -97,7 +97,7 @@
 # ----------------------------- Virtualenv -----------------------------------
 
 - name: Run virtualenv role
-  hosts: all
+  nternaphosts: all
   roles:
     - virtualenv
   tags:
