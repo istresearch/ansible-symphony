@@ -62,9 +62,8 @@
 # ----------------------------- Add TechOps Users -----------------------------------
 - name: Add TechOps Users
   hosts: 
-    - tags_environment_production
-    - tags_environment_development
-  gather_facts: true
+    - tag_Environment_Production
+    - internap
   roles:
     - add-users
   tags: 
@@ -74,7 +73,9 @@
 # ----------------------------- Add Development Users -----------------------------------
 
 - name: Add Developer Users
-  hosts: tags_environment_development
+  hosts: 
+    - tag_Environment_Development
+    - development
   roles:
     - add-users
   tags: 
