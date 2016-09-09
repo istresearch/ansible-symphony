@@ -13,10 +13,18 @@
     - sudo
     - add-users
 
-- name: TechOps User
+- name: Adding TechOps User
   sudo: yes
   user: name="{{ item.name }}" shell=/bin/bash groups=sudo append=yes
   with_items: 
+    - "{{ techops }}"
+  when: people == "techops"
+  tags:
+    - add-techops-users
+
+- name: Ensure Proper permissions on Users Home Directory
+  file: path="/home/{{ item.name }}" state=directory owner="{{ item.name }}" group="{{ item.name }}" mode=0755
+  with_items:
     - "{{ techops }}"
   when: people == "techops"
   tags:
@@ -36,7 +44,15 @@
   user: name="{{ item.name }}" shell=/bin/bash groups=sudo append=yes
   with_items: 
     - "{{ dev }}"
-  when: people == "devs"
+  when: people == "dev"
+  tags:
+    - add-dev-users
+
+- name: Ensure Proper permissions on Users Home Directory
+  file: path="/home/{{ item.name }}" state=directory owner="{{ item.name }}" group="{{ item.name }}" mode=0755
+  with_items:
+    - "{{ dev }}"
+  when: people == "dev"
   tags:
     - add-dev-users
 
@@ -53,6 +69,14 @@
   sudo: yes
   user: name="{{ item.name }}" shell=/bin/bash groups=sudo append=yes
   with_items: 
+    - "{{ third_party }}"
+  when: people == "third_party"
+  tags:
+    - add-third-party-users
+
+- name: Ensure Proper permissions on Users Home Directory
+  file: path="/home/{{ item.name }}" state=directory owner="{{ item.name }}" group="{{ item.name }}" mode=0755
+  with_items:
     - "{{ third_party }}"
   when: people == "third_party"
   tags:

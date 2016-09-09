@@ -84,20 +84,18 @@
 
 # ----------------------------- Third-Party users -----------------------------------
 
-- name: Run Third-Party Users
-  hosts: 
-    - tags_environment_production
-    - tags_environment_development
-  roles:
-    - add-users
-  tags: 
-    - site-add-users
-    - site-add-thirdparty-users
+#- name: Run Third-Party Users
+#  hosts: 
+#  roles:
+#    - add-users
+#  tags: 
+#    - site-add-users
+#    - site-add-thirdparty-users
 
 # ----------------------------- Virtualenv -----------------------------------
 
 - name: Run virtualenv role
-  nternaphosts: all
+  hosts: all
   roles:
     - virtualenv
   tags:
