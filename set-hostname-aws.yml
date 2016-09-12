@@ -1,7 +1,10 @@
 ---
 # file: hostname.yml
 
-- hosts: aws
+- hosts: 
+    - aws
+    - tag_Environment_Production
+    - tag_Environment_Development
   roles: 
     - common
 
