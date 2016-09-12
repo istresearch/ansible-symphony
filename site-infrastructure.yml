@@ -68,6 +68,7 @@
     - tag_Environment_Production
     - tag_Environment_Development
     - internap
+    - all
   roles:
     - add-users
   tags: 
