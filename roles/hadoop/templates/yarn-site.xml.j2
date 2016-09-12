@@ -123,4 +123,9 @@
     <value>${yarn.resourcemanager.hostname}:{{ yarn_resourcemanager_webapp_https_address_port|default(8090) }}</value>
   </property>
 
+  <property>
+    <name>yarn.nodemanager.vmem-check-enabled</name>
+    <value>false</value>
+  </property>
+
 </configuration>
