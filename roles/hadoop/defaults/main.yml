@@ -92,8 +92,8 @@ yarn_nodemanager_resource_memory_mb: 16384
 yarn_scheduler_minimum_allocation_mb: 2048
 mapreduce_reduce_memory_mb: 5120
 mapreduce_map_memory_mb: 5120
-mapreduce_map_java_opts: -Xmx5120m
-mapreduce_reduce_java_opts: -Xmx5120m
+mapreduce_map_java_opts: "-Xmx5120m"
+mapreduce_reduce_java_opts: "-Xmx5120m"
 
 
 repository_infrastructure:  "{{ apache_mirror }}/hadoop/common/hadoop-{{ hdfs_version }}"

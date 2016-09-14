@@ -66,22 +66,22 @@
 
   <property>
     <name>mapreduce.map.memory.mb</name>
-    <value>{{ mapreduce_map_memory_mb|default(5120) }}</value>
+    <value>{{ mapreduce_map_memory_mb|default(1024) }}</value>
   </property>
 
   <property>
     <name>mapreduce.reduce.memory.mb</name>
-    <value>{{ mapreduce_reduce_memory_mb|default(5120) }}</value>
+    <value>{{ mapreduce_reduce_memory_mb|default(1024) }}</value>
   </property>
 
   <property>
     <name>mapreduce.map.java.opts</name>
-    <value>{{ mapreduce_map_java_opts|default(-Xmx5120m) }}</value>
+    <value>{{ mapreduce_map_java_opts|default("-Xmx1024M") }}</value>
   </property>
 
   <property>
     <name>mapreduce.reduce.java.opts</name>
-    <value>{{ mapreduce_reduce_java_opts|default(-Xmx5120m) }}</value>
+    <value>{{ mapreduce_reduce_java_opts|default("-Xmx2560M") }}</value>
   </property>
 
 

@@ -130,12 +130,12 @@
 
   <property>
     <name>yarn.nodemanager.resource.memory-mb</name>
-    <value>{{ yarn_nodemanager_resource_memory_mb |default(16384) }}</value>
+    <value>{{ yarn_nodemanager_resource_memory_mb |default(8192) }}</value>
   </property>
 
   <property>
     <name>yarn.scheduler.minimum-allocation-mb</name>
-    <value>{{ yarn_scheduler_minimum_allocation_mb|default(2048) }}</value>
+    <value>{{ yarn_scheduler_minimum_allocation_mb|default(1024) }}</value>
   </property>
 
 </configuration>
