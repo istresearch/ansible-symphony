@@ -65,9 +65,6 @@
 # ----------------------------- Add TechOps Users -----------------------------------
 - name: Add TechOps Users
   hosts: 
-    - tag_Environment_Production
-    - tag_Environment_Development
-    - internap
     - all
   roles:
     - add-users
