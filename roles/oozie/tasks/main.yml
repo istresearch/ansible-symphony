@@ -110,7 +110,7 @@
         -Dpackaging=jar
 
     - name: make oozie distro (long running)
-      command: bin/mkdistro.sh -DskipTests -Puber
+      command: bin/mkdistro.sh -DskipTests -Puber -Phadoop-2
       args:
         chdir: "{{ oozie_install_dir }}/default"
 

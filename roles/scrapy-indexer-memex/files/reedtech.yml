@@ -1,5 +1,6 @@
----
-rediskey: indexer-reedtech 
+campaignid: memex
 downloaddelay: 3600
-findadregex: downloads\/PatentAssignmentText\/2015\/.*\.zip$
+engagementid: eng1
+findurlregex: downloads\/PatentAssignmentText\/2015\/.*\.zip$
+rediskey: indexer-reedtech
 urllist: http://patents.reedtech.com/assignment.php

@@ -7,9 +7,7 @@
 #     * additional_checksd_dir
 ############################################################################
 
-datadog_monitor_version: 0.0.7
 datadog_monitor_install_dir: "{{ ddagent_dir }}/monitors"
-datadog_monitor_custom_monitors_dir: "{{ datadog_monitor_install_dir }}/ist-sysadmin-ddagent_conf_vars/datadog"
 datadog_embedded_python_lib_dir: /opt/datadog-agent/embedded/lib/python2.7/site-packages
 
 

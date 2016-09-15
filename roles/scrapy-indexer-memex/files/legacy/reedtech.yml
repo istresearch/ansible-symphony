@@ -1,0 +1,5 @@
+---
+rediskey: indexer-reedtech 
+downloaddelay: 3600
+findadregex: downloads\/PatentAssignmentText\/2015\/.*\.zip$
+urllist: http://patents.reedtech.com/assignment.php

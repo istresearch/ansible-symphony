@@ -1,7 +1,8 @@
----
-rediskey: indexer-kyclassifieds
+campaignid: memex
 downloaddelay: 30
+engagementid: eng1
+findurlregex:
+- http:\/\/www.kyclassifieds.com\/ads\/[^/]+\/
+rediskey: indexer-kyclassifieds
 urllist:
- - http://www.kyclassifieds.com/ad-category/guns/
-findadregex:
- - http:\/\/www.kyclassifieds.com\/ads\/[^/]+\/
+- http://www.kyclassifieds.com/ad-category/guns/

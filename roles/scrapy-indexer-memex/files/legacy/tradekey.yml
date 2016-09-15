@@ -1,0 +1,9 @@
+---
+urllist:
+ - http://www.tradekey.com/Passport-Visa_pid2517.htm
+ - http://www.tradekey.com/Labour-Employment_pid2514.htm
+findadregex:
+ - http:\/\/www\.tradekey\.com\/product-free\S*\d+\.html
+ - http:\/\/www\.tradekey\.com\/company\/\S*\d+\.html
+downloaddelay: 10
+rediskey: indexer-tradekey

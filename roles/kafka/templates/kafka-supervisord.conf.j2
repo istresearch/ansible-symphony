@@ -1,6 +1,10 @@
 [program:kafka]
 command={{ kafka_install_dir }}/default/bin/kafka-server-start.sh {{ kafka_config_dir }}/server.properties
-environment= KAFKA_HEAP_OPTS="-Xmx{{ kafka_heap }} -Xms{{ kafka_heap }}"
+{% if kafka_jmx_port is defined and kafka_jmx_port %}
+environment=KAFKA_HEAP_OPTS="-Xmx{{ kafka_heap }} -Xms{{ kafka_heap }}", JMX_PORT={{ kafka_jmx_port }}
+{% else %}
+environment=KAFKA_HEAP_OPTS="-Xmx{{ kafka_heap }} -Xms{{ kafka_heap }}"
+{% endif %}
 autostart=true
 autorestart=true
 startsecs=5

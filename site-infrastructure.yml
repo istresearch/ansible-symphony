@@ -310,7 +310,7 @@
   vars:
     - hdfs_namenode_enabled: true
     - yarn_resourcemanager_enabled: true
-    - yarn_historyserver_enabled: true
+    - yarn_historyserver_enabled: false
     - mapreduce_historyserver_enabled: true
     - dfs_namenode_host: "{{ groups['hadoop-namenode-node'][0] }}"
     - yarn_resourcemanager_hostname: "{{ groups['hadoop-namenode-node'][0] }}"

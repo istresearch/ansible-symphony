@@ -1,51 +1,52 @@
----
-urllist:
- - http://escortsin.ca/calgary-canadian-escort-numbers/
- - http://escortsin.ca/edmonton-canadian-escort-numbers/
- - http://escortsin.ca/fortmcmurray-canadian-escort-numbers/
- - http://escortsin.ca/lethbridge-canadian-escort-numbers/
- - http://escortsin.ca/reddeer-canadian-escort-numbers/
- - http://escortsin.ca/abbotsford-canadian-escort-numbers/
- - http://escortsin.ca/cariboo-canadian-escort-numbers/
- - http://escortsin.ca/comoxvalley-canadian-escort-numbers/
- - http://escortsin.ca/cranbrook-canadian-escort-numbers/
- - http://escortsin.ca/kamloops-canadian-escort-numbers/
- - http://escortsin.ca/kelowna-canadian-escort-numbers/
- - http://escortsin.ca/nanaimo-canadian-escort-numbers/
- - http://escortsin.ca/princegeorge-canadian-escort-numbers/
- - http://escortsin.ca/skeena-canadian-escort-numbers/
- - http://escortsin.ca/sunshine-canadian-escort-numbers/
- - http://escortsin.ca/vancouver-canadian-escort-numbers/
- - http://escortsin.ca/victoria-canadian-escort-numbers/
- - http://escortsin.ca/whistler-canadian-escort-numbers/
- - http://escortsin.ca/barrie-canadian-escort-numbers/
- - http://escortsin.ca/belleville-canadian-escort-numbers/
- - http://escortsin.ca/brantford-canadian-escort-numbers/
- - http://escortsin.ca/chatham-canadian-escort-numbers/
- - http://escortsin.ca/cornwall-canadian-escort-numbers/
- - http://escortsin.ca/guelph-canadian-escort-numbers/
- - http://escortsin.ca/hamilton-canadian-escort-numbers/
- - http://escortsin.ca/kingston-canadian-escort-numbers/
- - http://escortsin.ca/kitchener-canadian-escort-numbers/
- - http://escortsin.ca/londonon-canadian-escort-numbers/
- - http://escortsin.ca/niagara-canadian-escort-numbers/
- - http://escortsin.ca/ottawa-canadian-escort-numbers/
- - http://escortsin.ca/owensound-canadian-escort-numbers/
- - http://escortsin.ca/peterborough-canadian-escort-numbers/
- - http://escortsin.ca/sarnia-canadian-escort-numbers/
- - http://escortsin.ca/sault-canadian-escort-numbers/
- - http://escortsin.ca/sudbury-canadian-escort-numbers/
- - http://escortsin.ca/thunderbay-canadian-escort-numbers/
- - http://escortsin.ca/toronto-canadian-escort-numbers/
- - http://escortsin.ca/windsor-canadian-escort-numbers/
- - http://escortsin.ca/montreal-canadian-escort-numbers/
- - http://escortsin.ca/quebec-canadian-escort-numbers/
- - http://escortsin.ca/saguenay-canadian-escort-numbers/
- - http://escortsin.ca/sherbrooke-canadian-escort-numbers/
- - http://escortsin.ca/troisrivieres-canadian-escort-numbers/
- - http://escortsin.ca/regina-canadian-escort-numbers/
- - http://escortsin.ca/saskatoon-canadian-escort-numbers/
-findadregex:
- - http:\/\/escortsin\.ca\/\d{3}\-\d{3}\-\d{4}\/
+campaignid: memex
 downloaddelay: 10
+engagementid: eng1
+findurlregex:
+- http:\/\/escortsin\.ca\/\d{3}\-\d{3}\-\d{4}\/
 rediskey: indexer-escortsinca
+urllist:
+- http://escortsin.ca/calgary-canadian-escort-numbers/
+- http://escortsin.ca/edmonton-canadian-escort-numbers/
+- http://escortsin.ca/fortmcmurray-canadian-escort-numbers/
+- http://escortsin.ca/lethbridge-canadian-escort-numbers/
+- http://escortsin.ca/reddeer-canadian-escort-numbers/
+- http://escortsin.ca/abbotsford-canadian-escort-numbers/
+- http://escortsin.ca/cariboo-canadian-escort-numbers/
+- http://escortsin.ca/comoxvalley-canadian-escort-numbers/
+- http://escortsin.ca/cranbrook-canadian-escort-numbers/
+- http://escortsin.ca/kamloops-canadian-escort-numbers/
+- http://escortsin.ca/kelowna-canadian-escort-numbers/
+- http://escortsin.ca/nanaimo-canadian-escort-numbers/
+- http://escortsin.ca/princegeorge-canadian-escort-numbers/
+- http://escortsin.ca/skeena-canadian-escort-numbers/
+- http://escortsin.ca/sunshine-canadian-escort-numbers/
+- http://escortsin.ca/vancouver-canadian-escort-numbers/
+- http://escortsin.ca/victoria-canadian-escort-numbers/
+- http://escortsin.ca/whistler-canadian-escort-numbers/
+- http://escortsin.ca/barrie-canadian-escort-numbers/
+- http://escortsin.ca/belleville-canadian-escort-numbers/
+- http://escortsin.ca/brantford-canadian-escort-numbers/
+- http://escortsin.ca/chatham-canadian-escort-numbers/
+- http://escortsin.ca/cornwall-canadian-escort-numbers/
+- http://escortsin.ca/guelph-canadian-escort-numbers/
+- http://escortsin.ca/hamilton-canadian-escort-numbers/
+- http://escortsin.ca/kingston-canadian-escort-numbers/
+- http://escortsin.ca/kitchener-canadian-escort-numbers/
+- http://escortsin.ca/londonon-canadian-escort-numbers/
+- http://escortsin.ca/niagara-canadian-escort-numbers/
+- http://escortsin.ca/ottawa-canadian-escort-numbers/
+- http://escortsin.ca/owensound-canadian-escort-numbers/
+- http://escortsin.ca/peterborough-canadian-escort-numbers/
+- http://escortsin.ca/sarnia-canadian-escort-numbers/
+- http://escortsin.ca/sault-canadian-escort-numbers/
+- http://escortsin.ca/sudbury-canadian-escort-numbers/
+- http://escortsin.ca/thunderbay-canadian-escort-numbers/
+- http://escortsin.ca/toronto-canadian-escort-numbers/
+- http://escortsin.ca/windsor-canadian-escort-numbers/
+- http://escortsin.ca/montreal-canadian-escort-numbers/
+- http://escortsin.ca/quebec-canadian-escort-numbers/
+- http://escortsin.ca/saguenay-canadian-escort-numbers/
+- http://escortsin.ca/sherbrooke-canadian-escort-numbers/
+- http://escortsin.ca/troisrivieres-canadian-escort-numbers/
+- http://escortsin.ca/regina-canadian-escort-numbers/
+- http://escortsin.ca/saskatoon-canadian-escort-numbers/

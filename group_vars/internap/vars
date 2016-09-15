@@ -26,6 +26,7 @@ yarn_nodemanager_log_dirs:
    - /data/4/yarn/logs
    - /data/5/yarn/logs
    - /data/6/yarn/logs
+dfs_namenode_opts: "-XX:NewSize=512m -XX:MaxNewSize=512m -Xms3072m -Xmx3072m -XX:PermSize=128m -XX:MaxPermSize=256m -Dhadoop.security.logger=${HADOOP_SECURITY_LOGGER:-INFO,RFAS} -Dhdfs.audit.logger=${HDFS_AUDIT_LOGGER:-INFO,NullAppender} $HADOOP_NAMENODE_OPTS"
 
 #### HBASE VARS ####
 hbase_heap_size: 20480

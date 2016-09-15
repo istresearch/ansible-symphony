@@ -1,0 +1,13 @@
+---
+rediskey: indexer-jiatx999
+downloaddelay: 30
+findadregex: bencandy\.php\?fid=\d+&id=\d+
+paginateregex: list\.php\?fid=\d+&page=\d+
+paginatenum: 50
+urllist:
+ - http://www.jiatx999.com/f/list.php?fid=69
+ - http://www.jiatx999.com/f/list.php?fid=68
+ - http://www.jiatx999.com/f/list.php?fid=7
+ - http://www.jiatx999.com/f/list.php?fid=185
+ - http://www.jiatx999.com/f/list.php?fid=183
+ - http://www.jiatx999.com/f/list.php?fid=252

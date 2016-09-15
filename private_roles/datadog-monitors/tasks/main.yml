@@ -19,35 +19,29 @@
         mode=0744
         owner=dd-agent
 
-    - name: check for existing datadog monitor install
-      stat: path={{ datadog_monitor_install_dir }}/ist-sysadmin-{{ datadog_monitor_version }}
-      register: dd_monitors
-
     - name: download datadog monitors
       get_url:
-        url={{ repository_infrastructure }}/ist-sysadmin-{{ datadog_monitor_version }}.zip
-        dest=/tmp/ist-sysadmin-{{ datadog_monitor_version }}.zip
+        url={{ repository_infrastructure }}/ist-sysadmin-master.zip
+        dest=/tmp/ist-sysadmin-master.zip
         mode=0644
         validate_certs=no
-      when: dd_monitors.stat.isdir is not defined
 
     - name: extract datadog monitors
       unarchive:
-        src=/tmp/ist-sysadmin-{{ datadog_monitor_version }}.zip
+        src=/tmp/ist-sysadmin-master.zip
         dest={{ datadog_monitor_install_dir }}/
         copy=no
-      when: dd_monitors.stat.isdir is not defined
 
     - name: delete temporary datadog monitors file
       file:
-        path=/tmp/ist-sysadmin-{{ datadog_monitor_version }}.zip
+        path=/tmp/ist-sysadmin-master.zip
         state=absent
       ignore_errors: yes
 
     - name: create datadog monitors symlink
       file:
         path={{ datadog_monitor_install_dir }}/custom_monitors
-        src={{ datadog_monitor_install_dir }}/ist-sysadmin-{{ datadog_monitor_version }}/datadog
+        src={{ datadog_monitor_install_dir }}/ist-sysadmin-master/datadog
         state=link
         owner=dd-agent
 

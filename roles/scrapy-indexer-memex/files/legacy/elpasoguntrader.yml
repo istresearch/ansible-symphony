@@ -1,0 +1,13 @@
+---
+rediskey: indexer-elpasoguntrader 
+downloaddelay: 30
+urllist:
+ - http://elpasoguntrader.com/home/category-table/ar-s
+ - http://elpasoguntrader.com/home/category-table/handguns
+ - http://elpasoguntrader.com/home/category-table/revolvers
+ - http://elpasoguntrader.com/home/category-table/rifles
+ - http://elpasoguntrader.com/home/category-table/shotguns
+ - http://elpasoguntrader.com/home/category-table/wanted-ads
+ - http://elpasoguntrader.com/home/category-table/tactical-goods
+findadregex:
+ - \/home\/category-table/.*\/ad\/[^"]+

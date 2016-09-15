@@ -1,8 +1,9 @@
----
-urllist:
- - http://www.gmdu.net/list-4-199-p1.html
- - http://www.gmdu.net/list-4-204-p1.html
-findadregex:
- - https:\/\/www\.gmdu\.net\/corp-\d+\.html
+campaignid: memex
 downloaddelay: 10
+engagementid: eng1
+findurlregex:
+- https:\/\/www\.gmdu\.net\/corp-\d+\.html
 rediskey: indexer-gmdu
+urllist:
+- http://www.gmdu.net/list-4-199-p1.html
+- http://www.gmdu.net/list-4-204-p1.html

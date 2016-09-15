@@ -1,0 +1,7 @@
+---
+rediskey: indexer-tennesseegunexchange
+downloaddelay: 30
+urllist:
+ - http://tennesseegunexchange.com/
+findadregex:
+ - http:.*\/ads\/[^"]+

@@ -101,6 +101,7 @@
     - hdfs-site.xml.j2
     - yarn-site.xml.j2
     - mapred-site.xml.j2
+    - hadoop-env.sh.j2
   register: hadoop_config
   tags: hadoop
   

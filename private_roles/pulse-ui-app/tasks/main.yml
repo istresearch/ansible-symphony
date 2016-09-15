@@ -79,13 +79,13 @@
   tags: pulse-ui-app
 
 - name: Check for existing pulse ui install
-  stat: path={{ pulse_install_dir }}/pulse-{{ pulse_version }}/ui
+  stat: path={{ pulse_install_dir }}/joka-{{ pulse_version }}/ui
   register: pulse_ui_dir
   tags: pulse-ui-app
 
 - name: Create pulse-ui3 directory
   file:
-    path={{ pulse_install_dir }}/pulse-{{ pulse_version }}/ui
+    path={{ pulse_install_dir }}/joka-{{ pulse_version }}/ui
     state=directory
     mode=0755
   when: not pulse_ui_dir.stat.exists
@@ -105,7 +105,7 @@
 - name: Extract Pulse UI3
   unarchive:
     src=/tmp/{{ pulse_ui_name }}-{{ pulse_ui_version }}.tar.gz
-    dest={{ pulse_install_dir }}/pulse-{{ pulse_version }}/ui
+    dest={{ pulse_install_dir }}/joka-{{ pulse_version }}/ui
     copy=no
   when: not pulse_ui_dir.stat.exists
   tags: pulse-ui-app
@@ -119,54 +119,56 @@
 
 - name: Check if Pollster directory exists
   stat:
-    path={{ pulse_install_dir }}/pulse-{{ pulse_version }}/res/files
+    path={{ pulse_install_dir }}/joka-{{ pulse_version }}/res/files
     get_md5=False
   register: pollster_dir
   tags: pulse-ui-app
 
 - name: Make pollster directory if it doesn't exist
   file:
-    path={{ pulse_install_dir }}/pulse-{{ pulse_version }}/res/files
+    path={{ pulse_install_dir }}/joka-{{ pulse_version }}/res/files
     state=directory
   when: not pollster_dir.stat.exists
   tags: pulse-ui-app
 
 - name: Create Pulse config directory
   file:
-    path={{ pulse_install_dir }}/pulse-{{ pulse_version }}/app/configs/anyhost
+    path={{ pulse_install_dir }}/joka-{{ pulse_version }}/app/configs/anyhost
     state=directory
     mode=0755
   tags: pulse-ui-app
 
-- name: Download Pollster
+- name: Download Pollster APK's
   get_url:
-    url={{ pulse_repo_location }}/pollster/{{ pollster_name }}-{{ pollster_build_type }}-{{ pollster_version }}.apk
-    dest={{ pulse_install_dir }}/pulse-{{ pulse_version }}/res/files/{{ pollster_name }}-{{ pollster_build_type }}-{{ pollster_version }}.apk
+    url={{ pulse_repo_location }}/pollster/{{ pollster_name }}-{{ item.name }}-{{ pollster_version }}.apk
+    dest={{ pulse_install_dir }}/joka-{{ pulse_version }}/res/files/{{ pollster_name }}-{{ item.name }}-{{ pollster_version }}.apk
     mode=0755
     validate_certs=no
     url_username={{ pulse_repo_user }}
     url_password={{ pulse_repo_password }}
+  with_items: pollster_build_types
   tags: pulse-ui-app
 
-- name: Create Pollster symlink
+- name: Create Pollster symlinks
   file:
-    path={{ pulse_install_dir }}/pulse-{{ pulse_version }}/res/files/Pollster.Prime.apk
+    path={{ pulse_install_dir }}/joka-{{ pulse_version }}/res/files/{{ item.name }}
     state=link
-    src={{ pulse_install_dir }}/pulse-{{ pulse_version }}/res/files/{{ pollster_name }}-{{ pollster_build_type }}-{{ pollster_version }}.apk
+    src={{ pulse_install_dir }}/joka-{{ pulse_version }}/res/files/{{ pollster_name }}-{{ item.build_type }}-{{ pollster_version }}.apk
+  with_items: pollster_symlinks
   tags: pulse-ui-app
 
 - name: Create Pulse symlink
   file:
     path={{ pulse_install_dir }}/default
     state=link
-    src={{ pulse_install_dir }}/pulse-{{ pulse_version }}
+    src={{ pulse_install_dir }}/joka-{{ pulse_version }}
   tags: pulse-ui-app
 
 - name: Create Pulse web symlink
   file:
     path={{ apache_document_root|default('/var/www') }}/pulse
     state=link
-    src={{ pulse_install_dir }}/pulse-{{ pulse_version }}
+    src={{ pulse_install_dir }}/joka-{{ pulse_version }}
   tags: pulse-ui-app
 
 - name: Install apache proxy
