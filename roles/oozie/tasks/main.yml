@@ -136,6 +136,19 @@
         url: "{{ extjs_download_url }}"
         dest: "{{ oozie_install_dir }}/default/oozie_build/libext"
 
+    - name: populate oozie-site.xml
+      template:
+        src=oozie-site.xml.j2
+        dest="{{ oozie_install_dir }}/default/oozie_build/conf/oozie-site.xml"
+        owner="{{ oozie_user }}"
+        group="{{ oozie_user }}"
+
+    - name: create oozie sharelib
+      command: "bin/oozie-setup.sh sharelib create -fs hdfs://{{ inventory_hostname }}:{{ oozie_external_vars.dfs_namenode_port }} -locallib {{ oozie_install_dir }}/default/oozie_build/oozie-sharelib-{{ oozie_version }}.tar.gz"
+      args:
+        chdir: "{{ oozie_install_dir }}/default/oozie_build"
+
+
     - name: build oozie
       command: bin/oozie-setup.sh prepare-war
       args:

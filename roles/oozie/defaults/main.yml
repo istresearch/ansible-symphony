@@ -18,3 +18,4 @@ oozie_external_vars:
   hdfs_conf_dir: "{{ hdfs_conf_dir | default('/opt/hadoop/default/etc/hadoop') }}"
   hdfs_user: "{{ hdfs_user | default('hadoop') }}"
   hbase_install_dir: "{{ hbase_install_dir | default('/opt/hbase') }}"
+  dfs_namenode_port: "{{ dfs_namenode_port | default(8020) }}"
