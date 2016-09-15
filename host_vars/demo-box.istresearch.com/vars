@@ -30,3 +30,11 @@ storm_ui_extra_config:
 storm_worker_extra_config:
     worker.childopts: "-XX:MaxPermSize=48m -XX:+UseConcMarkSweepGC"
 storm_worker_ports: [6701, 6702, 6703, 6704, 6705, 6706, 6707, 6708, 6709, 6710]
+
+## GIVE THESE USERS SUDO ACCESS ON DEMO-BOX
+techops:
+   - { name: ryanf, key: "{{ vault_ryanf_key1 }}" }
+   - { name: ryanf, key: "{{ vault_ryanf_key2 }}" }
+   - { name: rselfridge, key: "{{ vault_rselfridge_key1 }}" }
+   - { name: rselfridge, key: "{{ vault_rselfridge_key2 }}" }
+   - { name: pasha, key: "{{ vault_pasha_key }}" }

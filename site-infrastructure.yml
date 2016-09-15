@@ -53,18 +53,45 @@
 # ------------------------------ Customize AWS ------------------------
 
 - name: Run AWS customize
-  hosts: aws
+  hosts: 
+    - aws
+    - tag_Environment_Production
+    - tag_Environment_Development
   roles:
     - aws-customize
   tags: aws-customize
   strategy: free
 
-# ----------------------------- Add users -----------------------------------
-
-- hosts: all
+# ----------------------------- Add TechOps Users -----------------------------------
+- name: Add TechOps Users
+  hosts: 
+    - all
   roles:
     - add-users
-  tags: site-add-users
+  tags: 
+    - site-add-users
+    - site-add-techops-users
+
+# ----------------------------- Add Development Users -----------------------------------
+
+- name: Add Developer Users
+  hosts: 
+    - tag_Environment_Development
+  roles:
+    - add-users
+  tags: 
+    - site-add-users
+    - site-add-dev-users
+
+# ----------------------------- Third-Party users -----------------------------------
+
+#- name: Run Third-Party Users
+#  hosts: 
+#  roles:
+#    - add-users
+#  tags: 
+#    - site-add-users
+#    - site-add-thirdparty-users
 
 # ----------------------------- Virtualenv -----------------------------------
 

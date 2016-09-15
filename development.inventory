@@ -1,0 +1,15 @@
+[all:vars]
+repository_host=repo.istresearch.com
+
+[development]
+nypd-kibana.istresearch.com
+docker.dev.istresearch.com
+phoenix-backend.istresearch.com
+kibi-demo.istresearch.com
+crawler-dev.istresearch.com
+demo-box-dev.istresearch.com
+memex-dev.istresearch.com
+pulse-test-01.istresearch.com
+phoenix-ubuntu.istresearch.com
+comic-books.istresearch.com
+qcr-dev.istresearch.com
