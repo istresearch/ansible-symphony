@@ -1,0 +1,14 @@
+---
+
+# Traptor
+traptor_kafka_topic: "{{ vault_traptor_kafka_topic }}"
+
+traptor_track_count: 0
+traptor_follow_count: 1
+traptor_location_count: 0
+
+traptor_track_apikeys: "{{ vault_traptor_track_apikeys }}"
+traptor_follow_apikeys: "{{ vault_traptor_follow_apikeys }}"
+traptor_location_apikeys: "{{ vault_traptor_location_apikeys }}"
+
+traptor_redis_db: 1
