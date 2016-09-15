@@ -1,0 +1,5 @@
+---
+
+## GIVE THESE SPECIFIC USERS ACCESS TO THE DOCKERVA SERVER
+techops:
+   - { name: ayue, key: "{{ vault_ayue_key }}" }

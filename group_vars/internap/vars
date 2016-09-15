@@ -71,3 +71,7 @@ storm_worker_extra_config:
     worker.childopts: "-Xmx1280m -XX:PermSize=128m -XX:MaxPermSize=256m -Xms256m -XX:+UseConcMarkSweepGC -Dcom.sun.management.jmxremote"
     supervisor.worker.timeout.secs: 60
 
+## GIVE THESE SPECIFIC USERS ACCESS TO THE INTERNAP CLUSTER
+techops:
+   - { name: amandeep, key: "{{ vault_amandeep_key1 }}" }
+   - { name: amandeep, key: "{{ vault_amandeep_key2 }}" }
