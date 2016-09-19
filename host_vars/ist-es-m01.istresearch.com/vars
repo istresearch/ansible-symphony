@@ -1,0 +1,33 @@
+---
+datadog_monitors:
+  supervisord:
+    enabled: true
+    is_custom_check: false
+    server_name: '{{ inventory_hostname }}'
+  elastic:
+    enabled: true
+    is_custom_check: false
+    es_instances:
+        - url: http://localhost:9200
+          tag: "es-cluster:ist"
+  disk:
+    enabled: true
+    is_custom_check: false
+    use_mount: no
+  network:
+    enabled: true
+    is_custom_check: false
+    collect_connection_state: yes
+  es_doc_count:
+    enabled: true
+    is_custom_check: true
+    es_instances:
+    - user: '{{ ist_es_creds.user }}'
+      password: '{{ ist_es_creds.password }}'
+      host: ist-es.istresearch.com
+      port: 9200
+      doctypes:
+      - doc_type: telegram_stream_message
+        index: pulse-*
+        metric_name: telegram_stream_message.count
+        timestamp_field: norm.timestamp
