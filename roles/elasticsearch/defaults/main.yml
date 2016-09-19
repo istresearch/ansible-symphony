@@ -100,4 +100,7 @@ elasticsearch_logger_indexing: "{{ elasticsearch_log_trace }}"
 elasticsearch_additivity_search: "false"
 elasticsearch_additivity_indexing: "false"
 
+elasticsearch_logging_slowlog_mode: "standard" # standard, showall, off
+elasticsearch_logger_type: "dailyRollingFile" # dailyRollingFile, file
+
 repository_infrastructure: "https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/{{ elasticsearch_version }}"

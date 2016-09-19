@@ -88,7 +88,48 @@ path.logs: {{ elasticsearch_log_dir }}_{{ conf_name }}
 #
 # path.plugins: /path/to/plugins
 path.plugins: {{ elasticsearch_plugin_dir }}
+
 #
+# ----------------------------------- Slow Logs --------------------------------
+#
+{% if elasticsearch_logging_slowlog_mode != "off" %}
+index.indexing.slowlog.level: info
+index.indexing.slowlog.source: 1000
+
+{% if elasticsearch_logging_slowlog_mode == "standard" %}
+index.search.slowlog.threshold.query.warn: 10s
+index.search.slowlog.threshold.query.info: 5s
+index.search.slowlog.threshold.query.debug: 2s
+index.search.slowlog.threshold.query.trace: 500ms
+
+index.search.slowlog.threshold.fetch.warn: 1s
+index.search.slowlog.threshold.fetch.info: 800ms
+index.search.slowlog.threshold.fetch.debug: 500ms
+index.search.slowlog.threshold.fetch.trace: 200ms
+
+index.indexing.slowlog.threshold.index.warn: 10s
+index.indexing.slowlog.threshold.index.info: 5s
+index.indexing.slowlog.threshold.index.debug: 2s
+index.indexing.slowlog.threshold.index.trace: 500ms
+{% elif elasticsearch_logging_slowlog_mode == "showall" %}
+index.search.slowlog.threshold.query.warn: 0s
+index.search.slowlog.threshold.query.info: 0s
+index.search.slowlog.threshold.query.debug: 0s
+index.search.slowlog.threshold.query.trace: 0s
+
+index.search.slowlog.threshold.fetch.warn: 0s
+index.search.slowlog.threshold.fetch.info: 0s
+index.search.slowlog.threshold.fetch.debug: 0s
+index.search.slowlog.threshold.fetch.trace: 0s
+
+index.indexing.slowlog.threshold.index.warn: 0s
+index.indexing.slowlog.threshold.index.info: 0s
+index.indexing.slowlog.threshold.index.debug: 0s
+index.indexing.slowlog.threshold.index.trace: 0s
+{% endif %}
+{% endif %}
+
+
 # ----------------------------------- Memory -----------------------------------
 #
 # Lock the memory on startup:
