@@ -1,0 +1,22 @@
+---
+datadog_monitors:
+  supervisord:
+    enabled: true
+    is_custom_check: false
+    server_name: '{{ inventory_hostname }}'
+  disk:
+    enabled: true
+    is_custom_check: false
+    use_mount: no
+  network:
+    enabled: true
+    is_custom_check: false
+    collect_connection_state: yes
+  ist_dns_check:
+    enabled: true
+    is_custom_check: true
+    aws_access_key: '{{ datadog_aws_access_key_id }}'
+    aws_secret_access_key: '{{ datadog_aws_secret_access_key }}'
+    public_zone_id: '{{ vault_aws_public_zone_id }}'
+    private_zone_id: '{{ vault_aws_private_zone_id }}'
+    region: us-east-1
