@@ -44,7 +44,7 @@
   file:
     path={{ pulse_mmr_dir }}/
     state=directory
-    mode=0755
+    mode=0777
   tags: pulse-ui-app
 
 - name: Check for existing pulse install
