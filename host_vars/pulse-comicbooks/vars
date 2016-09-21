@@ -13,7 +13,6 @@ repository_infrastructure: "https://{{ repository_un }}:{{ repository_pwd }}@{{ 
 swap_run: false
 pip_local: false
 
-elasticsearch_heap_size: 2g
 gnip_monitor_autostart: "false"
 gnip_monitor_data_dir: /tmp
 gnip_monitor_es_port: 9200
@@ -21,6 +20,9 @@ kafka_data_log_dir:
   - "/opt/kafka/topic-logs"
 crawler_es_port: 9200
 monitis: false
+elasticsearch_heap_size: 2g
+elasticsearch_data_dir:
+  - "/data/elasticsearch"
 elastalert_autostart: false
 elastalert_es1_port: 9200
 elastalert_es2_port: 9200
@@ -36,7 +38,21 @@ pulse_self_signed_ssl: true
 pulse_self_signed_url: true
 pulse_local_install: false
 
+pulse_user: "{{ vault_pulse_user }}"
+pulse_password: "{{ vault_pulse_password }}"
+
+pulse_serial: "{{ vault_pulse_serial }}"
+pulse_titan_user: "{{ vault_pulse_titan_user }}"
+pulse_titan_pw: "{{ vault_pulse_password }}"
+pulse_password_hash: "{{ vault_pulse_password_hash }}"
+
+pulse_db_user_name: "{{ vault_pulse_db_user_name }}"
+pulse_db_password: "{{ vault_pulse_password }}"
+
 mysql_db_host: pulse-comicbooks
+mysql_root_username: "{{ vault_mysql_root_username }}"
+mysql_root_password: "{{ vault_mysql_root_password }}"
+
 pulse_mysql_admin_login:
   user: "{{ mysql_root_username }}"
   password: "{{ mysql_root_password }}"
