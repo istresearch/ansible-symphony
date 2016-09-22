@@ -35,8 +35,8 @@ grawler_redis_port: 6379
 grawler_redis_db: 5
 
 grawler_sleep_time: 5
-grawler_crawl_interval: 30 * 60
-grawler_crawl_depth: 5
+grawler_crawl_interval: 180 * 60
+grawler_crawl_depth: 3
 grawler_feed_engagement_base: 3
 
 grawler_zookeeper_dir: "/grawler/instance"
@@ -52,23 +52,16 @@ grawler_config_dict:
   grawl2:
     yml: grawler_config2.yml
     id: 200
-## When scaling up/out
-#  grawl3:
-#    yml: grawler_config3.yml
-#    id: 102
-#  grawl4:
-#    yml: grawler_config4.yml
-#    id: 103
-#  grawl5:
-#    yml: grawler_config5.yml
-#    id: 200
-#  grawl6:
-#    yml: grawler_config6.yml
-#    id: 201
-#  grawl7:
-#    yml: grawler_config7.yml
-#    id: 202
-#  grawl8:
-#    yml: grawler_config8.yml
-#    id: 203
+  grawl3:
+    yml: grawler_config3.yml
+    id: 300
+  grawl4: 
+    yml: grawler_config4.yml
+    id: 400
+  grawl5:
+    yml: grawler_config5.yml
+    id: 500
+  grawl6:
+    yml: grawler_config6.yml
+    id: 600
     
