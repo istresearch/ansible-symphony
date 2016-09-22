@@ -1,4 +1,0 @@
----
-facebook.app_id: {{ grawler_fb_app_id_7 }}
-facebook.app_secret: {{ grawler_fb_app_secret_7 }}
-downloaddelay: 10
