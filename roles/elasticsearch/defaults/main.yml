@@ -19,7 +19,8 @@ elasticsearch_install_icu_analysis: false
 elasticsearch_plugin_dir: "{{ elasticsearch_install_dir }}/elasticsearch-{{ elasticsearch_version }}/plugins"
 elasticsearch_bin_dir: "{{ elasticsearch_install_dir }}/elasticsearch-{{ elasticsearch_version }}/bin"
 elasticsearch_log_dir: /var/log/elasticsearch
-elasticsearch_data_dir: /data/elasticsearch
+elasticsearch_data_dir: 
+   - '/data/elasticsearch'
 elasticsearch_work_dir: /tmp/elasticsearch
 elasticsearch_conf_dir: "{{ elasticsearch_install_dir }}/elasticsearch-{{ elasticsearch_version }}/config"
 
