@@ -172,6 +172,7 @@ traptor-track-nodes
 [logstash-nodes]
 ist-crawler[01:06].istresearch.com
 crew[06:08].istresearch.com
+traptor[01:03].istresearch.com
 
 [docker-engine]
 docker.dev.istresearch.com
