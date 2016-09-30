@@ -23,7 +23,7 @@
     - add-techops-users
 
 - name: Ensure Proper permissions on Users Home Directory
-  file: path="/home/{{ item.name }}" state=directory owner="{{ item.name }}" group="{{ item.name }}" mode=0755
+  shell: /bin/chown -R {{ item.name }}:{{ item.name }} /home/{{ item.name }}
   with_items:
     - "{{ techops }}"
   when: people == "techops"
@@ -49,7 +49,7 @@
     - add-dev-users
 
 - name: Ensure Proper permissions on Users Home Directory
-  file: path="/home/{{ item.name }}" state=directory owner="{{ item.name }}" group="{{ item.name }}" mode=0755
+  shell: /bin/chown -R {{ item.name }}:{{ item.name }} /home/{{ item.name }}
   with_items:
     - "{{ dev }}"
   when: people == "dev"
@@ -75,7 +75,7 @@
     - add-third-party-users
 
 - name: Ensure Proper permissions on Users Home Directory
-  file: path="/home/{{ item.name }}" state=directory owner="{{ item.name }}" group="{{ item.name }}" mode=0755
+  shell: /bin/chown -R {{ item.name }}:{{ item.name }} /home/{{ item.name }}
   with_items:
     - "{{ third_party }}"
   when: people == "third_party"
