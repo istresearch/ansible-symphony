@@ -1,8 +1,8 @@
 ---
 datadog_monitors:
-  supervisord:
+  ist_supervisord:
     enabled: true
-    is_custom_check: false
+    is_custom_check: true
     server_name: '{{ inventory_hostname }}'
   disk:
     enabled: true
