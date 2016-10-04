@@ -1,0 +1,35 @@
+pulse_admin_group_id: 2
+pulse_admin_group_name: admin
+pulse_admin_reg_code: S83HGQ07-KM31-P39X-02E7-3QY68CX7K7P0
+
+test_ticketholder_reg: devops-test
+test_reg_email: devops-test@istresearch.com
+test_reg_pw: IxqXLb$AItp%Y3dj
+
+test_campaign_title: Campaign 0001
+test_campaign_description: Test campaign description
+
+test_project_title: Project 0001
+test_project_description: Test project description
+test_project_group: project
+test_project_subgroup: project
+test_project_type: project
+
+group_name_json: "\"group_name\": \"{{ pulse_admin_group_name }}\""
+group_reg_code_json: "\"reg_code\": \"{{ pulse_admin_reg_code }}\""
+
+set_permission_namespace_json: "\"namespace\""
+set_permission_permission_json: "\"permission\""
+set_permission_value_json: "\"value\": \"allow\""
+
+ticketholder_reg_json: "\"ticketholder_reg\": \"{{ test_ticketholder_reg }}\""
+email_json: "\"email\": \"{{ test_reg_email }}\""
+pwinput_reg_json: "\"pwinput_reg\": \"{{ test_reg_pw }}\""
+password_confirm_json: "\"password_confirm\": \"{{ test_reg_pw }}\""
+reg_code_json: "\"reg_code\": \"{{ pulse_admin_reg_code }}\""
+
+campaign_title_json: "\"title\": \"{{ test_campaign_title }}\""
+campaign_description_json: "\"description\": \"{{ test_campaign_description }}\""
+
+project_campaign_id_json: "\"campaign_id\""
+project_jsplumb_json: "\"project_as_jsplumb\": { \"type\": \"{{ test_project_type }}\", \"group\": \"{{ test_project_group }}\", \"subgroup\": \"{{ test_project_subgroup }}\", \"title\": \"{{ test_project_title }}\", \"description\": \"{{ test_project_description }}\" }"
