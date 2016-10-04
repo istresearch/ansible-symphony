@@ -144,12 +144,10 @@ demo-box-dev.istresearch.com
 [traptor-location-nodes]
 
 [traptor-follow-nodes]
-demo-box-dev.istresearch.com
 demo-trap1.dev.istresearch.com
 
 [traptor-track-nodes]
 demo-box-dev.istresearch.com
-demo-trap1.dev.istresearch.com
 
 [traptor-nodes:children]
 traptor-follow-nodes
