@@ -172,6 +172,13 @@
     - site-pulse-app-with-connector
     - site-pulse-es-conn
 
+- name: Pulse Data Load
+  hosts: pulse-ui-node
+  vars_files:
+    - private_roles/pulse-ui-app/defaults/main.yml
+  roles: [ pulse-ui-data-app ]
+  tags: site-pulse-app-data
+
 # --------------------------------- Googler -----------------------------------
 - name: Run the Googler role
   hosts: googler-nodes
