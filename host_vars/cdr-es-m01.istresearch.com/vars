@@ -21,7 +21,7 @@ datadog_monitors:
   cdr_cht:
     enabled: true
     is_custom_check: true
-    check_interval_s: 21600
+    check_interval_s: 60
     metric_name: cdr.cht
     elasticsearch:
       protocol: https
