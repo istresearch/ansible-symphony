@@ -192,6 +192,7 @@
   tags:
     - site-logstash
     - ELK
+    - deps-grawler
 
 - name: Run Kibana4 role
   hosts: kibana-node

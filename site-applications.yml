@@ -205,5 +205,7 @@
 # -------------------------------- Grawler ----------------------------------
 - name: Run Grawler role
   hosts: grawler-nodes
+  vars:
+    - logstash_auto_start: True  
   roles: [ grawler ]
   tags: site-grawler

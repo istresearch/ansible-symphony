@@ -1,0 +1,22 @@
+input {
+  file {
+    path => ['/var/log/grawler/*.log']
+    codec => json
+    tags => ['grawler']
+    sincedb_path => "/opt/logstash/.sincedb/since.db"
+  }
+}
+
+output {
+  if 'grawler' in [tags]{
+    elasticsearch {
+      hosts => "{{ groups['elasticsearch-nodes'][0] }}:{{ elasticsearch_network_http_port|default(9200) }}"
+      template => "/etc/logstash.d/templates/pulse-logs-template.json"
+      template_name => "logs-*"
+      template_overwrite => true
+      index => "logs-grawler-%{+YYYY.MM}"
+      document_type => "%{[logger]}"
+    }
+  }
+}
+
