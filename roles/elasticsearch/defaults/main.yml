@@ -16,6 +16,9 @@ elasticsearch_start_retries: 3
 elasticsearch_install_kopf: true
 elasticsearch_install_icu_analysis: false
 
+elasticsearch_install_marvel: false
+elasticsearch_marvel_cluster:  http://localhost
+
 elasticsearch_plugin_dir: "{{ elasticsearch_install_dir }}/elasticsearch-{{ elasticsearch_version }}/plugins"
 elasticsearch_bin_dir: "{{ elasticsearch_install_dir }}/elasticsearch-{{ elasticsearch_version }}/bin"
 elasticsearch_log_dir: /var/log/elasticsearch

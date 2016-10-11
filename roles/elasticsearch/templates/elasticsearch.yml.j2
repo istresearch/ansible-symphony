@@ -90,6 +90,16 @@ path.logs: {{ elasticsearch_log_dir }}_{{ conf_name }}
 path.plugins: {{ elasticsearch_plugin_dir }}
 
 #
+# ----------------------------------- Marvel Monitoring ------------------------
+#
+{% if elasticsearch_install_marvel == "true" %}
+marvel.agent.exporters:
+  id1:
+    type: http
+    host: ["{{ elasticsearch_marvel_cluster }}:9200"]
+{% endif %}
+
+#
 # ----------------------------------- Slow Logs --------------------------------
 #
 {% if elasticsearch_logging_slowlog_mode != "off" %}
