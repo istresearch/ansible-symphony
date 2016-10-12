@@ -196,6 +196,34 @@
     - elasticsearch
     - kopf
 
+- name: check for existing marvel plugin
+  stat:
+    path: "{{ elasticsearch_plugin_dir }}/marvel-agent"
+  register: elasticsearchmarvel
+  when: elasticsearch_install_marvel
+  tags:
+    - elasticsearch
+
+- name: install marvel plugin
+  shell: "{{ elasticsearch_bin_dir }}/plugin install -b marvel-agent"
+  when: elasticsearch_install_marvel and elasticsearchmarvel.stat.isdir is not defined
+  tags:
+    - elasticsearch
+
+- name: check for existing license plugin
+  stat:
+    path: "{{ elasticsearch_plugin_dir }}/license"
+  register: elasticsearchlicense
+  when: elasticsearch_install_marvel
+  tags:
+    - elasticsearch
+
+- name: install license plugin
+  shell: "{{ elasticsearch_bin_dir }}/plugin install -b license"
+  when: elasticsearch_install_marvel and elasticsearchlicense.stat.isdir is not defined
+  tags:
+    - elasticsearch
+
 - name: check for existing analysis icu plugin install
   stat:
     path: "{{ elasticsearch_plugin_dir }}/analysis-icu"
