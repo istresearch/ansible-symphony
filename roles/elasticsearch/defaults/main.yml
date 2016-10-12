@@ -18,7 +18,7 @@ elasticsearch_install_icu_analysis: false
 
 elasticsearch_install_marvel: false
 elasticsearch_marvel_with_shield: false
-elasticsearch_marvel_cluster:  http://localhost
+elasticsearch_marvel_cluster:  "http://{{ inventory_hostname }}"
 elasticsearch_marvel_agent_user: none
 elasticsearch_marvel_agent_password: none
 
