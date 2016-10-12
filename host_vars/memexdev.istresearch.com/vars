@@ -33,3 +33,12 @@ datadog_monitors:
            password: '{{ vault_rescue_forensics_auth.password }}'
          expected_status_code: 302
          allow_redirects: false
+      -  name: Dig2
+         url: https://dig2.istresearch.com/
+         method: GET
+         auth:
+           username: '{{ vault_dig2_auth.user }}'
+           password: '{{ vault_dig2_auth.password }}'
+         timeout: 10
+         expected_status_code: 200
+         allow_redirects: false
