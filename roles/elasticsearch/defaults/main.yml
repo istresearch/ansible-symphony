@@ -17,7 +17,10 @@ elasticsearch_install_kopf: true
 elasticsearch_install_icu_analysis: false
 
 elasticsearch_install_marvel: false
+elasticsearch_marvel_with_shield: false
 elasticsearch_marvel_cluster:  http://localhost
+elasticsearch_marvel_agent_user: none
+elasticsearch_marvel_agent_password: none
 
 elasticsearch_plugin_dir: "{{ elasticsearch_install_dir }}/elasticsearch-{{ elasticsearch_version }}/plugins"
 elasticsearch_bin_dir: "{{ elasticsearch_install_dir }}/elasticsearch-{{ elasticsearch_version }}/bin"
