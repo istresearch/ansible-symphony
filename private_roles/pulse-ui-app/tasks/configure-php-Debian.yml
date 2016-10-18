@@ -1,12 +1,12 @@
 ---
-- name: Check timezone curently configured on the OS
+- name: Check timezone currently configured on the OS
   shell: "cat /etc/timezone"
   register: os_timezone
   tags:
     - pulse-ui-app
 
 - name: Update timezone to UTC
-  shell: "timedatectl set-timezone Etc/UTC"
+  shell: "timedatectl set-timezone {{ pulse_timezone }}"
   when: os_timezone.stdout != "{{ pulse_timezone }}"
   tags:
     - pulse-ui-app
