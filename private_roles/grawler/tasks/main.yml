@@ -47,7 +47,7 @@
     - grawler
 
 - name: restore Kibana4 visualizations
-  shell: "./restore_kibana_index.sh {{ groups['elasticsearch-nodes'][0] }} {{ elasticsearch_network_http_port|default(9200) }} backup.tar"
+  shell: "./restore_kibana_index.sh {{ groups['elasticsearch-data-nodes'][0] }} {{ elasticsearch_network_http_port|default(9200) }} backup.tar"
   args:
     chdir: "/tmp/"
   run_once: true
