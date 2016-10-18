@@ -1,4 +1,30 @@
 ---
+- name: Check timezone currently configured on the OS
+  shell: "cat /etc/timezone"
+  register: os_timezone
+  tags:
+    - pulse-ui-app
+
+- name: Update timezone to UTC
+  shell: "timedatectl set-timezone {{ pulse_timezone }}"
+  when: os_timezone.stdout != "{{ pulse_timezone }}"
+  tags:
+    - pulse-ui-app
+
+- name: Restart services to pick up time changes
+  service:
+    name: "{{ item }}"
+    state: restarted
+    enabled: yes
+  with_items:
+    - ntp
+    - apache2
+    - supervisord
+    - cron
+  when: os_timezone.stdout != "{{ pulse_timezone }}"
+  tags:
+    - pulse-ui-app
+
 - name: Ensure PHP packages are installed on Debian.
   apt:
     name={{ item }}
