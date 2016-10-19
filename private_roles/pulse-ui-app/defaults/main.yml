@@ -38,3 +38,5 @@ pulse_deploy_log_file: deploy_survey.log
 pulse_kibana_backup: backup.tar
 
 pulse_self_signed_ssl: false
+
+pulse_timezone: Etc/UTC
