@@ -11,6 +11,10 @@ repository_host=repo.istresearch.com
 #
 # Memex infrastructure and software topology
 #
+[qcr:children]
+kafka-nodes
+zookeeper-nodes
+redis-master-node
 
 [aws:children]
 zookeeper-nodes

@@ -19,4 +19,3 @@ kafka_heap: 4G
 kafka_log_retention_hours: 24
 kafka_num_partitions: 3
 kafka_replication_factor: 1
-delete_topic: true
