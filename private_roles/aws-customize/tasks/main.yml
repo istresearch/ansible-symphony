@@ -3,19 +3,23 @@
 - name: Format AWS volume if it isn't formatted
   filesystem:
     fstype: ext4
-    dev: "{{ data_volume }}"
+    dev: "{{ item }}"
   when: aws_customize
+  with_items:
+    - "{{ data_volume }}"
   tags:
     - aws
 
 - name: Mounting attached ec2 volume if deploying in amazon
   mount:
     name: /data
-    src: "{{ data_volume }}"
+    src: "{{ item }}"
     fstype: ext4
     opts: rw
     state: mounted
   when: aws_customize
+  with_items:
+    - "{{ data_volume }}"
   tags:
     - aws
 
