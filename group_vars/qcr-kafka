@@ -1,0 +1,22 @@
+---
+
+#### ZOOKEEPER VARS ####
+zookeeper_maxClientCnxns: 120
+
+#### KAFKA VARS
+# Internap slaves have 6 data disks, striping data across them.
+kafka_data_log_dir:
+  - '/data/kafka/topic-logs'
+
+kafka_data_dir:
+  - '/data/kafka'
+
+# According to Apache Docs, num io threads should be at least equal number of disks.
+kafka_num_io_threads: 1
+
+kafka_heap: 4G
+
+kafka_log_retention_hours: 24
+kafka_num_partitions: 3
+kafka_replication_factor: 1
+delete_topic: true
