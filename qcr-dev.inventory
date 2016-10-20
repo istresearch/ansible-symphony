@@ -20,6 +20,7 @@ redis-master-node
 zookeeper-nodes
 kafka-nodes
 redis-nodes
+docker-engine
 scrapy-cluster-nodes
 kibana-node
 gnip-monitor-node
@@ -100,3 +101,6 @@ traptor-track-nodes
 [mysql-node]
 
 [grawler-nodes]
+
+[docker-engine]
+qcr-cooper.dev.istresearch.com
