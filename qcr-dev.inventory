@@ -15,6 +15,7 @@ repository_host=repo.istresearch.com
 kafka-nodes
 zookeeper-nodes
 redis-master-node
+elasticsearch-nodes
 
 [aws:children]
 zookeeper-nodes
@@ -61,7 +62,7 @@ redis-sentinel-nodes
 10.105.92.102
 10.105.92.101
 10.105.92.100
-10.105.92.98
+10.105.92.99
 
 [elasticsearch-client-nodes]
 
@@ -128,3 +129,8 @@ traptor-track-nodes
 
 [docker-engine]
 qcr-cooper.dev.istresearch.com
+10.105.92.98
+10.105.92.99
+10.105.92.100
+10.105.92.101
+10.105.92.102
