@@ -81,6 +81,7 @@ elasticsearch-client-nodes
 10.105.92.99
 10.105.92.100
 10.105.92.101
+10.105.92.98
 
 [storm-nodes:children]
 storm-nimbus-node
