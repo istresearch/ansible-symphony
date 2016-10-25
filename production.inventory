@@ -138,6 +138,7 @@ ist-crawler01.istresearch.com
 
 [scrapy-cluster-crawler-nodes]
 ist-crawler[01:06].istresearch.com
+hma-test.istresearch.com
 
 [scrapy-cluster-indexer-nodes]
 ist-crawler[01:06].istresearch.com
