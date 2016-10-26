@@ -19,6 +19,7 @@ hbase_stderr_logfile_maxbytes: 50MB
 # runtime opts
 hbase_heap_size: 1024
 hbase_opts: -XX:+UseConcMarkSweepGC
+hbase_dfs_replication: 3
 
 hbase_master_enabled: false
 hbase_regionserver_enabled: false
