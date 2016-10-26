@@ -10,6 +10,9 @@ yarn_nodemanager_local_dirs:
    - /data/yarn/local
 yarn_nodemanager_log_dirs:
    - /data/yarn/logs
+   
+#### HBASE VARS ####
+hbase_dfs_replication: 2
 
 #### STORM VARS ####
 storm_nimbus_extra_config:
