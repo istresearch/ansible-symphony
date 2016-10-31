@@ -16,6 +16,8 @@ kafka-nodes
 zookeeper-nodes
 redis-master-node
 elasticsearch-nodes
+kibana-node
+storm-nodes
 
 [aws:children]
 zookeeper-nodes
@@ -75,6 +77,7 @@ elasticsearch-client-nodes
 10.105.92.98
 
 [storm-ui-node]
+10.105.92.98
 
 [storm-supervisor-nodes]
 10.105.92.102
@@ -123,6 +126,7 @@ traptor-follow-nodes
 traptor-track-nodes
 
 [kibana-node]
+10.105.92.102
 
 [mysql-node]
 
