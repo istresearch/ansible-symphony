@@ -42,6 +42,13 @@
   tags:
     - site-logrotate
 
+- name: Run exim role
+  hosts: all
+  roles:
+    - exim
+  tags:
+    - site-exim
+
 # -------------------------- Zookeeper and Kafka -----------------------------
 - name: Run zookeeper role
   hosts: zookeeper-nodes

@@ -1,0 +1,15 @@
+---
+
+exim_mailname: yourdomain.com
+exim_conf_dir: /etc/exim4
+exim_confd: "{{ exim_conf_dir }}/conf.d"
+
+exim_amazon_ses_conf:
+  conf_name: 'amazon_ses'
+  region_endpoint: 'email-smtp.us-east-1.amazonaws.com'
+  port: 25
+  username: 'smtp_username'
+  password: 'smtp_password'
+
+exim_configs: []
+# - "{{ exim_amazon_ses_conf.conf_name }}"
