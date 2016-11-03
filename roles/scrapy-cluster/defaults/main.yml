@@ -1,6 +1,6 @@
 ---
 sc_install_dir: /opt/scrapy-cluster
-sc_build_version: 78
+sc_build_version: 83
 sc_build_branch: dev
 sc_install_version: "scrapy-cluster-ist-{{ sc_build_version }}-{{ sc_build_branch }}"
 

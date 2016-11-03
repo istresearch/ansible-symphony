@@ -1,5 +1,5 @@
 ---
-
+# Pulse
 pulse_titan_pw: "{{ vault_pulse_password }}"
 
 pulse_db_name: pulse-demo-dev
@@ -11,17 +11,17 @@ pulse_mysql_admin_login:
   user: "{{ vault_rds_mysql_admin_login.user }}"
   password: "{{ vault_rds_mysql_admin_login.password }}"
 
-
-
 pulse_url_host: demo-dev.istresearch.com
 pulse_install_database: true
 
 pulse_self_signed_ssl: false
 pulse_local_install: false
 mysql_root_password: "{{ vault_mysql_root_password }}"
+
+# Elasticsearch
 elasticsearch_heap_size: 4g
-kafka_data_log_dir:
-   - /data/kafka/topic-logs
+
+# HDFS
 dfs_internap: false
 dfs_replication: 1
 dfs_block_size: 67109888
@@ -32,6 +32,8 @@ yarn_nodemanager_log_dirs:
 zookeeper_data_dir: /data/zookeeper
 dfs_datanode_data_dir:
    - /data/dfs/dn
+
+# Storm DEPRECATED
 storm_nimbus_extra_config:
     nimbus.childopts: "-Xmx128m"
 storm_supervisor_extra_config:
@@ -41,3 +43,67 @@ storm_ui_extra_config:
 storm_worker_extra_config:
     worker.childopts: "-XX:MaxPermSize=48m -XX:+UseConcMarkSweepGC"
 storm_worker_ports: [6701, 6702, 6703, 6704, 6705, 6706, 6707, 6708, 6709, 6710]
+
+# Grunner overrides
+runner_gandalf_version: 0.0.88
+runner_build_branch: demo-dev-config
+runner_build_version: 183
+restore_kibana_visualization: True
+runner_kafka_consumer_hosts:
+  - demo-box-dev.istresearch.com
+runner_kafka_producer_hosts:
+  - demo-box-dev.istresearch.com
+runner_kafka_siphon_hosts:
+  - demo-box-dev.istresearch.com
+
+# Kafka
+kafka_heap: 2G
+kafka_log_retention_hours: 24
+kafka_data_log_dir:
+   - /data/kafka/topic-logs
+kafka_num_partitions: 1
+kafka_replication_factor: 1
+
+# Spark
+spark_worker_memory: 4g
+spark_worker_cores: 8
+
+# Crawlers
+sc_kafka_master_topic_prefix: crawl
+sc_redis_master_db: 2
+sc_crawling_queue_hits: 60
+sc_crawling_kafka_appid_topics: False
+sc_crawling_kafka_base_64: True
+sc_crawling_num_procs: 5
+sc_crawling_stats_times:
+    - 'SECONDS_15_MINUTE'
+    - 'SECONDS_1_HOUR'
+sc_kafka_monitor_plugins:
+    - "'plugins.scraper_handler.ScraperHandler': 100"
+    - "'plugins.action_handler.ActionHandler': 200"
+    - "'plugins.stats_handler.StatsHandler': 300"
+    - "'plugins.keyword_handler.KeywordHandler': 400"
+    - "'plugins.zookeeper_handler.ZookeeperHandler': 500"
+sc_kafka_monitor_stats_times:
+    - 'SECONDS_15_MINUTE'
+    - 'SECONDS_1_HOUR'
+sc_redis_monitor_kafka_appids: False
+sc_redis_monitor_stats_times:
+    - 'SECONDS_15_MINUTE'
+    - 'SECONDS_1_HOUR'
+sc_indexer_parallelism: 10
+sc_indexer_stats_times:
+    - 'SECONDS_15_MINUTE'
+    - 'SECONDS_1_HOUR'
+
+# Traptor
+traptor_kafka_topic: "{{ vault_traptor_kafka_topic }}"
+
+traptor_track_count: 2
+traptor_follow_count: 0
+traptor_location_count: 0
+
+traptor_track_apikeys: "{{ vault_traptor_track_apikeys }}"
+traptor_follow_apikeys: "{{ vault_traptor_follow_apikeys }}"
+traptor_location_apikeys: "{{ vault_traptor_location_apikeys }}"
+traptor_redis_db: 1
