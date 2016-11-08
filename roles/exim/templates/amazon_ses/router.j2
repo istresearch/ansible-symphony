@@ -1,0 +1,5 @@
+send_via_ses:
+driver = manualroute
+domains = ! +local_domains
+transport = ses_smtp
+route_list = * {{ exim_amazon_ses_conf.region_endpoint }};

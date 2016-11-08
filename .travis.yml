@@ -33,6 +33,7 @@ env:
   - TAGS='site-phantomjs'
   - TAGS='site-supervisord'
   - TAGS='site-oozie'
+  - TAGS='site-exim'
 
 matrix:
   fast_finish: true

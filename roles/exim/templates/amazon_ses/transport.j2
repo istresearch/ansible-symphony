@@ -1,0 +1,5 @@
+ses_smtp:
+driver = smtp
+port = {{ exim_amazon_ses_conf.port }}
+hosts_require_auth = $host_address
+hosts_require_tls = $host_address
