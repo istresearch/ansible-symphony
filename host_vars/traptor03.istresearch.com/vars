@@ -12,9 +12,10 @@ datadog_monitors:
         host: '{{ traptor_ist_es.host }}'
         port: '{{ traptor_ist_es.port }}'
         doctypes:
+
           -  doc_type: tweet_traptor
              index: pulse-default-default
-             metric_name: tweet_traptor.track.track0.count
+             metric_name: tweet_traptor.count
              timestamp_field: system_timestamp
              query:
                bool:
@@ -23,9 +24,13 @@ datadog_monitors:
                       doc.traptor.rule_type: track
                   - match:
                       doc.traptor.id: 0
+             tags:
+               - 'traptor_type:track'
+               - 'traptor_metric:track.track0'
+
           -  doc_type: tweet_traptor
              index: pulse-default-default
-             metric_name: tweet_traptor.track.track1.count
+             metric_name: tweet_traptor.count
              timestamp_field: system_timestamp
              query:
                bool:
@@ -34,9 +39,13 @@ datadog_monitors:
                       doc.traptor.rule_type: track
                   - match:
                       doc.traptor.id: 1
+             tags:
+               - 'traptor_type:track'
+               - 'traptor_metric:track.track1'
+
           -  doc_type: tweet_traptor
              index: pulse-default-default
-             metric_name: tweet_traptor.track.track2.count
+             metric_name: tweet_traptor.count
              timestamp_field: system_timestamp
              query:
                bool:
@@ -45,6 +54,9 @@ datadog_monitors:
                       doc.traptor.rule_type: track
                   - match:
                       doc.traptor.id: 2
+             tags:
+               - 'traptor_type:track'
+               - 'traptor_metric:track.track2'
   disk:
     enabled: true
     is_custom_check: false
