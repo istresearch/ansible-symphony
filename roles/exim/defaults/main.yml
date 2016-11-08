@@ -7,7 +7,7 @@ exim_confd: "{{ exim_conf_dir }}/conf.d"
 exim_amazon_ses_conf:
   conf_name: 'amazon_ses'
   region_endpoint: 'email-smtp.us-east-1.amazonaws.com'
-  port: 25
+  port: 587
   username: 'smtp_username'
   password: 'smtp_password'
 
