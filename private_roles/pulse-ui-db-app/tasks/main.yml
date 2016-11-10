@@ -8,7 +8,7 @@
     login_password: "{{ pulse_mysql_admin_login.password }}"
     collation: "{{ item.collation | default('utf8_general_ci') }}"
     encoding: "{{ item.encoding | default('utf8') }}"
-  with_items: pulse_mysql_databases
+  with_items: "{{ pulse_mysql_databases }}"
   tags: pulse-ui-db-app
 
 - name: Ensure MySQL users are present
@@ -21,7 +21,7 @@
     host: "{{ item.host | default('{{ inventory_hostname }}') }}"
     password: "{{ item.password }}"
     priv: "{{ item.priv | default('*.*:USAGE') }}"
-  with_items: pulse_mysql_users
+  with_items: "{{ pulse_mysql_users }}"
   tags: pulse-ui-db-app
 
 # ####################################################################
