@@ -123,7 +123,7 @@
       blockinfile:
         dest: "{{ ddagent_conf_path }}"
         marker: "### {mark} ANSIBLE MANAGED ###"
-        content: "dogstreams: {{ datadog_dogstreams|default([])|join(',') }}"
+        content: "dogstreams: {{ datadog_dogstreams|join(',') }}"
   tags:
     - datadog-monitors
     - datadog-monitors-dogstreams

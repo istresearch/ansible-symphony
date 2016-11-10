@@ -6,3 +6,6 @@ elasticsearch_is_master: "false"
 elasticsearch_is_data: "true"
 elasticsearch_data_dir:
   - '/data/elasticsearch'
+
+datadog_dogstreams:
+  - "/var/log/elasticsearch_data/elasticsearch_index_*.log:{{ datadog_dogstream_dir }}/es_slowlog_parser.py:parse_slowlog"
