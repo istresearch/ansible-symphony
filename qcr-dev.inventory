@@ -18,6 +18,7 @@ redis-master-node
 elasticsearch-nodes
 kibana-node
 storm-nodes
+phantomjs-nodes
 
 [aws:children]
 zookeeper-nodes
@@ -57,6 +58,7 @@ redis-slave-nodes
 redis-sentinel-nodes
 
 [phantomjs-nodes:children]
+storm-supervisor-nodes
 
 [elasticsearch-master-nodes]
 
