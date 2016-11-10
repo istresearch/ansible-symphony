@@ -146,7 +146,7 @@
     validate_certs=no
     url_username={{ pulse_repo_user }}
     url_password={{ pulse_repo_password }}
-  with_items: pollster_build_types
+  with_items: "{{ pollster_build_types }}"
   tags: pulse-ui-app
 
 - name: Create Pollster symlinks
@@ -154,7 +154,7 @@
     path={{ pulse_install_dir }}/joka-{{ pulse_version }}/res/files/{{ item.name }}
     state=link
     src={{ pulse_install_dir }}/joka-{{ pulse_version }}/res/files/{{ pollster_name }}-{{ item.build_type }}-{{ pollster_version }}.apk
-  with_items: pollster_symlinks
+  with_items: "{{ pollster_symlinks }}"
   tags: pulse-ui-app
 
 - name: Create Pulse symlink
