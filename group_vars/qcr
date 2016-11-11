@@ -27,6 +27,9 @@ storm_worker_extra_config:
     worker.childopts: "-Xmx1280m -XX:PermSize=128m -XX:MaxPermSize=256m -Xms256m -XX:+UseConcMarkSweepGC -Dcom.sun.management.jmxremote"
     supervisor.worker.timeout.secs: 60
 
+#### TOPOLOGIES VARS ####
+topologies_virtualenv_dir: '/data/storm/virtualenvs'
+
 #### ELASTICSEARCH VARS ####
 elasticsearch_is_master: "true"
 elasticsearch_is_data: "true"
@@ -34,3 +37,6 @@ elasticsearch_data_dir:
   - /data/elasticsearch
 
 elasticsearch_heap_size: 31g
+
+#### REDIS VARS ####
+redis_dir: /data/redis/{{ redis_port }}
