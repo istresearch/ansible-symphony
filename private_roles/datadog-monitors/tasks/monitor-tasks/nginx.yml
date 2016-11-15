@@ -1,0 +1,31 @@
+---
+############################################################################
+# The Nginx stub status module must be compiled with nginx. The module is
+# available in the nginx-extras package on debian/ubuntu.
+############################################################################
+- name: verify http_stub_status is enabled
+  shell: "nginx -V |& grep http_stub_status_module"
+  args:
+    executable: /bin/bash
+
+- name: populate http_status conf
+  template:
+    src: monitor-tasks/nginx/http_status.conf.j2
+    dest: /etc/nginx/sites-available/http_status
+
+- name: create http_status sites-enabled link
+  file:
+    src: /etc/nginx/sites-available/http_status
+    dest: /etc/nginx/sites-enabled/http_status
+    state: link
+
+- name: reload nginx
+  service:
+    name=nginx
+    state=reloaded
+
+- name: verify nginx status endpoint is reachable
+  uri:
+    url: "http://localhost:{{ datadog_monitors.nginx.port }}/{{ datadog_monitors.nginx.endpoint }}"
+    method: GET
+    status_code: 200
