@@ -116,6 +116,18 @@
     - datadog-monitors-vars
 
 ###########################################################################
+# Custom tasks required for certain monitors
+###########################################################################
+- block:
+    - name: execute nginx monitor tasks
+      include: monitor-tasks/nginx.yml
+      when: datadog_monitors.nginx is defined and datadog_monitors.nginx.enabled
+      tags: datadog-monitors-nginx
+  tags:
+    - datadog-monitors
+    - datadog-monitors-custom-tasks
+
+###########################################################################
 # Datadog dogstream relocation
 ###########################################################################
 - block:
@@ -139,3 +151,4 @@
     - datadog-monitors
     - datadog-monitors-install
     - datadog-monitors-vars
+    - datadog-monitors-custom-tasks
