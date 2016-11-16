@@ -36,3 +36,7 @@ exim_amazon_ses_conf:
 
 exim_configs:
  - "{{ exim_amazon_ses_conf.conf_name }}"
+
+tarsnap_credentials:
+  username: "{{ vault_tarsnap_username }}"
+  password: "{{ vault_tarsnap_password }}"

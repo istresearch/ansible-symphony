@@ -177,6 +177,9 @@ traptor[01:03].istresearch.com
 [docker-engine]
 docker.dev.istresearch.com
 
+[tarsnap-nodes]
+odin.istresearch.com
+
 [other]
 in-namenode01.nj.istresearch.com
 memexdev.istresearch.com
@@ -186,6 +189,7 @@ dockerva.istresearch.com
 nypd-kibana.istresearch.com
 phoenix-backend.istresearch.com
 qcr-dev.istresearch.com
+odin.istresearch.com
 
 [grawler-nodes] 
 ist-crawler01.istresearch.com 
