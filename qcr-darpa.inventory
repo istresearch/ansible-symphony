@@ -34,16 +34,11 @@ elastalert-nodes
 tor-proxy
 
 [zookeeper-nodes]
-qcr-kafka01.istresearch.com
-10.105.92.98
-10.105.92.99
-10.105.92.100
+10.105.92.[98:100]
 
 [kafka-nodes]
-qcr-kafka01.istresearch.com
 
 [redis-master-node]
-qcr-redis.istresearch.com
 10.105.92.98
 
 [redis-slave-nodes]
@@ -63,10 +58,7 @@ storm-supervisor-nodes
 [elasticsearch-master-nodes]
 
 [elasticsearch-data-nodes]
-10.105.92.102
-10.105.92.101
-10.105.92.100
-10.105.92.99
+10.105.92.[99:102]
 
 [elasticsearch-client-nodes]
 
@@ -82,11 +74,7 @@ elasticsearch-client-nodes
 10.105.92.98
 
 [storm-supervisor-nodes]
-10.105.92.102
-10.105.92.99
-10.105.92.100
-10.105.92.101
-10.105.92.98
+10.105.92.[98:102]
 
 [storm-nodes:children]
 storm-nimbus-node
@@ -135,7 +123,6 @@ traptor-track-nodes
 [grawler-nodes]
 
 [docker-engine]
-qcr-cooper.dev.istresearch.com
 10.105.92.98
 10.105.92.99
 10.105.92.100
