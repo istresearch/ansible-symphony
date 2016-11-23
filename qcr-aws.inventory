@@ -40,6 +40,7 @@ qcr-kafka01.istresearch.com
 
 [redis-master-node]
 qcr-redis.istresearch.com
+qcr-crawler06.istresearch.com
 
 [redis-slave-nodes]
 #leave empty
