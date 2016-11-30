@@ -14,7 +14,7 @@ datadog_monitors:
         doctypes:
 
           -  doc_type: tweet_traptor
-             index: pulse-default-default
+             index: pulse-*
              metric_name: tweet_traptor.count
              timestamp_field: system_timestamp
              query:
@@ -27,7 +27,7 @@ datadog_monitors:
                - 'traptor_metric:geo.europe'
 
           -  doc_type: tweet_traptor
-             index: pulse-default-default
+             index: pulse-*
              metric_name: tweet_traptor.count
              timestamp_field: system_timestamp
              query:
@@ -40,7 +40,7 @@ datadog_monitors:
                - 'traptor_metric:geo.asia'
 
           -  doc_type: tweet_traptor
-             index: pulse-default-default
+             index: pulse-*
              metric_name: tweet_traptor.count
              timestamp_field: system_timestamp
              query:
@@ -53,7 +53,7 @@ datadog_monitors:
                - 'traptor_metric:geo.south_america'
 
           -  doc_type: tweet_traptor
-             index: pulse-default-default
+             index: pulse-*
              metric_name: tweet_traptor.count
              timestamp_field: system_timestamp
              query:
@@ -66,7 +66,7 @@ datadog_monitors:
                - 'traptor_metric:geo.africa'
 
           -  doc_type: tweet_traptor
-             index: pulse-default-default
+             index: pulse-*
              metric_name: tweet_traptor.count
              timestamp_field: system_timestamp
              query:
