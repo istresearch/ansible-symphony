@@ -12,8 +12,8 @@ datadog_monitors:
         port: 9200
         doctypes:
           -  doc_type: tweet_traptor
-             index: pulse-*
-             metric_name: qcr_tweet_traptor.follow.follow0.count
+             index: pulseprod-*
+             metric_name: qcr_tweet_traptor.count
              timestamp_field: system_timestamp
              query:
                bool:
@@ -22,9 +22,13 @@ datadog_monitors:
                       doc.traptor.rule_type: follow
                   - match:
                       doc.traptor.id: 0
+             tags:
+               - 'traptor_type:follow'
+               - 'traptor_metric:follow.follow0'
+
           -  doc_type: tweet_traptor
-             index: pulse-*
-             metric_name: qcr_tweet_traptor.follow.follow1.count
+             index: pulseprod-*
+             metric_name: qcr_tweet_traptor.count
              timestamp_field: system_timestamp
              query:
                bool:
@@ -33,6 +37,9 @@ datadog_monitors:
                       doc.traptor.rule_type: follow
                   - match:
                       doc.traptor.id: 1
+             tags:
+               - 'traptor_type:follow'
+               - 'traptor_metric:follow.follow1'
   disk:
     enabled: true
     is_custom_check: false
