@@ -1,0 +1,54 @@
+datadog_monitors:
+  ist_supervisord:
+    enabled: true
+    is_custom_check: true
+    server_name: '{{ inventory_hostname }}'
+  es_doc_count:
+    enabled: true
+    is_custom_check: true
+    es_instances:
+      - host: '10.105.92.100'
+        protocol: http
+        port: 9200
+        doctypes:
+          -  doc_type: tweet_traptor
+             index: pulse-*
+             metric_name: qcr_tweet_traptor.track.track0.count
+             timestamp_field: system_timestamp
+             query:
+               bool:
+                 must:
+                  - match:
+                      doc.traptor.rule_type: track
+                  - match:
+                      doc.traptor.id: 0
+          -  doc_type: tweet_traptor
+             index: pulse-*
+             metric_name: qcr_tweet_traptor.track.track1.count
+             timestamp_field: system_timestamp
+             query:
+               bool:
+                 must:
+                  - match:
+                      doc.traptor.rule_type: track
+                  - match:
+                      doc.traptor.id: 1
+          -  doc_type: tweet_traptor
+             index: pulse-*
+             metric_name: qcr_tweet_traptor.track.track2.count
+             timestamp_field: system_timestamp
+             query:
+               bool:
+                 must:
+                  - match:
+                      doc.traptor.rule_type: track
+                  - match:
+                      doc.traptor.id: 2
+  disk:
+    enabled: true
+    is_custom_check: false
+    use_mount: no
+  network:
+    enabled: true
+    is_custom_check: false
+    collect_connection_state: yes
