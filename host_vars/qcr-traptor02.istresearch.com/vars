@@ -89,64 +89,12 @@ datadog_monitors:
                bool:
                  must:
                   - match:
-                      doc.traptor.rule_tag: QCR.cscc
-             tags:
-               - 'traptor_type:geo'
-               - 'traptor_metric:geo.europe'
-
-          -  doc_type: tweet_traptor
-             index: pulsedev-*
-             metric_name: qcr_tweet_traptor.dev.count
-             timestamp_field: system_timestamp
-             query:
-               bool:
-                 must:
+                      doc.traptor.rule_type: locations
                   - match:
-                      doc.traptor.rule_tag: Pulse.asia
+                      doc.traptor.id: 0
              tags:
-               - 'traptor_type:geo'
-               - 'traptor_metric:geo.asia'
-
-          -  doc_type: tweet_traptor
-             index: pulsedev-*
-             metric_name: qcr_tweet_traptor.dev.count
-             timestamp_field: system_timestamp
-             query:
-               bool:
-                 must:
-                  - match:
-                      doc.traptor.rule_tag: Pulse.south_america
-             tags:
-               - 'traptor_type:geo'
-               - 'traptor_metric:geo.south_america'
-
-          -  doc_type: tweet_traptor
-             index: pulsedev-*
-             metric_name: qcr_tweet_traptor.dev.count
-             timestamp_field: system_timestamp
-             query:
-               bool:
-                 must:
-                  - match:
-                      doc.traptor.rule_tag: Pulse.africa
-             tags:
-               - 'traptor_type:geo'
-               - 'traptor_metric:geo.africa'
-
-          -  doc_type: tweet_traptor
-             index: pulsedev-*
-             metric_name: qcr_tweet_traptor.dev.count
-             timestamp_field: system_timestamp
-             query:
-               bool:
-                 must:
-                  - match:
-                      doc.traptor.rule_tag: Pulse.australia
-             tags:
-               - 'traptor_type:geo'
-               - 'traptor_metric:geo.australia'
-
-
+               - 'traptor_type:locations'
+               - 'traptor_metric:locations.locations0'
   disk:
     enabled: true
     is_custom_check: false
