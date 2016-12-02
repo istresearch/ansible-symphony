@@ -11,6 +11,9 @@ datadog_monitors:
         protocol: http
         port: 9200
         doctypes:
+          ##########################
+          # QCR Prod
+          ##########################
           -  doc_type: tweet_traptor
              index: pulseprod-*
              metric_name: qcr_tweet_traptor.count
@@ -29,6 +32,38 @@ datadog_monitors:
           -  doc_type: tweet_traptor
              index: pulseprod-*
              metric_name: qcr_tweet_traptor.count
+             timestamp_field: system_timestamp
+             query:
+               bool:
+                 must:
+                  - match:
+                      doc.traptor.rule_type: follow
+                  - match:
+                      doc.traptor.id: 1
+             tags:
+               - 'traptor_type:follow'
+               - 'traptor_metric:follow.follow1'
+          ##########################
+          # QCR Dev
+          ##########################
+          -  doc_type: tweet_traptor
+             index: pulsedev-*
+             metric_name: qcr_tweet_traptor.dev.count
+             timestamp_field: system_timestamp
+             query:
+               bool:
+                 must:
+                  - match:
+                      doc.traptor.rule_type: follow
+                  - match:
+                      doc.traptor.id: 0
+             tags:
+               - 'traptor_type:follow'
+               - 'traptor_metric:follow.follow0'
+
+          -  doc_type: tweet_traptor
+             index: pulsedev-*
+             metric_name: qcr_tweet_traptor.dev.count
              timestamp_field: system_timestamp
              query:
                bool:

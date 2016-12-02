@@ -11,6 +11,9 @@ datadog_monitors:
         protocol: http
         port: 9200
         doctypes:
+          ##########################
+          # QCR prod
+          ##########################
           -  doc_type: tweet_traptor
              index: pulseprod-*
              metric_name: qcr_tweet_traptor.count
@@ -44,6 +47,53 @@ datadog_monitors:
           -  doc_type: tweet_traptor
              index: pulseprod-*
              metric_name: qcr_tweet_traptor.count
+             timestamp_field: system_timestamp
+             query:
+               bool:
+                 must:
+                  - match:
+                      doc.traptor.rule_type: track
+                  - match:
+                      doc.traptor.id: 2
+             tags:
+               - 'traptor_type:track'
+               - 'traptor_metric:track.track2'
+          ##########################
+          # QCR Dev
+          ##########################
+          -  doc_type: tweet_traptor
+             index: pulsedev-*
+             metric_name: qcr_tweet_traptor.dev.count
+             timestamp_field: system_timestamp
+             query:
+               bool:
+                 must:
+                  - match:
+                      doc.traptor.rule_type: track
+                  - match:
+                      doc.traptor.id: 0
+             tags:
+               - 'traptor_type:track'
+               - 'traptor_metric:track.track0'
+
+          -  doc_type: tweet_traptor
+             index: pulsedev-*
+             metric_name: qcr_tweet_traptor.dev.count
+             timestamp_field: system_timestamp
+             query:
+               bool:
+                 must:
+                  - match:
+                      doc.traptor.rule_type: track
+                  - match:
+                      doc.traptor.id: 1
+             tags:
+               - 'traptor_type:track'
+               - 'traptor_metric:track.track1'
+
+          -  doc_type: tweet_traptor
+             index: pulsedev-*
+             metric_name: qcr_tweet_traptor.dev.count
              timestamp_field: system_timestamp
              query:
                bool:
