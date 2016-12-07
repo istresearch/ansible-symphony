@@ -16,7 +16,7 @@ datadog_monitors:
           ##########################
           -  doc_type: tweet_traptor
              index: pulseprod-*
-             metric_name: qcr_tweet_traptor.count
+             metric_name: tweet_traptor.count
              timestamp_field: system_timestamp
              query:
                bool:
@@ -29,7 +29,7 @@ datadog_monitors:
 
           -  doc_type: tweet_traptor
              index: pulseprod-*
-             metric_name: qcr_tweet_traptor.count
+             metric_name: tweet_traptor.count
              timestamp_field: system_timestamp
              query:
                bool:
@@ -42,7 +42,7 @@ datadog_monitors:
 
           -  doc_type: tweet_traptor
              index: pulseprod-*
-             metric_name: qcr_tweet_traptor.count
+             metric_name: tweet_traptor.count
              timestamp_field: system_timestamp
              query:
                bool:
@@ -55,7 +55,7 @@ datadog_monitors:
 
           -  doc_type: tweet_traptor
              index: pulseprod-*
-             metric_name: qcr_tweet_traptor.count
+             metric_name: tweet_traptor.count
              timestamp_field: system_timestamp
              query:
                bool:
@@ -68,7 +68,7 @@ datadog_monitors:
 
           -  doc_type: tweet_traptor
              index: pulseprod-*
-             metric_name: qcr_tweet_traptor.count
+             metric_name: tweet_traptor.count
              timestamp_field: system_timestamp
              query:
                bool:
@@ -83,7 +83,7 @@ datadog_monitors:
           ##########################
           -  doc_type: tweet_traptor
              index: pulsedev-*
-             metric_name: qcr_tweet_traptor.dev.count
+             metric_name: tweet_traptor.count
              timestamp_field: system_timestamp
              query:
                bool:
@@ -95,6 +95,7 @@ datadog_monitors:
              tags:
                - 'traptor_type:locations'
                - 'traptor_metric:locations.locations0'
+               - 'traptor_env:development'
   disk:
     enabled: true
     is_custom_check: false
