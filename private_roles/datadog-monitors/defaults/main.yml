@@ -22,9 +22,9 @@ datadog_dogstream_dir: "{{ datadog_monitor_install_dir }}/custom_monitors/dd-age
 #                  script in the ist-sysadmin repo under datadog/checks-available
 ####################################################################################
 datadog_monitors:
-  supervisord:
+  ist_supervisord:
     enabled: true
-    is_custom_check: false
+    is_custom_check: true
     server_name: '{{ inventory_hostname }}'
   disk:
     enabled: true
