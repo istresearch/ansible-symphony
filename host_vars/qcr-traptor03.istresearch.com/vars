@@ -58,6 +58,36 @@ datadog_monitors:
              tags:
                - 'traptor_type:track'
                - 'traptor_metric:track.track2'
+
+          -  doc_type: tweet_traptor
+             index: pulseprod-*
+             metric_name: tweet_traptor.count
+             timestamp_field: system_timestamp
+             query:
+               bool:
+                 must:
+                  - match:
+                      doc.traptor.rule_type: track
+                  - match:
+                      doc.traptor.id: 3
+             tags:
+               - 'traptor_type:track'
+               - 'traptor_metric:track.track3'
+
+          -  doc_type: tweet_traptor
+             index: pulseprod-*
+             metric_name: tweet_traptor.count
+             timestamp_field: system_timestamp
+             query:
+               bool:
+                 must:
+                  - match:
+                      doc.traptor.rule_type: track
+                  - match:
+                      doc.traptor.id: 4
+             tags:
+               - 'traptor_type:track'
+               - 'traptor_metric:track.track4'
           ##########################
           # QCR Dev
           ##########################

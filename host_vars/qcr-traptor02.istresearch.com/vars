@@ -22,10 +22,12 @@ datadog_monitors:
                bool:
                  must:
                   - match:
-                      doc.traptor.rule_tag: QCR.cscc
+                      doc.traptor.rule_type: locations
+                  - match:
+                      doc.traptor.id: 0
              tags:
-               - 'traptor_type:geo'
-               - 'traptor_metric:geo.europe'
+               - 'traptor_type:locations'
+               - 'traptor_metric:locations.locations0'
 
           -  doc_type: tweet_traptor
              index: pulseprod-*
@@ -35,10 +37,12 @@ datadog_monitors:
                bool:
                  must:
                   - match:
-                      doc.traptor.rule_tag: Pulse.asia
+                      doc.traptor.rule_type: locations
+                  - match:
+                      doc.traptor.id: 1
              tags:
-               - 'traptor_type:geo'
-               - 'traptor_metric:geo.asia'
+               - 'traptor_type:locations'
+               - 'traptor_metric:locations.locations1'
 
           -  doc_type: tweet_traptor
              index: pulseprod-*
@@ -48,10 +52,12 @@ datadog_monitors:
                bool:
                  must:
                   - match:
-                      doc.traptor.rule_tag: Pulse.south_america
+                      doc.traptor.rule_type: locations
+                  - match:
+                      doc.traptor.id: 2
              tags:
-               - 'traptor_type:geo'
-               - 'traptor_metric:geo.south_america'
+               - 'traptor_type:locations'
+               - 'traptor_metric:locations.locations2'
 
           -  doc_type: tweet_traptor
              index: pulseprod-*
@@ -61,10 +67,12 @@ datadog_monitors:
                bool:
                  must:
                   - match:
-                      doc.traptor.rule_tag: Pulse.africa
+                      doc.traptor.rule_type: locations
+                  - match:
+                      doc.traptor.id: 3
              tags:
-               - 'traptor_type:geo'
-               - 'traptor_metric:geo.africa'
+               - 'traptor_type:locations'
+               - 'traptor_metric:locations.locations3'
 
           -  doc_type: tweet_traptor
              index: pulseprod-*
@@ -74,10 +82,27 @@ datadog_monitors:
                bool:
                  must:
                   - match:
-                      doc.traptor.rule_tag: Pulse.australia
+                      doc.traptor.rule_type: locations
+                  - match:
+                      doc.traptor.id: 4
              tags:
-               - 'traptor_type:geo'
-               - 'traptor_metric:geo.australia'
+               - 'traptor_type:locations'
+               - 'traptor_metric:locations.locations4'
+
+          -  doc_type: tweet_traptor
+             index: pulseprod-*
+             metric_name: tweet_traptor.count
+             timestamp_field: system_timestamp
+             query:
+               bool:
+                 must:
+                  - match:
+                      doc.traptor.rule_type: locations
+                  - match:
+                      doc.traptor.id: 5
+             tags:
+               - 'traptor_type:locations'
+               - 'traptor_metric:locations.locations5'
           ##########################
           # QCR Dev
           ##########################
