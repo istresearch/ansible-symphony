@@ -43,6 +43,10 @@ datadog_monitors:
              tags:
                - 'traptor_type:follow'
                - 'traptor_metric:follow.follow1'
+          - doc_type: telegram_stream_message
+            index: pulseprod-*
+            metric_name: telegram_stream_message.count
+            timestamp_field: norm.timestamp
           ##########################
           # QCR Dev
           ##########################
@@ -61,6 +65,10 @@ datadog_monitors:
                - 'traptor_type:follow'
                - 'traptor_metric:follow.follow0'
                - 'traptor_env:development'
+          - doc_type: telegram_stream_message
+            index: pulsedev-*
+            metric_name: telegram_stream_message.count
+            timestamp_field: norm.timestamp
   disk:
     enabled: true
     is_custom_check: false
