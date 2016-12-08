@@ -29,40 +29,11 @@ datadog_monitors:
                - 'traptor_type:follow'
                - 'traptor_metric:follow.follow0'
 
-          -  doc_type: tweet_traptor
-             index: pulseprod-*
-             metric_name: tweet_traptor.count
-             timestamp_field: system_timestamp
-             query:
-               bool:
-                 must:
-                  - match:
-                      doc.traptor.rule_type: follow
-                  - match:
-                      doc.traptor.id: 1
-             tags:
-               - 'traptor_type:follow'
-               - 'traptor_metric:follow.follow1'
-
-          -  doc_type: tweet_traptor
-             index: pulseprod-*
-             metric_name: tweet_traptor.count
-             timestamp_field: system_timestamp
-             query:
-               bool:
-                 must:
-                  - match:
-                      doc.traptor.rule_type: follow
-                  - match:
-                      doc.traptor.id: 2
-             tags:
-               - 'traptor_type:follow'
-               - 'traptor_metric:follow.follow2'
-
           - doc_type: telegram_stream_message
             index: pulseprod-*
             metric_name: telegram_stream_message.count
             timestamp_field: norm.timestamp
+
           ##########################
           # QCR Dev
           ##########################
