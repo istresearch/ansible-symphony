@@ -42,3 +42,32 @@ datadog_monitors:
          timeout: 10
          expected_status_code: 200
          allow_redirects: false
+      -  name: Dig2 CDR proxy
+         url: https://dig2.istresearch.com/cdr/
+         method: GET
+         auth:
+           username: '{{ vault_dig2_auth.user }}'
+           password: '{{ vault_dig2_auth.password }}'
+         timeout: 10
+         expected_status_code: 200
+         allow_redirects: false
+  ist_json_http_check:
+    enabled: true
+    is_custom_check: true
+    apis:
+      - name: QCR Annotation
+        base_url: https://qcr-annotation.istresearch.com
+        endpoints:
+          - url: /status
+            method: GET
+            matches:
+            - json_path: status
+              pattern: ok
+            - json_path: components.elasticsearch
+              pattern: ok
+            - json_path: components.sql
+              pattern: ok
+            - json_path: components.redis
+              pattern: ok
+            - json_path: components.kafka
+              pattern: ok
