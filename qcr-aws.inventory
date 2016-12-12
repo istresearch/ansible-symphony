@@ -124,5 +124,6 @@ traptor-location-nodes
 
 [docker-engine]
 qcr-cooper.istresearch.com
+qcr-cooper.dev.istresearch.com
 qcr-traptor[01:03].istresearch.com
 qcr-crawler[01:06].istresearch.com

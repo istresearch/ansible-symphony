@@ -1,0 +1,66 @@
+datadog_monitors:
+  ist_supervisord:
+    enabled: true
+    is_custom_check: true
+    server_name: '{{ inventory_hostname }}'
+  es_doc_count:
+    enabled: true
+    is_custom_check: true
+    es_instances:
+      - host: '10.105.92.100'
+        protocol: http
+        port: 9200
+        doctypes:
+          ##########################
+          # QCR Prod
+          ##########################
+          -  doc_type: tweet_traptor
+             index: pulseprod-*
+             metric_name: tweet_traptor.count
+             timestamp_field: system_timestamp
+             query:
+               bool:
+                 must:
+                  - match:
+                      doc.traptor.rule_type: follow
+                  - match:
+                      doc.traptor.id: 0
+             tags:
+               - 'traptor_type:follow'
+               - 'traptor_metric:follow.follow0'
+
+          - doc_type: telegram_stream_message
+            index: pulseprod-*
+            metric_name: telegram_stream_message.count
+            timestamp_field: norm.timestamp
+
+          ##########################
+          # QCR Dev
+          ##########################
+          -  doc_type: tweet_traptor
+             index: pulsedev-*
+             metric_name: tweet_traptor.count
+             timestamp_field: system_timestamp
+             query:
+               bool:
+                 must:
+                  - match:
+                      doc.traptor.rule_type: follow
+                  - match:
+                      doc.traptor.id: 0
+             tags:
+               - 'traptor_type:follow'
+               - 'traptor_metric:follow.follow0'
+               - 'traptor_env:development'
+          - doc_type: telegram_stream_message
+            index: pulsedev-*
+            metric_name: telegram_stream_message.count
+            timestamp_field: norm.timestamp
+  disk:
+    enabled: true
+    is_custom_check: false
+    use_mount: no
+  network:
+    enabled: true
+    is_custom_check: false
+    collect_connection_state: yes
