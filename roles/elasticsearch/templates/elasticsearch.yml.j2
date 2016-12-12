@@ -23,9 +23,7 @@ cluster.name: {{ elasticsearch_cluster_name }}
 #
 # node.name: node-1
 
-{% for host in elasticsearch_host_list %}
-{%- if host == inventory_hostname -%}node.name: {{ elasticsearch_base_node_name }}-{{ loop.index }}-{{ conf_name }}{%- endif -%}
-{% endfor %}
+node.name: {{ elasticsearch_base_node_name.stdout }}-{{ conf_name }}
 
 #
 # Add custom attributes to the node:
@@ -144,6 +142,11 @@ index.indexing.slowlog.threshold.index.trace: 0s
 {% endif %}
 {% endif %}
 
+# ----------------------------------- Watermarks -----------------------------------
+cluster.routing.allocation.disk.threshold_enabled: {{ elasticsearch_disk_threshold_enabled }}
+cluster.routing.allocation.disk.watermark.low: {{ elasticsearch_watermark_low }}
+cluster.routing.allocation.disk.watermark.high: {{ elasticsearch_watermark_high }}
+cluster.info.update.interval: {{ elasticsearch_update_interval }}
 
 # ----------------------------------- Memory -----------------------------------
 #
