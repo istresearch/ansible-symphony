@@ -1,0 +1,26 @@
+---
+
+#### ZOOKEEPER VARS ####
+zookeeper_maxClientCnxns: 120
+
+#### STORM VARS ####
+storm_worker_ports: [6701, 6702, 6703, 6704, 6705, 6706, 6707, 6708, 6709, 6710, 6711, 6712, 6713, 6714, 6715, 6716, 6717, 6718, 6719, 6720, 6721, 6722, 6723, 6724]
+
+storm_worker_extra_config:
+    worker.childopts: "-Xmx1280m -XX:PermSize=128m -XX:MaxPermSize=256m -Xms256m -XX:+UseConcMarkSweepGC -Dcom.sun.management.jmxremote"
+    supervisor.worker.timeout.secs: 60
+
+#### ELASTICSEARCH VARS ####
+elasticsearch_is_master: "true"
+elasticsearch_is_data: "true"
+elasticsearch_data_dir:
+  - /data/elasticsearch
+
+## TECHOPS PEOPLE ##
+techops:
+   - { name: "madisonb", key: "{{ madisonb_key }}" }
+   - { name: "jhaas", key: "{{ jhaas_key }}" }
+   - { name: "scambria", key: "{{ scambria_key }}" }
+   - { name: "andrew.carter", key: "{{ andrew.carter_key }}" }
+   - { name: "dcavitt", key: "{{ dcavitt_key }}" }
+   - { name: "marti", key: "{{ marti_key }}" }
