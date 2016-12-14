@@ -14,21 +14,6 @@ datadog_monitors:
           ##########################
           # QCR Prod
           ##########################
-          -  doc_type: tweet_traptor
-             index: pulseprod-*
-             metric_name: tweet_traptor.count
-             timestamp_field: system_timestamp
-             query:
-               bool:
-                 must:
-                  - match:
-                      doc.traptor.rule_type: follow
-                  - match:
-                      doc.traptor.id: 0
-             tags:
-               - 'traptor_type:follow'
-               - 'traptor_metric:follow.follow0'
-
           - doc_type: telegram_stream_message
             index: pulseprod-*
             metric_name: telegram_stream_message.count
@@ -37,21 +22,6 @@ datadog_monitors:
           ##########################
           # QCR Dev
           ##########################
-          -  doc_type: tweet_traptor
-             index: pulsedev-*
-             metric_name: tweet_traptor.count
-             timestamp_field: system_timestamp
-             query:
-               bool:
-                 must:
-                  - match:
-                      doc.traptor.rule_type: follow
-                  - match:
-                      doc.traptor.id: 0
-             tags:
-               - 'traptor_type:follow'
-               - 'traptor_metric:follow.follow0'
-               - 'traptor_env:development'
           - doc_type: telegram_stream_message
             index: pulsedev-*
             metric_name: telegram_stream_message.count
