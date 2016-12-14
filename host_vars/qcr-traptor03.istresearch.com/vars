@@ -3,9 +3,6 @@ datadog_monitors:
     enabled: true
     is_custom_check: true
     server_name: '{{ inventory_hostname }}'
-  es_doc_count:
-    enabled: true
-    is_custom_check: true
   disk:
     enabled: true
     is_custom_check: false
