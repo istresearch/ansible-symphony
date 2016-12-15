@@ -184,6 +184,7 @@ traptor[01:03].istresearch.com
 [docker-engine]
 docker.dev.istresearch.com
 login-crawler[01:06].istresearch.com
+login-crawler.dev.istresearch.com
 
 [tarsnap-nodes]
 odin.istresearch.com
