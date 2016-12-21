@@ -107,3 +107,6 @@ traptor_track_apikeys: "{{ vault_traptor_track_apikeys }}"
 traptor_follow_apikeys: "{{ vault_traptor_follow_apikeys }}"
 traptor_location_apikeys: "{{ vault_traptor_location_apikeys }}"
 traptor_redis_db: 1
+
+dev:
+   - { name: dsmalls, key: "{{ vault_dsmalls_key }}" }
