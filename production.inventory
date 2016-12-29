@@ -46,6 +46,7 @@ backup[01:02].nj.istresearch.com
 
 [redis-master-node]
 memex-services.istresearch.com
+login-redis.istresearch.com
 
 [redis-slave-nodes]
 #leave empty
@@ -199,6 +200,7 @@ nypd-kibana.istresearch.com
 phoenix-backend.istresearch.com
 qcr-dev.istresearch.com
 odin.istresearch.com
+proxy-redis.istresearch.com
 
 [grawler-nodes] 
 ist-crawler[01:06].istresearch.com 
