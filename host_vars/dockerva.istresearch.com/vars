@@ -1,8 +1,9 @@
 ---
 
 ## GIVE THESE SPECIFIC USERS ACCESS TO THE DOCKERVA SERVER
-techops:
+dev:
    - { name: ayue, key: "{{ vault_ayue_key }}" }
+   - { name: rdempsey, key: "{{ vault_rdempsey_key }}" }
 
 datadog_monitors:
   ist_supervisord:
