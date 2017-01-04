@@ -1,0 +1,52 @@
+datadog_monitors:
+  ist_supervisord:
+    enabled: true
+    is_custom_check: true
+    server_name: '{{ inventory_hostname }}'
+  es_doc_count:
+    enabled: true
+    is_custom_check: true
+    es_instances:
+      - user: '{{ traptor_ist_es.user }}'
+        password: '{{ traptor_ist_es.password }}'
+        host: '{{ traptor_ist_es.host }}'
+        port: '{{ traptor_ist_es.port }}'
+        doctypes:
+
+          -  doc_type: tweet_traptor
+             index: pulse-*
+             metric_name: tweet_traptor.count
+             timestamp_field: system_timestamp
+             query:
+               bool:
+                 must:
+                  - match:
+                      doc.traptor.rule_type: follow
+                  - match:
+                      doc.traptor.id: 0
+             tags:
+               - 'traptor_type:follow'
+               - 'traptor_metric:follow.follow0'
+
+          -  doc_type: tweet_traptor
+             index: pulse-*
+             metric_name: tweet_traptor.count
+             timestamp_field: system_timestamp
+             query:
+               bool:
+                 must:
+                  - match:
+                      doc.traptor.rule_type: follow
+                  - match:
+                      doc.traptor.id: 1
+             tags:
+               - 'traptor_type:follow'
+               - 'traptor_metric:follow.follow1'
+  disk:
+    enabled: true
+    is_custom_check: false
+    use_mount: no
+  network:
+    enabled: true
+    is_custom_check: false
+    collect_connection_state: yes
