@@ -82,13 +82,10 @@ spark-master-node
 spark-worker-nodes
 
 [storm-nimbus-node]
-demo-box-dev.istresearch.com
 
 [storm-ui-node]
-demo-box-dev.istresearch.com
 
 [storm-supervisor-nodes]
-demo-box-dev.istresearch.com
 
 [storm-nodes:children]
 storm-nimbus-node
@@ -98,6 +95,7 @@ storm-supervisor-nodes
 [phantomjs-nodes:children]
 storm-nodes
 spark-nodes
+gandalf-runner-node
 
 [elasticsearch-master-nodes]
 
@@ -131,8 +129,6 @@ scrapy-cluster-indexer-nodes
 [googler-nodes]
 demo-box-dev.istresearch.com
 
-[kibana-node]
-
 [gnip-monitor-node]
 
 [gdelt-monitor-node]
@@ -153,6 +149,7 @@ demo-box-dev.istresearch.com
 traptor-follow-nodes
 traptor-track-nodes
 
+
 [kibana-node]
 demo-box-dev.istresearch.com
 
@@ -166,4 +163,9 @@ demo-box-dev.istresearch.com
 demo-box-dev.istresearch.com
 
 [grawler-nodes]
+
+[gandalf-runner-node]
+demo-box-dev.istresearch.com
+
+[cooper-node]
 demo-box-dev.istresearch.com

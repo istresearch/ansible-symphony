@@ -4,6 +4,6 @@
     name: "{{ item }}"
     state: installed
     # enablerepo: "{{ apache_enablerepo }}"
-  with_items: apache_packages
+  with_items: "{{ apache_packages }}"
   tags:
     - apache2

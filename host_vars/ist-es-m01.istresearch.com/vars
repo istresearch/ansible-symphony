@@ -1,8 +1,8 @@
 ---
 datadog_monitors:
-  supervisord:
+  ist_supervisord:
     enabled: true
-    is_custom_check: false
+    is_custom_check: true
     server_name: '{{ inventory_hostname }}'
   elastic:
     enabled: true
@@ -18,16 +18,3 @@ datadog_monitors:
     enabled: true
     is_custom_check: false
     collect_connection_state: yes
-  es_doc_count:
-    enabled: true
-    is_custom_check: true
-    es_instances:
-    - user: '{{ ist_es_creds.user }}'
-      password: '{{ ist_es_creds.password }}'
-      host: ist-es.istresearch.com
-      port: 9200
-      doctypes:
-      - doc_type: telegram_stream_message
-        index: pulse-*
-        metric_name: telegram_stream_message.count
-        timestamp_field: norm.timestamp

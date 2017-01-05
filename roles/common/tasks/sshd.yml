@@ -1,19 +1,36 @@
 ---
 - name: Edit sshd_config to reject root login
   replace:
-      dest=/etc/ssh/sshd_config
-      regexp='^.*PermitRootLogin.+$'
-      replace='PermitRootLogin no'
-      validate='sshd -f %s -t'
-  notify:
-    - restart sshd {{ ansible_os_family }}
+    dest=/etc/ssh/sshd_config
+    regexp='^.*PermitRootLogin.+$'
+    replace='PermitRootLogin no'
+    validate='sshd -f %s -t'
 
 - name: Ensure PermitRootLogin directive exists
   lineinfile:
-      dest=/etc/ssh/sshd_config
-      state=present
-      line='PermitRootLogin no'
-      validate='sshd -f %s -t'
+    dest=/etc/ssh/sshd_config
+    state=present
+    line='PermitRootLogin no'
+    validate='sshd -f %s -t'
+
+- name: Edit sshd_config to reject password logins
+  replace:
+    dest=/etc/ssh/sshd_config
+    regexp='^.*PasswordAuthentication.+$'
+    replace='PasswordAuthentication no'
+    validate='sshd -f %s -t'
+
+- name: Ensure PasswordAuthentication directive exists
+  lineinfile:
+    dest=/etc/ssh/sshd_config
+    state=present
+    line='PasswordAuthentication no'
+    validate='sshd -f %s -t'
   notify:
     - restart sshd {{ ansible_os_family }}
+
+- name: Restart sshd
+  service:
+    name=ssh
+    state=restarted
 

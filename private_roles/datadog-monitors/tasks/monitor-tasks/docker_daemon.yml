@@ -1,0 +1,10 @@
+---
+################################################################################
+# dd-agent needs to be added to the docker linux group in order to have access
+# to the docker stats
+################################################################################
+- name: Add dd-agent user to docker group
+  user:
+    user: dd-agent
+    groups: docker
+    append: yes

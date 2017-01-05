@@ -9,6 +9,7 @@
 
 datadog_monitor_install_dir: "{{ ddagent_dir }}/monitors"
 datadog_embedded_python_lib_dir: /opt/datadog-agent/embedded/lib/python2.7/site-packages
+datadog_dogstream_dir: "{{ datadog_monitor_install_dir }}/custom_monitors/dd-agent/dogstreams/parsers"
 
 
 ####################################################################################
@@ -21,9 +22,9 @@ datadog_embedded_python_lib_dir: /opt/datadog-agent/embedded/lib/python2.7/site-
 #                  script in the ist-sysadmin repo under datadog/checks-available
 ####################################################################################
 datadog_monitors:
-  supervisord:
+  ist_supervisord:
     enabled: true
-    is_custom_check: false
+    is_custom_check: true
     server_name: '{{ inventory_hostname }}'
   disk:
     enabled: true
@@ -33,3 +34,10 @@ datadog_monitors:
     enabled: true
     is_custom_check: false
     collect_connection_state: yes
+
+####################################################################################
+# View available dogstreams (log parsers)
+# https://github.com/istresearch/ist-sysadmin/blob/master/datadog/es_slowlog_parse/datadog/dd-agent/log_parsers
+####################################################################################
+datadog_dogstreams: []
+  #- /path/to/log1:/path/to/parsers_module.py:parser_function_name

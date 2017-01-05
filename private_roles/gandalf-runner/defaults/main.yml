@@ -1,7 +1,7 @@
 ---
 runner_gandalf_version: 0.0.64
 runner_build_branch: master
-runner_build_version: 15
+runner_build_version: 35
 runner_install_version: "gandalf-runner-{{ runner_build_version }}-{{ runner_build_branch }}"
 runner_install_dir: /opt/gandalf-runner
 runner_venv_dir: "{{ runner_install_dir }}/default/venv"
@@ -172,6 +172,11 @@ processors:
       module: *def-module
       settings: settings_height.py
 
+    - &extract-fbgraph-photos
+      class: GraphPhotos
+      module: *def-module
+      settings: settings_graph_photos.py
+
     - &extract-image-links
       class: ImageLinks
       module: *def-module
@@ -302,6 +307,11 @@ processors:
       module: *norm-module
       settings: settings_normalize_traptor.py
 
+    - &shepherd
+      class: Shepherd
+      module: *def-module
+      settings: settings_shepherd.py
+
 # things that do change between configurations
 # abbreviations:
 #   kct: kafka consumer topic
@@ -332,12 +342,18 @@ runner_settings:
     processors:
       - <<: *normalize-fbgraph
         rank: 000
+      - <<: *shepherd
+        rank: 050
       - <<: *extract-author-uid
         rank: 100
       - <<: *extract-author-uid-original
         rank: 200
       - <<: *extract-document-uid
         rank: 300
+      - <<: *extract-fbgraph-photos
+        rank: 350
+      - <<: *image-archiver
+        rank: 375
       - <<: *extract-links
         rank: 400
       - <<: *crawl-submitter
@@ -367,6 +383,8 @@ runner_settings:
     processors:
       - <<: *normalize-sms
         rank: 000
+      - <<: *shepherd
+        rank: 050
       - <<: *extract-twitter-username
         rank: 100
       - <<: *extract-links
@@ -400,6 +418,8 @@ runner_settings:
     processors:
       - <<: *normalize-crawl
         rank: 000
+      - <<: *shepherd
+        rank: 050
       - <<: *extract-twitter-username
         rank: 100
       - <<: *extract-email
@@ -416,10 +436,12 @@ runner_settings:
         rank: 700
       - <<: *image-archiver
         rank: 800
-      - <<: *hbase
+      - <<: *page-render
         rank: 900
-      - <<: *elasticsearch
+      - <<: *hbase
         rank: 1000
+      - <<: *elasticsearch
+        rank: 1100
   - uid: tweet
     np: 1
     kct: 'traptor.cooper_prod'
@@ -433,6 +455,8 @@ runner_settings:
         rank: 000
       - <<: *twitter-rule-matcher
         rank: 100
+      - <<: *shepherd
+        rank: 150
       - <<: *extract-author-geo-place
         rank: 200
       - <<: *extract-author-id
@@ -512,6 +536,8 @@ runner_settings:
     processors:
       - <<: *normalize-telegraptor-stream
         rank: 000
+      - <<: *shepherd
+        rank: 050
       - <<: *hbase
         rank: 100
       - <<: *elasticsearch
@@ -527,6 +553,8 @@ runner_settings:
     processors:
       - <<: *normalize-telegraptor-history
         rank: 000
+      - <<: *shepherd
+        rank: 050
       - <<: *hbase
         rank: 100
       - <<: *elasticsearch

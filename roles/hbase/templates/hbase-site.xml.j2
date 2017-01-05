@@ -109,4 +109,10 @@
   </property>
   
 {% endif %}
+
+  <property>
+    <name>dfs.replication</name>
+    <value>{{ hbase_dfs_replication|default(3) }}</value>
+  </property>
+
 </configuration>

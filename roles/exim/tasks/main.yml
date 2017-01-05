@@ -1,0 +1,65 @@
+---
+
+- name: Install exim
+  apt:
+    pkg: exim4
+    state: present
+  tags: exim-install
+
+- block:
+  - name: Populate /etc/mailname
+    template:
+      src: mailname.j2
+      dest: /etc/mailname
+      group: root
+      owner: root
+
+  - name: Use split configuration mode
+    lineinfile:
+      dest: "{{ exim_conf_dir }}/update-exim4.conf.conf"
+      line: dc_use_split_config='true'
+      regexp: dc_use_split_config=
+
+  # The auth config example causes conflicts with custom authentication
+  - name: Remove auth config example
+    file:
+      path: "{{ exim_confd }}/auth/30_exim4-config_examples"
+      state: absent
+
+  - name: Remove ansiblized configs
+    command: find {{ exim_confd }} -type f -name "*ansible*" -exec rm {} \;
+
+    ################################################################################
+    # Use '%02d'|format(item.0|int + 1) to start looping index from 1 to avoid
+    # conflicts with existing 00 configs. Also format to pad with leading 0 if < 10.
+    ################################################################################
+  - name: Populate exim confd routers
+    template:
+      src: "{{ item }}/router.j2"
+      dest: "{{ exim_confd }}/router/{{ '%02d'|format(item.0|int + 1) }}_ansible-{{ item }}"
+    with_items: "{{ exim_configs }}"
+
+  - name: Populate exim confd auth
+    template:
+      src: "{{ item }}/auth.j2"
+      dest: "{{ exim_confd }}/auth/{{ '%02d'|format(item.0|int + 1) }}_ansible-{{ item }}"
+    with_items: "{{ exim_configs }}"
+
+  - name: Populate exim confd transport
+    template:
+      src: "{{ item }}/transport.j2"
+      dest: "{{ exim_confd }}/transport/{{ '%02d'|format(item.0|int + 1) }}_ansible-{{ item }}"
+    with_items: "{{ exim_configs }}"
+  tags: exim-configure
+
+- block:
+  - name: Generate master exim config
+    command: update-exim4.conf
+
+  - name: Load generated exim config
+    service:
+      name: exim4
+      state: reloaded
+  tags:
+    - exim-reload
+    - exim-configure

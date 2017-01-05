@@ -81,14 +81,6 @@
     group: "{{ googler_group }}"
   tags: googler
 
-- name: install packages
-  apt:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - firefox
-  tags: googler
-
 - name: pip install requirements
   pip:
     virtualenv: "{{ googler_virtualenv_path }}"
@@ -114,6 +106,13 @@
     mode: 0644
   notify:
     - restart googler
+  tags: googler
+
+- name: restart if firefox changed
+  command: /bin/true
+  notify:
+    - restart googler
+  when: firefox_has_updated is defined
   tags: googler
 
 # logstash settings eventually here

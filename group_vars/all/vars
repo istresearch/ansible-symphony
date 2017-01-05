@@ -26,3 +26,17 @@ iptables: false
 es_hadoop_install_dir: /opt/elasticsearch-hadoop
 es_hadoop_version: 2.2.0
 
+exim_mailname: istresearch.com
+exim_amazon_ses_conf:
+  conf_name: 'amazon_ses'
+  region_endpoint: 'email-smtp.us-east-1.amazonaws.com'
+  port: 587
+  username: '{{ vault_ses_smtp_username }}'
+  password: '{{ vault_ses_smtp_password }}'
+
+exim_configs:
+ - "{{ exim_amazon_ses_conf.conf_name }}"
+
+tarsnap_credentials:
+  username: "{{ vault_tarsnap_username }}"
+  password: "{{ vault_tarsnap_password }}"

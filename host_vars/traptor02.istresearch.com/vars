@@ -14,54 +14,69 @@ datadog_monitors:
         doctypes:
 
           -  doc_type: tweet_traptor
-             index: pulse-default-default
-             metric_name: tweet_traptor.geo.europe.count
+             index: pulse-*
+             metric_name: tweet_traptor.count
              timestamp_field: system_timestamp
              query:
                bool:
                  must:
                   - match:
                       doc.traptor.rule_tag: QCR.cscc
+             tags:
+               - 'traptor_type:geo'
+               - 'traptor_metric:geo.europe'
 
           -  doc_type: tweet_traptor
-             index: pulse-default-default
-             metric_name: tweet_traptor.geo.asia.count
+             index: pulse-*
+             metric_name: tweet_traptor.count
              timestamp_field: system_timestamp
              query:
                bool:
                  must:
                   - match:
                       doc.traptor.rule_tag: Pulse.asia
+             tags:
+               - 'traptor_type:geo'
+               - 'traptor_metric:geo.asia'
 
           -  doc_type: tweet_traptor
-             index: pulse-default-default
-             metric_name: tweet_traptor.geo.south_america.count
+             index: pulse-*
+             metric_name: tweet_traptor.count
              timestamp_field: system_timestamp
              query:
                bool:
                  must:
                   - match:
                       doc.traptor.rule_tag: Pulse.south_america
+             tags:
+               - 'traptor_type:geo'
+               - 'traptor_metric:geo.south_america'
 
           -  doc_type: tweet_traptor
-             index: pulse-default-default
-             metric_name: tweet_traptor.geo.africa.count
+             index: pulse-*
+             metric_name: tweet_traptor.count
              timestamp_field: system_timestamp
              query:
                bool:
                  must:
                   - match:
                       doc.traptor.rule_tag: Pulse.africa
+             tags:
+               - 'traptor_type:geo'
+               - 'traptor_metric:geo.africa'
 
           -  doc_type: tweet_traptor
-             index: pulse-default-default
-             metric_name: tweet_traptor.geo.australia.count
+             index: pulse-*
+             metric_name: tweet_traptor.count
              timestamp_field: system_timestamp
              query:
                bool:
                  must:
                   - match:
                       doc.traptor.rule_tag: Pulse.australia
+             tags:
+               - 'traptor_type:geo'
+               - 'traptor_metric:geo.australia'
   disk:
     enabled: true
     is_custom_check: false
@@ -70,3 +85,8 @@ datadog_monitors:
     enabled: true
     is_custom_check: false
     collect_connection_state: yes
+  docker_daemon:
+    enabled: true
+    is_custom_check: false
+    socket_path: "unix://var/run/docker.sock"
+    labels_as_tags: ["com.docker.compose.service", "com.docker.compose.project"]

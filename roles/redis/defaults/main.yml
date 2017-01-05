@@ -1,6 +1,6 @@
 ---
 ## Installation options
-redis_version: 3.0.6
+redis_version: 3.2.6
 redis_install_dir: /opt/redis
 redis_user: redis
 redis_dir: /var/lib/redis/{{ redis_port }}

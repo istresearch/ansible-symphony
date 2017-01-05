@@ -12,9 +12,10 @@ datadog_monitors:
         host: '{{ traptor_ist_es.host }}'
         port: '{{ traptor_ist_es.port }}'
         doctypes:
+
           -  doc_type: tweet_traptor
-             index: pulse-default-default
-             metric_name: tweet_traptor.follow.follow0.count
+             index: pulse-*
+             metric_name: tweet_traptor.count
              timestamp_field: system_timestamp
              query:
                bool:
@@ -23,9 +24,13 @@ datadog_monitors:
                       doc.traptor.rule_type: follow
                   - match:
                       doc.traptor.id: 0
+             tags:
+               - 'traptor_type:follow'
+               - 'traptor_metric:follow.follow0'
+
           -  doc_type: tweet_traptor
-             index: pulse-default-default
-             metric_name: tweet_traptor.follow.follow1.count
+             index: pulse-*
+             metric_name: tweet_traptor.count
              timestamp_field: system_timestamp
              query:
                bool:
@@ -34,6 +39,9 @@ datadog_monitors:
                       doc.traptor.rule_type: follow
                   - match:
                       doc.traptor.id: 1
+             tags:
+               - 'traptor_type:follow'
+               - 'traptor_metric:follow.follow1'
   disk:
     enabled: true
     is_custom_check: false
@@ -42,3 +50,8 @@ datadog_monitors:
     enabled: true
     is_custom_check: false
     collect_connection_state: yes
+  docker_daemon:
+    enabled: true
+    is_custom_check: false
+    socket_path: "unix://var/run/docker.sock"
+    labels_as_tags: ["com.docker.compose.service", "com.docker.compose.project"]
