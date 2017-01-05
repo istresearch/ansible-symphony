@@ -77,7 +77,3 @@ storm_nimbus_extra_config:
     nimbus.childopts: "-Xmx1024m"
     nimbus.thrift.max_buffer_size: 4194304
     
-## GIVE THESE SPECIFIC USERS ACCESS TO THE INTERNAP CLUSTER
-techops:
-   - { name: amandeep, key: "{{ vault_amandeep_key1 }}" }
-   - { name: amandeep, key: "{{ vault_amandeep_key2 }}" }
