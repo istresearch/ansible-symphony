@@ -21,6 +21,7 @@ techops:
    - { name: "madisonb", key: "{{ madisonb_key }}" }
    - { name: "jhaas", key: "{{ jhaas_key }}" }
    - { name: "scambria", key: "{{ scambria_key }}" }
-   - { name: "andrew.carter", key: "{{ andrew.carter_key }}" }
+   - { name: "andrew.carter", key: "{{ andrew_key }}" }
    - { name: "dcavitt", key: "{{ dcavitt_key }}" }
    - { name: "marti", key: "{{ marti_key }}" }
+   - { name: "jcortmaior", key: "{{ jcortmaior_key }}" }
