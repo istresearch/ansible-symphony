@@ -13,10 +13,10 @@ mysql_enablerepo: ""
 # Define a custom list of packages to install; if none provided, the default
 # package list from vars/[OS-family].yml will be used.
 #mysql_packages:
-  #- mysql-client-core-5.5
-  #- mysql-server-5.5
-  #- mysql-server
-  #- MySQL-python
+ # - mysql-client-core-5.5
+ # - mysql-server-5.5
+ # - mysql-server
+ # - MySQL-python
 
 # MySQL connection settings.
 mysql_port: "3306"

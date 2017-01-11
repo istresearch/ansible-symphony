@@ -29,6 +29,11 @@
     name: vm.max_map_count
     value: 262144   
 
+- name: Get Base Node Name from Hostname
+  shell: hostname | awk -F . '{print $1}'
+  register: elasticsearch_base_node_name
+  tags: elasticsearch
+
 - name: Configuring group
   group:
     name: "{{ elasticsearch_group }}"
