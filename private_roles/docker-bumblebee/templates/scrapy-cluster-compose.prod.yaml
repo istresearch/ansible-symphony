@@ -1,0 +1,58 @@
+version: '2'
+
+services:
+  kafka_monitor:
+    image: istresearch/scrapy-cluster-ist:kafka-monitor-116-dev
+    restart: always
+    environment:
+      - KAFKA_HOSTS=crew06.istresearch.com:9092,crew07.istresearch.com:9092,crew08.istresearch.com:9092,backup01.nj.istresearch.com:9092,backup02.nj.istresearch.com:9092
+      - REDIS_HOST=login-redis.istresearch.com
+      - ZOOKEEPER_HOSTS=crew01.istresearch.com:2181,crew02.istresearch.com:2181,crew03.istresearch.com:2181
+      - REDIS_DB=2
+      - KAFKA_INCOMING_TOPIC=crawl.incoming
+      - KAFKA_GROUP=sc-kafka-monitor
+      - LOG_STDOUT=False
+      - LOG_JSON=True
+    volumes:
+      - logs:/usr/src/app/logs
+  redis_monitor:
+    image: istresearch/scrapy-cluster-ist:redis-monitor-116-dev
+    restart: always
+    environment:
+      - REDIS_HOST=login-redis.istresearch.com
+      - REDIS_DB=2
+      - KAFKA_HOSTS=crew06.istresearch.com:9092,crew07.istresearch.com:9092,crew08.istresearch.com:9092,backup01.nj.istresearch.com:9092,backup02.nj.istresearch.com:9092
+      - KAFKA_TOPIC_PREFIX=crawl
+      - ZOOKEEPER_HOSTS=crew01.istresearch.com:2181,crew02.istresearch.com:2181,crew03.istresearch.com:2181
+      - LOG_STDOUT=False
+      - LOG_JSON=True
+    volumes:
+      - logs:/usr/src/app/logs
+  crawler:
+    image: istresearch/scrapy-cluster-ist:crawler-127-dev
+    restart: always
+    environment:
+      - REDIS_HOST=login-redis.istresearch.com
+      - REDIS_DB=2
+      - KAFKA_HOSTS=crew06.istresearch.com:9092,crew07.istresearch.com:9092,crew08.istresearch.com:9092,backup01.nj.istresearch.com:9092,backup02.nj.istresearch.com:9092
+      - KAFKA_TOPIC_PREFIX=crawl
+      - ZOOKEEPER_HOSTS=crew01.istresearch.com:2181,crew02.istresearch.com:2181,crew03.istresearch.com:2181
+      - QUEUE_HITS=999999
+      - QUEUE_WINDOW=1
+      - QUEUE_MODERATED=False
+      - SC_LOG_STDOUT=False
+      - SC_LOG_JSON=True
+      - KAFKA_BASE_64_ENCODE=True
+    volumes:
+      - logs:/usr/src/app/logs
+  logstash:
+    image: logstash:latest
+    command: logstash -f /etc/logstash/conf.d/logstash.conf
+    volumes:
+      - /opt/docker_configs/logstash-scrapy-cluster-docker.conf:/etc/logstash/conf.d/logstash.conf
+      - /opt/docker_configs/logs-template.json:/etc/logstash/templates/logs-template.json
+      - logs:/var/log/scrapy-cluster
+
+volumes:
+  logs:
+

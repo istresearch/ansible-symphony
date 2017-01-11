@@ -1,0 +1,49 @@
+version: '2'
+services:
+  grawler:
+    image: istresearch/grawler:grawler-0.1.0
+    environment:
+      - GRAWLER_ID=1
+      - PROCESS_ID=00
+      - ELASTICSEARCH_HOSTS=https://ist-es.istresearch.com:9200
+      - KAFKA_HOSTS=crew06.istresearch.com:9092,crew07.istresearch.com:9092,crew08.istresearch.com:9092
+      - KAFKA_TOPIC=crawler.graph
+      - REDIS_HOST=memex-services.istresearch.com
+      - REDIS_PORT=6379
+      - REDIS_DB=5
+      - QUEUE=graph_q
+      - SHARED_QUEUE=shared_graph_q
+      - THROTTLE_BASE_DELAY=2
+      - THROTTLE_MAX_EXP=15
+      - THROTTLE_FLOOR=30
+      - ZOOKEEPER_HOSTS=crew01.istresearch.com:2181,crew02.istresearch.com:2181,crew03.istresearch.com:2181
+      - ZOOKEEPER_ASSIGN_PATH=/grawler/instance
+      - ZOOKEEPER_GRAWLER_CONFIG=grawler/config/facebook_config_100.yml
+      - LOGGER_NAME=grawler
+      - LOG_DIR=/var/log/grawler
+      - LOG_FILE=grawler.log
+      - LOG_STDOUT=False
+      - LOG_JSON=True
+      - LOG_LEVEL=INFO
+      - THROTTLE_HEADER=x-app-usage
+      - THROTTLE_ERROR_CODES=4,32
+      - THROTTLE_LIMIT_MS=600000      # sleep time when API returns an error
+      - THROTTLE_SPLAY_MS=2048        # max random added sleep time
+      - THROTTLE_MIN_EXP=8            # 2 ^ n =  min base sleep time, 2^8 =  256ms
+      - THROTTLE_MAX_EXP=12           # 2 ^ n =  max base sleep time, 2^12 =  4096ms
+    volumes:
+      - logs:/var/log/grawler
+      # facebook config should match grawler id ie. _100
+      - /opt/docker_configs/facebook_config_100.yml:/usr/src/app/grawler/config/facebook_config_100.yml
+    restart: always
+
+  logstash:
+    image: logstash:latest
+    command: logstash -f /etc/logstash/conf.d/logstash.conf
+    volumes:
+      - /opt/docker_configs/logstash-grawler.conf:/etc/logstash/conf.d/logstash.conf
+      - /opt/docker_configs/logs-template.json:/etc/logstash/templates/logs-template.json
+      - logs:/var/log/grawler
+
+volumes:
+  logs:
