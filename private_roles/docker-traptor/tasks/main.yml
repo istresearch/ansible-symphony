@@ -20,61 +20,106 @@
     path: "{{ docker_compose_dir }}"
     state: directory
     mode: 0755
-  tags: docker-cooper
+  tags: docker-traptor
 
 - name: Make sure scripts directory exists
   file:
     path: "{{ docker_scripts_dir }}"
     state: directory
     mode: 0755
-  tags: docker-cooper
+  tags: docker-traptor
 
 - name: Make sure docker_configs directory exists
   file:
     path: "{{ docker_configs_dir }}"
     state: directory
     mode: 0755
-  tags: docker-cooper
+  tags: docker-traptor
 
-- name: copy compose file
+- name: copy Traptor Follow compose file
   template:
-    src: cooper-compose.prod.yaml.j2
-    dest: "{{ docker_compose_dir }}/cooper-compose.prod.yaml"
+    src: traptor-follow-compose.prod.yaml.j2
+    dest: "{{ docker_compose_dir }}/traptor-follow-compose.prod.yaml"
     mode: 0644
-  tags: docker-cooper
+  when: is_follow
+  tags: docker-traptor
 
-- name: copy cooper_config.py file
+- name: copy Traptor Track compose file
   template:
-    src: cooper_config.py.j2
-    dest: "{{ docker_configs_dir }}/cooper_config.py"
+    src: traptor-track-compose.prod.yaml.j2
+    dest: "{{ docker_compose_dir }}/traptor-track-compose.prod.yaml"
     mode: 0644
-  tags: docker-cooper
+  when: is_track
+  tags: docker-traptor
 
-- name: copy cooper_settings.json file
+- name: copy Traptor Geo compose file
   template:
-    src: cooper_settings.json.j2
-    dest: "{{ docker_configs_dir }}/cooper_settings.json"
+    src: traptor-geo-compose.prod.yaml.j2
+    dest: "{{ docker_compose_dir }}/traptor-geo-compose.prod.yaml"
     mode: 0644
-  tags: docker-cooper
+  when: is_geo
+  tags: docker-traptor
 
-- name: copy logstash-cooper-prod.conf file
+- name: copy logstash-traptor-prod.conf file
   template:
-    src: logstash-cooper-prod.conf.j2
-    dest: "{{ docker_configs_dir }}/logstash-cooper-prod.conf"
+    src: logstash-traptor-prod.conf.j2
+    dest: "{{ docker_configs_dir }}/logstash-traptor-prod.conf"
     mode: 0644
-  tags: docker-cooper
+  tags: docker-traptor
 
-- name: copy scripts file
+## TRAPTOR FOLLOW ##
+- name: copy Traptor Follow scripts file
   template:
-    src: dc-cooper.sh.j2
-    dest: "{{ docker_scripts_dir }}/dc-cooper.sh"
+    src: dc-traptor-follow.sh.j2
+    dest: "{{ docker_scripts_dir }}/dc-traptor-follow.sh"
     mode: 0644
-  tags: docker-cooper
+  when: is_follow
+  tags: docker-traptor
 
-- name: Stop and Kill any existing Cooper Containers
-  command: "{{ docker_scripts_dir }}/dc-cooper.sh down"
-  tags: docker-cooper
+- name: Stop and Kill any existing Traptor Follow Containers
+  command: "{{ docker_scripts_dir }}/dc-traptor-follow.sh down"
+  when: is_follow
+  tags: docker-traptor
 
-- name: Start the Cooper Container
-  command: "{{ docker_scripts_dir }}/dc-cooper.sh up -d"
-  tags: docker-cooper
+- name: Start the Traptor Follow Container
+  command: "{{ docker_scripts_dir }}/dc-traptor-follow.sh up -d"
+  when: is_follow
+  tags: docker-traptor
+
+## TRAPTOR TRACK ##
+- name: copy Traptor Track scripts file
+  template:
+    src: dc-traptor-track.sh.j2
+    dest: "{{ docker_scripts_dir }}/dc-traptor-track.sh"
+    mode: 0644
+  when: is_track
+  tags: docker-traptor
+
+- name: Stop and Kill any existing Traptor Track Containers
+  command: "{{ docker_scripts_dir }}/dc-traptor-track.sh down"
+  when: is_track
+  tags: docker-traptor
+
+- name: Start the Traptor Track Container
+  command: "{{ docker_scripts_dir }}/dc-traptor-track.sh up -d"
+  when: is_track
+  tags: docker-traptor
+
+## TRAPTOR GEO ##
+- name: copy Traptor Geo scripts file
+  template:
+    src: dc-traptor-geo.sh.j2
+    dest: "{{ docker_scripts_dir }}/dc-traptor-geo.sh"
+    mode: 0644
+  when: is_geo
+  tags: docker-traptor
+
+- name: Stop and Kill any existing Traptor Geo Containers
+  command: "{{ docker_scripts_dir }}/dc-traptor-geo.sh down"
+  when: is_geo
+  tags: docker-traptor
+
+- name: Start the Traptor Geo Container
+  command: "{{ docker_scripts_dir }}/dc-traptor-geo.sh up -d"
+  when: is_geo
+  tags: docker-traptor
