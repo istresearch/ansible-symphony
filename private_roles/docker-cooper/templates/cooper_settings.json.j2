@@ -1,0 +1,55 @@
+{
+    "twitter": {
+        "OAUTH_TOKEN_SECRET": "STK2IUEphEJTOjGmQ8b5h1i5VegzlLFX4QH5PmtVfpd35",
+        "APP_SECRET": "e9AkOljbl2jC0wEsaJWEMHHlN1YCyzD6zKnL615b2UcIotpTa2",
+        "OAUTH_TOKEN": "3515082683-9xSgmPr2zzIQ4aW9MRZCLMeehRC0gAOHRVFK6LO",
+        "APP_KEY": "CWTq9WVgpVobhvAR43gfE0nFZ"
+        },
+    "GNIP": {
+        "PWD": "phPi9F4B%5^4",
+        "UN": "jason.haas@istresearch.com",
+        "ACCOUNT": "Timbr",
+        "STREAMS": ["dev-darpa", "prod-darpa"]
+        },
+    "SQL": {
+        "UN": "memex",
+        "PWD": "pDYKV39gySsHcPhzpjTbgkM6",
+        "DATABASE": "memex_cooper_prod",
+        "HOST": "memex-db.istresearch.com",
+        "ROOT": "stuff",
+        "ROOT_UN": "COOPER_PROD_ROOT_UN",
+        "ROOT_PWD": "COOPER_PROD_ROOT_PW",
+        "SCHEMA": "schema.sql"
+        },
+    "ES": {
+        "URL": "http://ist-es01.istresearch.com:9200",
+        "INDEX": "traptor-cooper-1"
+        },
+    "FLASK": {
+        "CONFIG_PATH": "/usr/src/app/cooper-the-dog/config.py"
+        },
+    "KAFKA": {
+        "HOST": "crew04.istresearch.com:9092,crew05.istresearch.com:9092,crew06.istresearch.com:9092",
+        "TOPIC": "crawl.incoming"
+    },
+    "THRESHOLDS": {
+        "TWEETS_PER_SECOND": 1.0
+    },
+    "TWITTER_API_URLS": {
+        "RATE_LIMIT_URL": "https://api.twitter.com/1.1/application/rate_limit_status.json",
+        "SEARCH_API_URL": "https://api.twitter.com/1.1/search/tweets.json"
+    },
+    "FACEBOOK_SCRAPERS": {
+        "GRAPH_SCRAPER_API_URL": "https://memex:xL22rptV@memexdev.istresearch.com/graph/api/graph/",
+        "PROFILE_SCRAPER_URL": "https://quicker:Sh4b00m!@54.201.220.233/scrapyd/schedule.json",
+        "PEOPLE_SEARCH_SCRAPER_URL": "https://quicker:Sh4b00m!@54.201.220.233/scrapyd/schedule.json",
+        "FACEBOOK_PROFILE_SPIDER_NAME": "profile-prod"
+    },
+    "TELEGRAM": {
+        "TELEGRAM_PEER_ID_LOOKUP_URL": "http://dockerva.istresearch.com:5010/lookup_peer/"
+    },
+    "LOGGING": {
+        "LOG_FILE_DIR": "/var/log/cooper"
+    }
+}
+

@@ -1,2 +1,66 @@
 ---
 
+- name: Check if Docker is running
+  command: service docker status
+  ignore_errors: yes
+  changed_when: false
+  register: service_docker_status
+
+- name: Report status of Docker
+  fail:
+    msg: |
+      Service Docker is not running.
+      Output of `service docker status`:
+      {{ service_docker_status.stdout }}
+      {{ service_docker_status.stderr }}
+  when: service_docker_status | failed
+
+- name: Make sure Compose Directory exists
+  file:
+    path: "{{ docker_compose_dir }}"
+    state: directory
+    mode: 0755
+  tags: docker-telegraptor
+
+- name: Make sure scripts directory exists
+  file:
+    path: "{{ docker_scripts_dir }}"
+    state: directory
+    mode: 0755
+  tags: docker-telegraptor
+
+- name: Make sure docker_configs directory exists
+  file:
+    path: "{{ docker_configs_dir }}"
+    state: directory
+    mode: 0755
+  tags: docker-telegraptor
+
+- name: copy compose file
+  template:
+    src: telegraptor-compose.prod.yaml.j2
+    dest: "{{ docker_compose_dir }}/telegraptor-compose.prod.yaml"
+    mode: 0644
+  tags: docker-telegraptor
+
+- name: copy logstash-telegraptor.conf.j2 file
+  template:
+    src: logstash-telegraptor.conf.j2
+    dest: "{{ docker_configs_dir }}/logstash-telegraptor.conf"
+    mode: 0644
+  tags: docker-telegraptor
+
+- name: copy scripts file
+  template:
+    src: dc-telegraptor.sh.j2
+    dest: "{{ docker_scripts_dir }}/dc-telegraptor.sh"
+    mode: 0644
+  tags: docker-telegraptor
+
+- name: Stop and Kill any existing Telegraptor Containers
+  command: "{{ docker_scripts_dir }}/dc-telegraptor.sh down"
+  tags: docker-telegraptor
+
+- name: Start the Telegraptor Container
+  command: "{{ docker_scripts_dir }}/dc-telegraptor.sh up -d"
+  tags: docker-telegraptor

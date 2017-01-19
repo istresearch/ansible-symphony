@@ -1,0 +1,23 @@
+input {
+  file {
+    path => ['/var/log/cooper/*.log']
+    codec => json
+    tags => ['cooper']
+  }
+}
+
+output {
+    if 'cooper' in [tags] {
+        elasticsearch {
+            hosts => ["https://ist-es.istresearch.com:9200"]
+            user => "ist-es"
+            password => "44vtjgDLn6Xdj4d8"
+            template => "/etc/logstash/templates/logs-template.json"
+            template_name => "logs-*"
+            template_overwrite => true
+            index => "logs-cooper-%{+YYYY.MM.dd}"
+            document_type => "%{[logger]}"
+        }
+    }
+}
+

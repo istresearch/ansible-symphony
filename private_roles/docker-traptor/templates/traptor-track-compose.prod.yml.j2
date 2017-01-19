@@ -1,0 +1,247 @@
+version: '2'
+
+services:
+  track_0:
+    image: istresearch/traptor:v1.3.0
+    volumes:
+      - logs:/var/log/traptor
+    environment:
+      - TRAPTOR_TYPE=track
+      - TRAPTOR_ID=0
+      - RULE_CHECK_INTERVAL=60
+      - USE_SENTRY=true
+      - SENTRY_URL=https://870e681805524cddbeadb1957498d4c7:ebcb1d9a15ab4f4f837e0c3694225db5@sentry.io/55250
+      - LOG_LEVEL=INFO
+      - LOG_DIR=/var/log/traptor
+      - LOG_FILE_NAME=traptor_track_0.log
+      - KAFKA_ENABLED=true
+      - KAFKA_HOSTS=crew06.istresearch.com:9092,crew07.istresearch.com:9092,crew08.istresearch.com:9092
+      - KAFKA_TOPIC=traptor.cooper_prod
+      - REDIS_HOST=memex-services.istresearch.com
+      - REDIS_PORT=6379
+      - REDIS_DB=1
+      - REDIS_PUBSUB_CHANNEL=traptor-notify-prod
+      - CONSUMER_KEY=NV5qZNPu4tpUXjJe9tfdQtYXh
+      - CONSUMER_SECRET=CApz8u3c6ymZa42N9f4bgR0bqKi5K3aFprwwTNWjybLJOyLtoS
+      - ACCESS_TOKEN=3432988792-qO0au0KGMj9UQfuABOFTWm2tvHs50F2pRzYQl0n
+      - ACCESS_TOKEN_SECRET=PL3wIvlTfiDYxEPbKxDzlaPh7juihrxn3sl4hF4UlmCnL
+      - STATSD_HOST_IP=172.17.0.1
+    restart: "on-failure:3"
+    depends_on:
+      - logstash
+
+  track_1:
+    image: istresearch/traptor:v1.3.0
+    volumes:
+      - logs:/var/log/traptor
+    environment:
+      - TRAPTOR_TYPE=track
+      - TRAPTOR_ID=1
+      - RULE_CHECK_INTERVAL=60
+      - USE_SENTRY=true
+      - SENTRY_URL=https://870e681805524cddbeadb1957498d4c7:ebcb1d9a15ab4f4f837e0c3694225db5@sentry.io/55250
+      - LOG_LEVEL=INFO
+      - LOG_DIR=/var/log/traptor
+      - LOG_FILE_NAME=traptor_track_1.log
+      - KAFKA_ENABLED=true
+      - KAFKA_HOSTS=crew06.istresearch.com:9092,crew07.istresearch.com:9092,crew08.istresearch.com:9092
+      - KAFKA_TOPIC=traptor.cooper_prod
+      - REDIS_HOST=memex-services.istresearch.com
+      - REDIS_PORT=6379
+      - REDIS_DB=1
+      - REDIS_PUBSUB_CHANNEL=traptor-notify-prod
+      - CONSUMER_KEY=yJYAUb9vOhISx2U4Qt5QsAKcE
+      - CONSUMER_SECRET=FqlFbqtzBJQRXqXOA839sgWre3sWmQ3HeOFj8qEDnyCyebNm9Y
+      - ACCESS_TOKEN=3432988792-xuqAvsVTKrjQb8fZNDz1h2FgBuo9ha145yHeswB
+      - ACCESS_TOKEN_SECRET=IPJ6Hg5JhxtH2MSC6TzKHJ0wTsOKFKwBFGP3OAeSNkM4I
+      - STATSD_HOST_IP=172.17.0.1
+    restart: "on-failure:3"
+    depends_on:
+      - logstash
+
+  track_2:
+    image: istresearch/traptor:v1.3.0
+    volumes:
+      - logs:/var/log/traptor
+    environment:
+      - TRAPTOR_TYPE=track
+      - TRAPTOR_ID=2
+      - RULE_CHECK_INTERVAL=60
+      - USE_SENTRY=true
+      - SENTRY_URL=https://870e681805524cddbeadb1957498d4c7:ebcb1d9a15ab4f4f837e0c3694225db5@sentry.io/55250
+      - LOG_LEVEL=INFO
+      - LOG_DIR=/var/log/traptor
+      - LOG_FILE_NAME=traptor_track_2.log
+      - KAFKA_ENABLED=true
+      - KAFKA_HOSTS=crew06.istresearch.com:9092,crew07.istresearch.com:9092,crew08.istresearch.com:9092
+      - KAFKA_TOPIC=traptor.cooper_prod
+      - REDIS_HOST=memex-services.istresearch.com
+      - REDIS_PORT=6379
+      - REDIS_DB=1
+      - REDIS_PUBSUB_CHANNEL=traptor-notify-prod
+      - CONSUMER_KEY=9zpLLExxOI2IOYgbNhRvtIgGx
+      - CONSUMER_SECRET=ZsNbJLPoL5x6V9MMgPfUctyLmpjwUF9JzZuXAX6TaItXmtdEIs
+      - ACCESS_TOKEN=3432988792-WdL16SxVisIWhGbp7oB52ivZ5EH4AI9XcHtgPwe
+      - ACCESS_TOKEN_SECRET=6pwlUaxkzLCIW4wT7HxF6bizLoDytbwRUX3vjsNjiCPes
+      - STATSD_HOST_IP=172.17.0.1
+    restart: "on-failure:3"
+    depends_on:
+      - logstash
+
+  track_3:
+    image: istresearch/traptor:v1.3.0
+    volumes:
+      - logs:/var/log/traptor
+    environment:
+      - TRAPTOR_TYPE=track
+      - TRAPTOR_ID=3
+      - RULE_CHECK_INTERVAL=60
+      - USE_SENTRY=true
+      - SENTRY_URL=https://870e681805524cddbeadb1957498d4c7:ebcb1d9a15ab4f4f837e0c3694225db5@sentry.io/55250
+      - LOG_LEVEL=INFO
+      - LOG_DIR=/var/log/traptor
+      - LOG_FILE_NAME=traptor_track_3.log
+      - KAFKA_ENABLED=true
+      - KAFKA_HOSTS=crew06.istresearch.com:9092,crew07.istresearch.com:9092,crew08.istresearch.com:9092
+      - KAFKA_TOPIC=traptor.cooper_prod
+      - REDIS_HOST=memex-services.istresearch.com
+      - REDIS_PORT=6379
+      - REDIS_DB=1
+      - REDIS_PUBSUB_CHANNEL=traptor-notify-prod
+      - CONSUMER_KEY=AUgcv74WCu6yo6GL3bYGaaG0c
+      - CONSUMER_SECRET=wgZl3EoBomgIP2R1B3xL8imsd6vV83u2BWynbb3wuzgQxgrNSO
+      - ACCESS_TOKEN=3515082683-9gSutGiZvXoujlIWBVD3J7vClAcfemnROmdAXUX
+      - ACCESS_TOKEN_SECRET=7L4oc15ofwukANtgC01WvosS1XgYW1qab8rMyu7vTDlF7
+      - STATSD_HOST_IP=172.17.0.1
+    restart: "on-failure:3"
+    depends_on:
+      - logstash
+
+  track_4:
+    image: istresearch/traptor:v1.3.0
+    volumes:
+      - logs:/var/log/traptor
+    environment:
+      - TRAPTOR_TYPE=track
+      - TRAPTOR_ID=4
+      - RULE_CHECK_INTERVAL=60
+      - USE_SENTRY=true
+      - SENTRY_URL=https://870e681805524cddbeadb1957498d4c7:ebcb1d9a15ab4f4f837e0c3694225db5@sentry.io/55250
+      - LOG_LEVEL=INFO
+      - LOG_DIR=/var/log/traptor
+      - LOG_FILE_NAME=traptor_track_4.log
+      - KAFKA_ENABLED=true
+      - KAFKA_HOSTS=crew06.istresearch.com:9092,crew07.istresearch.com:9092,crew08.istresearch.com:9092
+      - KAFKA_TOPIC=traptor.cooper_prod
+      - REDIS_HOST=memex-services.istresearch.com
+      - REDIS_PORT=6379
+      - REDIS_DB=1
+      - REDIS_PUBSUB_CHANNEL=traptor-notify-prod
+      - CONSUMER_KEY=OHNbN8cO2zlMXvRZ2VYRLrCYT
+      - CONSUMER_SECRET=XLPwMjxk4A7dc6IyARjGcIGd2BxhxFi5gUbvKL37LDWScgCRxy
+      - ACCESS_TOKEN=3515082683-deuaTp5PoSID719yQ3gj13qkYvCI3xGZ5xtu5aO
+      - ACCESS_TOKEN_SECRET=orzuge4vUdgEBOTsPErGJI15GYyUYHBwqUdEFaa4UNXcv
+      - STATSD_HOST_IP=172.17.0.1
+    restart: "on-failure:3"
+    depends_on:
+      - logstash
+
+  track_5:
+    image: istresearch/traptor:v1.3.0
+    volumes:
+      - logs:/var/log/traptor
+    environment:
+      - TRAPTOR_TYPE=track
+      - TRAPTOR_ID=5
+      - RULE_CHECK_INTERVAL=60
+      - USE_SENTRY=true
+      - SENTRY_URL=https://870e681805524cddbeadb1957498d4c7:ebcb1d9a15ab4f4f837e0c3694225db5@sentry.io/55250
+      - LOG_LEVEL=INFO
+      - LOG_DIR=/var/log/traptor
+      - LOG_FILE_NAME=traptor_track_5.log
+      - KAFKA_ENABLED=true
+      - KAFKA_HOSTS=crew06.istresearch.com:9092,crew07.istresearch.com:9092,crew08.istresearch.com:9092
+      - KAFKA_TOPIC=traptor.cooper_prod
+      - REDIS_HOST=memex-services.istresearch.com
+      - REDIS_PORT=6379
+      - REDIS_DB=1
+      - REDIS_PUBSUB_CHANNEL=traptor-notify-prod
+      - CONSUMER_KEY=KjnqAzoPieDE8TDsRUqc1tDh7
+      - CONSUMER_SECRET=q89tSKpCUaQ6VyzxHE3lIskrfjjQ71DAhe9GfoabDxSTPvV4wJ
+      - ACCESS_TOKEN=3515187809-L2QJEDs5nqcEfvFUptw3Y1IWbGbuPZbfbOmUrSk
+      - ACCESS_TOKEN_SECRET=oIARX8mSq8akIbaXnE1fQ0WfTEeU1VTMU1g84QKIze72b
+      - STATSD_HOST_IP=172.17.0.1
+    restart: "on-failure:3"
+    depends_on:
+      - logstash
+
+  track_6:
+    image: istresearch/traptor:v1.3.0
+    volumes:
+      - logs:/var/log/traptor
+    environment:
+      - TRAPTOR_TYPE=track
+      - TRAPTOR_ID=6
+      - RULE_CHECK_INTERVAL=60
+      - USE_SENTRY=true
+      - SENTRY_URL=https://870e681805524cddbeadb1957498d4c7:ebcb1d9a15ab4f4f837e0c3694225db5@sentry.io/55250
+      - LOG_LEVEL=INFO
+      - LOG_DIR=/var/log/traptor
+      - LOG_FILE_NAME=traptor_track_6.log
+      - KAFKA_ENABLED=true
+      - KAFKA_HOSTS=crew06.istresearch.com:9092,crew07.istresearch.com:9092,crew08.istresearch.com:9092
+      - KAFKA_TOPIC=traptor.cooper_prod
+      - REDIS_HOST=memex-services.istresearch.com
+      - REDIS_PORT=6379
+      - REDIS_DB=1
+      - REDIS_PUBSUB_CHANNEL=traptor-notify-prod
+      - CONSUMER_KEY=dwRokIedMnYcJQBUMez3LMduu
+      - CONSUMER_SECRET=SgsCYnCNtK2gk5eEQqB4cHfGW8GpEEpqlBcPoxcqHTqTL0Cq2g
+      - ACCESS_TOKEN=3439765912-5rqDuDR3M4SGWJYvCiHM9bjZA4B9KAdEgPs37uW
+      - ACCESS_TOKEN_SECRET=2qKh2tuj7qKWpmyioRzvVrgoNK0juEsyDtVqkA1OZHVpo
+      - STATSD_HOST_IP=172.17.0.1
+    restart: "on-failure:3"
+    depends_on:
+      - logstash
+
+  track_7:
+    image: istresearch/traptor:v1.3.0
+    volumes:
+      - logs:/var/log/traptor
+    environment:
+      - TRAPTOR_TYPE=track
+      - TRAPTOR_ID=7
+      - RULE_CHECK_INTERVAL=60
+      - USE_SENTRY=true
+      - SENTRY_URL=https://870e681805524cddbeadb1957498d4c7:ebcb1d9a15ab4f4f837e0c3694225db5@sentry.io/55250
+      - LOG_LEVEL=INFO
+      - LOG_DIR=/var/log/traptor
+      - LOG_FILE_NAME=traptor_track_7.log
+      - KAFKA_ENABLED=true
+      - KAFKA_HOSTS=crew06.istresearch.com:9092,crew07.istresearch.com:9092,crew08.istresearch.com:9092
+      - KAFKA_TOPIC=traptor.cooper_prod
+      - REDIS_HOST=memex-services.istresearch.com
+      - REDIS_PORT=6379
+      - REDIS_DB=1
+      - REDIS_PUBSUB_CHANNEL=traptor-notify-prod
+      - CONSUMER_KEY=YgPmiUv4LWlmnmKVXS2MPYoyc
+      - CONSUMER_SECRET=nJEHgJOWgpCuRAwVFUOxTnQO08D6xn8awNWkAjZW6fOxMfcuvB
+      - ACCESS_TOKEN=3439765912-a48dWcHlEOLs1WSwd4iB0CWFSoxMRHHQS8cuC9F
+      - ACCESS_TOKEN_SECRET=EMME13LSCHXQLrXSbQPZfTmf4GmS56jVT52cTGCX7MN7j
+      - STATSD_HOST_IP=172.17.0.1
+    restart: "on-failure:3"
+    depends_on:
+      - logstash
+
+  logstash:
+    container_name: traptor_logstash
+    image: logstash:latest
+    command: logstash -f /etc/logstash/conf.d/logstash.conf
+    volumes:
+      - /opt/docker_configs/logstash-traptor-prod.conf:/etc/logstash/conf.d/logstash.conf
+      - /opt/docker_configs/logs-template.json:/etc/logstash/templates/logs-template.json
+      - logs:/var/log/traptor
+
+volumes:
+  logs:
+
