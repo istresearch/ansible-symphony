@@ -41,6 +41,11 @@ elasticsearch_misc_query_bool_max_clause_count: 4096
 elasticsearch_memory_bootstrap_mlockall: "true"
 elasticsearch_base_node_name: esnode
 
+elasticsearch_disk_threshold_enabled: True
+elasticsearch_watermark_low: 85%
+elasticsearch_watermark_high: 90%
+elasticsearch_update_interval: 30s
+
 elasticsearch_gateway_type: local
 elasticsearch_gateway_recover_after_nodes: 1
 elasticsearch_gateway_recover_after_time: 2m

@@ -123,6 +123,11 @@
       include: monitor-tasks/nginx.yml
       when: datadog_monitors.nginx is defined and datadog_monitors.nginx.enabled
       tags: datadog-monitors-nginx
+
+    - name: execute docker_daemon monitor tasks
+      include: monitor-tasks/docker_daemon.yml
+      when: datadog_monitors.docker_daemon is defined and datadog_monitors.docker_daemon.enabled
+      tags: datadog-monitors-docker
   tags:
     - datadog-monitors
     - datadog-monitors-custom-tasks

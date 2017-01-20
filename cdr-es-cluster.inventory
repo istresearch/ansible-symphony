@@ -23,7 +23,7 @@ elasticsearch-nodes
 cdr-es-m[01:03].istresearch.com
 
 [elasticsearch-data-nodes]
-cdr-es[01:10].istresearch.com
+cdr-es[01:13].istresearch.com
 
 [elasticsearch-client-nodes]
 

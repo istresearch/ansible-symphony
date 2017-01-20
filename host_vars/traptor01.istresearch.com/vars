@@ -21,10 +21,12 @@ datadog_monitors:
                bool:
                  must:
                   - match:
-                      doc.traptor.rule_type: locations
+                      doc.traptor.rule_type: follow
              tags:
-               - 'traptor_type:locations'
-               - 'traptor_metric:locations'
+               - 'traptor_type:follow'
+               - 'traptor_metric:follow'
+
+
   disk:
     enabled: true
     is_custom_check: false
