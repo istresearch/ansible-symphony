@@ -42,6 +42,16 @@ pulse-ui-node
 pulse-mysql-es-host
 phantomjs-nodes
 gandalf-runner-node
+docker-bumblebee-nodes
+docker-cooper-nodes
+docker-curator-nodes
+docker-grawler-nodes
+docker-rule-manager-nodes
+docker-scrapy-nodes
+docker-telegraptor-nodes
+docker-telegraptor-api-nodes
+docker-traptor-nodes
+portainer-nodes
 
 [zookeeper-nodes]
 vagrant-ist-01
@@ -197,34 +207,45 @@ traptor-location-nodes
 [docker-engine]
 vagrant-ist-01
 
-[docker-bumblebee]
+[docker-bumblebee-nodes]
 vagrant-ist-01
 
-[docker-cooper]
+[docker-cooper-nodes]
 vagrant-ist-01
 
-[docker-curator]
+[docker-curator-nodes]
 vagrant-ist-01
 
-[docker-grawler]
+[docker-grawler-nodes]
 vagrant-ist-01
 
-[docker-rule-manager]
+[docker-rule-manager-nodes]
 vagrant-ist-01
 
-[docker-scrapy]
+[docker-scrapy-nodes]
 vagrant-ist-01
 
-[docker-telegraptor]
+[docker-telegraptor-nodes]
 vagrant-ist-01
 
-[docker-telegraptor-api]
+[docker-telegraptor-api-nodes]
 vagrant-ist-01
 
-[docker-traptor]
+[docker-traptor-follow-nodes]
 vagrant-ist-01
 
-[portainer]
+[docker-traptor-track-nodes]
+vagrant-ist-02
+
+[docker-traptor-geo-nodes]
+vagrant-ist-01
+
+[docker-traptor-nodes:children]
+docker-traptor-follow-nodes
+docker-traptor-track-nodes
+docker-traptor-geo-nodes
+
+[portainer-nodes]
 vagrant-ist-01
 
 [googler-nodes]

@@ -463,6 +463,7 @@
   tags:
     - site-docker-engine
     - deps-pulse-docker
+    - deps-docker-apps
 
 # ---------------------------------- MySQL -----------------------------------
 
@@ -562,4 +563,107 @@
     - site-grawler
     - deps-grawler
 
-    
+# ---------------------------------- Docker Bumblebee --------------------------------
+
+- name: Run Docker Bumblebee role
+  hosts: docker-bumblebee-nodes
+  roles: [ docker-bumblebee ]
+  tags:
+    - site-docker-bumblebee
+    - deps-docker-apps
+
+# ---------------------------------- Docker Cooper --------------------------------
+
+- name: Run Docker Cooper role
+  hosts: docker-cooper-nodes
+  roles: [ docker-cooper ]
+  tags:
+    - site-docker-cooper
+    - deps-docker-apps
+
+# ---------------------------------- Docker Curator --------------------------------
+
+- name: Run Docker Curator role
+  hosts: docker-curator-nodes
+  roles: [ docker-curator ]
+  tags:
+    - site-docker-curator
+    - deps-docker-apps
+
+# ---------------------------------- Docker Grawler --------------------------------
+
+- name: Run Docker Grawler role
+  hosts: docker-grawler-nodes
+  roles: [ docker-grawler ]
+  tags:
+    - site-docker-grawler
+    - deps-docker-apps
+
+# ---------------------------------- Docker Rule Manager --------------------------------
+
+- name: Run Docker Rule Manager role
+  hosts: docker-rule-manager-nodes
+  roles: [ docker-rule-manager ]
+  tags:
+    - site-docker-rule-manager
+    - deps-docker-apps
+
+# ---------------------------------- Docker Scrapy --------------------------------
+
+- name: Run Docker Scrapy role
+  hosts: docker-scrapy-nodes
+  roles: [ docker-scrapy ]
+  tags:
+    - site-docker-scrapy
+    - deps-docker-apps
+
+# ---------------------------------- Docker Telegraptor --------------------------------
+
+- name: Run Docker Telegraptor role
+  hosts: docker-telegraptor-nodes
+  roles: [ docker-telegraptor ]
+  tags:
+    - site-docker-telegraptor-nodes
+    - deps-docker-apps
+
+# ---------------------------------- Docker Telegraptor API --------------------------------
+
+- name: Run Docker Telegraptor API role
+  hosts: docker-telegraptor-api-nodes
+  roles: [ docker-telegraptor-api ]
+  tags:
+    - site-docker-telegraptor-api
+    - deps-docker-apps
+
+# ---------------------------------- Docker Traptor --------------------------------
+
+- name: Run Traptor Follow role
+  hosts: docker-traptor-follow-nodes
+  roles: [ docker-traptor ]
+  vars:
+    is_follow: true
+  tags:
+    - site-docker-traptor
+    - site-docker-traptor-follow
+    - deps-docker-apps
+
+- name: Run Traptor Track role
+  hosts: docker-traptor-track-nodes
+  roles: [ docker-traptor ]
+  vars:
+    is_track: true
+  tags:
+    - site-docker-traptor
+    - site-docker-traptor-track
+    - deps-docker-apps
+
+- name: Run Traptor Geo role
+  hosts: docker-traptor-geo-nodes
+  roles: [ docker-traptor ]
+  vars:
+    is_geo: true
+  tags:
+    - site-docker-traptor
+    - site-docker-traptor-geo
+    - deps-docker-apps
+
