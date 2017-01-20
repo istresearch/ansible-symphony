@@ -197,6 +197,36 @@ traptor-location-nodes
 [docker-engine]
 vagrant-ist-01
 
+[docker-bumblebee]
+vagrant-ist-01
+
+[docker-cooper]
+vagrant-ist-01
+
+[docker-curator]
+vagrant-ist-01
+
+[docker-grawler]
+vagrant-ist-01
+
+[docker-rule-manager]
+vagrant-ist-01
+
+[docker-scrapy]
+vagrant-ist-01
+
+[docker-telegraptor]
+vagrant-ist-01
+
+[docker-telegraptor-api]
+vagrant-ist-01
+
+[docker-traptor]
+vagrant-ist-01
+
+[portainer]
+vagrant-ist-01
+
 [googler-nodes]
 vagrant-ist-02
 
