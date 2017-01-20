@@ -27,6 +27,7 @@ gdelt-monitor-node
 traptor-nodes
 elastalert-nodes
 tor-proxy
+docker-engine
 
 [zookeeper-nodes]
 nightly.dev.istresearch.com host_alias=demo-box-dev.istresearch.com
@@ -169,3 +170,7 @@ nightly.dev.istresearch.com
 
 [cooper-node]
 nightly.dev.istresearch.com
+
+[docker-engine]
+nightly.dev.istresearch.com
+login-crawler.dev.istresearch.com
