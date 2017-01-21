@@ -39,7 +39,7 @@
 - name: copy compose file
   template:
     src: scrapy-cluster-compose.prod.yaml.j2
-    dest: "{{ docker_compose_dir }}/scrapy-cluster-compose.prod.yaml.j2"
+    dest: "{{ docker_compose_dir }}/scrapy-cluster-compose.prod.yaml"
     mode: 0644
   tags: docker-scrapy
 
@@ -54,7 +54,7 @@
   template:
     src: dc-scrapy-cluster.sh.j2
     dest: "{{ docker_scripts_dir }}/dc-scrapy-cluster.sh"
-    mode: 0644
+    mode: 0755
   tags: docker-scrapy
 
 - name: Stop and Kill any existing Scrapy Containers

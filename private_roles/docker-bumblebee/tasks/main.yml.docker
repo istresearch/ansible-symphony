@@ -36,9 +36,15 @@
   tags: docker-bumblebee
 
 - name: Stop and Kill any existing Bumblebee Containers
-  command: "{{ docker_scripts_dir }}/dc-bumblebee.sh down"
+  docker_service:
+    project_src: "{{ docker_compose_dir }}/bumblebee-compose.yaml"
+    project_name: bumblebee
+    state: absent
   tags: docker-bumblebee
 
 - name: Start the Bumblebee Container
-  command: "{{ docker_scripts_dir }}/dc-bumblebee.sh up -d"
+  docker_service:
+    project_src: "{{ docker_compose_dir }}/bumblebee-compose.yaml"
+    project_name: bumblebee
+    state: present
   tags: docker-bumblebee

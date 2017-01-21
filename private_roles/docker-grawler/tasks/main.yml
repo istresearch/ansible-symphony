@@ -61,7 +61,7 @@
   template:
     src: dc-grawler.sh.j2
     dest: "{{ docker_scripts_dir }}/dc-grawler.sh"
-    mode: 0644
+    mode: 0755
   tags: docker-grawler
 
 - name: Stop and Kill any existing Grawler Containers

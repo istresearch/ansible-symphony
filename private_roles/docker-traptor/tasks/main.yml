@@ -38,24 +38,24 @@
 
 - name: copy Traptor Follow compose file
   template:
-    src: traptor-follow-compose.prod.yaml.j2
-    dest: "{{ docker_compose_dir }}/traptor-follow-compose.prod.yaml"
+    src: traptor-follow-compose.prod.yml.j2
+    dest: "{{ docker_compose_dir }}/traptor-follow-compose.prod.yml"
     mode: 0644
   when: is_follow
   tags: docker-traptor
 
 - name: copy Traptor Track compose file
   template:
-    src: traptor-track-compose.prod.yaml.j2
-    dest: "{{ docker_compose_dir }}/traptor-track-compose.prod.yaml"
+    src: traptor-track-compose.prod.yml.j2
+    dest: "{{ docker_compose_dir }}/traptor-track-compose.prod.yml"
     mode: 0644
   when: is_track
   tags: docker-traptor
 
 - name: copy Traptor Geo compose file
   template:
-    src: traptor-geo-compose.prod.yaml.j2
-    dest: "{{ docker_compose_dir }}/traptor-geo-compose.prod.yaml"
+    src: traptor-geo-compose.prod.yml.j2
+    dest: "{{ docker_compose_dir }}/traptor-geo-compose.prod.yml"
     mode: 0644
   when: is_geo
   tags: docker-traptor
@@ -72,7 +72,7 @@
   template:
     src: dc-traptor-follow.sh.j2
     dest: "{{ docker_scripts_dir }}/dc-traptor-follow.sh"
-    mode: 0644
+    mode: 0755
   when: is_follow
   tags: docker-traptor
 
@@ -91,7 +91,7 @@
   template:
     src: dc-traptor-track.sh.j2
     dest: "{{ docker_scripts_dir }}/dc-traptor-track.sh"
-    mode: 0644
+    mode: 0755
   when: is_track
   tags: docker-traptor
 
@@ -110,7 +110,7 @@
   template:
     src: dc-traptor-geo.sh.j2
     dest: "{{ docker_scripts_dir }}/dc-traptor-geo.sh"
-    mode: 0644
+    mode: 0755
   when: is_geo
   tags: docker-traptor
 

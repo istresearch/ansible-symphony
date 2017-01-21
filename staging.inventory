@@ -206,6 +206,7 @@ traptor-location-nodes
 
 [docker-engine]
 vagrant-ist-01
+vagrant-ist-02
 
 [docker-bumblebee-nodes]
 vagrant-ist-01

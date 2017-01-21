@@ -68,7 +68,7 @@
   template:
     src: dc-cooper.sh.j2
     dest: "{{ docker_scripts_dir }}/dc-cooper.sh"
-    mode: 0644
+    mode: 0755
   tags: docker-cooper
 
 - name: Stop and Kill any existing Cooper Containers

@@ -463,7 +463,15 @@
   tags:
     - site-docker-engine
     - deps-pulse-docker
-    - deps-docker-apps
+    - deps-docker-bumblebee
+    - deps-docker-cooper
+    - deps-docker-curator
+    - deps-docker-grawler
+    - deps-docker-rule-manager
+    - deps-docker-scrapy
+    - deps-docker-telegraptor
+    - deps-docker-telegraptor-api
+    - deps-docker-traptor
 
 # ---------------------------------- MySQL -----------------------------------
 
@@ -570,7 +578,6 @@
   roles: [ docker-bumblebee ]
   tags:
     - site-docker-bumblebee
-    - deps-docker-apps
 
 # ---------------------------------- Docker Cooper --------------------------------
 
@@ -579,7 +586,6 @@
   roles: [ docker-cooper ]
   tags:
     - site-docker-cooper
-    - deps-docker-apps
 
 # ---------------------------------- Docker Curator --------------------------------
 
@@ -588,7 +594,6 @@
   roles: [ docker-curator ]
   tags:
     - site-docker-curator
-    - deps-docker-apps
 
 # ---------------------------------- Docker Grawler --------------------------------
 
@@ -597,7 +602,6 @@
   roles: [ docker-grawler ]
   tags:
     - site-docker-grawler
-    - deps-docker-apps
 
 # ---------------------------------- Docker Rule Manager --------------------------------
 
@@ -606,7 +610,6 @@
   roles: [ docker-rule-manager ]
   tags:
     - site-docker-rule-manager
-    - deps-docker-apps
 
 # ---------------------------------- Docker Scrapy --------------------------------
 
@@ -615,7 +618,6 @@
   roles: [ docker-scrapy ]
   tags:
     - site-docker-scrapy
-    - deps-docker-apps
 
 # ---------------------------------- Docker Telegraptor --------------------------------
 
@@ -624,7 +626,6 @@
   roles: [ docker-telegraptor ]
   tags:
     - site-docker-telegraptor-nodes
-    - deps-docker-apps
 
 # ---------------------------------- Docker Telegraptor API --------------------------------
 
@@ -633,7 +634,6 @@
   roles: [ docker-telegraptor-api ]
   tags:
     - site-docker-telegraptor-api
-    - deps-docker-apps
 
 # ---------------------------------- Docker Traptor --------------------------------
 
@@ -645,7 +645,6 @@
   tags:
     - site-docker-traptor
     - site-docker-traptor-follow
-    - deps-docker-apps
 
 - name: Run Traptor Track role
   hosts: docker-traptor-track-nodes
@@ -655,7 +654,6 @@
   tags:
     - site-docker-traptor
     - site-docker-traptor-track
-    - deps-docker-apps
 
 - name: Run Traptor Geo role
   hosts: docker-traptor-geo-nodes
@@ -665,5 +663,4 @@
   tags:
     - site-docker-traptor
     - site-docker-traptor-geo
-    - deps-docker-apps
 

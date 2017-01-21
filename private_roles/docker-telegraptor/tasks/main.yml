@@ -54,7 +54,7 @@
   template:
     src: dc-telegraptor.sh.j2
     dest: "{{ docker_scripts_dir }}/dc-telegraptor.sh"
-    mode: 0644
+    mode: 0755
   tags: docker-telegraptor
 
 - name: Stop and Kill any existing Telegraptor Containers

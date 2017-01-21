@@ -39,7 +39,7 @@
 - name: copy compose file
   template:
     src: rule-manager-compose.prod.yml.j2
-    dest: "{{ docker_compose_dir }}/rule-manager-compose.prod.yml.j2"
+    dest: "{{ docker_compose_dir }}/rule-manager-compose.prod.yml"
     mode: 0644
   tags: docker-rule-manager
 
@@ -54,7 +54,7 @@
   template:
     src: dc-rule-manager.sh.j2
     dest: "{{ docker_scripts_dir }}/dc-rule-manager.sh"
-    mode: 0644
+    mode: 0755
   tags: docker-rule-manager
 
 - name: Stop and Kill any existing Rule Manager Containers

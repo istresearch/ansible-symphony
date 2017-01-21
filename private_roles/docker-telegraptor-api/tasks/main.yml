@@ -47,7 +47,7 @@
   template:
     src: dc-telegraptor-api.sh.j2
     dest: "{{ docker_scripts_dir }}/dc-telegraptor-api.sh"
-    mode: 0644
+    mode: 0755
   tags: docker-telegraptor-api
 
 - name: Stop and Kill any existing Telegraptor API Containers

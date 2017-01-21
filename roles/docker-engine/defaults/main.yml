@@ -18,8 +18,8 @@ docker_apt_repository: deb https://apt.dockerproject.org/repo ubuntu-{{ ansible_
 
 docker_opts: "-H tcp://127.0.0.1:4243 -H unix:///var/run/docker.sock --dns 8.8.8.8 --dns 8.8.4.4"
 
-# Versions for the python packages that are installed installed
-docker_py_version: latest
+# Versions for the python packages that are installed
+docker_py_version: 1.7.0
 docker_compose_version: latest
 
 # Set to 'yes' or 'true' to enable updates (sets 'latest' in apt module)
