@@ -15,6 +15,7 @@ elasticsearch_start_retries: 3
 
 elasticsearch_install_kopf: true
 elasticsearch_install_icu_analysis: false
+elasticsearch_install_cloud_aws: true
 
 elasticsearch_install_marvel: false
 elasticsearch_marvel_with_shield: false
