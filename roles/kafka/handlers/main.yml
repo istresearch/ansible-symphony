@@ -1,6 +1,3 @@
 ---
 - name: restart kafka
   command: supervisorctl update kafka
-  # supervisorctl:
-  #   name=kafka
-  #   state=restarted
