@@ -33,6 +33,11 @@
   tags:
     - elasticsearch
 
+- name: Get Base Node Name from Hostname
+  shell: hostname | awk -F . '{print $1}'
+  register: elasticsearch_base_node_name
+  tags: elasticsearch
+
 - name: Configuring group
   group:
     name: "{{ elasticsearch_group }}"
@@ -221,6 +226,20 @@
 - name: install license plugin
   shell: "{{ elasticsearch_bin_dir }}/plugin install -b license"
   when: elasticsearch_install_marvel and elasticsearchlicense.stat.isdir is not defined
+  tags:
+    - elasticsearch
+
+- name: check for existing cloud-aws plugin
+  stat:
+    path: "{{ elasticsearch_plugin_dir }}/cloud-aws"
+  register: cloud_aws
+  when: elasticsearch_install_cloud_aws
+  tags:
+    - elasticsearch
+
+- name: install cloud-aws plugin
+  shell: "{{ elasticsearch_bin_dir }}/plugin install -b cloud-aws"
+  when: elasticsearch_install_cloud_aws and cloud_aws.stat.isdir is not defined
   tags:
     - elasticsearch
 

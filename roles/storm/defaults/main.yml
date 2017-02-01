@@ -16,6 +16,7 @@ storm_logviewer_extra_config:
 storm_nimbus_enabled: false
 storm_nimbus_extra_config:
     nimbus.childopts: "-Xmx1024m"
+    nimbus.thrift.max_buffer_size: 1048576
 storm_supervisor_enabled: false
 storm_supervisor_extra_config:
     supervisor.childopts: "-Xmx1024m"

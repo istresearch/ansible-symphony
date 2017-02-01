@@ -46,6 +46,7 @@
     - e2fslibs-dev
     - resolvconf
     - ntpdate
+    - rdate
     #- awscli
   tags: common
 

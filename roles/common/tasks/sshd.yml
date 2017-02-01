@@ -26,11 +26,8 @@
     state=present
     line='PasswordAuthentication no'
     validate='sshd -f %s -t'
-  notify:
-    - restart sshd {{ ansible_os_family }}
 
 - name: Restart sshd
   service:
     name=ssh
     state=restarted
-
