@@ -34,6 +34,10 @@ datadog_monitors:
     enabled: true
     is_custom_check: false
     collect_connection_state: yes
+  ntp:
+    enabled: true
+    is_custom_check: false
+    offset_threshold: 60
 
 ####################################################################################
 # View available dogstreams (log parsers)
