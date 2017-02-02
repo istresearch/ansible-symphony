@@ -1,0 +1,8 @@
+---
+############################################################################
+# dd-agent needs to be added to the docker group in order to access docker
+# metrics
+############################################################################
+- user:
+    name: dd-agent
+    group: docker
