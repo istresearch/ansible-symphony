@@ -39,5 +39,3 @@ pulse_install_first_account: true
 pulse_install_first_account_json: "\"install_first_account\": {{ pulse_install_first_account }}, \"first_account\": { \"name\": \"{{ pulse_db_titan_user }}\", \"email\": \"{{ pulse_db_titan_email }}\", \"password\": \"{{ pulse_db_titan_pw }}\" }"
 
 pulse_db_setup_json: "{{ pulse_install_language_json }}, {{ pulse_install_db_conn_json }}, {{ pulse_install_database_json }}, {{ pulse_install_settings_class_json }}, {{ pulse_install_config_settings_json }}, {{ pulse_install_first_account_json }}"
-
-pulse_configs_dir: "{{ pulse_install_dir | default('/opt/pulse') }}/joka-{{ pulse_version | default('2.1.11.1') }}/app/configs"
