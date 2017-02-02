@@ -128,6 +128,12 @@
       include: monitor-tasks/docker_daemon.yml
       when: datadog_monitors.docker_daemon is defined and datadog_monitors.docker_daemon.enabled
       tags: datadog-monitors-docker
+
+    - name: execute ist_docker_daemon monitor tasks
+      include: monitor-tasks/ist_docker_daemon.yml
+      when: datadog_monitors.ist_docker_daemon is defined and datadog_monitors.ist_docker_daemon.enabled
+      tags: datadog-monitors-ist-docker-daemon
+
   tags:
     - datadog-monitors
     - datadog-monitors-custom-tasks

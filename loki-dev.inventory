@@ -29,13 +29,13 @@ elastalert-nodes
 tor-proxy
 
 [zookeeper-nodes]
-demo-box-dev.istresearch.com host_alias=demo-box-dev.istresearch.com
+loki.dev.istresearch.com host_alias=demo-box-dev.istresearch.com
 
 [kafka-nodes]
-demo-box-dev.istresearch.com
+loki.dev.istresearch.com
 
 [redis-master-node]
-demo-box-dev.istresearch.com
+loki.dev.istresearch.com
 
 [redis-slave-nodes]
 #leave empty
@@ -49,33 +49,33 @@ redis-slave-nodes
 redis-sentinel-nodes
 
 [hadoop-namenode-node]
-demo-box-dev.istresearch.com
+loki.dev.istresearch.com
 
 [hadoop-secondary-namenode-node]
 #leave empty
 
 [hadoop-datanode-nodes]
-demo-box-dev.istresearch.com
+loki.dev.istresearch.com
 
 [hadoop-nodes:children]
 hadoop-namenode-node
 hadoop-datanode-nodes
 
 [hbase-master-node]
-demo-box-dev.istresearch.com
+loki.dev.istresearch.com
 
 [hbase-regionserver-nodes]
-demo-box-dev.istresearch.com
+loki.dev.istresearch.com
 
 [hbase-nodes:children]
 hbase-master-node
 hbase-regionserver-nodes
 
 [spark-master-node]
-demo-box-dev.istresearch.com
+loki.dev.istresearch.com
 
 [spark-worker-nodes]
-demo-box-dev.istresearch.com
+loki.dev.istresearch.com
 
 [spark-nodes:children]
 spark-master-node
@@ -100,7 +100,7 @@ gandalf-runner-node
 [elasticsearch-master-nodes]
 
 [elasticsearch-data-nodes]
-demo-box-dev.istresearch.com elasticsearch_is_master=true
+loki.dev.istresearch.com elasticsearch_is_master=true
 
 [elasticsearch-client-nodes]
 
@@ -110,13 +110,13 @@ elasticsearch-data-nodes
 elasticsearch-client-nodes
 
 [scrapy-cluster-kafka-monitor-node]
-demo-box-dev.istresearch.com
+loki.dev.istresearch.com
 
 [scrapy-cluster-redis-monitor-node]
-demo-box-dev.istresearch.com
+loki.dev.istresearch.com
 
 [scrapy-cluster-crawler-nodes]
-demo-box-dev.istresearch.com
+loki.dev.istresearch.com
 
 [scrapy-cluster-indexer-nodes]
 
@@ -127,7 +127,7 @@ scrapy-cluster-crawler-nodes
 scrapy-cluster-indexer-nodes
 
 [googler-nodes]
-demo-box-dev.istresearch.com
+loki.dev.istresearch.com
 
 [gnip-monitor-node]
 
@@ -143,7 +143,7 @@ demo-box-dev.istresearch.com
 demo-trap1.dev.istresearch.com
 
 [traptor-track-nodes]
-demo-box-dev.istresearch.com
+loki.dev.istresearch.com
 
 [traptor-nodes:children]
 traptor-follow-nodes
@@ -151,21 +151,21 @@ traptor-track-nodes
 
 
 [kibana-node]
-demo-box-dev.istresearch.com
+loki.dev.istresearch.com
 
 [mysql-node]
-demo-box-dev.istresearch.com
+loki.dev.istresearch.com
 
 [pulse-ui-node]
-demo-box-dev.istresearch.com
+loki.dev.istresearch.com
 
 [pulse-mysql-es-host]
-demo-box-dev.istresearch.com
+loki.dev.istresearch.com
 
 [grawler-nodes]
 
 [gandalf-runner-node]
-demo-box-dev.istresearch.com
+loki.dev.istresearch.com
 
 [cooper-node]
-demo-box-dev.istresearch.com
+loki.dev.istresearch.com
