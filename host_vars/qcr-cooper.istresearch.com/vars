@@ -1,0 +1,48 @@
+datadog_monitors:
+  ist_supervisord:
+    enabled: true
+    is_custom_check: true
+    server_name: '{{ inventory_hostname }}'
+  es_doc_count:
+    enabled: true
+    is_custom_check: true
+    es_instances:
+      - host: '10.105.92.100'
+        protocol: http
+        port: 9200
+        doctypes:
+          ##########################
+          # QCR Prod storm
+          ##########################
+          - doc_type: normalizer-traptor-topology
+            index: logs-topologies-*
+            metric_name: storm.check.logs.count
+            timestamp_field: timestamp
+            query:
+              bool:
+                must:
+                 - match:
+                     message: Tuple acked in spout.
+            tags:
+              - 'storm_log:normalizer-traptor-topology'
+
+          - doc_type: normalizer-voyager-topology
+            index: logs-topologies-*
+            metric_name: storm.check.logs.count
+            timestamp_field: timestamp
+            query:
+              bool:
+                must:
+                 - match:
+                     message: Tuple acked in spout.
+            tags:
+              - 'storm_log:normalizer-voyager-topology'
+
+  disk:
+    enabled: true
+    is_custom_check: false
+    use_mount: no
+  network:
+    enabled: true
+    is_custom_check: false
+    collect_connection_state: yes
