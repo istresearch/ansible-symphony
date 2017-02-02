@@ -176,3 +176,4 @@ nightly.dev.istresearch.com
 [docker-engine]
 nightly.dev.istresearch.com
 login-crawler.dev.istresearch.com
+dag.dev.istresearch.com
