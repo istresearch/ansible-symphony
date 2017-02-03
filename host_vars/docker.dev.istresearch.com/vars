@@ -1,3 +1,4 @@
+---
 datadog_monitors:
   ist_supervisord:
     enabled: true
@@ -16,3 +17,6 @@ datadog_monitors:
     is_custom_check: false
     socket_path: "unix://var/run/docker.sock"
     labels_as_tags: ["com.docker.compose.service", "com.docker.compose.project"]
+
+dev:
+   - { name: jrgoulet, key: '{{ vault_jrgoulet_key }}' }

@@ -1,0 +1,36 @@
+datadog_monitors:
+  ist_supervisord:
+    enabled: true
+    is_custom_check: true
+    server_name: '{{ inventory_hostname }}'
+  es_doc_count:
+    enabled: true
+    is_custom_check: true
+    es_instances:
+      - host: '10.105.92.100'
+        protocol: http
+        port: 9200
+        doctypes:
+          ##########################
+          # QCR Prod
+          ##########################
+          - doc_type: telegram_stream_message
+            index: pulseprod-*
+            metric_name: telegram_stream_message.count
+            timestamp_field: norm.timestamp
+
+          ##########################
+          # QCR Dev
+          ##########################
+          - doc_type: telegram_stream_message
+            index: pulsedev-*
+            metric_name: telegram_stream_message.count
+            timestamp_field: norm.timestamp
+  disk:
+    enabled: true
+    is_custom_check: false
+    use_mount: no
+  network:
+    enabled: true
+    is_custom_check: false
+    collect_connection_state: yes

@@ -27,6 +27,7 @@ gdelt-monitor-node
 traptor-nodes
 elastalert-nodes
 tor-proxy
+docker-engine
 
 [zookeeper-nodes]
 nightly.dev.istresearch.com host_alias=demo-box-dev.istresearch.com
@@ -101,6 +102,7 @@ gandalf-runner-node
 
 [elasticsearch-data-nodes]
 nightly.dev.istresearch.com elasticsearch_is_master=true
+dag.dev.istresearch.com elasticsearch_is_master=true
 
 [elasticsearch-client-nodes]
 
@@ -152,6 +154,7 @@ traptor-track-nodes
 
 [kibana-node]
 nightly.dev.istresearch.com
+dag.dev.istresearch.com
 
 [mysql-node]
 nightly.dev.istresearch.com
@@ -169,3 +172,9 @@ nightly.dev.istresearch.com
 
 [cooper-node]
 nightly.dev.istresearch.com
+
+[docker-engine]
+nightly.dev.istresearch.com
+login-crawler.dev.istresearch.com
+docker.dev.istresearch.com
+dag.dev.istresearch.com

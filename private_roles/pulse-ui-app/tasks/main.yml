@@ -33,11 +33,25 @@
     state=present
   tags: pulse-ui-app
 
-- name: Create pulse-ui install directory
+- name: Check for existing pulse install
+  stat: path={{ pulse_install_dir }}
+  register: pulse
+  tags: pulse-ui-app
+
+- name: Create pulse install directory
   file:
     path={{ pulse_install_dir }}/
     state=directory
     mode=0755
+  when: pulse.stat.isdir is not defined
+  tags: pulse-ui-app
+
+- name: Create pulse common directory
+  file:
+    path={{ pulse_common_dir }}
+    state=directory
+    mode=0755
+  when: pulse.stat.isdir is not defined
   tags: pulse-ui-app
 
 - name: Create pulse mmr directory
@@ -45,11 +59,12 @@
     path={{ pulse_mmr_dir }}/
     state=directory
     mode=0777
+  when: pulse.stat.isdir is not defined
   tags: pulse-ui-app
 
-- name: Check for existing pulse install
+- name: Check for existing pulse version install
   stat: path={{ pulse_install_dir }}/pulse-{{ pulse_version }}
-  register: pulse
+  register: joka_version
   tags: pulse-ui-app
 
 - name: Download pulse
@@ -60,7 +75,7 @@
     validate_certs=no
     url_username={{ pulse_repo_user }}
     url_password={{ pulse_repo_password }}
-  when: pulse.stat.isdir is not defined
+  when: joka_version.stat.isdir is not defined
   tags: pulse-ui-app
 
 - name: Extract pulse
@@ -68,7 +83,7 @@
     src=/tmp/joka-{{ pulse_version }}.zip
     dest={{ pulse_install_dir }}/
     copy=no
-  when: pulse.stat.isdir is not defined
+  when: joka_version.stat.isdir is not defined
   tags: pulse-ui-app
 
 - name: Delete temporary pulse file
@@ -133,7 +148,7 @@
 
 - name: Create Pulse config directory
   file:
-    path={{ pulse_install_dir }}/joka-{{ pulse_version }}/app/configs/anyhost
+    path={{ pulse_configs_dir }}/anyhost
     state=directory
     mode=0755
   tags: pulse-ui-app
@@ -147,6 +162,33 @@
     url_username={{ pulse_repo_user }}
     url_password={{ pulse_repo_password }}
   with_items: "{{ pollster_build_types }}"
+  tags: pulse-ui-app
+
+- name: Check for existing htaccess pulse common
+  stat: path={{ pulse_common_dir }}/.htaccess
+  register: pulse_htaccess
+  tags: pulse-ui-app
+
+- name: Copy htaccess into common when not there
+  copy:
+    src={{ pulse_install_dir }}/joka-{{ pulse_version }}/.htaccess
+    dest={{ pulse_common_dir }}/.htaccess
+    mode=0755
+  when: not pulse_htaccess.stat.exists
+  tags: pulse-ui-app
+
+- name: Delete htaccess from pulse version directory
+  file:
+    path={{ pulse_install_dir }}/joka-{{ pulse_version }}/.htaccess
+    state=absent
+  ignore_errors: yes
+  tags: pulse-ui-app
+
+- name: Create htaccess symlink
+  file:
+    path={{ pulse_install_dir }}/joka-{{ pulse_version }}/.htaccess
+    state=link
+    src={{ pulse_common_dir }}/.htaccess
   tags: pulse-ui-app
 
 - name: Create Pollster symlinks
@@ -168,7 +210,7 @@
   file:
     path={{ apache_document_root|default('/var/www') }}/pulse
     state=link
-    src={{ pulse_install_dir }}/joka-{{ pulse_version }}
+    src={{ pulse_install_dir }}/default
   tags: pulse-ui-app
 
 - name: Install apache proxy

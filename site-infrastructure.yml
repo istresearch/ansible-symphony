@@ -53,10 +53,7 @@
 # ------------------------------ Customize AWS ------------------------
 
 - name: Run AWS customize
-  hosts: 
-    - aws
-    - tag_Environment_Production
-    - tag_Environment_Development
+  hosts: all
   roles:
     - aws-customize
   tags: aws-customize

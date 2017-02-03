@@ -1,7 +1,9 @@
-pulse_version: 3.0.16
+pulse_version: 3.0.17
 
 pulse_name: pulse
 pulse_install_dir: /opt/pulse
+pulse_common_dir: "{{ pulse_install_dir }}/common"
+pulse_configs_dir: "{{ pulse_install_dir }}/joka-{{ pulse_version | default('3.0.17') }}/app/configs"
 pulse_mmr_dir: /var/mmr/pulse
 pulse_log_dir: "{{ pulse_mmr_dir }}/logs"
 pulse_docker_dir: /data/bin/pulse_docker
@@ -10,10 +12,10 @@ pulse_analysis_iframe_url: "http://{{ inventory_hostname }}:{{ kibana4_port | de
 pulse_repo_location: "https://{{ repository_host }}/pulse"
 
 pulse_ui_name: pulse-ui
-pulse_ui_version: 3.0.16
+pulse_ui_version: 3.0.17
 
 pollster_name: appPollsterPrime
-pollster_version: 5.3.16
+pollster_version: 5.3.17
 pollster_build_types:
   - { name: post23-release }
   - { name: pre23-release }

@@ -79,7 +79,35 @@
     mode: 0755
     recurse: yes
   when: not pulse_db_legacy_setup
-  tags: pulse-ui-db-app 
+  tags: pulse-ui-db-app
+
+- name: Check for existing common configs directory
+  stat: path={{ pulse_common_dir }}/configs
+  register: pulse_common_configs
+  tags: pulse-ui-db-app
+
+- name: Copy configs to pulse common directory
+  copy:
+    src={{ pulse_configs_dir }}
+    dest={{ pulse_common_dir }}
+    remote_src=False
+    directory_mode=0755
+  when: not pulse_common_configs.stat.exists
+  tags: pulse-ui-db-app
+
+- name: Delete configs directory
+  file:
+    path={{ pulse_configs_dir }}
+    state=absent
+  ignore_errors: yes
+  tags: pulse-ui-db-app
+
+- name: Create configs symlink
+  file:
+    path={{ pulse_configs_dir }}
+    state=link
+    src={{ pulse_common_dir }}/configs
+  tags: pulse-ui-db-app
 
 # ####################################################################
 # Start original database setup process for older versions of Pulse

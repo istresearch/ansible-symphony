@@ -3,6 +3,11 @@
 
 elasticsearch_discovery_zen_minimum_master_nodes: 2
 
+elasticsearch_disk_threshold_enabled: True
+elasticsearch_watermark_low: 300gb
+elasticsearch_watermark_high: 250gb
+elasticsearch_update_interval: 1m
+
 datadog_monitors:
   supervisord:
     enabled: true
