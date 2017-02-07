@@ -1,4 +1,5 @@
-pulse_version: 3.0.17
+pulse_version: 3.1.1
+pulse_version_update: false
 
 pulse_name: pulse
 pulse_install_dir: /opt/pulse
@@ -12,7 +13,7 @@ pulse_analysis_iframe_url: "http://{{ inventory_hostname }}:{{ kibana4_port | de
 pulse_repo_location: "https://{{ repository_host }}/pulse"
 
 pulse_ui_name: pulse-ui
-pulse_ui_version: 3.0.17
+pulse_ui_version: 3.1.1
 
 pollster_name: appPollsterPrime
 pollster_version: 5.3.17
@@ -20,6 +21,7 @@ pollster_build_types:
   - { name: post23-release }
   - { name: pre23-release }
 pollster_symlinks:
+  - { name: Pollster.Prime.apk, build_type: pre23-release }
   - { name: Pollster.Android5.apk, build_type: pre23-release }
   - { name: Pollster.Android6.apk, build_type: post23-release }
 

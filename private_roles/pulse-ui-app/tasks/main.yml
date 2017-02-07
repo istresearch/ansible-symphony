@@ -8,14 +8,15 @@
   copy:
     dest={{ apache_conf_path }}/welcome.conf
     src=welcome.conf
+  when: not pulse_version_update
   tags: pulse-ui-app
 
 # PHP configuration for Pulse UI
 - include: configure-php-RedHat.yml
-  when: ansible_os_family == 'RedHat'
+  when: ansible_os_family == 'RedHat' and not pulse_version_update
 
 - include: configure-php-Debian.yml
-  when: ansible_os_family == 'Debian'
+  when: ansible_os_family == 'Debian' and not pulse_version_update
 
 - name: Extend php limits (1/2)
   lineinfile:
@@ -23,6 +24,7 @@
     regexp="^post_max_size = 8M"
     line="post_max_size = 48M"
     state=present
+  when: not pulse_version_update
   tags: pulse-ui-app
 
 - name: Extend php limits (2/2)
@@ -31,6 +33,7 @@
     regexp="^upload_max_filesize = 2M"
     line="upload_max_filesize = 48M"
     state=present
+  when: not pulse_version_update
   tags: pulse-ui-app
 
 - name: Check for existing pulse install
@@ -67,6 +70,13 @@
   register: joka_version
   tags: pulse-ui-app
 
+- name: Copy files for pulse version update
+  shell: "cd private_roles/pulse-ui-app/files; bash copy_pulse_files.sh {{ pulse_version }} {{ pulse_ui_version }} {{ pollster_version }}"
+  args:
+    executable: "/bin/bash"
+  when: pulse_version_update
+  tags: pulse-ui-app
+
 - name: Download pulse
   get_url:
     url={{ pulse_repo_location }}/joka/joka-{{ pulse_version }}.zip
@@ -75,7 +85,7 @@
     validate_certs=no
     url_username={{ pulse_repo_user }}
     url_password={{ pulse_repo_password }}
-  when: joka_version.stat.isdir is not defined
+  when: joka_version.stat.isdir is not defined and not pulse_version_update
   tags: pulse-ui-app
 
 - name: Extract pulse
@@ -114,7 +124,7 @@
     validate_certs=no
     url_username={{ pulse_repo_user }}
     url_password={{ pulse_repo_password }}
-  when: not pulse_ui_dir.stat.exists
+  when: not pulse_ui_dir.stat.exists and not pulse_version_update
   tags: pulse-ui-app
 
 - name: Extract Pulse UI3
@@ -146,12 +156,21 @@
   when: not pollster_dir.stat.exists
   tags: pulse-ui-app
 
-- name: Create Pulse config directory
+- name: Create Pulse configs directory
   file:
     path={{ pulse_configs_dir }}/anyhost
     state=directory
     mode=0755
+  when: not pulse_version_update
   tags: pulse-ui-app
+
+- name: Create configs symlink
+  file:
+    path={{ pulse_configs_dir }}
+    state=link
+    src={{ pulse_common_dir }}/configs
+  when: pulse_version_update
+  tags: pulse-ui-db-app
 
 - name: Download Pollster APK's
   get_url:
@@ -162,6 +181,25 @@
     url_username={{ pulse_repo_user }}
     url_password={{ pulse_repo_password }}
   with_items: "{{ pollster_build_types }}"
+  when: not pulse_version_update
+  tags: pulse-ui-app
+
+- name: Move Pollster APK's
+  copy:
+    src=/tmp/{{ pollster_name }}-{{ item.name }}-{{ pollster_version }}.apk
+    dest={{ pulse_install_dir }}/joka-{{ pulse_version }}/res/files/{{ pollster_name }}-{{ item.name }}-{{ pollster_version }}.apk
+    mode=0755
+  with_items: "{{ pollster_build_types }}"
+  when: pulse_version_update
+  tags: pulse-ui-app
+
+- name: Delete temporary Pollster APK's
+  file:
+    path=/tmp/{{ pollster_name }}-{{ item.name }}-{{ pollster_version }}.apk
+    state=absent
+  with_items: "{{ pollster_build_types }}"
+  ignore_errors: yes
+  when: pulse_version_update
   tags: pulse-ui-app
 
 - name: Check for existing htaccess pulse common
@@ -199,6 +237,15 @@
   with_items: "{{ pollster_symlinks }}"
   tags: pulse-ui-app
 
+# This can replace the above task once we are sure all Joka versions contain the updated 
+#   link.-to-pollster.sh script.
+#- name: Create Pollster symlinks - updated
+#  shell: "cd {{ pulse_install_dir }}/joka-{{ pulse_version }}/res/files; bash link-to-pollster.sh {{ pollster_version }}"
+#  args:
+#    executable: "/bin/bash"
+#  when: pulse_version_update
+#  tags: pulse-ui-app
+
 - name: Create Pulse symlink
   file:
     path={{ pulse_install_dir }}/default
@@ -217,10 +264,12 @@
   apt: 
     name=libapache2-mod-proxy-html
     state=present
+  when: not pulse_version_update
   tags: pulse-ui-app
 
 - name: Enable apache proxy mods
   shell: a2enmod proxy && a2enmod proxy_http && a2enmod proxy_connect && a2enmod ssl
+  when: not pulse_version_update
   tags: pulse-ui-app
 
 - name: Check for SSL cert directory
@@ -233,12 +282,12 @@
     path=/etc/apache2/ssl
     state=directory
     mode=0755
-  when: ssl_dir.stat.isdir is not defined
+  when: ssl_dir.stat.isdir is not defined and not pulse_version_update
   tags: pulse-ui-app
 
 - name: Generate self-signed SSL cert for pulse
   command: openssl req -x509 -subj "/C=/ST=/L=/O=/CN={{ inventory_hostname }}" -nodes -days 365 -newkey rsa:2048 -keyout /etc/apache2/ssl/pulse.key -out /etc/apache2/ssl/pulse.crt
-  when: pulse_self_signed_ssl
+  when: pulse_self_signed_ssl and not pulse_version_update
   tags: pulse-ui-app
 
 - name: Move apache2 conf over
@@ -250,6 +299,7 @@
     - create kibana pwd
     - apache add pulse
     - restart apache
+  when: not pulse_version_update
   tags: pulse-ui-app
 
 - name: Download Kibana backup
@@ -260,6 +310,7 @@
     validate_certs=no
     url_username={{ pulse_repo_user }}
     url_password={{ pulse_repo_password }}
+  when: not pulse_version_update
   tags: 
     - pulse-ui-app
     - kibana4-app
@@ -273,10 +324,18 @@
     - pulse-ui-app
     - kibana4-app
 
+- name: Check for kibana backup in tmp
+  stat: path=/tmp/{{ pulse_kibana_backup }}
+  register: kibana_backup
+  tags: 
+    - pulse-ui-app
+    - kibana4-app
+
 - name: Restore Kibana4 visualizations
   shell: "cd /tmp/; bash restore_kibana_index.sh {{ inventory_hostname }} {{ elasticsearch_network_http_port | default('9200') }} backup.tar"
   args:
     executable: "/bin/bash"
+  when: kibana_backup.stat.exists
   tags:
     - pulse-ui-app
     - kibana4-app
@@ -306,18 +365,33 @@
     validate_certs=no
     url_username={{ pulse_repo_user }}
     url_password={{ pulse_repo_password }}
-  tags: nuke
+  when: not pulse_version_update
+  tags: 
+    - pulse-ui-app
+    - nuke
+
+- name: Check for joka_nuke in tmp
+  stat: path=/tmp/joka_nuke.zip
+  register: joka_nuke
+  tags: 
+    - pulse-ui-app
+    - nuke
 
 - name: Extract Joka Nuke
   unarchive:
     src=/tmp/joka_nuke.zip
     dest=/opt
     copy=no
-  tags: nuke
+  when: joka_nuke.stat.exists
+  tags: 
+    - pulse-ui-app
+    - nuke
 
 - name: Delete temporary Joka Nuke files
   file:
     path=/tmp/joka_nuke.zip
     state=absent
   ignore_errors: yes
-  tags: nuke
+  tags: 
+    - pulse-ui-app
+    - nuke
