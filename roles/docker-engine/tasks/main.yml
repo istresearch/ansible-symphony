@@ -51,7 +51,7 @@
     name: "{{ item.name }}"
     state: latest
   with_items:
-    - { name: docker-py, version: "{{ docker_py_version }}" }
+#    - { name: docker-py, version: "{{ docker_py_version }}" }
     - { name: docker-compose, version: "{{ docker_compose_version }}" }
 
 #- name: stop docker service

@@ -1,19 +1,19 @@
 {
     "twitter": {
-        "OAUTH_TOKEN_SECRET": "STK2IUEphEJTOjGmQ8b5h1i5VegzlLFX4QH5PmtVfpd35",
-        "APP_SECRET": "e9AkOljbl2jC0wEsaJWEMHHlN1YCyzD6zKnL615b2UcIotpTa2",
-        "OAUTH_TOKEN": "3515082683-9xSgmPr2zzIQ4aW9MRZCLMeehRC0gAOHRVFK6LO",
-        "APP_KEY": "CWTq9WVgpVobhvAR43gfE0nFZ"
+        "OAUTH_TOKEN_SECRET": {{ twitter_oauth_token_secret }},
+        "APP_SECRET": {{ twitter_app_secret }},
+        "OAUTH_TOKEN": {{ twitter_oauth_token }},
+        "APP_KEY": {{ twitter_app_key }}
         },
     "GNIP": {
-        "PWD": "phPi9F4B%5^4",
-        "UN": "jason.haas@istresearch.com",
-        "ACCOUNT": "Timbr",
+        "PWD": {{ gnip_pwd }},
+        "UN": {{ gnip_un }},
+        "ACCOUNT": {{ gnip_account }},
         "STREAMS": ["dev-darpa", "prod-darpa"]
         },
     "SQL": {
         "UN": "memex",
-        "PWD": "pDYKV39gySsHcPhzpjTbgkM6",
+        "PWD": {{ sql_pwd }},
         "DATABASE": "memex_cooper_prod",
         "HOST": "memex-db.istresearch.com",
         "ROOT": "stuff",
@@ -40,9 +40,9 @@
         "SEARCH_API_URL": "https://api.twitter.com/1.1/search/tweets.json"
     },
     "FACEBOOK_SCRAPERS": {
-        "GRAPH_SCRAPER_API_URL": "https://memex:xL22rptV@memexdev.istresearch.com/graph/api/graph/",
-        "PROFILE_SCRAPER_URL": "https://quicker:Sh4b00m!@54.201.220.233/scrapyd/schedule.json",
-        "PEOPLE_SEARCH_SCRAPER_URL": "https://quicker:Sh4b00m!@54.201.220.233/scrapyd/schedule.json",
+        "GRAPH_SCRAPER_API_URL": {{ graph_api_url }},
+        "PROFILE_SCRAPER_URL": {{ profile_url }},
+        "PEOPLE_SEARCH_SCRAPER_URL": {{ people_search_url }},
         "FACEBOOK_PROFILE_SPIDER_NAME": "profile-prod"
     },
     "TELEGRAM": {

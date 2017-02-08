@@ -15,8 +15,8 @@ services:
     environment:
       - KAFKA_HOSTS=crew04.istresearch.com:9092,crew05.istresearch.com:9092,crew06.istresearch.com:9092
       - MYSQL_HOST=memex-db.istresearch.com
-      - MYSQL_USER=memex
-      - MYSQL_PASSWORD=pDYKV39gySsHcPhzpjTbgkM6
+      - MYSQL_USER={{ mysql_username }}
+      - MYSQL_PASSWORD={{ mysql_password }}
       - MYSQL_DATABASE=memex_cooper_prod
       - MYSQL_ROOT_PASSWORD=USE_A_REAL_PW_IF_NOT_SETUP_ALREADY
       - MYSQL_ROOT_USER=root

@@ -1,20 +1,5 @@
 ---
 
-- name: Check if Docker is running
-  command: service docker status
-  ignore_errors: yes
-  changed_when: false
-  register: service_docker_status
-
-- name: Report status of Docker
-  fail:
-    msg: |
-      Service Docker is not running.
-      Output of `service docker status`:
-      {{ service_docker_status.stdout }}
-      {{ service_docker_status.stderr }}
-  when: service_docker_status | failed
-
 - name: Make sure Compose Directory exists
   file:
     path: "{{ docker_compose_dir }}"
@@ -69,6 +54,24 @@
     src: dc-cooper.sh.j2
     dest: "{{ docker_scripts_dir }}/dc-cooper.sh"
     mode: 0755
+  tags: docker-cooper
+
+- name: remove docker-py package
+  pip:
+    name: docker-py
+    state: absent
+  tags: docker-cooper
+
+- name: remove docker package
+  pip:
+    name: docker
+    state: absent
+  tags: docker-cooper
+
+- name: reinstall docker package
+  pip:
+    name: docker
+    state: present
   tags: docker-cooper
 
 - name: Stop and Kill any existing Cooper Containers

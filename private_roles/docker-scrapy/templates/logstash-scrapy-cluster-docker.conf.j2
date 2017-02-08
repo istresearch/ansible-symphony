@@ -16,7 +16,7 @@ output {
             index => "logs-scrapy-cluster-%{+YYYY.MM.dd}"
             document_type => "%{[logger]}"
             user => "ist-es"
-            password => "44vtjgDLn6Xdj4d8"
+            password => "{{ logstash_es_pwd }}"
         }
     }
 }

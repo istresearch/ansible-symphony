@@ -1,0 +1,10 @@
+---
+
+- name: install polipo packages
+  apt:
+    name={{ item }}
+    state=latest
+  with_items:
+    - polipo
+
+

@@ -1,0 +1,5 @@
+---
+
+fb_app_id: "{{ vault_fb_app_id }}"
+fb_app_secret: "{{ vault_fb_app_secret }}"
+logstash_es_pwd: "{{ vault_logstash_es_pwd }}"
