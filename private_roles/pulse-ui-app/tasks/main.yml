@@ -49,12 +49,17 @@
   when: pulse.stat.isdir is not defined
   tags: pulse-ui-app
 
+- name: Check for existing common directory
+  stat: path={{ pulse_common_dir }}
+  register: pulse_common
+  tags: pulse-ui-app
+
 - name: Create pulse common directory
   file:
     path={{ pulse_common_dir }}
     state=directory
-    mode=0755
-  when: pulse.stat.isdir is not defined
+    mode=0777
+  when: pulse_common.stat.isdir is not defined
   tags: pulse-ui-app
 
 - name: Create pulse mmr directory
@@ -164,14 +169,6 @@
   when: not pulse_version_update
   tags: pulse-ui-app
 
-- name: Create configs symlink
-  file:
-    path={{ pulse_configs_dir }}
-    state=link
-    src={{ pulse_common_dir }}/configs
-  when: pulse_version_update
-  tags: pulse-ui-db-app
-
 - name: Download Pollster APK's
   get_url:
     url={{ pulse_repo_location }}/pollster/{{ pollster_name }}-{{ item.name }}-{{ pollster_version }}.apk
@@ -227,6 +224,34 @@
     path={{ pulse_install_dir }}/joka-{{ pulse_version }}/.htaccess
     state=link
     src={{ pulse_common_dir }}/.htaccess
+  tags: pulse-ui-app
+
+- name: Check for existing configs in pulse common
+  stat: path={{ pulse_common_dir }}/configs
+  register: pulse_configs
+  tags: pulse-ui-app
+
+- name: Copy existing configs into common when not there
+  shell: "cd private_roles/pulse-ui-app/files; bash copy_existing_configs.sh {{ pulse_install_dir }} {{ pulse_common_dir }}"
+  args:
+    executable: "/bin/bash"
+  when: pulse_version_update and not pulse_configs.stat.exists
+  tags: pulse-ui-app
+
+- name: Revert directory permissions for common
+  file: 
+    path: "{{ pulse_common_dir }}"
+    mode: 0755
+    recurse: yes
+  when: pulse_common.stat.isdir is not defined
+  tags: pulse-ui-app
+
+- name: Create configs symlink
+  file:
+    path={{ pulse_configs_dir }}
+    state=link
+    src={{ pulse_common_dir }}/configs
+  when: pulse_version_update
   tags: pulse-ui-app
 
 - name: Create Pollster symlinks
