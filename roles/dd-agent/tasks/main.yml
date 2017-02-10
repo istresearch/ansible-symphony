@@ -24,27 +24,6 @@
     state: present
     update_cache: yes
 
-# We attempted to run dd-agent under supervisor. Stop and remove dd-agent
-# supervisor processes
-- name: Stop dd-agent supervisor process
-  supervisorctl:
-    name=dd-agent
-    state=stopped
-  ignore_errors: yes
-
-- name: Remove dd-agent from supervisor
-  supervisorctl:
-    name=dd-agent
-    state=absent
-  ignore_errors: yes
-
-- name: Remove dd-agent supervisor config file
-  file:
-    path="{{ supervisord_programs_dir }}/dd-agent-supervisord.conf"
-    state=absent
-  notify:
-    - reread supervisord
-
 - name: Create additional_checksd directory
   file:
     path: "{{ additional_checksd_dir }}"
