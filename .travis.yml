@@ -8,7 +8,9 @@ python: '2.7'
 before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -qq python-apt
-  - sudo apt-get remove mysql
+  - sudo apt-get remove --purge mysql-server mysql-client mysql-common
+  - sudo apt-get autoremove
+  - sudo apt-get autoclean
 install:
   - pip install ansible
 env:
