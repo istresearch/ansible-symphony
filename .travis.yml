@@ -29,7 +29,7 @@ env:
   - TAGS='virtualenv'
   - TAGS='miniconda'
   - TAGS='site-tangelo'
-  - TAGS='mysql' Breaks on downgrade from 5.6 (default for the Travis image) to 5.5 which we try to install.
+  - TAGS='mysql'
   - TAGS='deps-traptor'
   - TAGS='site-es-hadoop'
   - TAGS='site-tarsnap'
