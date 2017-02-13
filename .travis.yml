@@ -8,7 +8,7 @@ python: '2.7'
 before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -qq python-apt
-  - sudo rm /var/lib/mysql/debian-*.flag
+  - sudo apt-get remove mysql
 install:
   - pip install ansible
 env:
@@ -27,7 +27,7 @@ env:
   - TAGS='virtualenv'
   - TAGS='miniconda'
   - TAGS='site-tangelo'
-  - TAGS='mysql'
+  - TAGS='mysql' Breaks on downgrade from 5.6 (default for the Travis image) to 5.5 which we try to install.
   - TAGS='deps-traptor'
   - TAGS='site-es-hadoop'
   - TAGS='site-tarsnap'
