@@ -115,3 +115,18 @@ elasticsearch_logging_slowlog_mode: "standard" # standard, showall, off
 elasticsearch_logger_type: "dailyRollingFile" # dailyRollingFile, file
 
 repository_infrastructure: "https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/{{ elasticsearch_version }}"
+
+###########################################
+# Nginx proxy
+###########################################
+elasticsearch_nginx_proxy_enabled: false
+elasticsearch_nginx_proxy:
+  nginx_worker_user: 'www-data'
+  shell: '/bin/false'
+  listen_port: 9201
+  upstream_port: "{{ elasticsearch_network_http_port|default(9200) }}"
+  nginx_conf_path: '/etc/nginx/nginx.conf'
+elasticsearch_nginx_proxy_auth:
+  user: 'user'
+  password: 'password'
+  htpasswd_file: '/etc/nginx/.htpasswd'
