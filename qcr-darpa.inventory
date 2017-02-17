@@ -59,7 +59,7 @@ storm-supervisor-nodes
 
 [elasticsearch-data-nodes]
 10.105.92.[99:102]
-10.105.92.96
+10.105.92.[95:96]
 
 [elasticsearch-client-nodes]
 
@@ -76,7 +76,7 @@ elasticsearch-client-nodes
 
 [storm-supervisor-nodes]
 10.105.92.[98:102]
-10.105.92.96
+10.105.92.[95:96]
 
 [storm-nodes:children]
 storm-nimbus-node
