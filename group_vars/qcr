@@ -1,7 +1,7 @@
 ---
 
 #### ZOOKEEPER VARS ####
-zookeeper_maxClientCnxns: 120
+zookeeper_maxClientCnxns: 240
 zookeeper_auto_purge_interval: 1
 zookeeper_auto_purge_snap_retain_count: 5
 zookeeper_data_dir: "/data/zookeeper/data"
