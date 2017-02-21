@@ -43,6 +43,33 @@
     mode: 0644
   tags: docker-curator
 
+- name: copy alias bracket config file
+  template:
+    src: alias_bracket.json.j2
+    dest: "{{ docker_configs_dir }}/alias_bracket.json"
+    mode: 0644
+  tags: docker-curator
+
+- name: copy alias nationals config file
+  template:
+    src: alias_nationals.json.j2
+    dest: "{{ docker_configs_dir }}/alias_nationals.json"
+    mode: 0644
+  tags: docker-curator
+
+- name: copy alias rays config file:
+    src: alias_rays.json.j2
+    dest: "{{ docker_configs_dir }}/alias_rays.json"
+    mode: 0644
+  tags: docker-curator
+
+- name: copy alias training config file
+  template:
+    src: alias_training.json.j2
+    dest: "{{ docker_configs_dir }}/alias_training.json"
+    mode: 0644
+  tags: docker-curator
+
 - name: copy scripts file
   template:
     src: dc-curator.sh.j2

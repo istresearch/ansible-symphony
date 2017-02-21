@@ -1,0 +1,68 @@
+version: '2'
+
+services:
+
+  gatekeeper:
+    image: istresearch/gatekeeper:gatekeeper-3.1.2
+    volumes:
+      - .:/code
+      - logs:/var/log/gatekeeper
+    ports:
+      - "5000:5000"
+    environment:
+      - LOGGER_NAME=gatekeeper
+      - LOG_LEVEL=INFO
+      - LOG_DIR=/var/log/gatekeeper
+      - LOG_FILE_NAME=gatekeeper.log
+      - LOG_JSON=True
+      - LOG_STDOUT=False
+      - ES_USE_SSL=False
+      - ES_HOST=loki.dev.istresearch.com:9200
+      - ES_INDEX=pulse-default-default
+      - KAFKA_HOSTS=loki.dev.istresearch.com:9092
+      - KAFKA_TOPIC=gatekeeper.dev
+      - REDIS_HOST=loki.dev.istresearch.com
+      - REDIS_PORT=6379
+      - REDIS_DB=11
+      - STATSD_HOST_IP=172.17.0.1
+      - HISTORIC_QUERY_JOB_QUEUE_NAME=historic_query
+      - HISTORIC_QUERY_JOB_TTL=99999
+    restart: "on-failure:3"
+
+  gatekeeper_worker:
+    image: istresearch/gatekeeper:gatekeeper_worker-3.1.2
+    volumes:
+      - .:/code
+      - logs:/var/log/gatekeeper
+    environment:
+      - LOGGER_NAME=gatekeeper_worker
+      - LOG_LEVEL=INFO
+      - LOG_DIR=/var/log/gatekeeper
+      - LOG_FILE_NAME=gatekeeper_worker.log
+      - LOG_JSON=True
+      - LOG_STDOUT=False
+      - ES_USE_SSL=False
+      - ES_HOST=loki.dev.istresearch.com:9200
+      - ES_INDEX=pulse-default-default
+      - ES_DOC_TYPE=tweet_traptor
+      - KAFKA_ENABLED=true
+      - KAFKA_HOSTS=loki.dev.istresearch.com:9092
+      - KAFKA_TOPIC=gatekeeper.dev
+      - REDIS_HOST=loki.dev.istresearch.com
+      - REDIS_PORT=6379
+      - REDIS_DB=11
+      - STATSD_HOST_IP=172.17.0.1
+      - HISTORIC_QUERY_JOB_QUEUE_NAME=historic_query
+      - HISTORIC_QUERY_JOB_TTL=99999
+    restart: "on-failure:3"
+
+  logstash:
+    image: logstash:2.4.0-1
+    command: logstash -f /etc/logstash/conf.d/logstash.conf
+    volumes:
+      - ./dockerfiles/gatekeeper_logstash.conf:/etc/logstash/conf.d/logstash.conf
+      - ./dockerfiles/logs-template.json:/etc/logstash/templates/logs-template.json
+      - logs:/var/log/gatekeeper
+
+volumes:
+  logs:

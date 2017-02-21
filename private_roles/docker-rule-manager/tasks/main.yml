@@ -50,6 +50,13 @@
     mode: 0644
   tags: docker-rule-manager
 
+- name: copy logs-template.json file
+  template:
+    src: logs-template.json.j2
+    dest: "{{ docker_configs_dir }}/logs-template.json"
+    mode: 0644
+  tags: docker-rule-manager
+
 - name: copy scripts file
   template:
     src: dc-rule-manager.sh.j2

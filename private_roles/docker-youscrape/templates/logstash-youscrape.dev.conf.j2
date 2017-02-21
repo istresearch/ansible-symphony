@@ -1,0 +1,20 @@
+input {
+  file {
+    path => ['/var/log/youscrape/*.log']
+    codec => json
+    tags => ['youscrape']
+  }
+}
+
+output {
+  if 'youscrape' in [tags]{
+    elasticsearch {
+      hosts => "loki.dev.istresearch.com:9200"
+      template => "/etc/logstash/templates/logs-template.json"
+      template_name => "logs-*"
+      template_overwrite => true
+      index => "logs-youscrape-%{+YYYY.MM}"
+      document_type => "%{[logger]}"
+    }
+  }
+}

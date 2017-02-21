@@ -1,0 +1,20 @@
+input {
+  file {
+    path => ['/var/log/gatekeeper/*.log']
+    codec => json
+    tags => ['gatekeeper']
+  }
+}
+
+output {
+    if 'gatekeeper' in [tags] {
+        elasticsearch {
+          hosts => "10.105.92.99:9200"
+          template => "/etc/logstash/templates/logs-template.json"
+          template_name => "logs-*"
+          template_overwrite => true
+          index => "logs-gatekeeper-%{+YYYY.MM.dd}"
+          document_type => "%{[logger]}"
+        }
+    }
+}

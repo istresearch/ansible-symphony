@@ -1,0 +1,43 @@
+version: '2'
+
+services:
+
+  youscrape:
+    image: istresearch/youscrape:scraper-develop
+    environment:
+     - GOOGLE_APPLICATION_CREDENTIALS=/usr/src/app/YouScrape.json
+     - API_KEY=YOUTUBE_API_KEY
+     - YOUTUBE_THROTTLE_TIME=2
+     - REDIS_Q_SLEEP_TIME=5
+     - REDIS_QUEUE_NEW=youscrape_q_new
+     - REDIS_QUEUE_USERS=youscrape_q_users
+     - REDIS_QUEUE_USERS_MAX_LIMIT=100
+     - REDIS_QUEUE_VIDEOS=youscrape_q_videos
+     - REDIS_QUEUE_VIDEOS_MAX_LIMIT=100
+     - REDIS_HOST=loki.dev.istresearch.com
+     - REDIS_PORT=6379
+     - REDIS_DB=10
+     - COMMENT_MAX_LIMIT=500
+     - KAFKA_HOSTS=loki.dev.istresearch.com:9092
+     - KAFKA_TOPIC=crawl.youtube
+     - LOGGER_NAME=youscrape
+     - LOG_DIR=/var/log/youscrape
+     - LOG_FILE=youscrape.log
+     - LOG_STDOUT=False
+     - LOG_JSON=True
+     - LOG_LEVEL=INFO
+    restart: always
+    volumes:
+     - logs:/var/log/youscrape
+      # Get the JSON creds from the YouTube App Dashboard
+     - /opt/docker_configs/YouScrape-creds.5405386784.json:/usr/src/app/YouScrape.json
+  logstash:
+    image: logstash:latest
+    command: logstash -f /etc/logstash/conf.d/logstash.conf
+    volumes:
+     - /opt/docker_configs/logstash-youscrape.dev.conf:/etc/logstash/conf.d/logstash.conf
+     - /opt/docker_configs/logs-template.json:/etc/logstash/templates/logs-template.json
+     - logs:/var/log/youscrape
+
+volumes:
+  logs:

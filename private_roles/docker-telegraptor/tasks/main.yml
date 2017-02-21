@@ -50,6 +50,13 @@
     mode: 0644
   tags: docker-telegraptor
 
+- name: copy logs-template.json file
+  template:
+    src: logs-template.json.j2
+    dest: "{{ docker_configs_dir }}/logs-template.json"
+    mode: 0644
+  tags: docker-telegraptor
+
 - name: copy scripts file
   template:
     src: dc-telegraptor.sh.j2

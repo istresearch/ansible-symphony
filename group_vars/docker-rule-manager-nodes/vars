@@ -1,0 +1,4 @@
+---
+
+cooper_url_pwd: "{{ vault_cooper_url_pwd }}"
+ist_es_pwd: "{{ vault_ist_es_pwd }}"

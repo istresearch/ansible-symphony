@@ -10,21 +10,21 @@ services:
       - TRAPTOR_ID=0
       - RULE_CHECK_INTERVAL=60
       - USE_SENTRY=true
-      - SENTRY_URL=https://870e681805524cddbeadb1957498d4c7:ebcb1d9a15ab4f4f837e0c3694225db5@sentry.io/55250
+      - SENTRY_URL=https://"{{ sentry_url_un }}":"{{ sentry_url_pwd }}"@sentry.io/55250
       - LOG_LEVEL=INFO
       - LOG_DIR=/var/log/traptor
       - LOG_FILE_NAME=traptor_locations_0.log
       - KAFKA_ENABLED=true
-      - KAFKA_HOSTS=crew06.istresearch.com:9092,crew07.istresearch.com:9092,crew08.istresearch.com:9092
+      - KAFKA_HOSTS="{{ kafka_hosts }}"
       - KAFKA_TOPIC=traptor.cooper_prod
       - REDIS_HOST=memex-services.istresearch.com
       - REDIS_PORT=6379
       - REDIS_DB=1
       - REDIS_PUBSUB_CHANNEL=traptor-notify-prod
-      - CONSUMER_KEY=cEDecyjv70XBmG2vMcehi4NSH
-      - CONSUMER_SECRET=eMAngyvCsEQL0BuueXCTqyiEJ124tT07FkL9BbjY7Iz5cH66sz
-      - ACCESS_TOKEN=3515071036-PXV9ThqrrQBe32NDWe0mvO1iyMeST1gOiXtIwrB
-      - ACCESS_TOKEN_SECRET=CSs9sdp0tA4TsIvLM8odUYrOCWUsGdfDAoxpab3S4GsO1
+      - CONSUMER_KEY="{{ locations0_consumer_key }}"
+      - CONSUMER_SECRET="{{ locations0_consumer_secret }}"
+      - ACCESS_TOKEN="{{ locations0_access_token }}"
+      - ACCESS_TOKEN_SECRET="{{ locations0_access_token_secret }}"
       - STATSD_HOST_IP=172.17.0.1
     restart: "on-failure:3"
     depends_on:
@@ -39,21 +39,21 @@ services:
       - TRAPTOR_ID=1
       - RULE_CHECK_INTERVAL=60
       - USE_SENTRY=true
-      - SENTRY_URL=https://870e681805524cddbeadb1957498d4c7:ebcb1d9a15ab4f4f837e0c3694225db5@sentry.io/55250
+      - SENTRY_URL=https://"{{ sentry_url_un }}":"{{ sentry_url_pwd }}"@sentry.io/55250
       - LOG_LEVEL=INFO
       - LOG_DIR=/var/log/traptor
       - LOG_FILE_NAME=traptor_locations_1.log
       - KAFKA_ENABLED=true
-      - KAFKA_HOSTS=crew06.istresearch.com:9092,crew07.istresearch.com:9092,crew08.istresearch.com:9092
+      - KAFKA_HOSTS="{{ kafka_hosts }}"
       - KAFKA_TOPIC=traptor.cooper_prod
       - REDIS_HOST=memex-services.istresearch.com
       - REDIS_PORT=6379
       - REDIS_DB=1
       - REDIS_PUBSUB_CHANNEL=traptor-notify-prod
-      - CONSUMER_KEY=XtsKhhd8ZziBrc0dt4HFDmVmv
-      - CONSUMER_SECRET=uts8OVAr7P4Xj7Suy11vvvtETuoylABk1DGGwWSDt4TF9vgWu9
-      - ACCESS_TOKEN=3515082683-40rci3p35cHYrFcnOQuNqqp42MFzG6TkZHuV5iI
-      - ACCESS_TOKEN_SECRET=JkF35WafOnUsyKtKsWf7GCZvJWQ43rKM19nnKAJX1KIXd
+      - CONSUMER_KEY="{{ locations1_consumer_key }}"
+      - CONSUMER_SECRET="{{ locations1_consumer_secret }}"
+      - ACCESS_TOKEN="{{ locations1_access_token }}"
+      - ACCESS_TOKEN_SECRET="{{ locations1_access_token_secret }}"
       - STATSD_HOST_IP=172.17.0.1
     restart: "on-failure:3"
     depends_on:
@@ -68,21 +68,21 @@ services:
       - TRAPTOR_ID=2
       - RULE_CHECK_INTERVAL=60
       - USE_SENTRY=true
-      - SENTRY_URL=https://870e681805524cddbeadb1957498d4c7:ebcb1d9a15ab4f4f837e0c3694225db5@sentry.io/55250
+      - SENTRY_URL=https://"{{ sentry_url_un }}":"{{ sentry_url_pwd }}"@sentry.io/55250
       - LOG_LEVEL=INFO
       - LOG_DIR=/var/log/traptor
       - LOG_FILE_NAME=traptor_locations_2.log
       - KAFKA_ENABLED=true
-      - KAFKA_HOSTS=crew06.istresearch.com:9092,crew07.istresearch.com:9092,crew08.istresearch.com:9092
+      - KAFKA_HOSTS="{{ kafka_hosts }}"
       - KAFKA_TOPIC=traptor.cooper_prod
       - REDIS_HOST=memex-services.istresearch.com
       - REDIS_PORT=6379
       - REDIS_DB=1
       - REDIS_PUBSUB_CHANNEL=traptor-notify-prod
-      - CONSUMER_KEY=QABygrzHwlmChSjwqv4VVVeun
-      - CONSUMER_SECRET=hCXhu8z0sM1ywUC83DjqDd8oDaw7vNrOUIcgXC78Ebs8yGf2Bi
-      - ACCESS_TOKEN=3514807336-h3oWm9J1BpaBMuR3qQFJEJ11kvPQK3uKuSvINlP
-      - ACCESS_TOKEN_SECRET=1V0HARYAJXL5CDh40SiZ6MOxT4DsKrTmvtUoNZM8JK4QP
+      - CONSUMER_KEY="{{ locations2_consumer_key }}"
+      - CONSUMER_SECRET="{{ locations2_consumer_secret }}"
+      - ACCESS_TOKEN="{{ locations2_access_token }}"
+      - ACCESS_TOKEN_SECRET="{{ locations2_access_token_secret }}"
       - STATSD_HOST_IP=172.17.0.1
     restart: "on-failure:3"
     depends_on:
@@ -97,21 +97,21 @@ services:
       - TRAPTOR_ID=3
       - RULE_CHECK_INTERVAL=60
       - USE_SENTRY=true
-      - SENTRY_URL=https://870e681805524cddbeadb1957498d4c7:ebcb1d9a15ab4f4f837e0c3694225db5@sentry.io/55250
+      - SENTRY_URL=https://"{{ sentry_url_un }}":"{{ sentry_url_pwd }}"@sentry.io/55250
       - LOG_LEVEL=INFO
       - LOG_DIR=/var/log/traptor
       - LOG_FILE_NAME=traptor_locations_3.log
       - KAFKA_ENABLED=true
-      - KAFKA_HOSTS=crew06.istresearch.com:9092,crew07.istresearch.com:9092,crew08.istresearch.com:9092
+      - KAFKA_HOSTS="{{ kafka_hosts }}"
       - KAFKA_TOPIC=traptor.cooper_prod
       - REDIS_HOST=memex-services.istresearch.com
       - REDIS_PORT=6379
       - REDIS_DB=1
       - REDIS_PUBSUB_CHANNEL=traptor-notify-prod
-      - CONSUMER_KEY=WGGlBOFYyUSu7FNYDovZ2TWMN
-      - CONSUMER_SECRET=0jdogJtcAXmXlErZnMbFBnbnfPsQv4aAaT0ohGjPOPEqxfczR1
-      - ACCESS_TOKEN=3514807336-FJSCeYi1ZojsRp88CD61VEcVP7HfRjXSunh9bAu
-      - ACCESS_TOKEN_SECRET=fuHpwyyrGjWmX2EKgHhvU3t5wBpbHrnXb9zkUkIwVDpWP
+      - CONSUMER_KEY="{{ locations3_consumer_key }}"
+      - CONSUMER_SECRET="{{ locations3_consumer_secret }}"
+      - ACCESS_TOKEN="{{ locations3_access_token }}"
+      - ACCESS_TOKEN_SECRET="{{ locations3_access_token_secret }}"
       - STATSD_HOST_IP=172.17.0.1
     restart: "on-failure:3"
     depends_on:
@@ -126,21 +126,21 @@ services:
       - TRAPTOR_ID=4
       - RULE_CHECK_INTERVAL=60
       - USE_SENTRY=true
-      - SENTRY_URL=https://870e681805524cddbeadb1957498d4c7:ebcb1d9a15ab4f4f837e0c3694225db5@sentry.io/55250
+      - SENTRY_URL=https://"{{ sentry_url_un }}":"{{ sentry_url_pwd }}"@sentry.io/55250
       - LOG_LEVEL=INFO
       - LOG_DIR=/var/log/traptor
       - LOG_FILE_NAME=traptor_locations_4.log
       - KAFKA_ENABLED=true
-      - KAFKA_HOSTS=crew06.istresearch.com:9092,crew07.istresearch.com:9092,crew08.istresearch.com:9092
+      - KAFKA_HOSTS="{{ kafka_hosts }}"
       - KAFKA_TOPIC=traptor.cooper_prod
       - REDIS_HOST=memex-services.istresearch.com
       - REDIS_PORT=6379
       - REDIS_DB=1
       - REDIS_PUBSUB_CHANNEL=traptor-notify-prod
-      - CONSUMER_KEY=V9fQH0JmxGycPFduS9jamCkr4
-      - CONSUMER_SECRET=FfUsEnAIdXghEGlb4CsLXsbstKOjguhOZLE08IgCYvmwzaUCNy
-      - ACCESS_TOKEN=3514807336-3MJxdbyYgEcPT7nt1djsBdeqK3CB1KFBcG7w98s
-      - ACCESS_TOKEN_SECRET=JX6FWlPez3hUHELH7GjtUH5er3nCoKCgmV94AksVyEQwW
+      - CONSUMER_KEY="{{ locations4_consumer_key }}"
+      - CONSUMER_SECRET="{{ locations4_consumer_secret }}"
+      - ACCESS_TOKEN="{{ locations4_access_token }}"
+      - ACCESS_TOKEN_SECRET="{{ locations4_access_token_secret }}"
       - STATSD_HOST_IP=172.17.0.1
     restart: "on-failure:3"
     depends_on:
@@ -155,21 +155,21 @@ services:
       - TRAPTOR_ID=5
       - RULE_CHECK_INTERVAL=60
       - USE_SENTRY=true
-      - SENTRY_URL=https://870e681805524cddbeadb1957498d4c7:ebcb1d9a15ab4f4f837e0c3694225db5@sentry.io/55250
+      - SENTRY_URL=https://"{{ sentry_url_un }}":"{{ sentry_url_pwd }}"@sentry.io/55250
       - LOG_LEVEL=INFO
       - LOG_DIR=/var/log/traptor
       - LOG_FILE_NAME=traptor_locations_5.log
       - KAFKA_ENABLED=true
-      - KAFKA_HOSTS=crew06.istresearch.com:9092,crew07.istresearch.com:9092,crew08.istresearch.com:9092
+      - KAFKA_HOSTS="{{ kafka_hosts }}"
       - KAFKA_TOPIC=traptor.cooper_prod
       - REDIS_HOST=memex-services.istresearch.com
       - REDIS_PORT=6379
       - REDIS_DB=1
       - REDIS_PUBSUB_CHANNEL=traptor-notify-prod
-      - CONSUMER_KEY=jo1HM5gIVNIPMzeClXdSzZw3z
-      - CONSUMER_SECRET=zkt1dP5PaAYDyeDya74HzBsqXvoxK5QvbuZiGdq8AVKUCUEFYE
-      - ACCESS_TOKEN=3432988792-aChLLQou5HOVkUkZq3IGRnaTKPchVKZPFiDM6rp
-      - ACCESS_TOKEN_SECRET=cPbFnSRU6qVC0vQ7FXcJoq10krovFvmUT8BapvpkNXW4X
+      - CONSUMER_KEY="{{ locations5_consumer_key }}"
+      - CONSUMER_SECRET="{{ locations5_consumer_secret }}"
+      - ACCESS_TOKEN="{{ locations5_access_token }}"
+      - ACCESS_TOKEN_SECRET="{{ locations5_access_token_secret }}"
       - STATSD_HOST_IP=172.17.0.1
     restart: "on-failure:3"
     depends_on:
