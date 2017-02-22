@@ -111,3 +111,5 @@ datadog_monitors:
             index: pulse-*
             metric_name: telegram_stream_message.count
             timestamp_field: norm.timestamp
+            tags:
+              - 'telegraptor:ist-prod'
