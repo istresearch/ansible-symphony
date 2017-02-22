@@ -10,21 +10,21 @@ services:
       - TRAPTOR_ID=0
       - RULE_CHECK_INTERVAL=60
       - USE_SENTRY=true
-      - SENTRY_URL=https://"{{ sentry_url_un }}":"{{ sentry_url_pwd }}"@sentry.io/55250
+      - SENTRY_URL=https://{{ sentry_url_un }}:{{ sentry_url_pwd }}@sentry.io/55250
       - LOG_LEVEL=INFO
       - LOG_DIR=/var/log/traptor
       - LOG_FILE_NAME=traptor_track_0.log
       - KAFKA_ENABLED=true
-      - KAFKA_HOSTS="{{ kafka_hosts }}"
+      - KAFKA_HOSTS={{ kafka_hosts }}
       - KAFKA_TOPIC=traptor.cooper_prod
       - REDIS_HOST=memex-services.istresearch.com
       - REDIS_PORT=6379
       - REDIS_DB=1
       - REDIS_PUBSUB_CHANNEL=traptor-notify-prod
-      - CONSUMER_KEY="{{ track0_consumer_key }}"
-      - CONSUMER_SECRET="{{ track0_consumer_secret }}"
-      - ACCESS_TOKEN="{{ track0_access_token }}"
-      - ACCESS_TOKEN_SECRET="{{ track0_access_token_secret }}"
+      - CONSUMER_KEY={{ track0_consumer_key }}
+      - CONSUMER_SECRET={{ track0_consumer_secret }}
+      - ACCESS_TOKEN={{ track0_access_token }}
+      - ACCESS_TOKEN_SECRET={{ track0_access_token_secret }}
       - STATSD_HOST_IP=172.17.0.1
     restart: "on-failure:3"
     depends_on:
@@ -39,21 +39,21 @@ services:
       - TRAPTOR_ID=1
       - RULE_CHECK_INTERVAL=60
       - USE_SENTRY=true
-      - SENTRY_URL=https://"{{ sentry_url_un }}":"{{ sentry_url_pwd }}"@sentry.io/55250
+      - SENTRY_URL=https://{{ sentry_url_un }}:{{ sentry_url_pwd }}@sentry.io/55250
       - LOG_LEVEL=INFO
       - LOG_DIR=/var/log/traptor
       - LOG_FILE_NAME=traptor_track_1.log
       - KAFKA_ENABLED=true
-      - KAFKA_HOSTS="{{ kafka_hosts }}"
+      - KAFKA_HOSTS={{ kafka_hosts }}
       - KAFKA_TOPIC=traptor.cooper_prod
       - REDIS_HOST=memex-services.istresearch.com
       - REDIS_PORT=6379
       - REDIS_DB=1
       - REDIS_PUBSUB_CHANNEL=traptor-notify-prod
-      - CONSUMER_KEY="{{ track1_consumer_key }}"
-      - CONSUMER_SECRET="{{ track1_consumer_secret }}"
-      - ACCESS_TOKEN="{{ track1_access_token }}"
-      - ACCESS_TOKEN_SECRET="{{ track1_access_token_secret }}"
+      - CONSUMER_KEY={{ track1_consumer_key }}
+      - CONSUMER_SECRET={{ track1_consumer_secret }}
+      - ACCESS_TOKEN={{ track1_access_token }}
+      - ACCESS_TOKEN_SECRET={{ track1_access_token_secret }}
       - STATSD_HOST_IP=172.17.0.1
     restart: "on-failure:3"
     depends_on:
@@ -68,21 +68,21 @@ services:
       - TRAPTOR_ID=2
       - RULE_CHECK_INTERVAL=60
       - USE_SENTRY=true
-      - SENTRY_URL=https://"{{ sentry_url_un }}":"{{ sentry_url_pwd }}"@sentry.io/55250
+      - SENTRY_URL=https://{{ sentry_url_un }}:{{ sentry_url_pwd }}@sentry.io/55250
       - LOG_LEVEL=INFO
       - LOG_DIR=/var/log/traptor
       - LOG_FILE_NAME=traptor_track_2.log
       - KAFKA_ENABLED=true
-      - KAFKA_HOSTS="{{ kafka_hosts }}"
+      - KAFKA_HOSTS={{ kafka_hosts }}
       - KAFKA_TOPIC=traptor.cooper_prod
       - REDIS_HOST=memex-services.istresearch.com
       - REDIS_PORT=6379
       - REDIS_DB=1
       - REDIS_PUBSUB_CHANNEL=traptor-notify-prod
-      - CONSUMER_KEY="{{ track2_consumer_key }}"
-      - CONSUMER_SECRET="{{ track2_consumer_secret }}"
-      - ACCESS_TOKEN="{{ track2_access_token }}"
-      - ACCESS_TOKEN_SECRET="{{ track2_access_token_secret }}"
+      - CONSUMER_KEY={{ track2_consumer_key }}
+      - CONSUMER_SECRET={{ track2_consumer_secret }}
+      - ACCESS_TOKEN={{ track2_access_token }}
+      - ACCESS_TOKEN_SECRET={{ track2_access_token_secret }}
       - STATSD_HOST_IP=172.17.0.1
     restart: "on-failure:3"
     depends_on:
@@ -97,21 +97,21 @@ services:
       - TRAPTOR_ID=3
       - RULE_CHECK_INTERVAL=60
       - USE_SENTRY=true
-      - SENTRY_URL=https://"{{ sentry_url_un }}":"{{ sentry_url_pwd }}"@sentry.io/55250
+      - SENTRY_URL=https://{{ sentry_url_un }}:{{ sentry_url_pwd }}@sentry.io/55250
       - LOG_LEVEL=INFO
       - LOG_DIR=/var/log/traptor
       - LOG_FILE_NAME=traptor_track_3.log
       - KAFKA_ENABLED=true
-      - KAFKA_HOSTS="{{ kafka_hosts }}"
+      - KAFKA_HOSTS={{ kafka_hosts }}
       - KAFKA_TOPIC=traptor.cooper_prod
       - REDIS_HOST=memex-services.istresearch.com
       - REDIS_PORT=6379
       - REDIS_DB=1
       - REDIS_PUBSUB_CHANNEL=traptor-notify-prod
-      - CONSUMER_KEY="{{ track3_consumer_key }}"
-      - CONSUMER_SECRET="{{ track3_consumer_secret }}"
-      - ACCESS_TOKEN="{{ track3_access_token }}"
-      - ACCESS_TOKEN_SECRET="{{ track3_access_token_secret }}"
+      - CONSUMER_KEY={{ track3_consumer_key }}
+      - CONSUMER_SECRET={{ track3_consumer_secret }}
+      - ACCESS_TOKEN={{ track3_access_token }}
+      - ACCESS_TOKEN_SECRET={{ track3_access_token_secret }}
       - STATSD_HOST_IP=172.17.0.1
     restart: "on-failure:3"
     depends_on:
@@ -126,21 +126,21 @@ services:
       - TRAPTOR_ID=4
       - RULE_CHECK_INTERVAL=60
       - USE_SENTRY=true
-      - SENTRY_URL=https://"{{ sentry_url_un }}":"{{ sentry_url_pwd }}"@sentry.io/55250
+      - SENTRY_URL=https://{{ sentry_url_un }}:{{ sentry_url_pwd }}@sentry.io/55250
       - LOG_LEVEL=INFO
       - LOG_DIR=/var/log/traptor
       - LOG_FILE_NAME=traptor_track_4.log
       - KAFKA_ENABLED=true
-      - KAFKA_HOSTS="{{ kafka_hosts }}"
+      - KAFKA_HOSTS={{ kafka_hosts }}
       - KAFKA_TOPIC=traptor.cooper_prod
       - REDIS_HOST=memex-services.istresearch.com
       - REDIS_PORT=6379
       - REDIS_DB=1
       - REDIS_PUBSUB_CHANNEL=traptor-notify-prod
-      - CONSUMER_KEY="{{ track4_consumer_key }}"
-      - CONSUMER_SECRET="{{ track4_consumer_secret }}"
-      - ACCESS_TOKEN="{{ track4_access_token }}"
-      - ACCESS_TOKEN_SECRET="{{ track4_access_token_secret }}"
+      - CONSUMER_KEY={{ track4_consumer_key }}
+      - CONSUMER_SECRET={{ track4_consumer_secret }}
+      - ACCESS_TOKEN={{ track4_access_token }}
+      - ACCESS_TOKEN_SECRET={{ track4_access_token_secret }}
       - STATSD_HOST_IP=172.17.0.1
     restart: "on-failure:3"
     depends_on:
@@ -155,21 +155,21 @@ services:
       - TRAPTOR_ID=5
       - RULE_CHECK_INTERVAL=60
       - USE_SENTRY=true
-      - SENTRY_URL=https://"{{ sentry_url_un }}":"{{ sentry_url_pwd }}"@sentry.io/55250
+      - SENTRY_URL=https://{{ sentry_url_un }}:{{ sentry_url_pwd }}@sentry.io/55250
       - LOG_LEVEL=INFO
       - LOG_DIR=/var/log/traptor
       - LOG_FILE_NAME=traptor_track_5.log
       - KAFKA_ENABLED=true
-      - KAFKA_HOSTS="{{ kafka_hosts }}"
+      - KAFKA_HOSTS={{ kafka_hosts }}
       - KAFKA_TOPIC=traptor.cooper_prod
       - REDIS_HOST=memex-services.istresearch.com
       - REDIS_PORT=6379
       - REDIS_DB=1
       - REDIS_PUBSUB_CHANNEL=traptor-notify-prod
-      - CONSUMER_KEY="{{ track5_consumer_key }}"
-      - CONSUMER_SECRET="{{ track5_consumer_secret }}"
-      - ACCESS_TOKEN="{{ track5_access_token }}"
-      - ACCESS_TOKEN_SECRET="{{ track5_access_token_secret }}"
+      - CONSUMER_KEY={{ track5_consumer_key }}
+      - CONSUMER_SECRET={{ track5_consumer_secret }}
+      - ACCESS_TOKEN={{ track5_access_token }}
+      - ACCESS_TOKEN_SECRET={{ track5_access_token_secret }}
       - STATSD_HOST_IP=172.17.0.1
     restart: "on-failure:3"
     depends_on:
@@ -184,21 +184,21 @@ services:
       - TRAPTOR_ID=6
       - RULE_CHECK_INTERVAL=60
       - USE_SENTRY=true
-      - SENTRY_URL=https://"{{ sentry_url_un }}":"{{ sentry_url_pwd }}"@sentry.io/55250
+      - SENTRY_URL=https://{{ sentry_url_un }}:{{ sentry_url_pwd }}@sentry.io/55250
       - LOG_LEVEL=INFO
       - LOG_DIR=/var/log/traptor
       - LOG_FILE_NAME=traptor_track_6.log
       - KAFKA_ENABLED=true
-      - KAFKA_HOSTS="{{ kafka_hosts }}"
+      - KAFKA_HOSTS={{ kafka_hosts }}
       - KAFKA_TOPIC=traptor.cooper_prod
       - REDIS_HOST=memex-services.istresearch.com
       - REDIS_PORT=6379
       - REDIS_DB=1
       - REDIS_PUBSUB_CHANNEL=traptor-notify-prod
-      - CONSUMER_KEY="{{ track6_consumer_key }}"
-      - CONSUMER_SECRET="{{ track6_consumer_secret }}"
-      - ACCESS_TOKEN="{{ track6_access_token }}"
-      - ACCESS_TOKEN_SECRET="{{ track6_access_token_secret }}"
+      - CONSUMER_KEY={{ track6_consumer_key }}
+      - CONSUMER_SECRET={{ track6_consumer_secret }}
+      - ACCESS_TOKEN={{ track6_access_token }}
+      - ACCESS_TOKEN_SECRET={{ track6_access_token_secret }}
       - STATSD_HOST_IP=172.17.0.1
     restart: "on-failure:3"
     depends_on:
@@ -213,21 +213,21 @@ services:
       - TRAPTOR_ID=7
       - RULE_CHECK_INTERVAL=60
       - USE_SENTRY=true
-      - SENTRY_URL=https://"{{ sentry_url_un }}":"{{ sentry_url_pwd }}"@sentry.io/55250
+      - SENTRY_URL=https://{{ sentry_url_un }}:{{ sentry_url_pwd }}@sentry.io/55250
       - LOG_LEVEL=INFO
       - LOG_DIR=/var/log/traptor
       - LOG_FILE_NAME=traptor_track_7.log
       - KAFKA_ENABLED=true
-      - KAFKA_HOSTS="{{ kafka_hosts }}"
+      - KAFKA_HOSTS={{ kafka_hosts }}
       - KAFKA_TOPIC=traptor.cooper_prod
       - REDIS_HOST=memex-services.istresearch.com
       - REDIS_PORT=6379
       - REDIS_DB=1
       - REDIS_PUBSUB_CHANNEL=traptor-notify-prod
-      - CONSUMER_KEY="{{ track7_consumer_key }}"
-      - CONSUMER_SECRET="{{ track7_consumer_secret }}"
-      - ACCESS_TOKEN="{{ track7_access_token }}"
-      - ACCESS_TOKEN_SECRET="{{ track7_access_token_secret }}"
+      - CONSUMER_KEY={{ track7_consumer_key }}
+      - CONSUMER_SECRET={{ track7_consumer_secret }}
+      - ACCESS_TOKEN={{ track7_access_token }}
+      - ACCESS_TOKEN_SECRET={{ track7_access_token_secret }}
       - STATSD_HOST_IP=172.17.0.1
     restart: "on-failure:3"
     depends_on:

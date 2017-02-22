@@ -57,7 +57,8 @@
     mode: 0644
   tags: docker-curator
 
-- name: copy alias rays config file:
+- name: copy alias rays config file
+  template:
     src: alias_rays.json.j2
     dest: "{{ docker_configs_dir }}/alias_rays.json"
     mode: 0644
