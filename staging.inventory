@@ -51,6 +51,8 @@ docker-scrapy-nodes
 docker-telegraptor-nodes
 docker-telegraptor-api-nodes
 docker-traptor-nodes
+docker-gatekeeper-nodes
+docker-youscrape-nodes
 portainer-nodes
 
 [zookeeper-nodes]
@@ -245,6 +247,12 @@ vagrant-ist-01
 docker-traptor-follow-nodes
 docker-traptor-track-nodes
 docker-traptor-geo-nodes
+
+[docker-gatekeeper-nodes]
+vagrant-ist-02
+
+[docker-youscrape-nodes]
+vagrant-ist-02
 
 [portainer-nodes]
 vagrant-ist-01

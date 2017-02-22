@@ -661,3 +661,10 @@
     - site-docker-traptor
     - site-docker-traptor-geo
 
+# ---------------------------------- Portainer --------------------------------
+
+- name: Run Portainer role
+  hosts: portainer-nodes
+  roles: [ portainer ]
+  tags:
+    - site-portainer
