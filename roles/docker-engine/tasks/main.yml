@@ -55,7 +55,7 @@
 - name: Install docker-compose
   pip:
     name: docker-compose
-    state: present
+    state: forcereinstall
     version: "{{ docker_compose_version }}"
 
 - name: Login to Docker
