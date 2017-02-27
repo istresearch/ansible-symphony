@@ -1,3 +1,7 @@
+---
+
+redis_maxclients: 50000
+
 ### Users
 
 dev:
