@@ -460,15 +460,6 @@
   tags:
     - site-docker-engine
     - deps-pulse-docker
-    - deps-docker-bumblebee
-    - deps-docker-cooper
-    - deps-docker-curator
-    - deps-docker-grawler
-    - deps-docker-rule-manager
-    - deps-docker-scrapy
-    - deps-docker-telegraptor
-    - deps-docker-telegraptor-api
-    - deps-docker-traptor
 
 # ---------------------------------- MySQL -----------------------------------
 
