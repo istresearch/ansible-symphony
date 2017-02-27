@@ -16,12 +16,4 @@
   when: service_docker_status | failed
 
 - name: Start Portainer Container
-  docker:
-    name: portainer
-    image: portainer/portainer
-    state: restarted
-    pull: always
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock"
-    ports:
-      - "9000:9000"
+  command: docker run -d -v /var/run/docker.sock:/var/run/docker.sock -p 9000:9000 portainer/portainer

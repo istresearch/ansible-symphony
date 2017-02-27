@@ -46,11 +46,11 @@
   notify:
     - restart docker-engine
 
-- name: Install docker-py
-  pip:
-    name: docker-py
-    state: present
-    version: "{{ docker_py_version }}"
+#- name: Install docker-py
+#  pip:
+#    name: docker-py
+#    state: present
+#    version: "{{ docker_py_version }}"
 
 - name: Install docker-compose
   pip:
@@ -58,12 +58,9 @@
     state: forcereinstall
     version: "{{ docker_compose_version }}"
 
-- name: Login to Docker
-  docker_login:
-    username: "{{ docker_repo_user }}"
-    password: "{{ docker_repo_pwd }}"
-    email: "{{ docker_repo_email }}"
-  
+- name: Login to Docker Hub
+  script: login.exp {{ docker_repo_user }} {{ docker_repo_pwd }}
+
 #- name: stop docker service
 #  service:
 #    name: docker

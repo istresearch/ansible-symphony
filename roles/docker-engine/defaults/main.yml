@@ -22,7 +22,7 @@ docker_opts: "-H tcp://127.0.0.1:4243 -H unix:///var/run/docker.sock --dns 8.8.8
 
 # Versions for the python packages that are installed
 docker_py_version: 1.10.6
-docker_compose_version: 1.10.0
+docker_compose_version: 1.11.2
 
 # Set to 'yes' or 'true' to enable updates (sets 'latest' in apt module)
 docker_update_package: yes

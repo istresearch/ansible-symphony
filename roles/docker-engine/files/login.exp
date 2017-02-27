@@ -1,0 +1,17 @@
+#!/usr/bin/expect
+#
+# Script to automate the fisrt time configuration of Oracle Express
+
+set timeout 10
+
+set docker_un [lindex $argv 0]
+set docker_pwd [lindex $argv 1]
+
+spawn docker login
+
+#expect "Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.\n"
+expect "Username:" { send "$docker_un\r" }
+expect "Password:" { send "$docker_pwd\r" }
+expect "Login Succeeded"
+
+#interact
