@@ -46,3 +46,13 @@ datadog_monitors:
       - massagetroll.com
       - www.usasexguide.info
       - cityvibe.com
+  es_backup_status:
+    enabled: true
+    is_custom_check: true
+    collection_interval: 1200
+    host: localhost
+    port: 9200
+    cluster_name: cdr
+    repositories:
+      - cdr_es_snapshots
+      - cdr-es-archive

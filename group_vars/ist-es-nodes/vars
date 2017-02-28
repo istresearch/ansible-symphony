@@ -9,6 +9,8 @@ elasticsearch_discovery_zen_minimum_master_nodes: 2
 #elasticsearch_marvel_agent_user: marvel
 #elasticsearch_marvel_agent_password: "{{ elasticsearch_marvel_agent_vault }}"
 
+ist_elastic_creds: "{{ vault_ist_elastic_creds }}"
+
 datadog_monitors:
   supervisord:
     enabled: true

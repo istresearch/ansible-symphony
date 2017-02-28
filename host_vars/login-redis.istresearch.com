@@ -1,3 +1,4 @@
+---
 datadog_monitors:
   disk:
     enabled: true
@@ -7,8 +8,8 @@ datadog_monitors:
     enabled: true
     is_custom_check: false
     collect_connection_state: yes
-  docker_daemon:
+  redisdb:
     enabled: true
     is_custom_check: false
-    socket_path: "unix://var/run/docker.sock"
-    labels_as_tags: ["com.docker.compose.service", "com.docker.compose.project"]
+    host: localhost
+    port: 6379

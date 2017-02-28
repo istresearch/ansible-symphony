@@ -23,8 +23,12 @@ datadog_monitors:
                 must:
                  - match:
                      message: Tuple acked in spout.
+                 - match:
+                     path: /var/log/topologies/topology.log
+
             tags:
               - 'storm_log:normalizer-traptor-topology'
+              - 'storm_env:production'
 
           - doc_type: normalizer-voyager-topology
             index: logs-topologies-*
@@ -35,8 +39,11 @@ datadog_monitors:
                 must:
                  - match:
                      message: Tuple acked in spout.
+                 - match:
+                     path: /var/log/topologies/topology.log
             tags:
               - 'storm_log:normalizer-voyager-topology'
+              - 'storm_env:production'
 
   disk:
     enabled: true
