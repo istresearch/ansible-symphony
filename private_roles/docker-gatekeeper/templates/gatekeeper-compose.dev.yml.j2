@@ -60,8 +60,8 @@ services:
     image: logstash:2.4.0-1
     command: logstash -f /etc/logstash/conf.d/logstash.conf
     volumes:
-      - ./dockerfiles/gatekeeper_logstash.conf:/etc/logstash/conf.d/logstash.conf
-      - ./dockerfiles/logs-template.json:/etc/logstash/templates/logs-template.json
+      - /opt/docker_configs/gatekeeper_logstash.conf:/etc/logstash/conf.d/logstash.conf
+#      - /opt/docker_configs/logs-template.json:/etc/logstash/templates/logs-template.json
       - logs:/var/log/gatekeeper
 
 volumes:

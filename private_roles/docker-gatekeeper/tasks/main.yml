@@ -15,9 +15,9 @@
       {{ service_docker_status.stderr }}
   when: service_docker_status | failed
 
-- name: Make sure Gatekeeper Directory exists
+- name: Make sure Compose Directory exists
   file:
-    path: "{{ docker_gatekeeper_dir }}"
+    path: "{{ docker_compose_dir }}"
     state: directory
     mode: 0755
   tags: docker-gatekeeper
@@ -38,15 +38,15 @@
 
 - name: copy compose file
   template:
-    src: gatekeeper-compose.prod.yaml.j2
-    dest: "{{ docker_compose_dir }}/gatekeeper-compose.prod.yaml"
+    src: gatekeeper-compose.dev.yml.j2
+    dest: "{{ docker_compose_dir }}/gatekeeper-compose.dev.yml"
     mode: 0644
   tags: docker-gatekeeper
 
-- name: copy logstash-gatekeeper.conf.j2 file
+- name: copy gatekeeper_logstash.conf.j2 file
   template:
-    src: logstash-gatekeeper.conf.j2
-    dest: "{{ docker_configs_dir }}/logstash-gatekeeper.conf"
+    src: gatekeeper_logstash.conf.j2
+    dest: "{{ docker_configs_dir }}/gatekeeper_logstash.conf"
     mode: 0644
   tags: docker-gatekeeper
 
