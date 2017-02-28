@@ -1,5 +1,5 @@
 ---
 
-docker_youscrape_dir: /opt/youscrape
+docker_compose_dir: /opt/compose
 docker_configs_dir: /opt/docker_configs
 docker_scripts_dir: /data/bin

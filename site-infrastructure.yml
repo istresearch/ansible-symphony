@@ -623,6 +623,22 @@
   tags:
     - site-docker-telegraptor-api
 
+# ---------------------------------- Docker YouScrape --------------------------------
+
+- name: Run Docker YouScrape role
+  hosts: docker-youscrape-nodes
+  roles: [ docker-youscrape ]
+  tags:
+    - site-docker-youscrape
+
+# ---------------------------------- Docker Gatekeeper --------------------------------
+
+- name: Run Docker Gatekeeper role
+  hosts: docker-gatekeeper-nodes
+  roles: [ docker-gatekeeper ]
+  tags:
+    - site-docker-gatekeeper
+
 # ---------------------------------- Docker Traptor --------------------------------
 
 - name: Run Traptor Follow role

@@ -36,7 +36,7 @@ services:
     command: logstash -f /etc/logstash/conf.d/logstash.conf
     volumes:
      - /opt/docker_configs/logstash-youscrape.dev.conf:/etc/logstash/conf.d/logstash.conf
-     - /opt/docker_configs/logs-template.json:/etc/logstash/templates/logs-template.json
+#     - /opt/docker_configs/logs-template.json:/etc/logstash/templates/logs-template.json
      - logs:/var/log/youscrape
 
 volumes:

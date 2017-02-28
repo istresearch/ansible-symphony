@@ -15,9 +15,9 @@
       {{ service_docker_status.stderr }}
   when: service_docker_status | failed
 
-- name: Make sure YouScrape Directory exists
+- name: Make sure Compose Directory exists
   file:
-    path: "{{ docker_youscrape_dir }}"
+    path: "{{ docker_compose_dir }}"
     state: directory
     mode: 0755
   tags: docker-youscrape
@@ -38,15 +38,15 @@
 
 - name: copy compose file
   template:
-    src: youscrape-compose.dev.yaml.j2
-    dest: "{{ docker_compose_dir }}/youscrape-compose.prod.yaml"
+    src: youscrape-compose.dev.yml.j2
+    dest: "{{ docker_compose_dir }}/youscrape-compose.dev.yml"
     mode: 0644
   tags: docker-youscrape
 
 - name: copy logstash-youscrape.conf.j2 file
   template:
-    src: logstash-youscrape.conf.j2
-    dest: "{{ docker_configs_dir }}/logstash-youscrape.conf"
+    src: logstash-youscrape.dev.conf.j2
+    dest: "{{ docker_configs_dir }}/logstash-youscrape.dev.conf"
     mode: 0644
   tags: docker-youscrape
 
