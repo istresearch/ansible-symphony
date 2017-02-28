@@ -1,0 +1,66 @@
+---
+
+- name: Check if Docker is running
+  command: service docker status
+  ignore_errors: yes
+  changed_when: false
+  register: service_docker_status
+
+- name: Report status of Docker
+  fail:
+    msg: |
+      Service Docker is not running.
+      Output of `service docker status`:
+      {{ service_docker_status.stdout }}
+      {{ service_docker_status.stderr }}
+  when: service_docker_status | failed
+
+- name: Make sure Compose Directory exists
+  file:
+    path: "{{ docker_compose_dir }}"
+    state: directory
+    mode: 0755
+  tags: docker-youscrape
+
+- name: Make sure scripts directory exists
+  file:
+    path: "{{ docker_scripts_dir }}"
+    state: directory
+    mode: 0755
+  tags: docker-youscrape
+
+- name: Make sure docker_configs directory exists
+  file:
+    path: "{{ docker_configs_dir }}"
+    state: directory
+    mode: 0755
+  tags: docker-youscrape
+
+- name: copy compose file
+  template:
+    src: youscrape-compose.dev.yml.j2
+    dest: "{{ docker_compose_dir }}/youscrape-compose.dev.yml"
+    mode: 0644
+  tags: docker-youscrape
+
+- name: copy logstash-youscrape.conf.j2 file
+  template:
+    src: logstash-youscrape.dev.conf.j2
+    dest: "{{ docker_configs_dir }}/logstash-youscrape.dev.conf"
+    mode: 0644
+  tags: docker-youscrape
+
+- name: copy scripts file
+  template:
+    src: dc-youscrape.sh.j2
+    dest: "{{ docker_scripts_dir }}/dc-youscrape.sh"
+    mode: 0755
+  tags: docker-youscrape
+
+- name: Stop and Kill any existing YouScrape Containers
+  command: "{{ docker_scripts_dir }}/dc-youscrape.sh down"
+  tags: docker-youscrape
+
+- name: Start the YouScrape Container
+  command: "{{ docker_scripts_dir }}/dc-youscrape.sh up -d"
+  tags: docker-youscrape

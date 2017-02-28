@@ -46,13 +46,20 @@
   notify:
     - restart docker-engine
 
-- name: Install docker-py and docker-compose
+#- name: Install docker-py
+#  pip:
+#    name: docker-py
+#    state: present
+#    version: "{{ docker_py_version }}"
+
+- name: Install docker-compose
   pip:
-    name: "{{ item.name }}"
-    state: latest
-  with_items:
-    - { name: docker-py, version: "{{ docker_py_version }}" }
-    - { name: docker-compose, version: "{{ docker_compose_version }}" }
+    name: docker-compose
+    state: forcereinstall
+    version: "{{ docker_compose_version }}"
+
+- name: Login to Docker Hub
+  script: login.exp {{ docker_repo_user }} {{ docker_repo_pwd }}
 
 #- name: stop docker service
 #  service:

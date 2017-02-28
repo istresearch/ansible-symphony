@@ -1,0 +1,44 @@
+---
+
+- name: Make sure Compose Directory exists
+  file:
+    path: "{{ docker_compose_dir }}"
+    state: directory
+    mode: 0755
+  tags: docker-bumblebee
+
+- name: Make sure scripts directory exists
+  file:
+    path: "{{ docker_scripts_dir }}"
+    state: directory
+    mode: 0755
+  tags: docker-bumblebee
+ 
+- name: Make sure docker_configs directory exists
+  file:
+    path: "{{ docker_configs_dir }}"
+    state: directory
+    mode: 0755
+  tags: docker-bumblebee
+
+- name: copy compose file
+  template:
+    src: bumblebee-compose.yaml.j2
+    dest: "{{ docker_compose_dir }}/bumblebee-compose.yaml"
+    mode: 0644
+  tags: docker-bumblebee
+
+- name: copy scripts file
+  template:
+    src: dc-bumblebee.sh.j2
+    dest: "{{ docker_scripts_dir }}/dc-bumblebee.sh"
+    mode: 0755
+  tags: docker-bumblebee
+
+- name: Stop and Kill any existing Bumblebee Containers
+  command: "{{ docker_scripts_dir }}/dc-bumblebee.sh down"
+  tags: docker-bumblebee
+
+- name: Start the Bumblebee Container
+  command: "{{ docker_scripts_dir }}/dc-bumblebee.sh up -d"
+  tags: docker-bumblebee

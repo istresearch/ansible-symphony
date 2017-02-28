@@ -1,0 +1,13 @@
+{
+    "filter": {
+        "query": {
+            "constant_score": {
+                "filter": {
+                    "terms": {
+                        "meta.rule_matcher.results.rule_tag": ["Pulse.Rays.Keywords"]
+                    }
+                }
+            }
+        }
+    }
+}

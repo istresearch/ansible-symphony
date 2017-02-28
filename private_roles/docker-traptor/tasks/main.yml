@@ -1,0 +1,132 @@
+---
+
+- name: Check if Docker is running
+  command: service docker status
+  ignore_errors: yes
+  changed_when: false
+  register: service_docker_status
+
+- name: Report status of Docker
+  fail:
+    msg: |
+      Service Docker is not running.
+      Output of `service docker status`:
+      {{ service_docker_status.stdout }}
+      {{ service_docker_status.stderr }}
+  when: service_docker_status | failed
+
+- name: Make sure Compose Directory exists
+  file:
+    path: "{{ docker_compose_dir }}"
+    state: directory
+    mode: 0755
+  tags: docker-traptor
+
+- name: Make sure scripts directory exists
+  file:
+    path: "{{ docker_scripts_dir }}"
+    state: directory
+    mode: 0755
+  tags: docker-traptor
+
+- name: Make sure docker_configs directory exists
+  file:
+    path: "{{ docker_configs_dir }}"
+    state: directory
+    mode: 0755
+  tags: docker-traptor
+
+- name: copy Traptor Follow compose file
+  template:
+    src: traptor-follow-compose.prod.yml.j2
+    dest: "{{ docker_compose_dir }}/traptor-follow-compose.prod.yml"
+    mode: 0644
+  when: is_follow
+  tags: docker-traptor
+
+- name: copy Traptor Track compose file
+  template:
+    src: traptor-track-compose.prod.yml.j2
+    dest: "{{ docker_compose_dir }}/traptor-track-compose.prod.yml"
+    mode: 0644
+  when: is_track
+  tags: docker-traptor
+
+- name: copy Traptor Geo compose file
+  template:
+    src: traptor-geo-compose.prod.yml.j2
+    dest: "{{ docker_compose_dir }}/traptor-geo-compose.prod.yml"
+    mode: 0644
+  when: is_geo
+  tags: docker-traptor
+
+- name: copy logstash-traptor-prod.conf file
+  template:
+    src: logstash-traptor-prod.conf.j2
+    dest: "{{ docker_configs_dir }}/logstash-traptor-prod.conf"
+    mode: 0644
+  tags: docker-traptor
+
+- name: copy logs-template.json file
+  template:
+    src: logs-template.json.j2
+    dest: "{{ docker_configs_dir }}/logs-template.json"
+    mode: 0644
+  tags: docker-traptor
+
+## TRAPTOR FOLLOW ##
+- name: copy Traptor Follow scripts file
+  template:
+    src: dc-traptor-follow.sh.j2
+    dest: "{{ docker_scripts_dir }}/dc-traptor-follow.sh"
+    mode: 0755
+  when: is_follow
+  tags: docker-traptor
+
+- name: Stop and Kill any existing Traptor Follow Containers
+  command: "{{ docker_scripts_dir }}/dc-traptor-follow.sh down"
+  when: is_follow
+  tags: docker-traptor
+
+- name: Start the Traptor Follow Container
+  command: "{{ docker_scripts_dir }}/dc-traptor-follow.sh up -d"
+  when: is_follow
+  tags: docker-traptor
+
+## TRAPTOR TRACK ##
+- name: copy Traptor Track scripts file
+  template:
+    src: dc-traptor-track.sh.j2
+    dest: "{{ docker_scripts_dir }}/dc-traptor-track.sh"
+    mode: 0755
+  when: is_track
+  tags: docker-traptor
+
+- name: Stop and Kill any existing Traptor Track Containers
+  command: "{{ docker_scripts_dir }}/dc-traptor-track.sh down"
+  when: is_track
+  tags: docker-traptor
+
+- name: Start the Traptor Track Container
+  command: "{{ docker_scripts_dir }}/dc-traptor-track.sh up -d"
+  when: is_track
+  tags: docker-traptor
+
+## TRAPTOR GEO ##
+- name: copy Traptor Geo scripts file
+  template:
+    src: dc-traptor-geo.sh.j2
+    dest: "{{ docker_scripts_dir }}/dc-traptor-geo.sh"
+    mode: 0755
+  when: is_geo
+  tags: docker-traptor
+
+- name: Stop and Kill any existing Traptor Geo Containers
+  command: "{{ docker_scripts_dir }}/dc-traptor-geo.sh down"
+  when: is_geo
+  tags: docker-traptor
+
+- name: Start the Traptor Geo Container
+  command: "{{ docker_scripts_dir }}/dc-traptor-geo.sh up -d"
+  when: is_geo
+  tags: docker-traptor

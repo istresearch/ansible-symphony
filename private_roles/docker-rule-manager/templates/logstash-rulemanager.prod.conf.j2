@@ -1,0 +1,23 @@
+input {
+  file {
+    path => ['/var/log/rulemanager/*.log']
+    codec => json
+    tags => ['rulemanager']
+  }
+}
+
+output {
+    if 'rulemanager' in [tags] {
+        elasticsearch {
+            hosts => ["https://ist-es.istresearch.com:9200"]
+            user => "ist-es"
+            password => "{{ ist_es_pwd }}"
+            template => "/etc/logstash/templates/logs-template.json"
+            template_name => "logs-*"
+            template_overwrite => true
+            index => "logs-rulemanager-%{+YYYY.MM.dd}"
+            document_type => "%{[logger]}"
+        }
+    }
+}
+

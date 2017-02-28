@@ -1,0 +1,66 @@
+---
+
+- name: Check if Docker is running
+  command: service docker status
+  ignore_errors: yes
+  changed_when: false
+  register: service_docker_status
+
+- name: Report status of Docker
+  fail:
+    msg: |
+      Service Docker is not running.
+      Output of `service docker status`:
+      {{ service_docker_status.stdout }}
+      {{ service_docker_status.stderr }}
+  when: service_docker_status | failed
+
+- name: Make sure Compose Directory exists
+  file:
+    path: "{{ docker_compose_dir }}"
+    state: directory
+    mode: 0755
+  tags: docker-gatekeeper
+
+- name: Make sure scripts directory exists
+  file:
+    path: "{{ docker_scripts_dir }}"
+    state: directory
+    mode: 0755
+  tags: docker-gatekeeper
+
+- name: Make sure docker_configs directory exists
+  file:
+    path: "{{ docker_configs_dir }}"
+    state: directory
+    mode: 0755
+  tags: docker-gatekeeper
+
+- name: copy compose file
+  template:
+    src: gatekeeper-compose.dev.yml.j2
+    dest: "{{ docker_compose_dir }}/gatekeeper-compose.dev.yml"
+    mode: 0644
+  tags: docker-gatekeeper
+
+- name: copy gatekeeper_logstash.conf.j2 file
+  template:
+    src: gatekeeper_logstash.conf.j2
+    dest: "{{ docker_configs_dir }}/gatekeeper_logstash.conf"
+    mode: 0644
+  tags: docker-gatekeeper
+
+- name: copy scripts file
+  template:
+    src: dc-gatekeeper.sh.j2
+    dest: "{{ docker_scripts_dir }}/dc-gatekeeper.sh"
+    mode: 0755
+  tags: docker-gatekeeper
+
+- name: Stop and Kill any existing Gatekeeper Containers
+  command: "{{ docker_scripts_dir }}/dc-gatekeeper.sh down"
+  tags: docker-gatekeeper
+
+- name: Start the Gatekeeper Container
+  command: "{{ docker_scripts_dir }}/dc-gatekeeper.sh up -d"
+  tags: docker-gatekeeper

@@ -1,0 +1,26 @@
+---
+
+mysql_username: memex
+mysql_password: "{{ vault_mysql_password }}"
+
+### TWITTER ###
+twitter_oauth_token_secret: "{{ vault_twitter_oauth_token_secret }}"
+twitter_app_secret: "{{ vault_twitter_app_secret }}"
+twitter_oauth_token: "{{ vault_twitter_oauth_token }}"
+twitter_app_key: "{{ vault_twitter_app_key }}"
+
+### GNIP ###
+gnip_pwd: "{{ vault_gnip_pwd }}"
+gnip_un: "jason.haas@istresearch.com"
+gnip_account: "Timbr"
+
+### SQL ###
+sql_pwd: "{{ vault_sql_pwd }}"
+
+### FACEBOOK SCRAPERS ###
+graph_api_url: "{{ vault_graph_api_url }}"
+profile_url: "{{ vault_profile_url }}"
+people_search_url: "{{ vault_people_search_url }}"
+
+### LOGSTASH ###
+logstash_es_pwd: "{{ vault_es_pwd }}"

@@ -1,0 +1,25 @@
+{
+    "filter": {
+        "query": {
+            "bool": {
+                "should": [{
+                    "constant_score": {
+                        "filter": {
+                            "terms": {
+                                "meta.rule_matcher.results.appid": ["training-double-helix"]
+                            }
+                        }
+                    }
+                }, {
+                    "constant_score": {
+                        "filter": {
+                            "terms": {
+                                "doc.appid": ["training-double-helix"]
+                            }
+                        }
+                    }
+                }]
+            }
+        }
+    }
+}

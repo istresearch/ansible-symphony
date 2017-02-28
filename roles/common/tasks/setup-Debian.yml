@@ -47,6 +47,7 @@
     - resolvconf
     - ntpdate
     - rdate
+    - expect
     #- awscli
   tags: common
 

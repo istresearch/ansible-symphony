@@ -1,0 +1,83 @@
+version: '2'
+
+services:
+  cooper:
+    image: istresearch/cooper:1.7.1
+    volumes:
+      - logs:/var/log/cooper
+      - /opt/docker_configs/cooper_settings.json:/usr/src/app/cooper-the-dog/settings.json
+      - /opt/docker_configs/cooper_config.py:/usr/src/app/cooper-the-dog/config.py
+    ports:
+      - "5001:5001"
+    depends_on:
+      - logstash
+    restart: always
+    environment:
+      - KAFKA_HOSTS=crew04.istresearch.com:9092,crew05.istresearch.com:9092,crew06.istresearch.com:9092
+      - MYSQL_HOST=memex-db.istresearch.com
+      - MYSQL_USER={{ mysql_username }}
+      - MYSQL_PASSWORD={{ mysql_password }}
+      - MYSQL_DATABASE=memex_cooper_prod
+      - MYSQL_ROOT_PASSWORD=USE_A_REAL_PW_IF_NOT_SETUP_ALREADY
+      - MYSQL_ROOT_USER=root
+      - FACEBOOK_PROFILE_SPIDER_NAME=profile-prod
+
+  graphapi:
+     image: istresearch/graph-api:graph-api-latest
+     environment:
+      - REDIS_HOST=memex-services.istresearch.com
+      - REDIS_PORT=6379
+      - REDIS_DB=8
+      - REDIS_SHARED_QUEUE=shared_graph_q_prod
+      - THROTTLE_BASE_DELAY=2
+      - THROTTLE_MAX_EXP=15
+      - THROTTLE_FLOOR=30
+      - ZOOKEEPER_HOSTS=crew01.istresearch.com
+      - ZOOKEEPER_ASSIGN_PATH=/graph-api/instance_prod
+      - LOGGER_NAME=graph-api
+      - LOG_DIR=/var/log/graph-api
+      - LOG_FILE=graph-api.log
+      - LOG_STDOUT=False
+      - LOG_JSON=True
+      - LOG_LEVEL=INFO
+      - THROTTLE_HEADER=x-app-usage
+      - THROTTLE_ERROR_CODES=4,32
+      - THROTTLE_LIMIT_MS=600000      # sleep time when API returns an error
+      - THROTTLE_SPLAY_MS=2048        # max random added sleep time
+      - THROTTLE_MIN_EXP=8            # 2 ^ n = min base sleep time, 2^8 = 256ms
+      - THROTTLE_MAX_EXP=12           # 2 ^ n = max base sleep time, 2^12 = 4096ms
+     command: bash -c "python facebook/file_pusher.py -i 000 -z crew01.istresearch.com:2181 -f facebook/facebook_config_000.yml && python app.py"
+     restart: always
+     volumes:
+      - logs:/var/log/graph-api
+      - /opt/docker_configs/facebook_config_1.yml:/app/facebook/facebook_config_000.yml
+
+  qprulegen:
+    image: istresearch/quickpin-rule-generator:1.1.0
+    volumes:
+      - logs:/var/log/qprulegen
+    restart: always
+    environment:
+      - LOG_LEVEL=INFO
+      - LOG_DIR=/var/log/qprulegen
+      - LOG_FILE_NAME=qprulegen.log
+      - QP_URL=https://ec2-52-89-211-38.us-west-2.compute.amazonaws.com/
+      - QP_USERNAME=QP_UN
+      - QP_PASSWORD=QP_PW
+      - COOPER_LIST_URL=cooper:5001/cooper/rules/list
+      - COOPER_ACTIVATE_URL=cooper:5001/cooper/rules/activate
+      - SERVICE_REFRESH_RATE=600
+    volumes:
+      - logs:/var/log/qprulegen
+
+  logstash:
+    image: logstash:latest
+    command: logstash -f /etc/logstash/conf.d/logstash.conf
+    volumes:
+      - /opt/docker_configs/logstash-cooper-prod.conf:/etc/logstash/conf.d/logstash.conf
+      - /opt/docker_configs/logs-template.json:/etc/logstash/templates/logs-template.json
+      - logs:/var/log/cooper
+
+volumes:
+  logs:
+

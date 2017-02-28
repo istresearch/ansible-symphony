@@ -1,0 +1,25 @@
+version: '2'
+services:
+
+  tgapi:
+    image: istresearch/telegraptor:api-2.0.3
+    ports:
+      - 5010:5000
+    environment:
+      - TELEGRAM_CLI_HOST=tgcli-api
+      - TELEGRAM_CLI_PORT=4458
+      - LOG_NAME=telegraptor-api
+      - LOG_DIR=/var/log/telegraptor
+      - LOG_FILE=telegraptor.log
+      - LOG_STDOUT=False
+      - LOG_JSON=True
+      - LOG_LEVEL=INFO
+    depends_on:
+      - tgcli-api
+
+  tgcli-api:
+    image: istresearch/telegraptor:tgcli-latest
+    volumes:
+      - /tmp/.telegram-cli2:/root/.telegram-cli
+    tty: true
+    restart: always

@@ -1,0 +1,5 @@
+---
+
+docker_repo_user: istuser
+docker_repo_pwd: "{{ vault_docker_repo_pwd }}"
+docker_repo_email: techops@istresearch.com
