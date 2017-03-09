@@ -1,0 +1,3 @@
+---
+dev:
+   - { name: jrgoulet, key: '{{ vault_jrgoulet_key }}' }
