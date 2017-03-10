@@ -33,6 +33,9 @@ supervisor.slots.ports:
 {% endif %}
 
 ### nimbus.* configs are for the master
+# Up to Storm 0.10.x
+nimbus.host: "{{ nimbus_host }}"
+# For Storm 1.x+
 nimbus.seeds:
   - "{{ nimbus_host }}"
 nimbus.thrift.port: {{ nimbus_thrift_port }}
