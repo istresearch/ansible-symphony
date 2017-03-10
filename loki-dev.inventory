@@ -82,10 +82,13 @@ spark-master-node
 spark-worker-nodes
 
 [storm-nimbus-node]
+loki.dev.istresearch.com
 
 [storm-ui-node]
+loki.dev.istresearch.com
 
 [storm-supervisor-nodes]
+loki.dev.istresearch.com
 
 [storm-nodes:children]
 storm-nimbus-node
