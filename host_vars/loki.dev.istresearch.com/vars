@@ -33,7 +33,8 @@ zookeeper_data_dir: /data/zookeeper
 dfs_datanode_data_dir:
    - /data/dfs/dn
 
-# Storm DEPRECATED
+# Storm
+storm_local_dir: /data/storm
 storm_nimbus_extra_config:
     nimbus.childopts: "-Xmx128m"
 storm_supervisor_extra_config:
@@ -42,7 +43,7 @@ storm_ui_extra_config:
     ui.childopts: "-Xmx64m"
 storm_worker_extra_config:
     worker.childopts: "-XX:MaxPermSize=48m -XX:+UseConcMarkSweepGC"
-storm_worker_ports: [6701, 6702, 6703, 6704, 6705, 6706, 6707, 6708, 6709, 6710]
+storm_worker_ports: [6701, 6702, 6703, 6704, 6705, 6706, 6707, 6708, 6709, 6710, 6711, 6712, 6713, 6714, 6715, 6716, 6717, 6718, 6719, 6720]
 
 # Grunner overrides
 runner_gandalf_version: 0.0.88
