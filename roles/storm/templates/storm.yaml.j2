@@ -33,7 +33,8 @@ supervisor.slots.ports:
 {% endif %}
 
 ### nimbus.* configs are for the master
-nimbus.host: "{{ nimbus_host }}"
+nimbus.seeds:
+  - "{{ nimbus_host }}"
 nimbus.thrift.port: {{ nimbus_thrift_port }}
 {% if storm_nimbus_extra_config.items is defined %}
 {% for key, value in storm_nimbus_extra_config|dictsort %}
