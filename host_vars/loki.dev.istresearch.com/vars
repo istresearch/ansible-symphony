@@ -18,6 +18,9 @@ pulse_self_signed_ssl: false
 pulse_local_install: false
 mysql_root_password: "{{ vault_mysql_root_password }}"
 
+# Zookeeper
+zookeeper_maxClientCnxns: 6000
+
 # Elasticsearch
 elasticsearch_heap_size: 4g
 
