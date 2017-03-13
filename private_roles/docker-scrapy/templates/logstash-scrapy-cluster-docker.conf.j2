@@ -9,14 +9,16 @@ input {
 output {
     if 'scrapy-cluster' in [tags]{
         elasticsearch {
-            hosts => "https://ist-es.istresearch.com:9200"
+            hosts => "{{ groups['elasticsearch-nodes'][0] }}:{{ elasticsearch_network_http_port|default(9200) }}"
             template => "/etc/logstash/templates/logs-template.json"
             template_name => "logs-*"
             template_overwrite => true
             index => "logs-scrapy-cluster-%{+YYYY.MM.dd}"
             document_type => "%{[logger]}"
+            {% if logstash_credentials is defined and logstash_credentials == true %}
             user => "ist-es"
             password => "{{ logstash_es_pwd }}"
+            {% endif %}
         }
     }
 }

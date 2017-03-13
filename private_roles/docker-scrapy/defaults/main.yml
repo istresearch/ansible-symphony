@@ -3,3 +3,16 @@
 docker_compose_dir: /opt/compose
 docker_configs_dir: /opt/docker_configs
 docker_scripts_dir: /data/bin
+
+sc_kafka_master_topic_prefix: demo
+sc_redis_master_db: 0
+
+sc_crawling_kafka_topic_prefix: "{{ sc_kafka_master_topic_prefix }}"
+sc_crawling_queue_hits: 10
+sc_crawling_queue_window: 60
+sc_crawling_queue_moderated: True
+sc_crawling_kafka_base_64: False
+
+sc_kafka_monitor_topic_main: incoming
+sc_kafka_monitor_kafka_group: sc-kafka-monitor
+sc_kafka_monitor_kafka_topic_prefix: "{{ sc_kafka_master_topic_prefix }}"
