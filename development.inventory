@@ -42,13 +42,16 @@ docker-youscrape-nodes
 portainer-nodes
 
 [zookeeper-nodes]
-nightly.dev.istresearch.com host_alias=demo-box-dev.istresearch.com
+nightly.dev.istresearch.com 
+otto.dev.istresearch.com
 
 [kafka-nodes]
 nightly.dev.istresearch.com
+otto.dev.istresearch.com
 
 [redis-master-node]
 nightly.dev.istresearch.com
+otto.dev.istresearch.com
 
 [redis-slave-nodes]
 #leave empty
@@ -63,12 +66,14 @@ redis-sentinel-nodes
 
 [hadoop-namenode-node]
 nightly.dev.istresearch.com
+otto.dev.istresearch.com
 
 [hadoop-secondary-namenode-node]
 #leave empty
 
 [hadoop-datanode-nodes]
 nightly.dev.istresearch.com
+otto.dev.istresearch.com
 
 [hadoop-nodes:children]
 hadoop-namenode-node
@@ -76,9 +81,11 @@ hadoop-datanode-nodes
 
 [hbase-master-node]
 nightly.dev.istresearch.com
+otto.dev.istresearch.com
 
 [hbase-regionserver-nodes]
 nightly.dev.istresearch.com
+otto.dev.istresearch.com
 
 [hbase-nodes:children]
 hbase-master-node
@@ -86,9 +93,11 @@ hbase-regionserver-nodes
 
 [spark-master-node]
 nightly.dev.istresearch.com
+otto.dev.istresearch.com
 
 [spark-worker-nodes]
 nightly.dev.istresearch.com
+otto.dev.istresearch.com
 
 [spark-nodes:children]
 spark-master-node
@@ -115,6 +124,7 @@ gandalf-runner-node
 [elasticsearch-data-nodes]
 nightly.dev.istresearch.com elasticsearch_is_master=true
 dag.dev.istresearch.com elasticsearch_is_master=true
+otto.dev.istresearch.com elasticsearch_is_master=true
 
 [elasticsearch-client-nodes]
 
@@ -125,12 +135,15 @@ elasticsearch-client-nodes
 
 [scrapy-cluster-kafka-monitor-node]
 nightly.dev.istresearch.com
+otto.dev.istresearch.com
 
 [scrapy-cluster-redis-monitor-node]
 nightly.dev.istresearch.com
+otto.dev.istresearch.com
 
 [scrapy-cluster-crawler-nodes]
 nightly.dev.istresearch.com
+otto.dev.istresearch.com
 
 [scrapy-cluster-indexer-nodes]
 
@@ -142,6 +155,7 @@ scrapy-cluster-indexer-nodes
 
 [googler-nodes]
 nightly.dev.istresearch.com
+otto.dev.istresearch.com
 
 [gnip-monitor-node]
 
@@ -158,6 +172,7 @@ demo-trap1.dev.istresearch.com
 
 [traptor-track-nodes]
 nightly.dev.istresearch.com
+otto.dev.istresearch.com
 
 [traptor-nodes:children]
 traptor-follow-nodes
@@ -167,29 +182,36 @@ traptor-track-nodes
 [kibana-node]
 nightly.dev.istresearch.com
 dag.dev.istresearch.com
+otto.dev.istresearch.com
 
 [mysql-node]
 nightly.dev.istresearch.com
+otto.dev.istresearch.com
 
 [pulse-ui-node]
 nightly.dev.istresearch.com
+otto.dev.istresearch.com
 
 [pulse-mysql-es-host]
 nightly.dev.istresearch.com
+otto.dev.istresearch.com
 
 [grawler-nodes]
 
 [gandalf-runner-node]
 nightly.dev.istresearch.com
+otto.dev.istresearch.com
 
 [cooper-node]
 nightly.dev.istresearch.com
+otto.dev.istresearch.com
 
 [docker-engine]
 nightly.dev.istresearch.com
 login-crawler.dev.istresearch.com
 docker.dev.istresearch.com
 dag.dev.istresearch.com
+otto.dev.istresearch.com
 
 [docker-bumblebee-nodes]
 docker.dev.istresearch.com
