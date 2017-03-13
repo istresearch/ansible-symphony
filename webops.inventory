@@ -36,6 +36,8 @@ traptor-follow.webops.istresearch.com
 traptor-track.webops.istresearch.com
 traptor-geo.webops.istresearch.com
 
+[webops:children]
+aws
 
 [zookeeper-nodes]
 # need to know where these will be
@@ -109,6 +111,7 @@ docker-traptor-geo-nodes
 [docker-rule-manager-nodes]
 
 [docker-scrapy-nodes]
+crawler[01:04].webops.istresearch.com
 
 [docker-telegraptor-nodes]
 
