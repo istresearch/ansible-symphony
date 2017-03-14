@@ -54,6 +54,17 @@
     - { name: docker-py, version: "{{ docker_py_version }}" }
     - { name: docker-compose, version: "{{ docker_compose_version }}" }
 
+################################################################################
+# top command, for containers: https://github.com/yadutaf/ctop
+################################################################################
+- name: Install ctop
+  get_url:
+    url: https://raw.githubusercontent.com/yadutaf/ctop/master/cgroup_top.py
+    dest: /usr/local/bin/ctop
+    mode: 0755
+  when: docker_install_ctop is defined and docker_install_ctop
+
+
 #- name: stop docker service
 #  service:
 #    name: docker
