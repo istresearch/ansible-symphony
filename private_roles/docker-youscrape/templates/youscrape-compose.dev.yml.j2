@@ -14,7 +14,7 @@ services:
      - REDIS_QUEUE_USERS_MAX_LIMIT=100
      - REDIS_QUEUE_VIDEOS=youscrape_q_videos
      - REDIS_QUEUE_VIDEOS_MAX_LIMIT=100
-     - REDIS_HOST=loki.dev.istresearch.com
+     - REDIS_HOST={{ groups['redis-master-node'][0] }}
      - REDIS_PORT=6379
      - REDIS_DB=10
      - COMMENT_MAX_LIMIT=500

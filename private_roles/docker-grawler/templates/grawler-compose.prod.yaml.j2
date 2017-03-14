@@ -9,7 +9,7 @@ services:
       - KAFKA_HOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
 
       - KAFKA_TOPIC=crawler.graph
-      - REDIS_HOST=memex-services.istresearch.com
+      - REDIS_HOST={{ groups['redis-master-node'][0] }}
       - REDIS_PORT=6379
       - REDIS_DB=5
       - QUEUE=graph_q

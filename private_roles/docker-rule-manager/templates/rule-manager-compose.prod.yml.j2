@@ -4,7 +4,7 @@ services:
      image: istresearch/rule-manager:traptor-3.0.1
      environment:
        - COOPER_URL=https://cooper:{{ cooper_url_pwd }}@cooper-prod.istresearch.com/cooper/rules/list
-       - REDIS_HOST=memex-services.istresearch.com
+       - REDIS_HOST={{ groups['redis-master-node'][0] }}
        - REDIS_PORT=6379
        - REDIS_DB=1
        - REDIS_KEY_PREFIX=traptor
@@ -27,7 +27,7 @@ services:
        - COOPER_URL=https://cooper:{{ cooper_url_pwd }}@cooper-prod.istresearch.com/cooper/rules/list
        - COOPER_TYPE=telegram_public_channel
        - COOPER_RULE_ID_KEY=rule_id
-       - REDIS_HOST=memex-services.istresearch.com
+       - REDIS_HOST={{ groups['redis-master-node'][0] }}
        - REDIS_PORT=6379
        - REDIS_DB=3
        - REDIS_KEY_PREFIX=telegram
