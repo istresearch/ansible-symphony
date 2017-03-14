@@ -1,6 +1,12 @@
 version: '2'
 
 services:
+  pulse_alias:
+    image: istresearch/gandalf:curator-pulse
+    environment:
+      - INTERVAL=3600
+      - ES_HOSTS=ist-es-m01.istresearch.com:9200
+      - PREFIX=pulse
   logs_cooper:
     image: istresearch/gandalf:curator-logs
     environment:
@@ -94,4 +100,15 @@ services:
       - ES_HOSTS=ist-es-m01.istresearch.com:9200
     volumes:
       - /opt/docker_configs/alias_nationals.json:/usr/src/app/filter.json
+  alias_training:
+    image: istresearch/gandalf:curator-custom-alias
+    environment:
+      # alias to match pulse-default-default beyond 10/2016
+      - REGEX=pulse-default-default-2016\.1.*|^(?!pulse-default-default-2016)pulse-default-default.*
+      - ALIAS=training
+      - INTERVAL=60
+      - ES_HOSTS=ist-es-m01.istresearch.com:9200
+    volumes:
+      - /opt/docker_configs/alias_training.json:/usr/src/app/filter.json
+
 
