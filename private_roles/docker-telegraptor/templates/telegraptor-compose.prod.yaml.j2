@@ -11,10 +11,11 @@ services:
   pycli:
     image: istresearch/telegraptor:pycli-2.0.3
     environment:
-      - KAFKAHOSTS="{{ kafka_hosts }}"
+      - KAFKAHOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
+
       - KAFKATOPIC_STREAM=ist.telegram_stream
       - KAFKATOPIC_HISTORY=ist.telegram_history
-      - REDIS_HOST=qcr-redis.istresearch.com
+      - REDIS_HOST={{ groups['redis-master-node'][0] }}
       - TELEGRAM_NUMBER=15408456582
       - TELEGRAM_CLI_HOST=tgcli
       - TELEGRAM_CLI_PORT=4458
@@ -33,10 +34,11 @@ services:
   stream:
     image: istresearch/telegraptor:stream-2.0.3
     environment:
-      - KAFKAHOSTS="{{ kafka_hosts }}"
+      - KAFKAHOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
+
       - KAFKATOPIC_STREAM=ist.telegram_stream
       - KAFKATOPIC_HISTORY=ist.telegram_history
-      - REDIS_HOST=qcr-redis.istresearch.com
+      - REDIS_HOST={{ groups['redis-master-node'][0] }}
       - TELEGRAM_NUMBER=15408456582
       - TELEGRAM_CLI_HOST=tgcli
       - TELEGRAM_CLI_PORT=4458
@@ -58,10 +60,11 @@ services:
   pubsub:
     image: istresearch/telegraptor:pubsub-2.0.3
     environment:
-      - KAFKAHOSTS="{{ kafka_hosts }}"
+      - KAFKAHOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
+
       - KAFKATOPIC_STREAM=ist.telegram_stream
       - KAFKATOPIC_HISTORY=ist.telegram_history
-      - REDIS_HOST=qcr-redis.istresearch.com
+      - REDIS_HOST={{ groups['redis-master-node'][0] }}
       - TELEGRAM_CLI_HOST=tgcli
       - TELEGRAM_CLI_PORT=4458
       - REDIS_PORT=6379

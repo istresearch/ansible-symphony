@@ -18,7 +18,7 @@ services:
       - MYSQL_ROOT_PASSWORD=USE_A_REAL_PW_IF_NOT_SETUP_ALREADY
       - MYSQL_ROOT_USER=COOPER_PROD_ROOT_UN
       - MYSQL_SCHEMA_PATH=schema.sql
-      - KAFKA_HOSTS=crew04.istresearch.com:9092,crew05.istresearch.com:9092,crew06.istresearch.com:9092
+      - KAFKA_HOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
       - KAFKA_TOPIC=crawl.incoming
       - TELEGRAPTOR_API_OFFLINE=False
       - TELEGRAM_PEER_ID_LOOKUP_URL=http://tgapi:5000/lookup_peer/
@@ -104,7 +104,7 @@ services:
       - THROTTLE_BASE_DELAY=2
       - THROTTLE_MAX_EXP=15
       - THROTTLE_FLOOR=30
-      - ZOOKEEPER_HOSTS=crew01.istresearch.com
+      - ZOOKEEPER_HOSTS={% for host in groups['zookeeper-nodes'] %}{{ host }}:{{ zookeeper_port|default(2181) }}{% if not loop.last %},{% endif %}{% endfor %}
       - ZOOKEEPER_ASSIGN_PATH=/graph-api/instance
       - LOGGER_NAME=graph-api
       - LOG_DIR=/var/log/graph-api
