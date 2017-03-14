@@ -2,7 +2,6 @@
 
 sentry_url_un: "{{ vault_sentry_url_un }}"
 sentry_url_pwd: "{{ vault_sentry_url_pwd }}"
-kafka_hosts: "crew06.istresearch.com:9092,crew07.istresearch.com:9092,crew08.istresearch.com:9092"
 ist_es_pwd: "{{ vault_ist_es_pwd }}"
 
 ### FOLLOW TRAPTORS ###
