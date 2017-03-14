@@ -61,6 +61,17 @@
 - name: Login to Docker Hub
   script: login.exp {{ docker_repo_user }} {{ docker_repo_pwd }}
 
+################################################################################
+# top command, for containers: https://github.com/yadutaf/ctop
+################################################################################
+- name: Install ctop
+  get_url:
+    url: https://raw.githubusercontent.com/yadutaf/ctop/master/cgroup_top.py
+    dest: /usr/local/bin/ctop
+    mode: 0755
+  when: docker_install_ctop is defined and docker_install_ctop
+
+
 #- name: stop docker service
 #  service:
 #    name: docker
