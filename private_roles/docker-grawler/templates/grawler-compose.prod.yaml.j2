@@ -11,7 +11,7 @@ services:
       - KAFKA_TOPIC=crawler.graph
       - REDIS_HOST={{ groups['redis-master-node'][0] }}
       - REDIS_PORT=6379
-      - REDIS_DB=5
+      - REDIS_DB={{ grawler_redis_db }}
       - QUEUE=graph_q
       - SHARED_QUEUE=shared_graph_q
       - THROTTLE_BASE_DELAY=2

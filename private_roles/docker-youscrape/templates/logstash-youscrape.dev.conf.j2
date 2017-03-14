@@ -13,7 +13,7 @@ output {
       template => "/etc/logstash/templates/logs-template.json"
       template_name => "logs-*"
       template_overwrite => true
-      index => "logs-{{ logstash_environment }}-youscrape-%{+YYYY.MM}"
+      index => "logs-{{ deploy_env }}-youscrape-%{+YYYY.MM}"
       document_type => "%{[logger]}"
       {% if logstash_credentials is defined and logstash_credentials == true %}
       user => "ist-es"

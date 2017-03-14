@@ -19,6 +19,7 @@ services:
       - logs:/usr/src/app/logs
     extra_hosts:
       - {{ inventory_hostname }}:172.17.0.1
+    hostname: {% for host in groups['docker-scrapy-nodes'] %}{%- if host == inventory_hostname -%}kafkamonitor{{ loop.index }}{%- endif -%}{% endfor %}
 
   redis_monitor:
     image: istresearch/scrapy-cluster-ist:redis-monitor-116-dev
@@ -37,6 +38,7 @@ services:
       - logs:/usr/src/app/logs
     extra_hosts:
       - {{ inventory_hostname }}:172.17.0.1
+    hostname: {% for host in groups['docker-scrapy-nodes'] %}{%- if host == inventory_hostname -%}redismonitor{{ loop.index }}{%- endif -%}{% endfor %}
 
   crawler:
     image: istresearch/scrapy-cluster-ist:crawler-127-dev
@@ -59,13 +61,14 @@ services:
       - logs:/usr/src/app/logs
     extra_hosts:
       - {{ inventory_hostname }}:172.17.0.1
+    hostname: {% for host in groups['docker-scrapy-nodes'] %}{%- if host == inventory_hostname -%}crawler{{ loop.index }}{%- endif -%}{% endfor %}
 
   logstash:
     image: logstash:latest
     command: logstash -f /etc/logstash/conf.d/logstash.conf
     volumes:
       - /opt/docker_configs/logstash-scrapy-cluster-docker.conf:/etc/logstash/conf.d/logstash.conf
-      - /opt/docker_configs/logs-template.json:/etc/logstash/templates/logs-template.json
+      - /opt/docker_configs/logs-template.{{ deploy_env }}.json:/etc/logstash/templates/logs-template.json
       - logs:/var/log/scrapy-cluster
     extra_hosts:
       - {{ inventory_hostname }}:172.17.0.1

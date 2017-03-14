@@ -10,63 +10,63 @@ services:
   logs_cooper:
     image: istresearch/gandalf:curator-logs
     environment:
-      - TEMPLATE=logs-{{ logstash_environment }}-cooper-{year}.{month}.{day}
+      - TEMPLATE=logs-{{ deploy_env }}-cooper-{year}.{month}.{day}
       - RETAIN=7
       - INTERVAL=3600
       - ES_HOSTS={{ groups['elasticsearch-nodes'][0] }}:{{ elasticsearch_network_http_port|default(9200) }}
   logs_gatekeeper:
     image: istresearch/gandalf:curator-logs
     environment:
-      - TEMPLATE=logs-{{ logstash_environment }}-gatekeeper-{year}.{month}.{day}
+      - TEMPLATE=logs-{{ deploy_env }}-gatekeeper-{year}.{month}.{day}
       - RETAIN=7
       - INTERVAL=3600
       - ES_HOSTS={{ groups['elasticsearch-nodes'][0] }}:{{ elasticsearch_network_http_port|default(9200) }}
   logs_grawler:
     image: istresearch/gandalf:curator-logs
     environment:
-      - TEMPLATE=logs-{{ logstash_environment }}-grawler-{year}.{month}.{day}
+      - TEMPLATE=logs-{{ deploy_env }}-grawler-{year}.{month}.{day}
       - RETAIN=7
       - INTERVAL=3600
       - ES_HOSTS={{ groups['elasticsearch-nodes'][0] }}:{{ elasticsearch_network_http_port|default(9200) }}
   logs_topologies:
     image: istresearch/gandalf:curator-logs
     environment:
-      - TEMPLATE=logs-{{ logstash_environment }}-topologies-{year}.{month}.{day}
+      - TEMPLATE=logs-{{ deploy_env }}-topologies-{year}.{month}.{day}
       - RETAIN=7
       - INTERVAL=3600
       - ES_HOSTS={{ groups['elasticsearch-nodes'][0] }}:{{ elasticsearch_network_http_port|default(9200) }}
   logs_rule_manager:
     image: istresearch/gandalf:curator-logs
     environment:
-      - TEMPLATE=logs-{{ logstash_environment }}-rulemanager-{year}.{month}.{day}
+      - TEMPLATE=logs-{{ deploy_env }}-rulemanager-{year}.{month}.{day}
       - RETAIN=7
       - INTERVAL=3600
       - ES_HOSTS={{ groups['elasticsearch-nodes'][0] }}:{{ elasticsearch_network_http_port|default(9200) }}
   logs_scrapy-cluster:
     image: istresearch/gandalf:curator-logs
     environment:
-      - TEMPLATE=logs-{{ logstash_environment }}-scrapy-cluster-{year}.{month}.{day}
+      - TEMPLATE=logs-{{ deploy_env }}-scrapy-cluster-{year}.{month}.{day}
       - RETAIN=7
       - INTERVAL=3600
       - ES_HOSTS={{ groups['elasticsearch-nodes'][0] }}:{{ elasticsearch_network_http_port|default(9200) }}
   logs_telegraptor:
     image: istresearch/gandalf:curator-logs
     environment:
-      - TEMPLATE=logs-{{ logstash_environment }}-telegraptor-{year}.{month}.{day}
+      - TEMPLATE=logs-{{ deploy_env }}-telegraptor-{year}.{month}.{day}
       - RETAIN=7
       - INTERVAL=3600
       - ES_HOSTS={{ groups['elasticsearch-nodes'][0] }}:{{ elasticsearch_network_http_port|default(9200) }}
   logs_traptor:
     image: istresearch/gandalf:curator-logs
     environment:
-      - TEMPLATE=logs-{{ logstash_environment }}-traptor-{year}.{month}.{day}
+      - TEMPLATE=logs-{{ deploy_env }}-traptor-{year}.{month}.{day}
       - RETAIN=7
       - INTERVAL=3600
       - ES_HOSTS={{ groups['elasticsearch-nodes'][0] }}:{{ elasticsearch_network_http_port|default(9200) }}
   logs_youscrape:
     image: istresearch/gandalf:curator-logs
     environment:
-      - TEMPLATE=logs-{{ logstash_environment }}-youscrape-{year}.{month}.{day}
+      - TEMPLATE=logs-{{ deploy_env }}-youscrape-{year}.{month}.{day}
       - RETAIN=7
       - INTERVAL=3600
       - ES_HOSTS={{ groups['elasticsearch-nodes'][0] }}:{{ elasticsearch_network_http_port|default(9200) }}

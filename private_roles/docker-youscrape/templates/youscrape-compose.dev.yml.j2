@@ -16,7 +16,7 @@ services:
      - REDIS_QUEUE_VIDEOS_MAX_LIMIT=100
      - REDIS_HOST={{ groups['redis-master-node'][0] }}
      - REDIS_PORT=6379
-     - REDIS_DB=10
+     - REDIS_DB={{ youscrape_redis_db }}
      - COMMENT_MAX_LIMIT=500
      - KAFKA_HOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
 

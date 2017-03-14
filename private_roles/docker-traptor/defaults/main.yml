@@ -8,12 +8,11 @@ is_follow: false
 is_track: false
 is_geo: false
 
-traptor_redis_db: 1
 traptor_kafka_topic: traptor.cooper_prod
 
-traptor_follow_creds: {{ vault_traptor_follow_apikeys }}
+traptor_follow_creds: "{{ vault_traptor_follow_apikeys }}"
 
-traptor_geo_creds: {{ vault_traptor_location_apikeys }}
+traptor_geo_creds: "{{ vault_traptor_location_apikeys }}"
 
-traptor_track_creds: {{ vault_traptor_track_apikeys }}
+traptor_track_creds: "{{ vault_traptor_track_apikeys }}"
 
