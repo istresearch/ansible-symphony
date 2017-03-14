@@ -15,7 +15,8 @@ services:
       - LOG_DIR=/var/log/traptor
       - LOG_FILE_NAME=traptor_locations_0.log
       - KAFKA_ENABLED=true
-      - KAFKA_HOSTS={{ kafka_hosts }}
+      - KAFKA_HOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
+
       - KAFKA_TOPIC=traptor.cooper_prod
       - REDIS_HOST=memex-services.istresearch.com
       - REDIS_PORT=6379
@@ -44,7 +45,8 @@ services:
       - LOG_DIR=/var/log/traptor
       - LOG_FILE_NAME=traptor_locations_1.log
       - KAFKA_ENABLED=true
-      - KAFKA_HOSTS={{ kafka_hosts }}
+      - KAFKA_HOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
+
       - KAFKA_TOPIC=traptor.cooper_prod
       - REDIS_HOST=memex-services.istresearch.com
       - REDIS_PORT=6379
@@ -73,7 +75,8 @@ services:
       - LOG_DIR=/var/log/traptor
       - LOG_FILE_NAME=traptor_locations_2.log
       - KAFKA_ENABLED=true
-      - KAFKA_HOSTS={{ kafka_hosts }}
+      - KAFKA_HOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
+
       - KAFKA_TOPIC=traptor.cooper_prod
       - REDIS_HOST=memex-services.istresearch.com
       - REDIS_PORT=6379
@@ -102,7 +105,8 @@ services:
       - LOG_DIR=/var/log/traptor
       - LOG_FILE_NAME=traptor_locations_3.log
       - KAFKA_ENABLED=true
-      - KAFKA_HOSTS={{ kafka_hosts }}
+      - KAFKA_HOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
+
       - KAFKA_TOPIC=traptor.cooper_prod
       - REDIS_HOST=memex-services.istresearch.com
       - REDIS_PORT=6379
@@ -131,7 +135,8 @@ services:
       - LOG_DIR=/var/log/traptor
       - LOG_FILE_NAME=traptor_locations_4.log
       - KAFKA_ENABLED=true
-      - KAFKA_HOSTS={{ kafka_hosts }}
+      - KAFKA_HOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
+
       - KAFKA_TOPIC=traptor.cooper_prod
       - REDIS_HOST=memex-services.istresearch.com
       - REDIS_PORT=6379
@@ -160,7 +165,8 @@ services:
       - LOG_DIR=/var/log/traptor
       - LOG_FILE_NAME=traptor_locations_5.log
       - KAFKA_ENABLED=true
-      - KAFKA_HOSTS={{ kafka_hosts }}
+      - KAFKA_HOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
+
       - KAFKA_TOPIC=traptor.cooper_prod
       - REDIS_HOST=memex-services.istresearch.com
       - REDIS_PORT=6379

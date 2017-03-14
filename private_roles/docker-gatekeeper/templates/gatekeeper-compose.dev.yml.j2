@@ -19,7 +19,8 @@ services:
       - ES_USE_SSL=False
       - ES_HOST=loki.dev.istresearch.com:9200
       - ES_INDEX=pulse-default-default
-      - KAFKA_HOSTS=loki.dev.istresearch.com:9092
+      - KAFKA_HOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
+
       - KAFKA_TOPIC=gatekeeper.dev
       - REDIS_HOST=loki.dev.istresearch.com
       - REDIS_PORT=6379

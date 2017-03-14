@@ -18,7 +18,8 @@ services:
      - REDIS_PORT=6379
      - REDIS_DB=10
      - COMMENT_MAX_LIMIT=500
-     - KAFKA_HOSTS=loki.dev.istresearch.com:9092
+     - KAFKA_HOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
+
      - KAFKA_TOPIC=crawl.youtube
      - LOGGER_NAME=youscrape
      - LOG_DIR=/var/log/youscrape

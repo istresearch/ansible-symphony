@@ -11,7 +11,8 @@ services:
   pycli:
     image: istresearch/telegraptor:pycli-2.0.3
     environment:
-      - KAFKAHOSTS="{{ kafka_hosts }}"
+      - KAFKAHOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
+
       - KAFKATOPIC_STREAM=ist.telegram_stream
       - KAFKATOPIC_HISTORY=ist.telegram_history
       - REDIS_HOST=qcr-redis.istresearch.com
@@ -33,7 +34,8 @@ services:
   stream:
     image: istresearch/telegraptor:stream-2.0.3
     environment:
-      - KAFKAHOSTS="{{ kafka_hosts }}"
+      - KAFKAHOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
+
       - KAFKATOPIC_STREAM=ist.telegram_stream
       - KAFKATOPIC_HISTORY=ist.telegram_history
       - REDIS_HOST=qcr-redis.istresearch.com
@@ -58,7 +60,8 @@ services:
   pubsub:
     image: istresearch/telegraptor:pubsub-2.0.3
     environment:
-      - KAFKAHOSTS="{{ kafka_hosts }}"
+      - KAFKAHOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
+
       - KAFKATOPIC_STREAM=ist.telegram_stream
       - KAFKATOPIC_HISTORY=ist.telegram_history
       - REDIS_HOST=qcr-redis.istresearch.com
