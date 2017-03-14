@@ -40,3 +40,7 @@ exim_configs:
 tarsnap_credentials:
   username: "{{ vault_tarsnap_username }}"
   password: "{{ vault_tarsnap_password }}"
+
+# logstash setup
+logstash_credentials: false
+logstash_environment: prod

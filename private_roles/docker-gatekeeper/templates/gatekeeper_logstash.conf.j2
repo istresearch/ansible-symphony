@@ -9,12 +9,16 @@ input {
 output {
     if 'gatekeeper' in [tags] {
         elasticsearch {
-          hosts => "10.105.92.99:9200"
+          hosts => "{{ groups['elasticsearch-nodes'][0] }}:{{ elasticsearch_network_http_port|default(9200) }}"
           template => "/etc/logstash/templates/logs-template.json"
           template_name => "logs-*"
           template_overwrite => true
-          index => "logs-gatekeeper-%{+YYYY.MM.dd}"
+          index => "logs-{{ logstash_environment }}-gatekeeper-%{+YYYY.MM.dd}"
           document_type => "%{[logger]}"
+          {% if logstash_credentials is defined and logstash_credentials == true %}
+          user => "ist-es"
+          password => "{{ logstash_es_pwd }}"
+          {% endif %}
         }
     }
 }
