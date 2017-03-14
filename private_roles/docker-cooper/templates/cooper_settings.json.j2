@@ -1,19 +1,19 @@
 {
     "twitter": {
-        "OAUTH_TOKEN_SECRET": {{ twitter_oauth_token_secret }},
-        "APP_SECRET": {{ twitter_app_secret }},
-        "OAUTH_TOKEN": {{ twitter_oauth_token }},
-        "APP_KEY": {{ twitter_app_key }}
+        "OAUTH_TOKEN_SECRET": "COOPER_OAUTH_TOKEN_SECRET",
+        "APP_SECRET": "COOPER_APP_SECRET",
+        "OAUTH_TOKEN": "COOPER_OAUTH_TOKEN",
+        "APP_KEY": "COOPER_APP_KEY"
         },
     "GNIP": {
-        "PWD": {{ gnip_pwd }},
-        "UN": {{ gnip_un }},
-        "ACCOUNT": {{ gnip_account }},
+        "PWD": "",
+        "UN": "j",
+        "ACCOUNT": "Timbr",
         "STREAMS": ["dev-darpa", "prod-darpa"]
         },
     "SQL": {
-        "UN": "memex",
-        "PWD": {{ sql_pwd }},
+        "UN": "COOPER_PROD_UN",
+        "PWD": "COOPER_PROD_PW",
         "DATABASE": "memex_cooper_prod",
         "HOST": "memex-db.istresearch.com",
         "ROOT": "stuff",
@@ -22,7 +22,7 @@
         "SCHEMA": "schema.sql"
         },
     "ES": {
-        "URL": "http://ist-es01.istresearch.com:9200",
+        "URL": "https://COOPER_ES_UN:COOPER_ES_PW@els.istresearch.com:59200",
         "INDEX": "traptor-cooper-1"
         },
     "FLASK": {
@@ -40,9 +40,9 @@
         "SEARCH_API_URL": "https://api.twitter.com/1.1/search/tweets.json"
     },
     "FACEBOOK_SCRAPERS": {
-        "GRAPH_SCRAPER_API_URL": {{ graph_api_url }},
-        "PROFILE_SCRAPER_URL": {{ profile_url }},
-        "PEOPLE_SEARCH_SCRAPER_URL": {{ people_search_url }},
+        "GRAPH_SCRAPER_API_URL": "http://graphapi:5000/graph/api/graph/",
+        "PROFILE_SCRAPER_URL": "https://PROFILE_SCRAPER_UN:PROFILE_SCRAPER_PW@54.201.220.233/scrapyd/schedule.json",
+        "PEOPLE_SEARCH_SCRAPER_URL": "https://PROFILE_SCRAPER_UN:PROFILE_SCRAPER_PW@54.201.220.233/scrapyd/schedule.json",
         "FACEBOOK_PROFILE_SPIDER_NAME": "profile-prod"
     },
     "TELEGRAM": {
@@ -52,4 +52,3 @@
         "LOG_FILE_DIR": "/var/log/cooper"
     }
 }
-

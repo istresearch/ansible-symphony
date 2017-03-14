@@ -2,40 +2,110 @@ version: '2'
 
 services:
   cooper:
-    image: istresearch/cooper:1.7.1
+    image: istresearch/cooper:1.7.5
     volumes:
       - logs:/var/log/cooper
-      - /opt/docker_configs/cooper_settings.json:/usr/src/app/cooper-the-dog/settings.json
-      - /opt/docker_configs/cooper_config.py:/usr/src/app/cooper-the-dog/config.py
     ports:
       - "5001:5001"
     depends_on:
       - logstash
-    restart: always
+    restart: "on-failure:3"
     environment:
-      - KAFKA_HOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
-
       - MYSQL_HOST=memex-db.istresearch.com
-      - MYSQL_USER={{ mysql_username }}
-      - MYSQL_PASSWORD={{ mysql_password }}
+      - MYSQL_USER=COOPER_PROD_UN
+      - MYSQL_PASSWORD=COOPER_PROD_PW
       - MYSQL_DATABASE=memex_cooper_prod
       - MYSQL_ROOT_PASSWORD=USE_A_REAL_PW_IF_NOT_SETUP_ALREADY
-      - MYSQL_ROOT_USER=root
+      - MYSQL_ROOT_USER=COOPER_PROD_ROOT_UN
+      - MYSQL_SCHEMA_PATH=schema.sql
+      - KAFKA_HOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
+      - KAFKA_TOPIC=crawl.incoming
+      - TELEGRAPTOR_API_OFFLINE=False
+      - TELEGRAM_PEER_ID_LOOKUP_URL=http://tgapi:5000/lookup_peer/
+      - FACEBOOK_GRAPH_SCRAPER_API_URL=https://graphapi:5000/graph/api/graph/
+      - FACEBOOK_PROFILE_SCRAPER_URL=https://UN:PW@54.201.220.233/scrapyd/schedule.json
+      - FACEBOOK_PEOPLE_SEARCH_SCRAPER_URL=https://UN:PW@54.201.220.233/scrapyd/schedule.json
       - FACEBOOK_PROFILE_SPIDER_NAME=profile-prod
+      - STATSD_HOST_IP=172.17.0.1
+      - YOUSCRAPE_API_URL=http://youscrapeapi:5000/youscrape/submit
+      - GATEKEEPER_HISTORIC_QUERY_ENDPOINT=http://gatekeeper:5000/1.0/jobs/historic-query
+      - GATEKEEPER_JOB_STATUS_ENDPOINT=http://gatekeeper:5000/1.0/jobs/job-status/
+      - TWITTER_OAUTH_TOKEN_SECRET=TWITTER_OAUTH_TOKEN_SECRET
+      - TWITTER_APP_SECRET=TWITTER_APP_SECRET
+      - TWITTER_OAUTH_TOKEN=TWITTER_OAUTH_TOKEN
+      - TWITTER_APP_KEY=TWITTER_APP_KEY
+      - TWITTER_TWEETS_PER_SECOND=1.0
+      - TWITTER_RATE_LIMIT_URL=https://api.twitter.com/1.1/application/rate_limit_status.json
+      - TWITTER_SEARCH_API_URL=https://api.twitter.com/1.1/search/tweets.json
+      - ES_URL=elasticsearch:9200
+      - ES_INDEX=cooper_dev
+      - LOG_NAME=cooper
+      - LOG_DIR=/var/log/cooper
+      - LOG_FILE=cooper.log
+      - LOG_STDOUT=False
+      - LOG_JSON=True
+      - LOG_LEVEL=INFO
+
+  tgapi:
+    image: istresearch/telegraptor:api-dev
+    environment:
+      - TELEGRAM_CLI_HOST=tgcli
+      - TELEGRAM_CLI_PORT=4458
+      - LOG_NAME=telegraptor-api
+      - LOG_DIR=/var/log/telegraptor
+      - LOG_FILE=telegraptor.log
+      - LOG_STDOUT=False
+      - LOG_JSON=True
+      - LOG_LEVEL=INFO
+    depends_on:
+      - tgcli
+    volumes:
+      - logs:/var/log/telegraptor
+    ports:
+      - "5000:5000"
+
+  tgcli:
+    image: istresearch/telegraptor:tgcli-latest
+    volumes:
+      - /data/tmp/.telegram-cli-cooper:/root/.telegram-cli
+    tty: true
+    restart: always
+
+  youscrapeapi:
+     image: istresearch/youscrape:api-develop
+     environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/usr/src/app/YouScrape.json
+      - YOUTUBE_TYPES=youtube,youtube_channel,youtube_video,youtube_playlist,youtube_user,youtube_url
+      - REDIS_HOST=loki.dev.istresearch.com
+      - REDIS_PORT=6379
+      - REDIS_DB=10
+      - REDIS_QUEUE_NEW=youscrape_q_new
+      - REDIS_QUEUE_USERS=youscrape_q_users
+      - REDIS_QUEUE_VIDEOS=youscrape_q_videos
+      - LOGGER_NAME=youscrape-api
+      - LOG_DIR=/var/log/youscrape-api
+      - LOG_FILE=youscrape-api.log
+      - LOG_STDOUT=False
+      - LOG_JSON=True
+      - LOG_LEVEL=INFO
+     restart: always
+     volumes:
+       # Get the JSON creds from the YouTube App Dashboard
+      - /opt/docker_configs/YouScrape-creds.json:/usr/src/app/YouScrape.json
+      - logs:/var/log/youscrape-api
 
   graphapi:
      image: istresearch/graph-api:graph-api-latest
      environment:
       - REDIS_HOST=memex-services.istresearch.com
       - REDIS_PORT=6379
-      - REDIS_DB=8
-      - REDIS_SHARED_QUEUE=shared_graph_q_prod
+      - REDIS_DB=5
+      - REDIS_SHARED_QUEUE=shared_graph_q
       - THROTTLE_BASE_DELAY=2
       - THROTTLE_MAX_EXP=15
       - THROTTLE_FLOOR=30
       - ZOOKEEPER_HOSTS={% for host in groups['zookeeper-nodes'] %}{{ host }}:{{ zookeeper_port|default(2181) }}{% if not loop.last %},{% endif %}{% endfor %}
-
-      - ZOOKEEPER_ASSIGN_PATH=/graph-api/instance_prod
+      - ZOOKEEPER_ASSIGN_PATH=/graph-api/instance
       - LOGGER_NAME=graph-api
       - LOG_DIR=/var/log/graph-api
       - LOG_FILE=graph-api.log
@@ -49,16 +119,68 @@ services:
       - THROTTLE_MIN_EXP=8            # 2 ^ n = min base sleep time, 2^8 = 256ms
       - THROTTLE_MAX_EXP=12           # 2 ^ n = max base sleep time, 2^12 = 4096ms
      command: bash -c "python facebook/file_pusher.py -i 000 -z crew01.istresearch.com:2181 -f facebook/facebook_config_000.yml && python app.py"
-     restart: always
+     restart: "on-failure:3"
      volumes:
       - logs:/var/log/graph-api
       - /opt/docker_configs/facebook_config_1.yml:/app/facebook/facebook_config_000.yml
+
+  gatekeeper:
+    image: istresearch/gatekeeper:gatekeeper-1.0.0
+    volumes:
+      - .:/code
+      - logs:/var/log/gatekeeper
+    environment:
+      - LOGGER_NAME=gatekeeper
+      - LOG_LEVEL=INFO
+      - LOG_DIR=/var/log/gatekeeper
+      - LOG_FILE_NAME=gatekeeper.log
+      - LOG_JSON=True
+      - LOG_STDOUT=False
+      - ES_USE_SSL=False
+      - ES_HOST=loki.dev.istresearch.com:9200
+      - ES_INDEX=pulse-default-default
+      - KAFKA_HOSTS=loki.dev.istresearch.com:9092
+      - KAFKA_TOPIC=gatekeeper.dev
+      - REDIS_HOST=loki.dev.istresearch.com
+      - REDIS_PORT=6379
+      - REDIS_DB=11
+      - STATSD_HOST_IP=172.17.0.1
+      - HISTORIC_QUERY_JOB_QUEUE_NAME=historic_query
+      - HISTORIC_QUERY_JOB_TTL=99999
+    restart: "on-failure:3"
+
+  gatekeeper_worker:
+    image: istresearch/gatekeeper:gatekeeper_worker-1.0.0
+    volumes:
+      - .:/code
+      - logs:/var/log/gatekeeper
+    environment:
+      - LOGGER_NAME=gatekeeper_worker
+      - LOG_LEVEL=INFO
+      - LOG_DIR=/var/log/gatekeeper
+      - LOG_FILE_NAME=gatekeeper_worker.log
+      - LOG_JSON=True
+      - LOG_STDOUT=False
+      - ES_USE_SSL=False
+      - ES_HOST=loki.dev.istresearch.com:9200
+      - ES_INDEX=pulse-default-default
+      - ES_DOC_TYPE=tweet_traptor
+      - KAFKA_ENABLED=true
+      - KAFKA_HOSTS=loki.dev.istresearch.com:9092
+      - KAFKA_TOPIC=gatekeeper.dev
+      - REDIS_HOST=loki.dev.istresearch.com
+      - REDIS_PORT=6379
+      - REDIS_DB=11
+      - STATSD_HOST_IP=172.17.0.1
+      - HISTORIC_QUERY_JOB_QUEUE_NAME=historic_query
+      - HISTORIC_QUERY_JOB_TTL=99999
+    restart: "on-failure:3"
 
   qprulegen:
     image: istresearch/quickpin-rule-generator:1.1.0
     volumes:
       - logs:/var/log/qprulegen
-    restart: always
+    restart: "on-failure:3"
     environment:
       - LOG_LEVEL=INFO
       - LOG_DIR=/var/log/qprulegen
@@ -82,4 +204,3 @@ services:
 
 volumes:
   logs:
-
