@@ -40,7 +40,7 @@ traptor-geo.webops.istresearch.com
 aws
 
 [zookeeper-nodes]
-# need to know where these will be
+zk[01:03].webops.istresearch.com
 
 [kafka-nodes]
 kafka[01:03].webops.istresearch.com
