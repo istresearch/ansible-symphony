@@ -1,0 +1,48 @@
+version: '2'
+
+services:
+{% for creds in traptor_follow_creds %}
+  follow_{{ loop.index }}:
+    image: istresearch/traptor:v1.3.0
+    volumes:
+      - logs:/var/log/traptor
+    environment:
+      - TRAPTOR_TYPE=follow
+      - TRAPTOR_ID={{ loop.index }}
+      - RULE_CHECK_INTERVAL=60
+      - USE_SENTRY=true
+      - SENTRY_URL=https://{{ sentry_url_un }}:{{ sentry_url_pwd }}@sentry.io/55250
+      - LOG_LEVEL=INFO
+      - LOG_DIR=/var/log/traptor
+      - LOG_FILE_NAME=traptor_follow_{{ loop.index }}.log
+      - KAFKA_ENABLED=true
+      - KAFKA_HOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
+
+      - KAFKA_TOPIC={{ traptor_kafka_topic }}
+      - REDIS_HOST={{ groups['redis-master-node'][0] }}
+      - REDIS_PORT=6379
+      - REDIS_DB={{ traptor_redis_db }}
+      - REDIS_PUBSUB_CHANNEL=traptor-notify-prod
+      - CONSUMER_KEY={{ creds.consumer_key }}
+      - CONSUMER_SECRET={{ creds.consumer_secret }}
+      - ACCESS_TOKEN={{ creds.access_token }}
+      - ACCESS_TOKEN_SECRET={{ creds.access_token_secret }}
+      - STATSD_HOST_IP=172.17.0.1
+    restart: "on-failure:3"
+    depends_on:
+      - logstash
+    extra_hosts:
+      - {{ inventory_hostname }}:172.17.0.1
+
+{% endfor %}
+  logstash:
+    container_name: traptor_follow_logstash
+    image: logstash:latest
+    command: logstash -f /etc/logstash/conf.d/logstash.conf
+    volumes:
+      - {{ docker_configs_dir }}/{{ logstash_file_final }}:/etc/logstash/conf.d/logstash.conf
+      - {{ docker_configs_dir }}/logs-template.{{ deploy_env }}.json:/etc/logstash/templates/logs-template.json
+      - logs:/var/log/traptor
+
+volumes:
+  logs:

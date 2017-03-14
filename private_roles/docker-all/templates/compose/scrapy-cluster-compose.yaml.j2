@@ -1,0 +1,78 @@
+version: '2'
+
+services:
+  kafka_monitor:
+    image: istresearch/scrapy-cluster-ist:kafka-monitor-116-dev
+    restart: always
+    environment:
+      - KAFKA_HOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
+
+      - REDIS_HOST={{ groups['redis-master-node'][0] }}
+      - ZOOKEEPER_HOSTS={% for host in groups['zookeeper-nodes'] %}{{ host }}:{{ zookeeper_port|default(2181) }}{% if not loop.last %},{% endif %}{% endfor %}
+
+      - REDIS_DB={{ scrapy_cluster_redis_db }}
+      - KAFKA_INCOMING_TOPIC={{ sc_kafka_monitor_kafka_topic_prefix }}.{{ sc_kafka_monitor_topic_main }}
+      - KAFKA_GROUP={{ sc_kafka_monitor_kafka_group }}
+      - LOG_STDOUT=False
+      - LOG_JSON=True
+    volumes:
+      - logs:/usr/src/app/logs
+    extra_hosts:
+      - {{ inventory_hostname }}:172.17.0.1
+    hostname: {% for host in groups['docker-scrapy-nodes'] %}{%- if host == inventory_hostname -%}kafkamonitor{{ loop.index }}{%- endif -%}{% endfor %}
+
+  redis_monitor:
+    image: istresearch/scrapy-cluster-ist:redis-monitor-116-dev
+    restart: always
+    environment:
+      - REDIS_HOST={{ groups['redis-master-node'][0] }}
+      - REDIS_DB={{ scrapy_cluster_redis_db }}
+      - KAFKA_HOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
+
+      - KAFKA_TOPIC_PREFIX={{ sc_crawling_kafka_topic_prefix }}
+      - ZOOKEEPER_HOSTS={% for host in groups['zookeeper-nodes'] %}{{ host }}:{{ zookeeper_port|default(2181) }}{% if not loop.last %},{% endif %}{% endfor %}
+
+      - LOG_STDOUT=False
+      - LOG_JSON=True
+    volumes:
+      - logs:/usr/src/app/logs
+    extra_hosts:
+      - {{ inventory_hostname }}:172.17.0.1
+    hostname: {% for host in groups['docker-scrapy-nodes'] %}{%- if host == inventory_hostname -%}redismonitor{{ loop.index }}{%- endif -%}{% endfor %}
+
+  crawler:
+    image: istresearch/scrapy-cluster-ist:crawler-127-dev
+    restart: always
+    environment:
+      - REDIS_HOST={{ groups['redis-master-node'][0] }}
+      - REDIS_DB={{ scrapy_cluster_redis_db }}
+      - KAFKA_HOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
+
+      - KAFKA_TOPIC_PREFIX={{ sc_crawling_kafka_topic_prefix }}
+      - ZOOKEEPER_HOSTS={% for host in groups['zookeeper-nodes'] %}{{ host }}:{{ zookeeper_port|default(2181) }}{% if not loop.last %},{% endif %}{% endfor %}
+
+      - QUEUE_HITS={{ sc_crawling_queue_hits }}
+      - QUEUE_WINDOW={{ sc_crawling_queue_window }}
+      - QUEUE_MODERATED={{ sc_crawling_queue_moderated }}
+      - SC_LOG_STDOUT=False
+      - SC_LOG_JSON=True
+      - KAFKA_BASE_64_ENCODE={{ sc_crawling_kafka_base_64 }}
+    volumes:
+      - logs:/usr/src/app/logs
+    extra_hosts:
+      - {{ inventory_hostname }}:172.17.0.1
+    hostname: {% for host in groups['docker-scrapy-nodes'] %}{%- if host == inventory_hostname -%}crawler{{ loop.index }}{%- endif -%}{% endfor %}
+
+  logstash:
+    image: logstash:latest
+    command: logstash -f /etc/logstash/conf.d/logstash.conf
+    volumes:
+      - {{ docker_configs_dir }}/{{ logstash_file_final }}:/etc/logstash/conf.d/logstash.conf
+      - {{ docker_configs_dir }}/logs-template.{{ deploy_env }}.json:/etc/logstash/templates/logs-template.json
+      - logs:/var/log/scrapy-cluster
+    extra_hosts:
+      - {{ inventory_hostname }}:172.17.0.1
+
+volumes:
+  logs:
+
