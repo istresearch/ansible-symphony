@@ -31,19 +31,19 @@ docker-youscrape-nodes
 portainer-nodes
 
 [docker-engine]
-cooper-joka.webops.istresearch.com
-traptor-follow.webops.istresearch.com
-traptor-track.webops.istresearch.com
-traptor-geo.webops.istresearch.com
+cooper-joka.rays.istresearch.com
+traptor-follow.rays.istresearch.com
+traptor-track.rays.istresearch.com
+traptor-geo.rays.istresearch.com
 
-[webops:children]
+[rays:children]
 aws
 
 [zookeeper-nodes]
-zk[01:03].webops.istresearch.com
+zk[01:03].rays.istresearch.com
 
 [kafka-nodes]
-kafka[01:03].webops.istresearch.com
+kafka[01:03].rays.istresearch.com
 
 [redis-master-node]
 # this might be on login
@@ -60,13 +60,13 @@ redis-slave-nodes
 redis-sentinel-nodes
 
 [storm-nimbus-node]
-storm01.webops.istresearch.com
+storm01.rays.istresearch.com
 
 [storm-ui-node]
-storm01.webops.istresearch.com
+storm01.rays.istresearch.com
 
 [storm-supervisor-nodes]
-storm[02:05].webops.istresearch.com
+storm[02:05].rays.istresearch.com
 
 [storm-nodes:children]
 storm-nimbus-node
@@ -88,16 +88,16 @@ gandalf-runner-node
 [gandalf-runner-node]
 
 [docker-cooper-nodes]
-cooper-joka.webops.istresearch.com
+cooper-joka.rays.istresearch.com
 
 [docker-traptor-follow-nodes]
-traptor-follow.webops.istresearch.com
+traptor-follow.rays.istresearch.com
 
 [docker-traptor-track-nodes]
-traptor-track.webops.istresearch.com
+traptor-track.rays.istresearch.com
 
 [docker-traptor-geo-nodes]
-traptor-geo.webops.istresearch.com
+traptor-geo.rays.istresearch.com
 
 [docker-traptor-nodes:children]
 docker-traptor-follow-nodes
@@ -111,7 +111,7 @@ docker-traptor-geo-nodes
 [docker-rule-manager-nodes]
 
 [docker-scrapy-nodes]
-crawler[01:04].webops.istresearch.com
+crawler[01:04].rays.istresearch.com
 
 [docker-telegraptor-nodes]
 
