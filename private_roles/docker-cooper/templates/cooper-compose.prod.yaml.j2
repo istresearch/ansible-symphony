@@ -19,26 +19,26 @@ services:
       - MYSQL_ROOT_USER=COOPER_PROD_ROOT_UN
       - MYSQL_SCHEMA_PATH=schema.sql
       - KAFKA_HOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
-      - KAFKA_TOPIC=crawl.incoming
+      - KAFKA_TOPIC={{ sc_kafka_monitor_kafka_topic_prefix|default('crawl') }}.{{ sc_kafka_monitor_topic_main|default('incoming') }}
       - TELEGRAPTOR_API_OFFLINE=False
       - TELEGRAM_PEER_ID_LOOKUP_URL=http://tgapi:5000/lookup_peer/
       - FACEBOOK_GRAPH_SCRAPER_API_URL=https://graphapi:5000/graph/api/graph/
-      - FACEBOOK_PROFILE_SCRAPER_URL=https://UN:PW@54.201.220.233/scrapyd/schedule.json
-      - FACEBOOK_PEOPLE_SEARCH_SCRAPER_URL=https://UN:PW@54.201.220.233/scrapyd/schedule.json
+      # - FACEBOOK_PROFILE_SCRAPER_URL=https://UN:PW@54.201.220.233/scrapyd/schedule.json
+      # - FACEBOOK_PEOPLE_SEARCH_SCRAPER_URL=https://UN:PW@54.201.220.233/scrapyd/schedule.json
       - FACEBOOK_PROFILE_SPIDER_NAME=profile-prod
       - STATSD_HOST_IP=172.17.0.1
       - YOUSCRAPE_API_URL=http://youscrapeapi:5000/youscrape/submit
       - GATEKEEPER_HISTORIC_QUERY_ENDPOINT=http://gatekeeper:5000/1.0/jobs/historic-query
       - GATEKEEPER_JOB_STATUS_ENDPOINT=http://gatekeeper:5000/1.0/jobs/job-status/
-      - TWITTER_OAUTH_TOKEN_SECRET=TWITTER_OAUTH_TOKEN_SECRET
-      - TWITTER_APP_SECRET=TWITTER_APP_SECRET
-      - TWITTER_OAUTH_TOKEN=TWITTER_OAUTH_TOKEN
-      - TWITTER_APP_KEY=TWITTER_APP_KEY
+      - TWITTER_OAUTH_TOKEN_SECRET={{ twitter_oauth_token_secret }}
+      - TWITTER_APP_SECRET={{ twitter_app_secret }}
+      - TWITTER_OAUTH_TOKEN={{ twitter_oauth_token }}
+      - TWITTER_APP_KEY={{ twitter_app_key }}
       - TWITTER_TWEETS_PER_SECOND=1.0
       - TWITTER_RATE_LIMIT_URL=https://api.twitter.com/1.1/application/rate_limit_status.json
       - TWITTER_SEARCH_API_URL=https://api.twitter.com/1.1/search/tweets.json
-      - ES_URL=elasticsearch:9200
-      - ES_INDEX=cooper_dev
+      - ES_URL={{ groups['elasticsearch-nodes'][0] }}:{{ elasticsearch_network_http_port|default(9200) }}
+      - ES_INDEX=cooper-rules
       - LOG_NAME=cooper
       - LOG_DIR=/var/log/cooper
       - LOG_FILE=cooper.log
@@ -76,9 +76,9 @@ services:
      environment:
       - GOOGLE_APPLICATION_CREDENTIALS=/usr/src/app/YouScrape.json
       - YOUTUBE_TYPES=youtube,youtube_channel,youtube_video,youtube_playlist,youtube_user,youtube_url
-      - REDIS_HOST=loki.dev.istresearch.com
+      - REDIS_HOST={{ groups['redis-master-node'][0] }}
       - REDIS_PORT=6379
-      - REDIS_DB=10
+      - REDIS_DB={{ youscrape_redis_db }}
       - REDIS_QUEUE_NEW=youscrape_q_new
       - REDIS_QUEUE_USERS=youscrape_q_users
       - REDIS_QUEUE_VIDEOS=youscrape_q_videos
@@ -97,9 +97,9 @@ services:
   graphapi:
      image: istresearch/graph-api:graph-api-latest
      environment:
-      - REDIS_HOST=memex-services.istresearch.com
+      - REDIS_HOST={{ groups['redis-master-node'][0] }}
       - REDIS_PORT=6379
-      - REDIS_DB=5
+      - REDIS_DB={{ grawler_redis_db }}
       - REDIS_SHARED_QUEUE=shared_graph_q
       - THROTTLE_BASE_DELAY=2
       - THROTTLE_MAX_EXP=15
@@ -118,7 +118,7 @@ services:
       - THROTTLE_SPLAY_MS=2048        # max random added sleep time
       - THROTTLE_MIN_EXP=8            # 2 ^ n = min base sleep time, 2^8 = 256ms
       - THROTTLE_MAX_EXP=12           # 2 ^ n = max base sleep time, 2^12 = 4096ms
-     command: bash -c "python facebook/file_pusher.py -i 000 -z crew01.istresearch.com:2181 -f facebook/facebook_config_000.yml && python app.py"
+     command: bash -c "python facebook/file_pusher.py -i 000 -z {{ groups['zookeeper-nodes'][0] }} -f facebook/facebook_config_000.yml && python app.py"
      restart: "on-failure:3"
      volumes:
       - logs:/var/log/graph-api
@@ -137,13 +137,14 @@ services:
       - LOG_JSON=True
       - LOG_STDOUT=False
       - ES_USE_SSL=False
-      - ES_HOST=loki.dev.istresearch.com:9200
+      - ES_HOST={{ groups['elasticsearch-nodes'][0] }}:{{ elasticsearch_network_http_port|default(9200) }}
       - ES_INDEX=pulse-default-default
-      - KAFKA_HOSTS=loki.dev.istresearch.com:9092
+      - KAFKA_HOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
+
       - KAFKA_TOPIC=gatekeeper.dev
-      - REDIS_HOST=loki.dev.istresearch.com
+      - REDIS_HOST={{ groups['redis-master-node'][0] }}
       - REDIS_PORT=6379
-      - REDIS_DB=11
+      - REDIS_DB={{ gatekeeper_redis_db }}
       - STATSD_HOST_IP=172.17.0.1
       - HISTORIC_QUERY_JOB_QUEUE_NAME=historic_query
       - HISTORIC_QUERY_JOB_TTL=99999
@@ -162,37 +163,20 @@ services:
       - LOG_JSON=True
       - LOG_STDOUT=False
       - ES_USE_SSL=False
-      - ES_HOST=loki.dev.istresearch.com:9200
+      - ES_HOST={{ groups['elasticsearch-nodes'][0] }}:{{ elasticsearch_network_http_port|default(9200) }}
       - ES_INDEX=pulse-default-default
       - ES_DOC_TYPE=tweet_traptor
       - KAFKA_ENABLED=true
-      - KAFKA_HOSTS=loki.dev.istresearch.com:9092
+      - KAFKA_HOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
+
       - KAFKA_TOPIC=gatekeeper.dev
-      - REDIS_HOST=loki.dev.istresearch.com
+      - REDIS_HOST={{ groups['redis-master-node'][0] }}
       - REDIS_PORT=6379
-      - REDIS_DB=11
+      - REDIS_DB={{ gatekeeper_redis_db }}
       - STATSD_HOST_IP=172.17.0.1
       - HISTORIC_QUERY_JOB_QUEUE_NAME=historic_query
       - HISTORIC_QUERY_JOB_TTL=99999
     restart: "on-failure:3"
-
-  qprulegen:
-    image: istresearch/quickpin-rule-generator:1.1.0
-    volumes:
-      - logs:/var/log/qprulegen
-    restart: "on-failure:3"
-    environment:
-      - LOG_LEVEL=INFO
-      - LOG_DIR=/var/log/qprulegen
-      - LOG_FILE_NAME=qprulegen.log
-      - QP_URL=https://ec2-52-89-211-38.us-west-2.compute.amazonaws.com/
-      - QP_USERNAME=QP_UN
-      - QP_PASSWORD=QP_PW
-      - COOPER_LIST_URL=cooper:5001/cooper/rules/list
-      - COOPER_ACTIVATE_URL=cooper:5001/cooper/rules/activate
-      - SERVICE_REFRESH_RATE=600
-    volumes:
-      - logs:/var/log/qprulegen
 
   logstash:
     image: logstash:latest

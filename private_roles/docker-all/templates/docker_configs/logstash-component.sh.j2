@@ -1,19 +1,19 @@
 input {
   file {
-    path => ['/var/log/cooper/*.log']
+    path => ['/var/log/scrapy-cluster/*.log']
     codec => json
-    tags => ['cooper']
+    tags => ['{{ logstash_tag }}']
   }
 }
 
 output {
-    if 'cooper' in [tags] {
+    if '{{ logstash_tag }}' in [tags]{
         elasticsearch {
-            hosts => ["{{ groups['elasticsearch-nodes'][0] }}:{{ elasticsearch_network_http_port|default(9200) }}"]
+            hosts => "{{ groups['elasticsearch-nodes'][0] }}:{{ elasticsearch_network_http_port|default(9200) }}"
             template => "/etc/logstash/templates/logs-template.json"
             template_name => "logs-*"
             template_overwrite => true
-            index => "logs-{{ deploy_env }}-cooper-%{+YYYY.MM.dd}"
+            index => "logs-{{ deploy_env }}-{{ logstash_tag }}-%{+YYYY.MM.dd}"
             document_type => "%{[logger]}"
             {% if logstash_credentials is defined and logstash_credentials == true %}
             user => "ist-es"
