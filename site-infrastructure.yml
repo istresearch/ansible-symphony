@@ -726,3 +726,15 @@
   tags:
     - site-docker-traptor-all
     - site-docker-traptor-geo-all
+
+- name: Run Telegraptor role
+  hosts: docker-telegraptor-nodes
+  roles: [ docker-all ]
+  vars:
+    component: telegraptor
+    logstash_file: "logstash-telegraptor.conf.j2"
+    logstash_file_final: "logstash-telegraptor.{{ deploy_env }}.conf"
+    logstash_tag: telegraptor
+    project_name: telegraptor
+  tags:
+    - site-docker-telegraptor-all
