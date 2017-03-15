@@ -4,53 +4,53 @@ services:
   tgcli:
     image: istresearch/telegraptor:tgcli-latest
     volumes:
-      - /opt/docker_configs/.telegram-cli-tg:/root/.telegram-cli
+      - /tmp/.telegram-cli:/root/.telegram-cli
     tty: true
     restart: always
 
   pycli:
-    image: istresearch/telegraptor:pycli-2.0.3
+    image: istresearch/telegraptor:pycli-2.0.5
     environment:
       - KAFKAHOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
-
-      - KAFKATOPIC_STREAM=ist.telegram_stream
-      - KAFKATOPIC_HISTORY=ist.telegram_history
+      - KAFKATOPIC_STREAM=telegraptor.stream
+      - KAFKATOPIC_HISTORY=telegraptor.history
       - REDIS_HOST={{ groups['redis-master-node'][0] }}
-      - TELEGRAM_NUMBER=15408456582
+      - TELEGRAM_NUMBER=15404249256
       - TELEGRAM_CLI_HOST=tgcli
       - TELEGRAM_CLI_PORT=4458
       - REDIS_PORT=6379
-      - REDIS_DB=8
-      - REDIS_PUBSUB_CH=telegram-notify-prod
+      - REDIS_DB=3
+      - REDIS_PUBSUB_CH=telegram.notify
       - LOG_NAME=telegraptor-pycli
       - LOG_DIR=/var/log/telegraptor
       - LOG_FILE=telegraptor.log
       - LOG_STDOUT=False
       - LOG_JSON=True
       - LOG_LEVEL=INFO
+      - SENTRY_URL=https://SENTRY_UN:SENTRY_PW@sentry.io/122464
     volumes:
       - logs:/var/log/telegraptor
 
   stream:
-    image: istresearch/telegraptor:stream-2.0.3
+    image: istresearch/telegraptor:stream-2.0.5
     environment:
       - KAFKAHOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
-
-      - KAFKATOPIC_STREAM=ist.telegram_stream
-      - KAFKATOPIC_HISTORY=ist.telegram_history
+      - KAFKATOPIC_STREAM=telegraptor.stream
+      - KAFKATOPIC_HISTORY=telegraptor.history
       - REDIS_HOST={{ groups['redis-master-node'][0] }}
-      - TELEGRAM_NUMBER=15408456582
+      - TELEGRAM_NUMBER=15404249256
       - TELEGRAM_CLI_HOST=tgcli
       - TELEGRAM_CLI_PORT=4458
       - REDIS_PORT=6379
-      - REDIS_DB=8
-      - REDIS_PUBSUB_CH=telegram-notify-prod
+      - REDIS_DB=3
+      - REDIS_PUBSUB_CH=telegram.notify
       - LOG_NAME=telegraptor-stream
       - LOG_DIR=/var/log/telegraptor
       - LOG_FILE=telegraptor.log
       - LOG_STDOUT=False
       - LOG_JSON=True
       - LOG_LEVEL=INFO
+      - SENTRY_URL=https://SENTRY_UN:SENTRY_PW@sentry.io/122464
     depends_on:
       - tgcli
     volumes:
@@ -58,37 +58,26 @@ services:
     restart: always
 
   pubsub:
-    image: istresearch/telegraptor:pubsub-2.0.3
+    image: istresearch/telegraptor:pubsub-2.0.5
     environment:
       - KAFKAHOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
-
-      - KAFKATOPIC_STREAM=ist.telegram_stream
-      - KAFKATOPIC_HISTORY=ist.telegram_history
+      - KAFKATOPIC_STREAM=telegraptor.stream
+      - KAFKATOPIC_HISTORY=telegraptor.history
       - REDIS_HOST={{ groups['redis-master-node'][0] }}
       - TELEGRAM_CLI_HOST=tgcli
       - TELEGRAM_CLI_PORT=4458
       - REDIS_PORT=6379
-      - REDIS_DB=8
-      - REDIS_PUBSUB_CH=telegram-notify-prod
+      - REDIS_DB=3
+      - REDIS_PUBSUB_CH=telegram.notify
       - LOG_NAME=telegraptor-pubsub
       - LOG_DIR=/var/log/telegraptor
       - LOG_FILE=telegraptor.log
       - LOG_STDOUT=False
       - LOG_JSON=True
       - LOG_LEVEL=INFO
+      - SENTRY_URL=https://SENTRY_UN:SENTRY_PW@sentry.io/122464
     depends_on:
       - tgcli
     volumes:
       - logs:/var/log/telegraptor
     restart: always
-
-  logstash:
-    image: logstash:latest
-    command: logstash -f /etc/logstash/conf.d/logstash.conf --verbose
-    volumes:
-      - /opt/docker_configs/logstash-telegraptor.conf:/etc/logstash/conf.d/logstash.conf
-      - /opt/docker_configs/logs-template.json:/etc/logstash/templates/logs-template.json
-      - logs:/var/log/telegraptor
-
-volumes:
-  logs:

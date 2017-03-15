@@ -9,11 +9,13 @@ input {
 output {
     if 'telegraptor' in [tags] {
         elasticsearch {
-            hosts => "10.105.92.99:9200"
+            hosts => ["https://ist-es.istresearch.com:9200"]
+            user => ES_UN
+            password => ES_PW
             template => "/etc/logstash/templates/logs-template.json"
             template_name => "logs-*"
             template_overwrite => true
-            index => "logs-prod-telegraptor-%{+YYYY.MM.dd}"
+            index => "logs-telegraptor-%{+YYYY.MM.dd}"
             document_type => "%{[logger]}"
         }
     }
