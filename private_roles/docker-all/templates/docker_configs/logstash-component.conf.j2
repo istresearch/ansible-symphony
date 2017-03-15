@@ -1,9 +1,15 @@
 input {
   file {
-    path => ['/var/log/scrapy-cluster/*.log']
+    path => ['/var/log/container-logs/*.log']
     codec => json
     tags => ['{{ logstash_tag }}']
   }
+}
+
+filter {
+    if [level] =~ /^DEBUG/ {
+        drop { }
+    }
 }
 
 output {

@@ -1,0 +1,41 @@
+---
+# this is needed because the graphapi for cooper requires a facebook config
+# already in zookeeper
+
+- name: install pip packages
+  pip:
+    name: kazoo
+    state: latest
+    virtualenv: "{{ virtualenv_path }}"
+
+- name: move file pusher script over
+  template:
+    src: extras/facebook_config.yml
+    dest: "{{ docker_configs_dir }}/facebook_cooper_config.yml"
+  run_once: true
+
+- name: start grawling facebook
+  shell: "{{ virtualenv_path }}/bin/python {{ grawler_install_dir }}/default/config/file_pusher.py -f {{ item.value.yml }} -i {{ item.value.id }} -z {{ groups['zookeeper-nodes'][0] }}"
+  args:
+    chdir: "{{ grawler_install_dir }}/default/config/"
+  with_dict: grawler_config_dict
+  run_once: true
+
+-
+
+
+  ---
+
+# create virtualenv
+
+# install packages
+
+# deploy all known zk configs
+
+# push into zookeeper
+
+# clean up configs
+
+# clean up pusher
+
+# clean up virtualenv

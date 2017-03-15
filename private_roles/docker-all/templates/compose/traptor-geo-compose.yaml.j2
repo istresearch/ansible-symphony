@@ -42,7 +42,7 @@ services:
     volumes:
       - {{ docker_configs_dir }}/{{ logstash_file_final }}:/etc/logstash/conf.d/logstash.conf
       - {{ docker_configs_dir }}/logs-template.{{ deploy_env }}.json:/etc/logstash/templates/logs-template.json
-      - logs:/var/log/traptor
+      - logs:/var/log/container-logs
 
 volumes:
   logs:

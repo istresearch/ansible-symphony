@@ -1,0 +1,11 @@
+---
+
+# move template over because it is volume mounted within graphapi
+- name: copy 000 config
+  template:
+    src: "extras/facebook_config.yaml.j2"
+    dest: "{{ docker_configs_dir }}/facebook_cooper_config.{{ deploy_env }}.yaml"
+    mode: 0755
+  with_items:
+    - app_id: "{{ cooper_graphapi_app_id }}"
+      app_secret: "{{ cooper_graphapi_app_secret }}"

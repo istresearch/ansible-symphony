@@ -82,13 +82,13 @@
 
 # ----------------------------- Third-Party users -----------------------------------
 
-#- name: Run Third-Party Users
-#  hosts:
-#  roles:
-#    - add-users
-#  tags:
-#    - site-add-users
-#    - site-add-thirdparty-users
+# - name: Run Third-Party Users
+#   hosts:
+#   roles:
+#     - add-users
+#   tags:
+#     - site-add-users
+#     - site-add-thirdparty-users
 
 # ----------------------------- Virtualenv -----------------------------------
 
@@ -693,7 +693,6 @@
   roles: [ docker-all ]
   vars:
     component: traptor-follow
-    logstash_file: "logstash-traptor.conf.j2"
     logstash_file_final: "logstash-traptor.{{ deploy_env }}.conf"
     logstash_tag: traptor
     project_name: traptor
@@ -706,7 +705,6 @@
   roles: [ docker-all ]
   vars:
     component: traptor-track
-    logstash_file: "logstash-traptor.conf.j2"
     logstash_file_final: "logstash-traptor.{{ deploy_env }}.conf"
     logstash_tag: traptor
     project_name: traptor
@@ -719,10 +717,20 @@
   roles: [ docker-all ]
   vars:
     component: traptor-geo
-    logstash_file: "logstash-traptor.conf.j2"
     logstash_file_final: "logstash-traptor.{{ deploy_env }}.conf"
     logstash_tag: traptor
     project_name: traptor
   tags:
     - site-docker-traptor-all
     - site-docker-traptor-geo-all
+
+# Cooper --------
+- name: Run Docker Cooper role
+  hosts: docker-cooper-nodes
+  roles: [ docker-all ]
+  tags:
+    - site-docker-cooper-all
+  vars:
+    component: cooper
+    extra_tasks: true
+

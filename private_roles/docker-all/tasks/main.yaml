@@ -76,6 +76,14 @@
   with_items: "{{ extra_templates|default([]) }}"
 # END File moving and configuration -------------------
 
+# Container specific tasking -------------------------
+- include: "{{ component }}.yaml"
+  when: "{{ extra_tasks is defined and extra_tasks == true }}"
+  tags:
+    - docker-all
+# END Container specific tasking -------------------------
+
+# Container deployment -----------------------------------
 - name: Stop and Kill any existing Containers
   command: "{{ docker_scripts_dir }}/{{ script_file_final }} down"
   tags: docker-all
@@ -83,3 +91,4 @@
 - name: Start the Containers
   command: "{{ docker_scripts_dir }}/{{ script_file_final }} up -d"
   tags: docker-all
+# END Container deployment -------------------------------

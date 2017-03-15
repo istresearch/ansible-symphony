@@ -156,11 +156,9 @@ vagrant-ist-01
 
 [scrapy-cluster-crawler-nodes]
 vagrant-ist-01
-vagrant-ist-02
 
 [scrapy-cluster-indexer-nodes]
 vagrant-ist-01
-vagrant-ist-02
 
 [scrapy-cluster-nodes:children]
 scrapy-cluster-kafka-monitor-node
@@ -211,37 +209,37 @@ vagrant-ist-01
 vagrant-ist-02
 
 [docker-bumblebee-nodes]
-vagrant-ist-01
+vagrant-ist-02
 
 [docker-cooper-nodes]
-vagrant-ist-01
+vagrant-ist-02
 
 [docker-curator-nodes]
-vagrant-ist-01
+vagrant-ist-02
 
 [docker-grawler-nodes]
-vagrant-ist-01
+vagrant-ist-02
 
 [docker-rule-manager-nodes]
-vagrant-ist-01
+vagrant-ist-02
 
 [docker-scrapy-nodes]
-vagrant-ist-01
+vagrant-ist-02
 
 [docker-telegraptor-nodes]
-vagrant-ist-01
+vagrant-ist-02
 
 [docker-telegraptor-api-nodes]
-vagrant-ist-01
+vagrant-ist-02
 
 [docker-traptor-follow-nodes]
-vagrant-ist-01
+vagrant-ist-02
 
 [docker-traptor-track-nodes]
 vagrant-ist-02
 
 [docker-traptor-geo-nodes]
-vagrant-ist-01
+vagrant-ist-02
 
 [docker-traptor-nodes:children]
 docker-traptor-follow-nodes
@@ -256,6 +254,7 @@ vagrant-ist-02
 
 [portainer-nodes]
 vagrant-ist-01
+vagrant-ist-02
 
 [googler-nodes]
 vagrant-ist-02

@@ -6,6 +6,7 @@ docker_scripts_dir: /data/bin
 
 # creates logs-<env>-* indexes
 deploy_env: prod
+virtualenv_path: /tmp/
 
 # redis db's for services
 gatekeeper_redis_db:      0
@@ -53,3 +54,23 @@ traptor_kafka_topic: traptor.cooper_prod
 traptor_follow_creds: "{{ vault_traptor_follow_apikeys }}"
 traptor_geo_creds: "{{ vault_traptor_location_apikeys }}"
 traptor_track_creds: "{{ vault_traptor_track_apikeys }}"
+
+# Facebook Graph specific vars
+graph_shared_queue: shared_graph_q
+graph_creds:
+  - app_id: blah
+    app_secret: blah
+
+# Cooper specific vars
+cooper_mysql_host: "{{ vault_mysql_host|default('localhost') }}"
+cooper_mysql_user: "{{ vault_mysql_user|default('user') }}"
+cooper_mysql_password: "{{ vault_mysql_password|default('password') }}"
+cooper_mysql_database: "{{ vault_mysql_database|default('cooper_db') }}"
+cooper_mysql_root_user: "{{ vault_mysql_root_username|default('root') }}"
+cooper_mysql_root_password: "{{ vault_mysql_root_password|default('root') }}"
+cooper_es_index: cooper-rules
+cooper_graphapi_app_id: "{{ graph_creds[0].app_id|default('super') }}"
+cooper_graphapi_app_secret: "{{ graph_creds[0].app_secret|default('secret') }}"
+
+
+
