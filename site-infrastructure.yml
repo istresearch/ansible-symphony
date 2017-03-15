@@ -734,3 +734,11 @@
     component: cooper
     extra_tasks: true
 
+# Telegraptor ----------
+- name: Run Telegraptor role
+  hosts: docker-telegraptor-nodes
+  roles: [ docker-all ]
+  vars:
+    component: telegraptor
+  tags:
+    - site-docker-telegraptor-all
