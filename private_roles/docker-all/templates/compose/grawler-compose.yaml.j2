@@ -1,10 +1,12 @@
 version: '2'
 services:
-  grawler:
+{% for count in range(grawler_containers_per_box) %}
+  grawler_{{ loop.index }}:
     image: istresearch/grawler:grawler-0.1.0
     environment:
-      - GRAWLER_ID=1
-      - PROCESS_ID=00
+      - GRAWLER_ID={% for host in groups['docker-grawler-nodes'] %}{%- if host == inventory_hostname -%}{{ loop.index }}{%- endif -%}{% endfor %}
+
+      - PROCESS_ID=0{{ loop.index }}
       - ELASTICSEARCH_HOSTS=https://ist-es.istresearch.com:9200
       - KAFKA_HOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
 
@@ -13,7 +15,7 @@ services:
       - REDIS_PORT=6379
       - REDIS_DB={{ grawler_redis_db }}
       - QUEUE=graph_q
-      - SHARED_QUEUE=shared_graph_q
+      - SHARED_QUEUE={{ grawler_shared_queue }}
       - THROTTLE_BASE_DELAY=2
       - THROTTLE_MAX_EXP=15
       - THROTTLE_FLOOR=30
@@ -35,17 +37,18 @@ services:
       - THROTTLE_MAX_EXP=12           # 2 ^ n =  max base sleep time, 2^12 =  4096ms
     volumes:
       - logs:/var/log/grawler
-      # facebook config should match grawler id ie. _100
-      - /opt/docker_configs/facebook_config_100.yml:/usr/src/app/grawler/config/facebook_config_100.yml
+    extra_hosts:
+      - {{ inventory_hostname }}:172.17.0.1
     restart: always
+{% endfor %}
 
   logstash:
     image: logstash:latest
     command: logstash -f /etc/logstash/conf.d/logstash.conf
     volumes:
-      - /opt/docker_configs/logstash-grawler.conf:/etc/logstash/conf.d/logstash.conf
-      - /opt/docker_configs/logs-template.json:/etc/logstash/templates/logs-template.json
-      - logs:/var/log/grawler
+      - {{ docker_configs_dir }}/{{ logstash_file_final }}:/etc/logstash/conf.d/logstash.conf
+      - {{ docker_configs_dir }}/logs-template.{{ deploy_env }}.json:/etc/logstash/templates/logs-template.json
+      - logs:/var/log/container-logs
 
 volumes:
   logs:

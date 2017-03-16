@@ -6,7 +6,8 @@ docker_scripts_dir: /data/bin
 
 # creates logs-<env>-* indexes
 deploy_env: prod
-virtualenv_path: /tmp/
+workdir: /tmp/
+virtualenv_path: /tmp/ansible
 
 # redis db's for services
 gatekeeper_redis_db:      0
@@ -31,6 +32,11 @@ project_name: "{{ component }}"
 # extra_templates:
 #  - in: input/file
 #    out: output/file
+# this should be a dict of scale values per component
+component_scales:
+  scrapy-cluster:
+    - name: crawler
+      scale: 5
 
 # logstash setup, for use when needing an ES cluster behind credentials
 logstash_credentials: false
@@ -56,10 +62,19 @@ traptor_geo_creds: "{{ vault_traptor_location_apikeys }}"
 traptor_track_creds: "{{ vault_traptor_track_apikeys }}"
 
 # Facebook Graph specific vars
-graph_shared_queue: shared_graph_q
-graph_creds:
+grawler_shared_queue: shared_graph_q
+# THE LENGTH OF THIS LIST MUST BE EQUAL TO
+# num grawler hosts * grawler_containers_per_box
+grawler_creds:
   - app_id: blah
     app_secret: blah
+  - app_id: blah2
+    app_secret: blah2
+  - app_id: blah3
+    app_secret: blah3
+  - app_id: blah4
+    app_secret: blah4
+grawler_containers_per_box: 2
 
 # Cooper specific vars
 cooper_mysql_host: "{{ vault_mysql_host|default('localhost') }}"
@@ -69,8 +84,8 @@ cooper_mysql_database: "{{ vault_mysql_database|default('cooper_db') }}"
 cooper_mysql_root_user: "{{ vault_mysql_root_username|default('root') }}"
 cooper_mysql_root_password: "{{ vault_mysql_root_password|default('root') }}"
 cooper_es_index: cooper-rules
-cooper_graphapi_app_id: "{{ graph_creds[0].app_id|default('super') }}"
-cooper_graphapi_app_secret: "{{ graph_creds[0].app_secret|default('secret') }}"
+cooper_graphapi_app_id: "{{ grawler_creds[0].app_id|default('super') }}"
+cooper_graphapi_app_secret: "{{ grawler_creds[0].app_secret|default('secret') }}"
 
 
 
