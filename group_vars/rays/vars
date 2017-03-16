@@ -2,6 +2,9 @@
 
 ### Variables specific for webops customer
 
+#### AWS Customize Variables ####
+data_volume: /dev/xvdf
+
 #### ZOOKEEPER VARS ####
 zookeeper_maxClientCnxns: 120
 

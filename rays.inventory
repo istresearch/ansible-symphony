@@ -40,10 +40,10 @@ traptor-geo.rays.istresearch.com
 aws
 
 [zookeeper-nodes]
-zk[01:03].rays.istresearch.com
+zk[01:03].rays.istresearch.com aws_customize=true
 
 [kafka-nodes]
-kafka[01:03].rays.istresearch.com
+kafka[01:03].rays.istresearch.com aws_customize=true
 
 [redis-master-node]
 redis.rays.istresearch.com
@@ -60,13 +60,13 @@ redis-slave-nodes
 redis-sentinel-nodes
 
 [storm-nimbus-node]
-storm01.rays.istresearch.com
+storm01.rays.istresearch.com aws_customize=true
 
 [storm-ui-node]
-storm01.rays.istresearch.com
+storm01.rays.istresearch.com aws_customize=true
 
 [storm-supervisor-nodes]
-storm[02:05].rays.istresearch.com
+storm[02:05].rays.istresearch.com aws_customize=true
 
 [storm-nodes:children]
 storm-nimbus-node
