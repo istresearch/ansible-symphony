@@ -46,7 +46,7 @@ zk[01:03].rays.istresearch.com
 kafka[01:03].rays.istresearch.com
 
 [redis-master-node]
-# this might be on login
+redis.rays.istresearch.com
 
 [redis-slave-nodes]
 #leave empty
