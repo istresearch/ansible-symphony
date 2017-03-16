@@ -1,5 +1,0 @@
----
-
-### Variables specific for webops customer
-
-mysql_host: https://webops-rds.istresearch.com 
