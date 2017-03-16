@@ -6,7 +6,7 @@
 data_volume: /dev/xvdf
 
 #### ZOOKEEPER VARS ####
-zookeeper_maxClientCnxns: 120
+zookeeper_maxClientCnxns: 600
 
 #### KAFKA VARS
 # Internap slaves have 6 data disks, striping data across them.
@@ -21,9 +21,10 @@ kafka_num_io_threads: 2
 
 kafka_heap: 8G
 
-kafka_log_retention_hours: 24
-kafka_num_partitions: 1
-kafka_replication_factor: 1
+# Retain for 1 week by default
+kafka_log_retention_hours: 168
+kafka_num_partitions: 8
+kafka_replication_factor: 2
 
 #### STORM VARS ####
 storm_version: 0.10.0

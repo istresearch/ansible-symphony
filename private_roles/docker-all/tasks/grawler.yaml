@@ -1,0 +1,50 @@
+---
+# this is needed because the graphapi for cooper requires a facebook config
+# already in zookeeper
+
+# move template over because it is volume mounted within graphapi
+# - name: copy all configs
+#   template:
+#     src: "extras/facebook_config.yaml.j2"
+#     dest: "{{ docker_configs_dir }}/facebook_cooper_config.{{ deploy_env }}.yaml"
+#     mode: 0755
+#   with_items: "{{ grawler_creds }}"
+
+- name: install pip packages
+  pip:
+    name: "{{ item }}"
+    virtualenv: "{{ virtualenv_path }}"
+  with_items:
+    - kazoo
+    - pyyaml
+
+- name: configure scripts
+  template:
+    src: "extras/facebook_config_special.yaml.j2"
+    dest: "{{ workdir }}/grawler_config.{{ deploy_env }}.yaml"
+    mode: 0755
+
+- name: move file pusher over
+  copy:
+    src: file_pusher.py
+    dest: "{{ workdir }}/file_pusher.py"
+    mode: 0755
+
+- name: run parser/pusher python file
+  command: "{{ virtualenv_path }}/bin/python file_pusher.py -z {{ groups['zookeeper-nodes'][0] }} -f grawler_config.{{ deploy_env }}.yaml"
+  args:
+    chdir: "{{ workdir }}"
+
+  # with_nested:
+  #   - "{{ grawler_creds }}"
+  #   - "{{ groups['docker-grawler-nodes'] }}"
+
+# clean up
+- name: Clean up files
+  file:
+    state: absent
+    path: "{{ item }}"
+  with_items:
+    - "{{ workdir }}/grawler_config.{{ deploy_env }}.yaml"
+    - "{{ workdir }}/file_pusher.py"
+    - "{{ virtualenv_path }}"
