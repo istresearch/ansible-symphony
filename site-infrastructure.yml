@@ -559,7 +559,7 @@
     - site-grawler
     - deps-grawler
 
-# ---------------------------------- Docker Bumblebee --------------------------------
+---------------------------------- Docker Bumblebee --------------------------------
 
 - name: Run Docker Bumblebee role
   hosts: docker-bumblebee-nodes
@@ -733,6 +733,16 @@
   vars:
     component: cooper
     extra_tasks: true
+
+# Grawler ----------
+- name: Run Grawler role
+  hosts: docker-grawler-nodes
+  roles: [ docker-all ]
+  vars:
+    component: grawler
+    extra_tasks: true
+  tags:
+    - site-docker-grawler-all
 
 # Telegraptor ----------
 - name: Run Telegraptor role

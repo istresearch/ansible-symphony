@@ -85,10 +85,18 @@
 
 # Container deployment -----------------------------------
 - name: Stop and Kill any existing Containers
-  command: "{{ docker_scripts_dir }}/{{ script_file_final }} down"
+  command: "{{ docker_scripts_dir }}/{{ script_file_final }} down --remove-orphans"
   tags: docker-all
 
 - name: Start the Containers
   command: "{{ docker_scripts_dir }}/{{ script_file_final }} up -d"
   tags: docker-all
+
+# this doesnt work yet
+# - name: scale components
+#   command: "{{ docker_scripts_dir }}/{{ script_file_final }} scale {{ item.name }}={{ item.scale }}"
+#   tags: docker-all
+#   when: "{{ item.key }} == {{ component }}"
+#   with_items:
+#     - "{{ component_scales|default([]) }}"
 # END Container deployment -------------------------------
