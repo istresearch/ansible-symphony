@@ -63,6 +63,8 @@
     dest: /usr/local/bin/ctop
     mode: 0755
   when: docker_install_ctop is defined and docker_install_ctop
+  tags:
+    - docker-engine-ctop
 
 
 #- name: stop docker service
