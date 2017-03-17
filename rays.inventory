@@ -39,6 +39,9 @@ traptor-geo.rays.istresearch.com
 [rays:children]
 aws
 
+[elasticsearch-nodes]
+es.rays.istresearch.com
+
 [zookeeper-nodes]
 zk[01:03].rays.istresearch.com aws_customize=true
 

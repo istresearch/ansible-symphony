@@ -5,6 +5,9 @@
 #### AWS Customize Variables ####
 data_volume: /dev/xvdf
 
+#### ELASTICSEARCH VARIABLES ####
+elasticsearch_network_http_port: 9243
+
 #### ZOOKEEPER VARS ####
 zookeeper_maxClientCnxns: 600
 
