@@ -559,7 +559,7 @@
     - site-grawler
     - deps-grawler
 
----------------------------------- Docker Bumblebee --------------------------------
+#---------------------------------- Docker Bumblebee --------------------------------
 
 - name: Run Docker Bumblebee role
   hosts: docker-bumblebee-nodes
