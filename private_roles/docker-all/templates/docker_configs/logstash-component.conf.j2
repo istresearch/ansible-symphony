@@ -22,7 +22,8 @@ output {
             index => "logs-{{ deploy_env }}-{{ logstash_tag }}-%{+YYYY.MM.dd}"
             document_type => "%{[logger]}"
             {% if logstash_credentials is defined and logstash_credentials == true %}
-            user => "ist-es"
+            ssl => {{ logstash_es_ssl|default('true')}}
+            user => "{{ logstash_es_user }}"
             password => "{{ logstash_es_pwd }}"
             {% endif %}
         }
