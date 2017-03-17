@@ -54,6 +54,7 @@ sc_kafka_master_topic_prefix: demo
 sc_kafka_monitor_topic_main: incoming
 sc_kafka_monitor_kafka_group: sc-kafka-monitor
 sc_kafka_monitor_kafka_topic_prefix: "{{ sc_kafka_master_topic_prefix }}"
+scrapy_redis_node: "{{ groups['redis-master-node'][0] }}"
 
 # Traptor specific vars
 traptor_kafka_topic: traptor.cooper_prod

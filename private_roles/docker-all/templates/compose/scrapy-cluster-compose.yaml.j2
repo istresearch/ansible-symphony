@@ -25,7 +25,7 @@ services:
     image: istresearch/scrapy-cluster-ist:redis-monitor-116-dev
     restart: always
     environment:
-      - REDIS_HOST={{ groups['redis-master-node'][0] }}
+      - REDIS_HOST={{ scrapy_redis_node }}
       - REDIS_DB={{ scrapy_cluster_redis_db }}
       - KAFKA_HOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
 

@@ -2,6 +2,13 @@
 
 ### Variables specific for webops customer
 
+#### SCRAPY VARIABLES ####
+scrapy_redis_node: "{{ groups['redis-master-node'][1] }}"
+
+#### DOCKER VARIABLES ####
+docker_repo_user: istuser
+docker_repo_pwd: "{{ vault_repo_pwd }}"
+
 #### AWS Customize Variables ####
 data_volume: /dev/xvdf
 

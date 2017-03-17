@@ -40,7 +40,7 @@ traptor-geo.rays.istresearch.com
 aws
 
 [elasticsearch-nodes]
-es.rays.istresearch.com
+d78a39df4d432418e73dac451b39d6f2.us-east-1.aws.found.io
 
 [zookeeper-nodes]
 zk[01:03].rays.istresearch.com aws_customize=true
@@ -49,6 +49,7 @@ zk[01:03].rays.istresearch.com aws_customize=true
 kafka[01:03].rays.istresearch.com aws_customize=true
 
 [redis-master-node]
+redis-aws.rays.istresearch.com
 redis.rays.istresearch.com
 
 [redis-slave-nodes]
