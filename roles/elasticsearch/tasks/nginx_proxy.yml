@@ -1,0 +1,36 @@
+---
+#########################################################################
+# Configure an nginx proxy in front of Elasticsearch
+#########################################################################
+- name: Install nginx
+  apt:
+    name=nginx
+    state=latest
+
+- name: Make sure we can use htpasswd module
+  apt:
+    name=python-passlib
+    state=installed
+
+- name: Create user nginx worker will run as
+  user:
+    name: "{{ elasticsearch_nginx_proxy.nginx_worker_user }}"
+    shell: "{{ elasticsearch_nginx_proxy.shell }}"
+    createhome: no
+    system: yes
+
+- name: Populate nginx conf
+  template:
+    src=nginx-proxy.conf.j2
+    dest={{ elasticsearch_nginx_proxy.nginx_conf_path }}
+
+- name: Add basic auth credentials to htpasswd file
+  htpasswd:
+    path: "{{ elasticsearch_nginx_proxy_auth.htpasswd_file }}"
+    name: "{{ elasticsearch_nginx_proxy_auth.user }}"
+    password: "{{ elasticsearch_nginx_proxy_auth.password }}"
+
+- name: Reload nginx
+  service:
+    name=nginx
+    state=reloaded
