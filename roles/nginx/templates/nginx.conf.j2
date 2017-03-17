@@ -1,0 +1,19 @@
+############################## IMPORTANT ######################################
+# Always run the following command to test the config before restarting
+# $ nginx -t
+################################ DO IT! #######################################
+
+user {{ nginx_worker_user }};
+
+events {
+    worker_connections  {{ nginx_worker_connections }};
+}
+
+http {
+  log_format   main '$host $remote_addr - $remote_user [$time_local]  $status ' '"$request" $body_bytes_sent "$http_referer" ' '"$http_user_agent" "$http_x_forwarded_for"';
+  access_log {{ nginx_access_log_path }} main;
+  error_log  {{ nginx_error_log_path }};
+  client_max_body_size 100M;
+
+  include /etc/nginx/sites-enabled/*;
+}
