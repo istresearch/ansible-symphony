@@ -1,6 +1,6 @@
 ---
 - name: check for existing install
-  stat: path={{ python_install_dir }}
+  stat: path="{{ python_install_dir }}"
   register: python_installed
   tags: 
     - python
@@ -39,6 +39,6 @@
     set_fact:
       python_installed: true
       
-  when: not python_installed
+  when: not python_installed.stat.exists
   tags:
     - python
