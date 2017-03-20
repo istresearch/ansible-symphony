@@ -16,6 +16,8 @@ repository_host=default
 #
 # Infrastructure and software topology
 #
+[nginx-nodes]
+vagrant-as-01
 
 [zookeeper-nodes]
 travis-trusty
