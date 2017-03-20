@@ -407,3 +407,11 @@
   roles: [ phantomjs ]
   tags:
     - site-phantomjs
+
+# ---------------------------------- Nginx  ------------------------------------
+#
+- name: Nginx role
+  hosts: nginx-nodes
+  roles: [ nginx ]
+  tags:
+    - site-nginx

@@ -15,6 +15,9 @@ repository_host=default
 [zookeeper-nodes]
 vagrant-as-01
 
+[nginx-nodes]
+vagrant-as-01
+
 [kafka-nodes]
 vagrant-as-01
 
