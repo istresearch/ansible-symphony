@@ -25,7 +25,6 @@ env:
   - TAGS='site-common'
   - TAGS='site-zookeeper'
   - TAGS='deps-kafka'
-  - TAGS='site-nginx'
   - TAGS='ELK'
   - TAGS='scrapy-services'
   - TAGS='scrapy-cluster'
