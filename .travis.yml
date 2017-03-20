@@ -25,6 +25,7 @@ env:
   - TAGS='site-common'
   - TAGS='site-zookeeper'
   - TAGS='deps-kafka'
+  - TAGS='site-nginx'
   - TAGS='ELK'
   - TAGS='scrapy-services'
   - TAGS='scrapy-cluster'
@@ -45,7 +46,6 @@ env:
   - TAGS='site-supervisord'
   - TAGS='site-oozie'
   - TAGS='site-exim'
-  - TAGS='site-nginx'
 
 matrix:
   fast_finish: true
