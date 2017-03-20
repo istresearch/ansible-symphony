@@ -46,6 +46,11 @@ class ActionModule(TemplateModule):
         else:
             raise AnsibleError("nginx module: {} is not a valid state. Choose one of [absent, enabled, available]".format(state))
 
+        if r1.get('failed'):
+            raise AnsibleError(r1)
+        if r2.get('failed'):
+            raise AnsibleError(r2)
+
         result.update({
             'nginx_conf': src_filename_cleaned,
             'changed': r1['changed'] or r2['changed'],

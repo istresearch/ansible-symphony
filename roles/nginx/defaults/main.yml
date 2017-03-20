@@ -9,3 +9,4 @@ nginx_worker_connections: 2048
 nginx_worker_user: "www-data"
 nginx_worker_user_shell: "/bin/false"
 nginx_disable_default_server: true
+nginx_htpasswd_file: '/etc/nginx/.htpasswd'
