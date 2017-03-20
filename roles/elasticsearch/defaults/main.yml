@@ -119,7 +119,7 @@ repository_infrastructure: "https://download.elasticsearch.org/elasticsearch/rel
 ###########################################
 # Nginx proxy
 ###########################################
-elasticsearch_nginx_proxy_enabled: true
+elasticsearch_nginx_proxy_enabled: false
 elasticsearch_nginx_proxy_conf:
   listen_port: 9201
   upstream_port: "{{ elasticsearch_network_http_port|default(9200) }}"
