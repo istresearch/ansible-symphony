@@ -16,7 +16,6 @@ repository_host=default
 #
 # Infrastructure and software topology
 #
-
 [zookeeper-nodes]
 travis-trusty
 

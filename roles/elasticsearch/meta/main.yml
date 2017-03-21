@@ -1,4 +1,5 @@
 ---
 dependencies:
+  - { role: nginx, when: elasticsearch_nginx_proxy_enabled is defined and elasticsearch_nginx_proxy_enabled }
   - { role: supervisord, when: "supervisord_has_run is not defined"}
   - { role: java, when: "java_has_run is not defined"}

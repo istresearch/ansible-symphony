@@ -256,3 +256,9 @@
   notify: "restart elasticsearch {{ conf_name }}"
   tags:
     - elasticsearch
+
+- name: include nginx_proxy tasks
+  include: nginx_proxy.yml
+  when: elasticsearch_nginx_proxy_enabled is defined and elasticsearch_nginx_proxy_enabled
+  tags:
+    - elasticsearch
