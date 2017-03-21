@@ -1,0 +1,33 @@
+---
+- name: Install nginx
+  apt:
+    name=nginx
+    state=latest
+
+- name: Make sure we can use htpasswd module
+  apt:
+    name=python-passlib
+    state=installed
+
+- name: Create user nginx worker will run as
+  user:
+    name: "{{ nginx_worker_user }}"
+    shell: "{{ nginx_worker_user_shell }}"
+    createhome: no
+    system: yes
+
+- name: Populate nginx conf
+  template:
+    src=nginx.conf.j2
+    dest={{ nginx_conf_path }}
+
+- name: Remove nginx default server
+  file:
+    path={{ nginx_sites_enabled_dir }}/default
+    state=absent
+  when: nginx_disable_default_server
+
+- name: Reload nginx
+  service:
+    name=nginx
+    state=reloaded

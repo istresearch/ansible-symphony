@@ -72,3 +72,20 @@
     dest: /etc/apt/apt.conf.d/50unattended-upgrades
     group: root
     owner: root
+  tags:
+    - common
+
+- name: Set Time Zone
+  copy: content={{ common_timezone }}
+        dest=/etc/timezone
+        owner=root
+        group=root
+        mode=0644
+        backup=yes
+  tags:
+    - common
+
+- name: Update timezone via dpkg
+  command: dpkg-reconfigure --frontend noninteractive tzdata
+  tags:
+    - common

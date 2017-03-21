@@ -1,0 +1,44 @@
+---
+- name: check for existing install
+  stat: path="{{ python_install_dir }}"
+  register: python_installed
+  tags: 
+    - python
+
+- block:
+  - name: Download python source
+    get_url:
+      url="{{ python_source }}"
+      dest="/tmp/Python-{{ python_version }}.tgz"
+
+  - name: Extract python source
+    unarchive:
+      src="/tmp/Python-{{ python_version }}.tgz"
+      dest="/tmp"
+      copy=no
+    
+  - name: Build python from source
+    shell: "{{ item }}"
+    args:
+      chdir: "/tmp/Python-{{ python_version }}"
+    with_items:
+      - "./configure --prefix {{ python_install_dir }}"
+      - "make"
+      - "make altinstall"
+
+  - name: Delete temporary files
+    file:
+      path="{{ item }}"
+      state=absent
+    ignore_errors: yes
+    with_items:
+      - "/tmp/Python-{{ python_version }}"
+      - "/tmp/Python-{{ python_version }}.tgz"
+
+  - name: Set fact python_installed
+    set_fact:
+      python_installed: true
+      
+  when: not python_installed.stat.exists
+  tags:
+    - python

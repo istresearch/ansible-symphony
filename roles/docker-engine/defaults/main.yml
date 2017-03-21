@@ -33,3 +33,5 @@ docker_kernel_pkg_state: latest
 docker_pidproxy_install_dir: /opt/pidproxy
 docker_pid_file: "{{ docker_pidproxy_install_dir }}/docker.pid"
 docker_stop_signal: INT
+
+docker_install_ctop: true
