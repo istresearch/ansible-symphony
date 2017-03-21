@@ -26,6 +26,7 @@
       - libffi-dev
       - libffi6
       - libffi6-dbg
+      - libc6-dev
       - libgdbm-dev
       - libgpm2
       - libncursesw5-dev
