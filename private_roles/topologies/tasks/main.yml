@@ -17,7 +17,8 @@
 - name: Configuring group
   group:
     name: "{{ topologies_group }}"
-  tags: topologies
+  tags:
+    - topologies
 
 - name: create streamparse user and group
   user:
@@ -25,39 +26,59 @@
     group={{ topologies_group }}
     shell=/bin/bash
     createhome=yes
-  tags: topologies
-
-- name: create log directory
-  file:
-    path: "{{ topologies_log_dir }}"
-    state: directory
-    mode: 0755
-    group: "{{ storm_group|default('storm') }}"
-    owner: "{{ storm_user|default('storm') }}"
   tags:
     - topologies
 
-- name: create streamparse log directory
+- name: create streamparse user directories
   file:
-    path: "{{ topologies_streamparse_log_dir }}"
-    state: directory
-    mode: 0755
-    group: "{{ storm_group|default('storm') }}"
-    owner: "{{ storm_user|default('storm') }}"
-  tags:
-    - topologies
-
-- name: create virtualenv directory
-  file:
-    path: "{{ topologies_virtualenv_dir }}"
+    path: "{{ item }}"
     state: directory
     mode: 0755
     group: "{{ topologies_group }}"
     owner: "{{ topologies_user }}"
+  with_items:
+    - "/home/{{ topologies_user }}/bin"
+    - "{{ topologies_virtualenv_dir }}"
+  tags:
+    - topologies
+    
+- name: identify python binary
+  shell: "(cd {{ python_install_dir }}/bin && ls python* | egrep -v '-')"
+  register: python_bin
+  changed_when: no
+  
+- name: symlink specific python for streamparse
+  file:
+    src: "{{ python_install_dir }}/bin/{{ python_bin.stdout }}"
+    dest: "/home/{{ topologies_user }}/bin/python"
+    group: "{{ topologies_group }}"
+    owner: "{{ topologies_user }}"
+    state: link
+  tags:
+    - topologies
+  
+- name: setup path for streamparse user
+  lineinfile:
+    name: "/home/{{ topologies_user }}/.bashrc"
+    regexp: '^PATH='
+    line: 'PATH=~/bin:$PATH'
   tags:
     - topologies
 
-- name: add the logstash configuration
+- name: create storm user directories for the topologies
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+    group: "{{ storm_group|default('storm') }}"
+    owner: "{{ storm_user|default('storm') }}"
+  with_items:
+    - "{{ topologies_log_dir }}"
+    - "{{ topologies_streamparse_log_dir }}"
+  tags:
+    - topologies
+
+- name: deploy the logstash configuration for topologies
   template:
     src: topologies-logstash.conf.j2
     dest: "{{ logstash_conf_dir|default('/etc/logstash.d') }}/topologies-logstash.conf"
