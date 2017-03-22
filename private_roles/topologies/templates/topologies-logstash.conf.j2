@@ -27,11 +27,11 @@ output {
       index => "logs-topologies-%{+YYYY.MM.dd}"
       document_type => "%{[logger]}"
       flush_size => {{ topologies_logstash_flush_size }}
-      {% if logstash_credentials is defined and logstash_credentials == true %}
+{% if logstash_credentials is defined and logstash_credentials == true %}
       ssl => {{ logstash_es_ssl|default('true')}}
       user => "{{ logstash_es_user }}"
       password => "{{ logstash_es_pwd }}"
-      {% endif %}
+{% endif %}
     }
   }
 {% endif %}
