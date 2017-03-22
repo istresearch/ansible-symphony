@@ -21,7 +21,7 @@ output {
   if 'topologies' in [tags]{
     elasticsearch {
       hosts => "{{ groups['elasticsearch-nodes'][0] }}:{{ elasticsearch_network_http_port|default(9200) }}"
-      template => "{{ logstash_template_dir|default('/etc/logstash.d/templates') }}/pulse-logs-template.json"
+      template => "{{ logstash_template_dir|default('/etc/logstash.d/templates') }}/logs-topologies-template.json"
       template_name => "logs-topologies"
       template_overwrite => false
       index => "logs-topologies-%{+YYYY.MM.dd}"
