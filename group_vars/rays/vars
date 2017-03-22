@@ -51,4 +51,4 @@ storm_nimbus_extra_config:
 #### Connecting Logstash to ES Cloud ####
 logstash_credentials: true
 logstash_es_user: "admin"
-logstash_es_password: "{{ vault_logstash_es_pwd }}"
+logstash_es_pwd: "{{ vault_logstash_es_pwd }}"
