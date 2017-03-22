@@ -16,7 +16,7 @@ data_volume: /dev/xvdf
 elasticsearch_network_http_port: 9243
 
 #### ZOOKEEPER VARS ####
-zookeeper_maxClientCnxns: 600
+zookeeper_maxClientCnxns: 1200
 
 #### KAFKA VARS
 # Internap slaves have 6 data disks, striping data across them.
@@ -47,3 +47,8 @@ storm_worker_extra_config:
 storm_nimbus_extra_config:
     nimbus.childopts: "-Xmx1024m"
     nimbus.thrift.max_buffer_size: 4194304
+
+#### Connecting Logstash to ES Cloud ####
+logstash_credentials: true
+logstash_es_user: "admin"
+logstash_es_pwd: "{{ vault_logstash_es_pwd }}"

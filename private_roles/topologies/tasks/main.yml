@@ -77,6 +77,16 @@
     - "{{ topologies_streamparse_log_dir }}"
   tags:
     - topologies
+    
+- name: copy topologies logging template over
+  copy:
+    src=logs-topologies-template.json
+    dest={{ logstash_template_dir|default('/opt/logstash/templates') }}/logs-topologies-template.json
+    mode=0644
+  notify:
+    - restart logstash
+  tags:
+    - topologies
 
 - name: deploy the logstash configuration for topologies
   template:
