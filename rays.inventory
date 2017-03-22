@@ -111,6 +111,7 @@ docker-traptor-geo-nodes
 [docker-curator-nodes]
 
 [docker-grawler-nodes]
+crawler[01:02].rays.istresearch.com
 
 [docker-rule-manager-nodes]
 
