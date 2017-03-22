@@ -9,6 +9,25 @@ deploy_env: prod
 workdir: /tmp/
 virtualenv_path: /tmp/ansible
 
+# PULSE VARIABLES
+pulse_environment: dev
+pulse_ui_auto_install: yes
+pulse_mysql_database: pulse
+pulse_landing_page: 3
+pulse_user: need to provide
+pulse_user_email: fake@fakemail.com
+pulse_user_pwd: "{{ vault pulse_user_pwd }}"
+pulse_mysql_host: "{{ inventory.hostname }}"
+pulse_mysql_port: 3306
+pulse_mysql_user: pulse
+pulse_mysql_pwd: "{{ vault_pulse_mysql_pwd }}"
+pulse_mysql_db_create: no
+
+mysql_pwd: "{{ vault_mysql_pwd }}"
+mysql_user: need to provide
+mysql_db: pulse
+mysql_root_pwd: "{{ vault_mysql_root_pwd }}"
+
 # redis db's for services
 gatekeeper_redis_db:      0
 grawler_redis_db:         1
