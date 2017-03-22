@@ -16,7 +16,7 @@ data_volume: /dev/xvdf
 elasticsearch_network_http_port: 9243
 
 #### ZOOKEEPER VARS ####
-zookeeper_maxClientCnxns: 600
+zookeeper_maxClientCnxns: 1200
 
 #### KAFKA VARS
 # Internap slaves have 6 data disks, striping data across them.
