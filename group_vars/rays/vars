@@ -47,3 +47,8 @@ storm_worker_extra_config:
 storm_nimbus_extra_config:
     nimbus.childopts: "-Xmx1024m"
     nimbus.thrift.max_buffer_size: 4194304
+
+#### Connecting Logstash to ES Cloud ####
+logstash_credentials: true
+logstash_es_user: "admin"
+logstash_es_password: "{{ vault_logstash_es_pwd }}"
