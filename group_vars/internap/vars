@@ -33,7 +33,7 @@ hbase_heap_size: 20480
 hbase_dfs_replication: 2
 
 #### ZOOKEEPER VARS ####
-zookeeper_maxClientCnxns: 120
+zookeeper_maxClientCnxns: 1200
 
 #### KAFKA VARS
 # Internap slaves have 6 data disks, striping data across them.
