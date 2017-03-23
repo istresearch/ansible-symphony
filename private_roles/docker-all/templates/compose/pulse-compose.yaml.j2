@@ -2,7 +2,7 @@ version: '2.0'
 services:
   ui:
     image: istresearch/pulse-ui:pulse-3.1.2-release
-    container_name: pulse_webopps
+    container_name: pulse
     links:
       - mysql
     ports:
@@ -10,11 +10,11 @@ services:
     depends_on:
       - mysql
     environment:
-      - ENVIRONMENT={{ pulse_environment }}
+      - ENVIRONMENT={{ deploy_env|default('dev') }}
       - PULSE_UI_AUTO_INSTALL={{ pulse_ui_auto_install|default('yes') }}
       - PULSE_MYSQL_DATABASE={{ pulse_mysql_database|default('pulse') }}
       - PULSE_LANDING_PAGE={{ pulse_landing_page }}
-      - PULSE_USER={{ pulse_user|default }}
+      - PULSE_USER={{ pulse_user|default('pulse') }}
       - PULSE_USER_EMAIL={{ pulse_user_email|default('fake@fakemail.com') }}
       - PULSE_USER_PASSWORD={{ pulse_user_pwd }}
       - PULSE_MYSQL_HOST={{ pulse_mysql_host }}
@@ -25,19 +25,19 @@ services:
     restart: always
   mysql:
     image: mysql:5.6.23
-    container_name: pulse_webopps_mysql
+    container_name: pulse_mysql
     environment:
       - MYSQL_PASSWORD={{ mysql_pwd }}
-      - MYSQL_USER={{ mysql_user }}
+      - MYSQL_USER={{ mysql_user|default('pulse') }}
       - MYSQL_DATABASE={{ mysql_db|default('pulse') }}
       - MYSQL_ROOT_PASSWORD={{ mysql_root_pwd }}
     volumes:
       - "./configs/mysql.d:/etc/mysql/conf.d"
   myadmin:
     image: phpmyadmin/phpmyadmin:4.6.2-1
-    container_name: "pulse_webopps_myadmin"
+    container_name: "pulse_myadmin"
     environment:
-      - PMA_HOST=mysql
+      - PMA_HOST={{ phpmyadmin_host }}
     ports:
       - "80"
     depends_on:

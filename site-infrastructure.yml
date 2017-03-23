@@ -752,3 +752,12 @@
     component: telegraptor
   tags:
     - site-docker-telegraptor-all
+
+# Pulse ----------
+- name: Run Pulse role
+  hosts: docker-pulse-nodes
+  roles: [ docker-all ]
+  vars:
+    component: pulse
+  tags:
+    - site-docker-pulse-all

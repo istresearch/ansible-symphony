@@ -28,6 +28,7 @@ docker-telegraptor-api-nodes
 docker-traptor-nodes
 docker-gatekeeper-nodes
 docker-youscrape-nodes
+docker-pulse-nodes
 portainer-nodes
 
 [docker-engine]
@@ -114,6 +115,7 @@ docker-traptor-geo-nodes
 crawler[01:02].rays.istresearch.com
 
 [docker-rule-manager-nodes]
+cooper-joka.rays.istresearch.com
 
 [docker-scrapy-nodes]
 crawler[01:04].rays.istresearch.com
@@ -125,6 +127,9 @@ crawler[01:04].rays.istresearch.com
 [docker-gatekeeper-nodes]
 
 [docker-youscrape-nodes]
+
+[docker-pulse-nodes]
+cooper-joka.rays.istresearch.com
 
 [portainer-nodes]
 # do we want portainer on every box or just a master?

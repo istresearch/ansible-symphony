@@ -2,6 +2,17 @@
 
 ### Variables specific for webops customer
 
+#### PULSE VARIABLES ####
+
+pulse_user: rays
+pulse_user_pwd: "{{ vault_pulse_user_pwd }}"
+pulse_mysql_host: rds.rays.istresearch.com
+pulse_mysql_pwd: "{{ vault_pulse_mysql_pwd }}"
+pulse_rds_master_user: rays
+pulse_rds_master_pwd: "{{ vault_pulse_rds_master_pwd }}"
+
+pulse_admin_analysis_url: "https://50337660b0b9722e952771984d3bf14a.us-east-1.aws.found.io"
+
 #### SCRAPY VARIABLES ####
 scrapy_redis_node: "{{ groups['redis-master-node'][1] }}"
 
@@ -18,7 +29,7 @@ elasticsearch_network_http_port: 9243
 #### ZOOKEEPER VARS ####
 zookeeper_maxClientCnxns: 1200
 
-#### KAFKA VARS
+#### KAFKA VARS ####
 # Internap slaves have 6 data disks, striping data across them.
 kafka_data_log_dir: 
    - /data/kafka/topic-logs
