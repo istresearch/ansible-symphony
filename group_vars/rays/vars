@@ -2,6 +2,11 @@
 
 ### Variables specific for webops customer
 
+#### Allowed Developers ####
+## DEV PEOPLE ##
+dev:
+   - { name: "aklintse", key: "{{ aklintse_key }}" }
+
 #### PULSE VARIABLES ####
 
 pulse_user: rays

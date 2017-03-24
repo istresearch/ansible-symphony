@@ -1,16 +1,12 @@
 version: '2.0'
 services:
   ui:
-    image: istresearch/pulse-ui:pulse-3.1.2-release
+    image: istresearch/pulse-ui:pulse-v3.1.3-release 
     container_name: pulse
-    links:
-      - mysql
     ports:
-      - "80:80"
-    depends_on:
-      - mysql
+      - "443:443"
     environment:
-      - ENVIRONMENT={{ deploy_env|default('dev') }}
+      - ENVIRONMENT={{ deploy_env|default('prod') }}
       - PULSE_UI_AUTO_INSTALL={{ pulse_ui_auto_install|default('yes') }}
       - PULSE_MYSQL_DATABASE={{ pulse_mysql_database|default('pulse') }}
       - PULSE_LANDING_PAGE={{ pulse_landing_page }}
@@ -21,24 +17,10 @@ services:
       - PULSE_MYSQL_PORT={{ pulse_mysql_port|default('3306') }}
       - PULSE_MYSQL_USER={{ pulse_mysql_user|default('pulse') }}
       - PULSE_MYSQL_PASSWORD={{ pulse_mysql_pwd }}
-      - PULSE_MYSQL_DATABASE_CREATE={{ pulse_mysql_db_create|default('no') }}
-    restart: always
-  mysql:
-    image: mysql:5.6.23
-    container_name: pulse_mysql
-    environment:
-      - MYSQL_PASSWORD={{ mysql_pwd }}
-      - MYSQL_USER={{ mysql_user|default('pulse') }}
-      - MYSQL_DATABASE={{ mysql_db|default('pulse') }}
-      - MYSQL_ROOT_PASSWORD={{ mysql_root_pwd }}
+      - PULSE_MYSQL_PRIVILEGED_USER={{ pulse_rds_master_user }}
+      - PULSE_MYSQL_PRIVILEGED_USER_PASSWORD={{ pulse_rds_master_pwd }}
+      - PULSE_MYSQL_DATABASE_CREATE={{ pulse_mysql_db_create|default('yes') }}
+      - PULSE_ANALYSIS_IFRAME_URL={{ pulse_admin_analysis_url|default('localhost:5601') }}
     volumes:
-      - "./configs/mysql.d:/etc/mysql/conf.d"
-  myadmin:
-    image: phpmyadmin/phpmyadmin:4.6.2-1
-    container_name: "pulse_myadmin"
-    environment:
-      - PMA_HOST={{ phpmyadmin_host }}
-    ports:
-      - "80"
-    depends_on:
-      - mysql
+      - /opt/pulse/mmr:/var/mmr
+    restart: always
