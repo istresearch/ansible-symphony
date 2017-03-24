@@ -3,7 +3,7 @@ version: '2'
 services:
 {% for creds in traptor_follow_creds %}
   follow_{{ loop.index }}:
-    image: istresearch/traptor:v1.3.0
+    image: istresearch/traptor:v1.4.6
     volumes:
       - logs:/var/log/traptor
     environment:
