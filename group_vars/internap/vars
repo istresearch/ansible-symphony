@@ -31,6 +31,7 @@ dfs_namenode_opts: "-XX:NewSize=512m -XX:MaxNewSize=512m -Xms3072m -Xmx3072m -XX
 #### HBASE VARS ####
 hbase_heap_size: 20480
 hbase_dfs_replication: 2
+hbase.thrift.minWorkerThreads: 64
 
 #### ZOOKEEPER VARS ####
 zookeeper_maxClientCnxns: 1200
