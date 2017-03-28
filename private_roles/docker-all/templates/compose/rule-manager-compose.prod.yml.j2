@@ -1,0 +1,53 @@
+version: '2'
+services:
+   traptor:
+     image: istresearch/rule-manager:traptor-3.0.1
+     environment:
+       - COOPER_URL=https://cooper:{{ cooper_url_pwd }}@cooper-prod.istresearch.com/cooper/rules/list
+       - REDIS_HOST={{ groups['redis-master-node'][0] }}
+       - REDIS_PORT=6379
+       - REDIS_DB={{ traptor_redis_db }}
+       - REDIS_KEY_PREFIX=traptor
+       - REDIS_NOTIFY_CHANNEL=traptor-notify-prod
+       - ES_USE_SSL=False
+       - ES_HOST=ist-es01.istresearch.com:9200
+       - ES_RULE_INDEX=collection-rules
+       - ES_RULE_DOC_TYPE=document
+       - LOG_LEVEL=INFO
+       - LOG_DIR=/var/log/rulemanager
+       - LOG_FILE_NAME=rulemanager_traptor.log
+       - REFRESH_RATE=600
+     restart: "on-failure:3"
+     volumes:
+      - logs:/var/log/rulemanager
+
+   telegram:
+     image: istresearch/rule-manager:telegram-3.0.1
+     environment:
+       - COOPER_URL=https://cooper:{{ cooper_url_pwd }}@cooper-prod.istresearch.com/cooper/rules/list
+       - COOPER_TYPE=telegram_public_channel
+       - COOPER_RULE_ID_KEY=rule_id
+       - REDIS_HOST={{ groups['redis-master-node'][0] }}
+       - REDIS_PORT=6379
+       - REDIS_DB={{ telegraptor_redis_db }}
+       - REDIS_KEY_PREFIX=telegram
+       - REDIS_NOTIFY_CHANNEL=telegram.notify
+       - LOG_LEVEL=INFO
+       - LOG_DIR=/var/log/rulemanager
+       - LOG_FILE_NAME=rulemanager_telegram.log
+       - REFRESH_RATE=60
+     restart: "on-failure:3"
+     volumes:
+      - logs:/var/log/rulemanager
+
+   logstash:
+     image: logstash:latest
+     command: logstash -f /etc/logstash/conf.d/logstash.conf
+     volumes:
+       - /opt/docker_configs/logstash-rulemanager.prod.conf:/etc/logstash/conf.d/logstash.conf
+       - /opt/docker_configs/logs-template.json:/etc/logstash/templates/logs-template.json
+       - logs:/var/log/rulemanager
+
+volumes:
+  logs:
+

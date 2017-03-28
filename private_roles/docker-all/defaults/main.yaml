@@ -83,7 +83,7 @@ grawler_creds:
     app_secret: blah3
   - app_id: blah4
     app_secret: blah4
-grawler_containers_per_box: 2
+grawler_containers_per_box: 1
 
 # Cooper specific vars
 cooper_mysql_host: "{{ vault_mysql_host|default('localhost') }}"

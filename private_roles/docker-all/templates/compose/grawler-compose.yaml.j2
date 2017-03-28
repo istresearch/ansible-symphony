@@ -7,7 +7,7 @@ services:
       - GRAWLER_ID={% for host in groups['docker-grawler-nodes'] %}{%- if host == inventory_hostname -%}{{ loop.index }}{%- endif -%}{% endfor %}
 
       - PROCESS_ID=0{{ loop.index }}
-      - ELASTICSEARCH_HOSTS=https://ist-es.istresearch.com:9200
+      - ELASTICSEARCH_HOSTS={{ groups['elasticsearch-nodes'][0] }}:{{ elasticsearch_network_http_port|default(9200) }}
       - KAFKA_HOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
 
       - KAFKA_TOPIC=crawler.graph
