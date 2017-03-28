@@ -761,3 +761,12 @@
     component: pulse
   tags:
     - site-docker-pulse-all
+
+# Rule Manager ----------
+- name: Run Rule Manager role
+  hosts: docker-rule-manager-nodes
+  roles: [ docker-all ]
+  vars:
+    component: rule-manager
+  tags:
+    - site-docker-rule-manager-all

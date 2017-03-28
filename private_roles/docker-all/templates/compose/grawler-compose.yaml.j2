@@ -22,7 +22,6 @@ services:
       - ZOOKEEPER_HOSTS={% for host in groups['zookeeper-nodes'] %}{{ host }}:{{ zookeeper_port|default(2181) }}{% if not loop.last %},{% endif %}{% endfor %}
 
       - ZOOKEEPER_ASSIGN_PATH=/grawler/instance
-      - ZOOKEEPER_GRAWLER_CONFIG=grawler/config/facebook_config_100.yml
       - LOGGER_NAME=grawler
       - LOG_DIR=/var/log/grawler
       - LOG_FILE=grawler.log
