@@ -16,7 +16,7 @@ cooper_twitter_app_key: "{{ vault_cooper_app_key }}"
 cooper_mysql_host: "{{ vault_mysql_host }}"
 cooper_mysql_user: "{{ vault_mysql_user }}"
 cooper_mysql_password: "{{ vault_mysql_password }}"
-cooper_mysql_root_user: "{{ vault_mysql_user }}"
+cooper_mysql_root_user: "{{ vault_mysql_root_username }}"
 cooper_mysql_root_password: "{{ vault_mysql_root_password }}"
 
 #### PULSE VARIABLES ####

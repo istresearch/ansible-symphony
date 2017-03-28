@@ -15,8 +15,8 @@ services:
       - MYSQL_USER={{ cooper_mysql_user }}
       - MYSQL_PASSWORD={{ cooper_mysql_password }}
       - MYSQL_DATABASE={{ cooper_mysql_database }}
-      - MYSQL_ROOT_PASSWORD={{ cooper_mysql_root_user }}
-      - MYSQL_ROOT_USER={{ cooper_mysql_root_password }}
+      - MYSQL_ROOT_PASSWORD={{ cooper_mysql_root_password }}
+      - MYSQL_ROOT_USER={{ cooper_mysql_root_user }}
       - MYSQL_SCHEMA_PATH=schema.sql
       - KAFKA_HOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
 
