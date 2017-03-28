@@ -7,8 +7,19 @@
 dev:
    - { name: "aklintse", key: "{{ aklintse_key }}" }
 
-#### PULSE VARIABLES ####
+#### COOPER VARIABLES ####
+cooper_twitter_oauth_token: "{{ vault_cooper_token }}"
+cooper_twitter_oauth_token_secret: "{{ vault_cooper_token_secret }}"
+cooper_twitter_app_secret: "{{ vault_cooper_app_secret }}"
+cooper_twitter_app_key: "{{ vault_cooper_app_key }}"
 
+cooper_mysql_host: "{{ vault_mysql_host }}"
+cooper_mysql_user: "{{ vault_mysql_user }}"
+cooper_mysql_password: "{{ vault_mysql_password }}"
+cooper_mysql_root_user: "{{ vault_mysql_user }}"
+cooper_mysql_root_password: "{{ vault_mysql_root_password }}"
+
+#### PULSE VARIABLES ####
 pulse_user: rays
 pulse_user_pwd: "{{ vault_pulse_user_pwd }}"
 pulse_mysql_host: rds.rays.istresearch.com

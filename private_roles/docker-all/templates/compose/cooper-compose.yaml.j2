@@ -80,7 +80,7 @@ services:
       - REDIS_HOST={{ groups['redis-master-node'][0] }}
       - REDIS_PORT=6379
       - REDIS_DB={{ grawler_redis_db }}
-      - REDIS_SHARED_QUEUE={{ graph_shared_queue }}
+      - REDIS_SHARED_QUEUE={{ grawler_shared_queue }}
       - THROTTLE_BASE_DELAY=2
       - THROTTLE_MAX_EXP=15
       - THROTTLE_FLOOR=30
