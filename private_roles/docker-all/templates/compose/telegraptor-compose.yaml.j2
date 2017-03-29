@@ -16,7 +16,7 @@ services:
       - KAFKATOPIC_STREAM=telegraptor.stream
       - KAFKATOPIC_HISTORY=telegraptor.history
       - REDIS_HOST={{ groups['redis-master-node'][0] }}
-      - TELEGRAM_NUMBER=15404249256
+      - TELEGRAM_NUMBER={{ telegram_number }}
       - TELEGRAM_CLI_HOST=tgcli
       - TELEGRAM_CLI_PORT=4458
       - REDIS_PORT=6379

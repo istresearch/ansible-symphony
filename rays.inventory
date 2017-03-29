@@ -24,7 +24,6 @@ docker-grawler-nodes
 docker-rule-manager-nodes
 docker-scrapy-nodes
 docker-telegraptor-nodes
-docker-telegraptor-api-nodes
 docker-traptor-nodes
 docker-gatekeeper-nodes
 docker-youscrape-nodes
@@ -121,8 +120,7 @@ cooper-joka.rays.istresearch.com
 crawler[01:04].rays.istresearch.com
 
 [docker-telegraptor-nodes]
-
-[docker-telegraptor-api-nodes]
+crawler01.rays.istresearch.com
 
 [docker-gatekeeper-nodes]
 

@@ -7,6 +7,9 @@
 dev:
    - { name: "aklintse", key: "{{ aklintse_key }}" }
 
+#### TELEGRAM VARIABLES
+telegram_number: 5403706068
+
 #### COOPER VARIABLES ####
 cooper_twitter_oauth_token: "{{ vault_cooper_token }}"
 cooper_twitter_oauth_token_secret: "{{ vault_cooper_token_secret }}"
