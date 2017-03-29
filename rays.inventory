@@ -109,6 +109,7 @@ docker-traptor-track-nodes
 docker-traptor-geo-nodes
 
 [docker-curator-nodes]
+cooper-joka.rays.istresearch.com
 
 [docker-grawler-nodes]
 crawler[01:04].rays.istresearch.com

@@ -10,7 +10,7 @@ services:
       - REDIS_KEY_PREFIX=traptor
       - REDIS_NOTIFY_CHANNEL=traptor-notify-prod
       - ES_USE_SSL={{ rulemanager_traptor_es_ssl }}
-      - ES_HOST=http{% if rulemanager_traptor_es_ssl %}s{% endif %}://{% if rulemanager_traptor_es_credentials %}{{ rulemanager_traptor_es_user }}:{{ rulemanager_es_pass }}@{% endif %}{{ groups['elasticsearch-nodes'][0] }}:{{ elasticsearch_network_http_port|default(9200) }}
+      - ES_HOST=http{% if rulemanager_traptor_es_ssl %}s{% endif %}://{% if rulemanager_traptor_es_credentials %}{{ rulemanager_traptor_es_user }}:{{ rulemanager_traptor_es_pass }}@{% endif %}{{ groups['elasticsearch-nodes'][0] }}:{{ elasticsearch_network_http_port|default(9200) }}
       - ES_RULE_INDEX={{ rulemanager_traptor_es_index }}
       - ES_RULE_DOC_TYPE=document
       - LOG_LEVEL=INFO

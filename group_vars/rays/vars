@@ -7,7 +7,28 @@
 dev:
    - { name: "aklintse", key: "{{ aklintse_key }}" }
 
-#### TELEGRAM VARIABLES
+#### CURATOR VARIABLES ####
+curator_es_credentials: true
+curator_es_ssl: true
+curator_es_user: admin
+curator_es_pass: "{{ vault_ec_pwd }}"
+
+#### RULE MANAGER VARIABLES ####
+rulemanager_traptor_es_ssl: true
+rulemanager_traptor_es_credentials: true
+rulemanager_traptor_es_user: admin
+rulemanager_traptor_es_pass: "{{ vault_ec_pwd }}"
+rulemanager_traptor_es_index: collection-rules
+rulemanager_traptor_refresh_rate: 600
+rulemanager_telegram_refresh_rate: 60
+rulemanager_telegram_channel: telegram.notify
+rulemanager_cooper_credentials: true
+rulemanager_cooper_user: cooper
+rulemanager_cooper_pass: "{{ vault_cooper_pass }}"
+rulemanager_cooper_ssl: true
+cooper_elb_host: cooper.rays.istresearch.com
+
+#### TELEGRAM VARIABLES ####
 telegram_number: 5403706068
 
 #### COOPER VARIABLES ####
@@ -81,4 +102,4 @@ storm_nimbus_extra_config:
 #### Connecting Logstash to ES Cloud ####
 logstash_credentials: true
 logstash_es_user: "admin"
-logstash_es_pwd: "{{ vault_logstash_es_pwd }}"
+logstash_es_pwd: "{{ vault_ec_pwd }}"
