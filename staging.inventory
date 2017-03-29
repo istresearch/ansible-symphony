@@ -221,7 +221,7 @@ vagrant-ist-01
 vagrant-ist-02
 
 [docker-rule-manager-nodes]
-vagrant-ist-02
+vagrant-ist-01
 
 [docker-scrapy-nodes]
 vagrant-ist-02
