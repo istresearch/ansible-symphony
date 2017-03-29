@@ -71,6 +71,9 @@ traptor_follow_creds: "{{ vault_traptor_follow_apikeys }}"
 traptor_geo_creds: "{{ vault_traptor_location_apikeys }}"
 traptor_track_creds: "{{ vault_traptor_track_apikeys }}"
 
+# Telegram specific vars
+telegram_number: need_to_specify
+
 # Facebook Graph specific vars
 grawler_shared_queue: shared_graph_q
 # THE LENGTH OF THIS LIST MUST BE EQUAL TO
