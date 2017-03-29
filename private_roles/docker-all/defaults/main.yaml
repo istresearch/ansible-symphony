@@ -130,5 +130,8 @@ rulemanager_cooper_credentials: False
 rulemanager_cooper_user: cooper
 rulemanager_cooper_pass: pass
 rulemanager_cooper_ssl: False
+# `cooper_elb_host` is currently undefined
+# define it to override the final cooper host
+rulemanager_cooper_host: "{{ cooper_elb_host|default(groups['docker-cooper-nodes'][0]) }}"
 
 

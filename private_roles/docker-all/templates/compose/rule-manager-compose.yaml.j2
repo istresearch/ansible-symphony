@@ -3,7 +3,7 @@ services:
   traptor:
     image: istresearch/rule-manager:traptor-3.0.1
     environment:
-      - COOPER_URL=http{% if rulemanager_cooper_ssl %}s{% endif %}://{% if rulemanager_cooper_credentials %}{{ rulemanager_cooper_user }}:{{ rulemanager_cooper_pass }}@{% endif %}{{ groups['docker-cooper-nodes'][0] }}/cooper/rules/list
+      - COOPER_URL=http{% if rulemanager_cooper_ssl %}s{% endif %}://{% if rulemanager_cooper_credentials %}{{ rulemanager_cooper_user }}:{{ rulemanager_cooper_pass }}@{% endif %}{{ rulemanager_cooper_host }}/cooper/rules/list
       - REDIS_HOST={{ groups['redis-master-node'][0] }}
       - REDIS_PORT=6379
       - REDIS_DB={{ traptor_redis_db }}
@@ -23,7 +23,7 @@ services:
   telegram:
     image: istresearch/rule-manager:telegram-3.0.1
     environment:
-      - COOPER_URL=http{% if rulemanager_cooper_ssl %}s{% endif %}://{% if rulemanager_cooper_credentials %}{{ rulemanager_cooper_user }}:{{ rulemanager_cooper_pass }}@{% endif %}{{ groups['docker-cooper-nodes'][0] }}/cooper/rules/list
+      - COOPER_URL=http{% if rulemanager_cooper_ssl %}s{% endif %}://{% if rulemanager_cooper_credentials %}{{ rulemanager_cooper_user }}:{{ rulemanager_cooper_pass }}@{% endif %}{{ rulemanager_cooper_host }}/cooper/rules/list
       - COOPER_TYPE=telegram_public_channel
       - COOPER_RULE_ID_KEY=rule_id
       - REDIS_HOST={{ groups['redis-master-node'][0] }}
