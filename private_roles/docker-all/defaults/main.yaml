@@ -120,4 +120,21 @@ curator_es_pass: password
 curator_pulse_prefix: pulse
 curator_pulse_interval: 3600
 
+# Rule Manager specific vars
+rulemanager_traptor_es_ssl: False
+rulemanager_traptor_es_credentials: False
+rulemanager_traptor_es_user: user
+rulemanager_traptor_es_pass: pass
+rulemanager_traptor_es_index: collection-rules
+rulemanager_traptor_refresh_rate: 600
+rulemanager_telegram_refresh_rate: 60
+rulemanager_telegram_channel: telegram.notify
+rulemanager_cooper_credentials: False
+rulemanager_cooper_user: cooper
+rulemanager_cooper_pass: pass
+rulemanager_cooper_ssl: False
+# `cooper_elb_host` is currently undefined
+# define it to override the final cooper host
+rulemanager_cooper_host: "{{ cooper_elb_host|default(groups['docker-cooper-nodes'][0]) }}"
+
 
