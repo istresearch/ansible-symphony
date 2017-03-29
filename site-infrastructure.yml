@@ -770,3 +770,13 @@
     component: rule-manager
   tags:
     - site-docker-rule-manager-all
+
+# Curator ----------
+- name: Run Curator role
+  hosts: docker-curator-nodes
+  roles: [ docker-all ]
+  vars:
+    component: curator
+    logstash_use: false
+  tags:
+    - site-docker-curator-all

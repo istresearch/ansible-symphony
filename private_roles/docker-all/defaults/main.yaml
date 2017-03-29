@@ -51,6 +51,7 @@ logstash_credentials: false
 logstash_shards: 3
 logstash_replicas: 0
 logstash_tag: "{{ component }}"
+logstash_use: true
 
 # Scrapy Cluster specific vars
 sc_crawling_kafka_topic_prefix: "{{ sc_kafka_master_topic_prefix }}"
@@ -96,5 +97,24 @@ cooper_es_index: cooper-rules
 cooper_graphapi_app_id: "{{ grawler_creds[0].app_id|default('super') }}"
 cooper_graphapi_app_secret: "{{ grawler_creds[0].app_secret|default('secret') }}"
 
+# Curator Script specific vars
+curator_logs:
+  # this should list all log indices, that match all 'logstash_tag's in the infrastructure playbook
+  - cooper
+  - grawler
+  - topologies
+  - rulemanager
+  - scrapy-cluster
+  - telegraptor
+  - traptor
+curator_log_suffix: "{year}.{month}.{day}"
+curator_log_retention: 7 # days
+curator_log_interval: 3600
+curator_es_credentials: False
+curator_es_ssl: False
+curator_es_user: user
+curator_es_pass: password
+curator_pulse_prefix: pulse
+curator_pulse_interval: 3600
 
 

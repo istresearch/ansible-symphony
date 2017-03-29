@@ -215,7 +215,7 @@ vagrant-ist-02
 vagrant-ist-02
 
 [docker-curator-nodes]
-vagrant-ist-02
+vagrant-ist-01
 
 [docker-grawler-nodes]
 vagrant-ist-02
