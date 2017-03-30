@@ -1,11 +1,19 @@
 import sys
+import logging
+logger = logging.getLogger(__name__)
+format = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+logger.setLevel(logging.DEBUG)
+ch = logging.StreamHandler(sys.stdout)
+ch.setFormatter(format)
+logger.addHandler(ch)
+
 
 def main():
     import argparse
     from kazoo.client import KazooClient
     import yaml
     import os
-
+    logger.debug("init")
     parser = argparse.ArgumentParser(
             description="Config file pusher to Zookeeper")
     parser.add_argument('-f', '--file', action='store', required=True)
@@ -49,15 +57,18 @@ def main():
                         'file': file
                       })
 
+        logger.debug("write file {}".format(file))
         with open(file, 'w') as outfile:
             yaml.dump(data, outfile, default_flow_style=False)
 
     # read each sub file, push into zk
     for item in my_list:
+        logger.debug("pushing file {}".format(item['file']))
         push(item['file'], path, instance_path, zk, item['id'])
 
     # clean up temp files
     for item in my_list:
+        logger.debug("deleting file {}".format(item['file']))
         os.remove(item['file'])
 
     zk.stop()
@@ -68,22 +79,23 @@ def push(filename, path, instance_path, zk, id):
 
     # push the conf file
     if not zk.exists(path + '/' + filename):
-        print "creaing conf node"
+        logger.debug("creaing conf node")
         zk.create(path + '/' + filename, bytes)
     else:
-        print "updating conf file"
+        logger.debug("updating conf file")
         zk.set(path + '/' + filename, bytes)
 
     if not zk.exists(instance_path + '/' + id):
+        logger.debug("creating id file")
         zk.create(instance_path + '/' + id, '')
 
     # push the path assignment
     data, stat = zk.get(instance_path + '/' + id)
     if data != path + '/' + filename:
         zk.set(instance_path + '/' + id, path + '/' + filename)
-        print "set assignment"
+        logger.debug("set assignment")
     else:
-        print "No new assignment"
+        logger.debug("No new assignment")
 
 
 if __name__ == "__main__":

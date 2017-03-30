@@ -218,6 +218,7 @@ vagrant-ist-02
 vagrant-ist-01
 
 [docker-grawler-nodes]
+vagrant-ist-01
 vagrant-ist-02
 
 [docker-rule-manager-nodes]

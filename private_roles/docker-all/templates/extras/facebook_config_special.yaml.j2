@@ -7,6 +7,7 @@ facebook.app_id:  {{ grawler_creds[the_index].app_id }}
 facebook.app_secret: {{ grawler_creds[the_index].app_secret }}
 downloaddelay: 10
 
-{% if not loop.last %}DELIM{% endif %}
+{% if not outer_loop.last or not loop.last %}DELIM{% endif %}
+
 {% endfor %}
 {% endfor %}
