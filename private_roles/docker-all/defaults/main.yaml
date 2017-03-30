@@ -12,6 +12,7 @@ virtualenv_path: /tmp/ansible
 # PULSE VARIABLES
 pulse_landing_page: 3
 pulse_mysql_host: "{{ inventory.hostname }}"
+pulse_tag: pulse-v3.1.3-release
 
 mysql_pwd: "{{ vault_mysql_pwd }}"
 mysql_root_pwd: "{{ vault_mysql_root_pwd }}"
@@ -52,8 +53,13 @@ logstash_shards: 3
 logstash_replicas: 0
 logstash_tag: "{{ component }}"
 logstash_use: true
+logstash_tag: latest
 
 # Scrapy Cluster specific vars
+sc_kafka_monitor_tag: kafka-monitor-116-dev
+sc_redis_monitor_tag: redis-monitor-116-dev
+sc_crawler_tag: crawler-127-dev
+sc_googler_tag: googler-0.0.1
 sc_crawling_kafka_topic_prefix: "{{ sc_kafka_master_topic_prefix }}"
 sc_crawling_queue_hits: 10
 sc_crawling_queue_window: 60
@@ -66,6 +72,7 @@ sc_kafka_monitor_kafka_topic_prefix: "{{ sc_kafka_master_topic_prefix }}"
 scrapy_redis_node: "{{ groups['redis-master-node'][0] }}"
 
 # Traptor specific vars
+traptor_tag: v1.4.6
 traptor_kafka_topic: traptor.cooper_prod
 traptor_follow_creds: "{{ vault_traptor_follow_apikeys }}"
 traptor_geo_creds: "{{ vault_traptor_location_apikeys }}"
@@ -73,8 +80,15 @@ traptor_track_creds: "{{ vault_traptor_track_apikeys }}"
 
 # Telegram specific vars
 telegram_number: need_to_specify
+telegram_tgapi_tag: api-dev
+telegram_tgcli_tag: tgcli-latest
+telegram_pycli_tag: pycli-2.0.5
+telegram_stream_tag: stream-2.0.5
+telegram_pubsub_tag: pubsub-2.0.5
 
 # Facebook Graph specific vars
+graphapi_tag: graph-api-latest
+grawler_tag: grawler-0.1.0
 grawler_shared_queue: shared_graph_q
 # THE LENGTH OF THIS LIST MUST BE EQUAL TO
 # num grawler hosts * grawler_containers_per_box
@@ -90,6 +104,7 @@ grawler_creds:
 grawler_containers_per_box: 1
 
 # Cooper specific vars
+cooper_tag: 1.7.5
 cooper_mysql_host: "{{ vault_mysql_host|default('localhost') }}"
 cooper_mysql_user: "{{ vault_mysql_user|default('user') }}"
 cooper_mysql_password: "{{ vault_mysql_password|default('password') }}"
@@ -101,6 +116,8 @@ cooper_graphapi_app_id: "{{ grawler_creds[0].app_id|default('super') }}"
 cooper_graphapi_app_secret: "{{ grawler_creds[0].app_secret|default('secret') }}"
 
 # Curator Script specific vars
+curator_pulse_tag: curator-pulse-0.1
+curator_logs_tag: curator-logs-0.1
 curator_logs:
   # this should list all log indices, that match all 'logstash_tag's in the infrastructure playbook
   - cooper
@@ -121,6 +138,8 @@ curator_pulse_prefix: pulse
 curator_pulse_interval: 3600
 
 # Rule Manager specific vars
+rulemanager_traptor_tag: traptor-3.0.1
+rulemanager_telegram_tag: telegram-3.0.1
 rulemanager_traptor_es_ssl: False
 rulemanager_traptor_es_credentials: False
 rulemanager_traptor_es_user: user
