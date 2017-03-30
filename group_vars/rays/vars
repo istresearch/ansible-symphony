@@ -6,6 +6,7 @@
 ## DEV PEOPLE ##
 dev:
    - { name: "aklintse", key: "{{ aklintse_key }}" }
+   - { name: "rdempsey", key: "{{ rdempsey_key }}" }
 
 #### CURATOR VARIABLES ####
 curator_es_credentials: true
