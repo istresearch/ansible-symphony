@@ -11,7 +11,7 @@ services:
       - TRAPTOR_ID={{ loop.index }}
       - RULE_CHECK_INTERVAL=60
       - USE_SENTRY=true
-      - SENTRY_URL=https://{{ sentry_url_un }}:{{ sentry_url_pwd }}@sentry.io/55250
+      - SENTRY_URL=https://{{ vault_sentry_url_un }}:{{ vault_sentry_url_pwd }}@sentry.io/55250
       - LOG_LEVEL=INFO
       - LOG_DIR=/var/log/traptor
       - LOG_FILE_NAME=traptor_locations_{{ loop.index }}.log

@@ -7,7 +7,28 @@
 dev:
    - { name: "aklintse", key: "{{ aklintse_key }}" }
 
-#### TELEGRAM VARIABLES
+#### CURATOR VARIABLES ####
+curator_es_credentials: true
+curator_es_ssl: true
+curator_es_user: admin
+curator_es_pass: "{{ vault_ec_pwd }}"
+
+#### RULE MANAGER VARIABLES ####
+rulemanager_traptor_es_ssl: true
+rulemanager_traptor_es_credentials: true
+rulemanager_traptor_es_user: admin
+rulemanager_traptor_es_pass: "{{ vault_ec_pwd }}"
+rulemanager_traptor_es_index: collection-rules
+rulemanager_traptor_refresh_rate: 600
+rulemanager_telegram_refresh_rate: 60
+rulemanager_telegram_channel: telegram.notify
+rulemanager_cooper_credentials: true
+rulemanager_cooper_user: cooper
+rulemanager_cooper_pass: "{{ vault_cooper_pass }}"
+rulemanager_cooper_ssl: true
+cooper_elb_host: cooper.rays.istresearch.com
+
+#### TELEGRAM VARIABLES ####
 telegram_number: 5403706068
 
 #### COOPER VARIABLES ####
@@ -16,10 +37,10 @@ cooper_twitter_oauth_token_secret: "{{ vault_cooper_token_secret }}"
 cooper_twitter_app_secret: "{{ vault_cooper_app_secret }}"
 cooper_twitter_app_key: "{{ vault_cooper_app_key }}"
 
-cooper_mysql_host: "{{ vault_mysql_host }}"
-cooper_mysql_user: "{{ vault_mysql_user }}"
+cooper_mysql_host: rds.rays.istresearch.com
+cooper_mysql_user: cooper
 cooper_mysql_password: "{{ vault_mysql_password }}"
-cooper_mysql_root_user: "{{ vault_mysql_root_username }}"
+cooper_mysql_root_user: rays
 cooper_mysql_root_password: "{{ vault_mysql_root_password }}"
 
 #### PULSE VARIABLES ####
@@ -81,4 +102,4 @@ storm_nimbus_extra_config:
 #### Connecting Logstash to ES Cloud ####
 logstash_credentials: true
 logstash_es_user: "admin"
-logstash_es_pwd: "{{ vault_logstash_es_pwd }}"
+logstash_es_pwd: "{{ vault_ec_pwd }}"
