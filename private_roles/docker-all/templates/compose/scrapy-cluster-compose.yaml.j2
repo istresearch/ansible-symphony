@@ -95,6 +95,7 @@ services:
       - logs:/var/log/container-logs
     extra_hosts:
       - {{ inventory_hostname }}:172.17.0.1
+    restart: "on-failure:3"
 
 volumes:
   logs:
