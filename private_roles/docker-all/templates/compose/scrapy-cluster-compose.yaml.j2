@@ -63,6 +63,29 @@ services:
       - {{ inventory_hostname }}:172.17.0.1
     hostname: {% for host in groups['docker-scrapy-nodes'] %}{%- if host == inventory_hostname -%}crawler{{ loop.index }}{%- endif -%}{% endfor %}
 
+  googler:
+    image: istresearch/googler:googler-0.0.1
+    environment:
+      - KAFKA_HOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
+
+      - KAFKA_TOPIC={{ sc_kafka_monitor_kafka_topic_prefix }}.{{ sc_kafka_monitor_topic_main }}
+      - REDIS_HOST="{{ groups['redis-master-node'][0] }}"
+      - REDIS_PORT=6379
+      - REDIS_DB={{ scrapy_cluster_redis_db }}
+      - QUEUE_NAME=keyword:queue
+      - LOGGER_NAME=googler
+      - LOG_DIR=/var/log/googler
+      - LOG_FILE=googler.log
+      - LOG_STDOUT=False
+      - LOG_JSON=True
+      - LOG_LEVEL=INFO
+      - LOG_BACKUPS=5
+    volumes:
+      - logs:/var/log/googler
+    restart: "on-failure:3"
+    extra_hosts:
+      - {{ inventory_hostname }}:172.17.0.1
+
   logstash:
     image: logstash:latest
     command: logstash -f /etc/logstash/conf.d/logstash.conf
