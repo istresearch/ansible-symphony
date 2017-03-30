@@ -225,7 +225,7 @@ vagrant-ist-02
 vagrant-ist-01
 
 [docker-scrapy-nodes]
-vagrant-ist-02
+vagrant-ist-01
 
 [docker-telegraptor-nodes]
 vagrant-ist-02

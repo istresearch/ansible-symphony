@@ -8,6 +8,13 @@ dev:
    - { name: "aklintse", key: "{{ aklintse_key }}" }
    - { name: "rdempsey", key: "{{ rdempsey_key }}" }
 
+#### CONTAINER SCALES ####
+component_scales:
+  - component: scrapy-cluster
+    containers:
+      - name: crawler
+        scale: 10
+
 #### CURATOR VARIABLES ####
 curator_es_credentials: true
 curator_es_ssl: true

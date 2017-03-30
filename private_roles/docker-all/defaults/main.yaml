@@ -37,15 +37,25 @@ logstash_file_final: "logstash-{{ component }}.{{ deploy_env }}.conf"
 script_file: "dc-component.sh.j2"
 script_file_final: "dc-{{ component }}.{{ deploy_env }}.sh"
 project_name: "{{ component }}"
+
 # Use extra templates to move extra files/configs over
 # extra_templates:
 #  - in: input/file
 #    out: output/file
-# this should be a dict of scale values per component
-component_scales:
-  scrapy-cluster:
-    - name: crawler
-      scale: 5
+
+# Use to scale each compose file on each host
+# this should be a list of dicts with component, name, and scale values like so
+# component_scales:
+#   - component: scrapy-cluster
+#     containers:
+#       - name: crawler
+#         scale: 5
+#       - name: kafka_monitor
+#         scale: 3
+#   - component: rule-manager
+#     containers:
+#       - name: traptor
+#         scale: 2
 
 # logstash setup, for use when needing an ES cluster behind credentials
 logstash_credentials: false

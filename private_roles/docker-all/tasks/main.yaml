@@ -94,11 +94,11 @@
   command: "{{ docker_scripts_dir }}/{{ script_file_final }} up -d"
   tags: docker-all
 
-# this doesnt work yet
-# - name: scale components
-#   command: "{{ docker_scripts_dir }}/{{ script_file_final }} scale {{ item.name }}={{ item.scale }}"
-#   tags: docker-all
-#   when: "{{ item.key }} == {{ component }}"
-#   with_items:
-#     - "{{ component_scales|default([]) }}"
+- name: scale components
+  command: "{{ docker_scripts_dir }}/{{ script_file_final }} scale {{ item.1.name }}={{ item.1.scale }}"
+  tags: docker-all
+  when: item.0.component == component
+  with_subelements:
+    - "{{ component_scales|default([]) }}"
+    - containers
 # END Container deployment -------------------------------
