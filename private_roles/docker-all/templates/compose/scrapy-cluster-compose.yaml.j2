@@ -7,7 +7,7 @@ services:
     environment:
       - KAFKA_HOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
 
-      - REDIS_HOST={{ groups['redis-master-node'][0] }}
+      - REDIS_HOST={{ scrapy_redis_node }}
       - ZOOKEEPER_HOSTS={% for host in groups['zookeeper-nodes'] %}{{ host }}:{{ zookeeper_port|default(2181) }}{% if not loop.last %},{% endif %}{% endfor %}
 
       - REDIS_DB={{ scrapy_cluster_redis_db }}
@@ -44,7 +44,7 @@ services:
     image: istresearch/scrapy-cluster-ist:{{ sc_crawler_tag }}
     restart: always
     environment:
-      - REDIS_HOST={{ groups['redis-master-node'][0] }}
+      - REDIS_HOST={{ scrapy_redis_node }}
       - REDIS_DB={{ scrapy_cluster_redis_db }}
       - KAFKA_HOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
 
@@ -69,7 +69,7 @@ services:
       - KAFKA_HOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
 
       - KAFKA_TOPIC={{ sc_kafka_monitor_kafka_topic_prefix }}.{{ sc_kafka_monitor_topic_main }}
-      - REDIS_HOST="{{ groups['redis-master-node'][0] }}"
+      - REDIS_HOST={{ scrapy_redis_node }}
       - REDIS_PORT=6379
       - REDIS_DB={{ scrapy_cluster_redis_db }}
       - QUEUE_NAME=keyword:queue
