@@ -1,7 +1,7 @@
 version: '2'
 services:
   traptor:
-    image: istresearch/rule-manager:traptor-3.0.1
+    image: istresearch/rule-manager:{{ rulemanager_traptor_tag }}
     environment:
       - COOPER_URL=http{% if rulemanager_cooper_ssl %}s{% endif %}://{% if rulemanager_cooper_credentials %}{{ rulemanager_cooper_user }}:{{ rulemanager_cooper_pass }}@{% endif %}{{ rulemanager_cooper_host }}/cooper/rules/list
       - REDIS_HOST={{ groups['redis-master-node'][0] }}
@@ -21,7 +21,7 @@ services:
     volumes:
      - logs:/var/log/rulemanager
   telegram:
-    image: istresearch/rule-manager:telegram-3.0.1
+    image: istresearch/rule-manager:{{ rulemanager_telegram_tag }}
     environment:
       - COOPER_URL=http{% if rulemanager_cooper_ssl %}s{% endif %}://{% if rulemanager_cooper_credentials %}{{ rulemanager_cooper_user }}:{{ rulemanager_cooper_pass }}@{% endif %}{{ rulemanager_cooper_host }}/cooper/rules/list
       - COOPER_TYPE=telegram_public_channel
@@ -40,7 +40,7 @@ services:
      - logs:/var/log/rulemanager
 
   logstash:
-    image: logstash:latest
+    image: logstash:{{ logstash_tag }}
     command: logstash -f /etc/logstash/conf.d/logstash.conf
     volumes:
       - {{ docker_configs_dir }}/{{ logstash_file_final }}:/etc/logstash/conf.d/logstash.conf

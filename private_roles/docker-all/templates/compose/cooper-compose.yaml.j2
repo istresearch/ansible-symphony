@@ -2,7 +2,7 @@ version: '2'
 
 services:
   cooper:
-    image: istresearch/cooper:1.7.5
+    image: istresearch/cooper:{{ cooper_tag }}
     volumes:
       - logs:/var/log/cooper
     ports:
@@ -50,7 +50,7 @@ services:
       - {{ inventory_hostname }}:172.17.0.1
 
   tgapi:
-    image: istresearch/telegraptor:api-dev
+    image: istresearch/telegraptor:{{ telegram_tgapi_tag }}
     environment:
       - TELEGRAM_CLI_HOST=tgcli
       - TELEGRAM_CLI_PORT=4458
@@ -68,14 +68,14 @@ services:
       - "5000:5000"
 
   tgcli:
-    image: istresearch/telegraptor:tgcli-latest
+    image: istresearch/telegraptor:{{ telegram_tgcli_tag }}
     volumes:
       - /data/tmp/.telegram-cli-cooper:/root/.telegram-cli
     tty: true
     restart: always
 
   graphapi:
-    image: istresearch/graph-api:graph-api-latest
+    image: istresearch/graph-api:{{ graphapi_tag }}
     environment:
       - REDIS_HOST={{ groups['redis-master-node'][0] }}
       - REDIS_PORT=6379
@@ -108,7 +108,7 @@ services:
       - {{ inventory_hostname }}:172.17.0.1
 
   logstash:
-    image: logstash:latest
+    image: logstash:{{ logstash_tag }}
     command: logstash -f /etc/logstash/conf.d/logstash.conf
     volumes:
       - {{ docker_configs_dir }}/{{ logstash_file_final }}:/etc/logstash/conf.d/logstash.conf

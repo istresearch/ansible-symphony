@@ -2,7 +2,7 @@ version: '2'
 
 services:
   kafka_monitor:
-    image: istresearch/scrapy-cluster-ist:kafka-monitor-116-dev
+    image: istresearch/scrapy-cluster-ist:{{ sc_kafka_monitor_tag }}
     restart: always
     environment:
       - KAFKA_HOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
@@ -22,7 +22,7 @@ services:
     hostname: {% for host in groups['docker-scrapy-nodes'] %}{%- if host == inventory_hostname -%}kafkamonitor{{ loop.index }}{%- endif -%}{% endfor %}
 
   redis_monitor:
-    image: istresearch/scrapy-cluster-ist:redis-monitor-116-dev
+    image: istresearch/scrapy-cluster-ist:{{ sc_redis_monitor_tag }}
     restart: always
     environment:
       - REDIS_HOST={{ scrapy_redis_node }}
@@ -41,7 +41,7 @@ services:
     hostname: {% for host in groups['docker-scrapy-nodes'] %}{%- if host == inventory_hostname -%}redismonitor{{ loop.index }}{%- endif -%}{% endfor %}
 
   crawler:
-    image: istresearch/scrapy-cluster-ist:crawler-127-dev
+    image: istresearch/scrapy-cluster-ist:{{ sc_crawler_tag }}
     restart: always
     environment:
       - REDIS_HOST={{ groups['redis-master-node'][0] }}
@@ -64,7 +64,7 @@ services:
     hostname: {% for host in groups['docker-scrapy-nodes'] %}{%- if host == inventory_hostname -%}crawler{{ loop.index }}{%- endif -%}{% endfor %}
 
   googler:
-    image: istresearch/googler:googler-0.0.1
+    image: istresearch/googler:{{ sc_googler_tag }}
     environment:
       - KAFKA_HOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
 
@@ -87,7 +87,7 @@ services:
       - {{ inventory_hostname }}:172.17.0.1
 
   logstash:
-    image: logstash:latest
+    image: logstash:{{ logstash_tag }}
     command: logstash -f /etc/logstash/conf.d/logstash.conf
     volumes:
       - {{ docker_configs_dir }}/{{ logstash_file_final }}:/etc/logstash/conf.d/logstash.conf
