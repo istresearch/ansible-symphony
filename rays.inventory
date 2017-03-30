@@ -29,6 +29,16 @@ docker-pulse-nodes
 portainer-nodes
 elasticsearch-nodes
 
+[docker-nodes:children]
+docker-cooper-nodes
+docker-curator-nodes
+docker-grawler-nodes
+docker-rule-manager-nodes
+docker-scrapy-nodes
+docker-telegraptor-nodes
+docker-traptor-nodes
+docker-pulse-nodes
+
 [docker-engine]
 cooper-joka.rays.istresearch.com
 traptor-follow.rays.istresearch.com

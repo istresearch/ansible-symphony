@@ -684,6 +684,7 @@
   roles: [ docker-all ]
   tags:
     - site-docker-scrapy-all
+    - site-docker-all
   vars:
     component: scrapy-cluster
 
@@ -699,6 +700,7 @@
   tags:
     - site-docker-traptor-all
     - site-docker-traptor-follow-all
+    - site-docker-all
 
 - name: Run Docker Traptor Track role
   hosts: docker-traptor-track-nodes
@@ -711,6 +713,7 @@
   tags:
     - site-docker-traptor-all
     - site-docker-traptor-track-all
+    - site-docker-all
 
 - name: Run Docker Traptor Geo role
   hosts: docker-traptor-geo-nodes
@@ -723,6 +726,7 @@
   tags:
     - site-docker-traptor-all
     - site-docker-traptor-geo-all
+    - site-docker-all
 
 # Cooper --------
 - name: Run Docker Cooper role
@@ -730,6 +734,7 @@
   roles: [ docker-all ]
   tags:
     - site-docker-cooper-all
+    - site-docker-all
   vars:
     component: cooper
     extra_tasks: true
@@ -743,6 +748,7 @@
     extra_tasks: true
   tags:
     - site-docker-grawler-all
+    - site-docker-all
 
 # Telegraptor ----------
 - name: Run Telegraptor role
@@ -752,6 +758,7 @@
     component: telegraptor
   tags:
     - site-docker-telegraptor-all
+    - site-docker-all
 
 # Pulse ----------
 - name: Run Pulse role
@@ -761,6 +768,7 @@
     component: pulse
   tags:
     - site-docker-pulse-all
+    - site-docker-all
 
 # Rule Manager ----------
 - name: Run Rule Manager role
@@ -770,6 +778,7 @@
     component: rule-manager
   tags:
     - site-docker-rule-manager-all
+    - site-docker-all
 
 # Curator ----------
 - name: Run Curator role
@@ -780,3 +789,4 @@
     logstash_use: false
   tags:
     - site-docker-curator-all
+    - site-docker-all
