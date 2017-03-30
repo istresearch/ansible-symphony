@@ -694,7 +694,7 @@
   vars:
     component: traptor-follow
     logstash_file_final: "logstash-traptor.{{ deploy_env }}.conf"
-    logstash_tag: traptor
+    logstash_component_tag: traptor
     project_name: traptor
   tags:
     - site-docker-traptor-all
@@ -706,7 +706,7 @@
   vars:
     component: traptor-track
     logstash_file_final: "logstash-traptor.{{ deploy_env }}.conf"
-    logstash_tag: traptor
+    logstash_component_tag: traptor
     project_name: traptor
   tags:
     - site-docker-traptor-all
@@ -718,7 +718,7 @@
   vars:
     component: traptor-geo
     logstash_file_final: "logstash-traptor.{{ deploy_env }}.conf"
-    logstash_tag: traptor
+    logstash_component_tag: traptor
     project_name: traptor
   tags:
     - site-docker-traptor-all

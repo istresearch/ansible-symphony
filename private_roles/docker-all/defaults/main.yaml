@@ -51,7 +51,7 @@ component_scales:
 logstash_credentials: false
 logstash_shards: 3
 logstash_replicas: 0
-logstash_tag: "{{ component }}"
+logstash_component_tag: "{{ component }}"
 logstash_use: true
 logstash_tag: latest
 
@@ -119,7 +119,7 @@ cooper_graphapi_app_secret: "{{ grawler_creds[0].app_secret|default('secret') }}
 curator_pulse_tag: curator-pulse-0.1
 curator_logs_tag: curator-logs-0.1
 curator_logs:
-  # this should list all log indices, that match all 'logstash_tag's in the infrastructure playbook
+  # this should list all log indices, that match all 'logstash_component_tag's in the infrastructure playbook
   - cooper
   - grawler
   - topologies
