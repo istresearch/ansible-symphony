@@ -104,7 +104,7 @@ grawler_creds:
 grawler_containers_per_box: 1
 
 # Cooper specific vars
-cooper_tag: 1.7.5
+cooper_tag: 1.7.9
 cooper_mysql_host: "{{ vault_mysql_host|default('localhost') }}"
 cooper_mysql_user: "{{ vault_mysql_user|default('user') }}"
 cooper_mysql_password: "{{ vault_mysql_password|default('password') }}"
