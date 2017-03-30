@@ -3,7 +3,7 @@ version: '2'
 services:
 {% for creds in traptor_geo_creds %}
   locations_{{ loop.index }}:
-    image: istresearch/traptor:v1.4.6
+    image: istresearch/traptor:{{ traptor_tag }}
     volumes:
       - logs:/var/log/traptor
     environment:
@@ -37,7 +37,7 @@ services:
 {% endfor %}
   logstash:
     container_name: traptor_geo_logstash
-    image: logstash:latest
+    image: logstash:{{ logstash_tag }}
     command: logstash -f /etc/logstash/conf.d/logstash.conf
     volumes:
       - {{ docker_configs_dir }}/{{ logstash_file_final }}:/etc/logstash/conf.d/logstash.conf
