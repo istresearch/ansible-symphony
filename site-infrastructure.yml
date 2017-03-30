@@ -694,7 +694,7 @@
   vars:
     component: traptor-follow
     logstash_file_final: "logstash-traptor.{{ deploy_env }}.conf"
-    logstash_tag: traptor
+    logstash_component_tag: traptor
     project_name: traptor
   tags:
     - site-docker-traptor-all
@@ -706,7 +706,7 @@
   vars:
     component: traptor-track
     logstash_file_final: "logstash-traptor.{{ deploy_env }}.conf"
-    logstash_tag: traptor
+    logstash_component_tag: traptor
     project_name: traptor
   tags:
     - site-docker-traptor-all
@@ -718,7 +718,7 @@
   vars:
     component: traptor-geo
     logstash_file_final: "logstash-traptor.{{ deploy_env }}.conf"
-    logstash_tag: traptor
+    logstash_component_tag: traptor
     project_name: traptor
   tags:
     - site-docker-traptor-all
@@ -761,3 +761,22 @@
     component: pulse
   tags:
     - site-docker-pulse-all
+
+# Rule Manager ----------
+- name: Run Rule Manager role
+  hosts: docker-rule-manager-nodes
+  roles: [ docker-all ]
+  vars:
+    component: rule-manager
+  tags:
+    - site-docker-rule-manager-all
+
+# Curator ----------
+- name: Run Curator role
+  hosts: docker-curator-nodes
+  roles: [ docker-all ]
+  vars:
+    component: curator
+    logstash_use: false
+  tags:
+    - site-docker-curator-all

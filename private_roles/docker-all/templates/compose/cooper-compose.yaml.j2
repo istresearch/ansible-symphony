@@ -2,7 +2,7 @@ version: '2'
 
 services:
   cooper:
-    image: istresearch/cooper:1.7.5
+    image: istresearch/cooper:{{ cooper_tag }}
     volumes:
       - logs:/var/log/cooper
     ports:
@@ -15,8 +15,8 @@ services:
       - MYSQL_USER={{ cooper_mysql_user }}
       - MYSQL_PASSWORD={{ cooper_mysql_password }}
       - MYSQL_DATABASE={{ cooper_mysql_database }}
-      - MYSQL_ROOT_PASSWORD={{ cooper_mysql_root_user }}
-      - MYSQL_ROOT_USER={{ cooper_mysql_root_password }}
+      - MYSQL_ROOT_PASSWORD={{ cooper_mysql_root_password }}
+      - MYSQL_ROOT_USER={{ cooper_mysql_root_user }}
       - MYSQL_SCHEMA_PATH=schema.sql
       - KAFKA_HOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
 
@@ -50,7 +50,7 @@ services:
       - {{ inventory_hostname }}:172.17.0.1
 
   tgapi:
-    image: istresearch/telegraptor:api-dev
+    image: istresearch/telegraptor:{{ telegram_tgapi_tag }}
     environment:
       - TELEGRAM_CLI_HOST=tgcli
       - TELEGRAM_CLI_PORT=4458
@@ -68,19 +68,19 @@ services:
       - "5000:5000"
 
   tgcli:
-    image: istresearch/telegraptor:tgcli-latest
+    image: istresearch/telegraptor:{{ telegram_tgcli_tag }}
     volumes:
       - /data/tmp/.telegram-cli-cooper:/root/.telegram-cli
     tty: true
     restart: always
 
   graphapi:
-    image: istresearch/graph-api:graph-api-latest
+    image: istresearch/graph-api:{{ graphapi_tag }}
     environment:
       - REDIS_HOST={{ groups['redis-master-node'][0] }}
       - REDIS_PORT=6379
       - REDIS_DB={{ grawler_redis_db }}
-      - REDIS_SHARED_QUEUE={{ graph_shared_queue }}
+      - REDIS_SHARED_QUEUE={{ grawler_shared_queue }}
       - THROTTLE_BASE_DELAY=2
       - THROTTLE_MAX_EXP=15
       - THROTTLE_FLOOR=30
@@ -108,12 +108,13 @@ services:
       - {{ inventory_hostname }}:172.17.0.1
 
   logstash:
-    image: logstash:latest
+    image: logstash:{{ logstash_tag }}
     command: logstash -f /etc/logstash/conf.d/logstash.conf
     volumes:
       - {{ docker_configs_dir }}/{{ logstash_file_final }}:/etc/logstash/conf.d/logstash.conf
       - {{ docker_configs_dir }}/logs-template.{{ deploy_env }}.json:/etc/logstash/templates/logs-template.json
       - logs:/var/log/container-logs
+    restart: "on-failure:3"
 
 volumes:
   logs:
