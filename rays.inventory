@@ -25,10 +25,9 @@ docker-rule-manager-nodes
 docker-scrapy-nodes
 docker-telegraptor-nodes
 docker-traptor-nodes
-docker-gatekeeper-nodes
-docker-youscrape-nodes
 docker-pulse-nodes
 portainer-nodes
+elasticsearch-nodes
 
 [docker-engine]
 cooper-joka.rays.istresearch.com
@@ -83,12 +82,6 @@ gandalf-runner-node
 
 [googler-nodes]
 
-[mysql-node]
-
-[pulse-ui-node]
-
-[pulse-mysql-es-host]
-
 [gandalf-runner-node]
 
 [docker-cooper-nodes]
@@ -122,10 +115,6 @@ crawler[01:04].rays.istresearch.com
 
 [docker-telegraptor-nodes]
 crawler01.rays.istresearch.com
-
-[docker-gatekeeper-nodes]
-
-[docker-youscrape-nodes]
 
 [docker-pulse-nodes]
 cooper-joka.rays.istresearch.com

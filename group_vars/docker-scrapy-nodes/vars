@@ -1,3 +1,0 @@
----
-
-logstash_es_pwd: "{{ vault_logstash_es_pwd }}"
