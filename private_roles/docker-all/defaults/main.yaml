@@ -59,7 +59,7 @@ sc_crawling_queue_hits: 10
 sc_crawling_queue_window: 60
 sc_crawling_queue_moderated: True
 sc_crawling_kafka_base_64: False
-sc_kafka_master_topic_prefix: demo
+sc_kafka_master_topic_prefix: crawl
 sc_kafka_monitor_topic_main: incoming
 sc_kafka_monitor_kafka_group: sc-kafka-monitor
 sc_kafka_monitor_kafka_topic_prefix: "{{ sc_kafka_master_topic_prefix }}"
@@ -106,7 +106,7 @@ curator_logs:
   - cooper
   - grawler
   - topologies
-  - rulemanager
+  - rule-manager
   - scrapy-cluster
   - telegraptor
   - traptor
