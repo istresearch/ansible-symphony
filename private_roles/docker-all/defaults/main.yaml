@@ -13,6 +13,11 @@ virtualenv_path: /tmp/ansible
 pulse_landing_page: 3
 pulse_mysql_host: "{{ inventory.hostname }}"
 pulse_tag: pulse-v3.1.3-release
+pulse_cooper_host: "{{ cooper_elb_host|default(groups['docker-cooper-nodes'][0]) }}"
+pulse_cooper_user: cooper
+pulse_cooper_pass: pass
+pulse_pipeline_type: kafka
+pulse_cooper_protocol: https://
 
 mysql_pwd: "{{ vault_mysql_pwd }}"
 mysql_root_pwd: "{{ vault_mysql_root_pwd }}"

@@ -61,6 +61,8 @@ pulse_rds_master_pwd: "{{ vault_pulse_rds_master_pwd }}"
 
 pulse_admin_analysis_url: "https://50337660b0b9722e952771984d3bf14a.us-east-1.aws.found.io"
 
+pulse_cooper_pass: "{{ vault_cooper_pass }}"
+
 #### SCRAPY VARIABLES ####
 scrapy_redis_node: "{{ groups['redis-master-node'][1] }}"
 
