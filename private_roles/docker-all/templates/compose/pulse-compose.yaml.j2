@@ -28,6 +28,7 @@ services:
       - PULSE_COOPER_HOST={{ pulse_cooper_host }}
       - PULSE_COOPER_PASSWORD={{ pulse_cooper_pass }}
       - PULSE_COOPER_USERNAME={{ pulse_cooper_user }}
+      - PULSE_COOPER_APIBASEPATH={{ pulse_cooper_apipath }}
     volumes:
       - /opt/pulse/mmr:/var/mmr
     restart: always

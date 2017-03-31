@@ -18,6 +18,7 @@ pulse_cooper_user: cooper
 pulse_cooper_pass: pass
 pulse_pipeline_type: kafka
 pulse_cooper_protocol: https://
+pulse_cooper_apipath: cooper/rules
 
 mysql_pwd: "{{ vault_mysql_pwd }}"
 mysql_root_pwd: "{{ vault_mysql_root_pwd }}"
