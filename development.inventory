@@ -212,6 +212,7 @@ login-crawler.dev.istresearch.com
 docker.dev.istresearch.com
 dag.dev.istresearch.com
 otto.dev.istresearch.com
+infra.dev.istresearch.com
 
 [docker-bumblebee-nodes]
 docker.dev.istresearch.com
