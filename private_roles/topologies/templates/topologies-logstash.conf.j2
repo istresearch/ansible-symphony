@@ -24,7 +24,7 @@ output {
       template => "{{ logstash_template_dir|default('/etc/logstash.d/templates') }}/logs-topologies-template.json"
       template_name => "logs-*-topologies-*"
       template_overwrite => false
-      index => "logs-{{ deploy_env }}-{{ topologies_logstash_component_tag }}-%{+YYYY.MM.dd}"
+      index => "logs-{{ deploy_env|default("prod") }}-{{ topologies_logstash_component_tag }}-%{+YYYY.MM.dd}"
       document_type => "%{[logger]}"
       flush_size => {{ topologies_logstash_flush_size }}
 {% if logstash_credentials is defined and logstash_credentials == true %}
