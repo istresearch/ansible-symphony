@@ -1,0 +1,13 @@
+---
+# tasks file for jq (Ubuntu specific)
+
+- name: Install jq packages
+  become: yes
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - "{{ jq_packages }}"
+  tags:
+    - jq
