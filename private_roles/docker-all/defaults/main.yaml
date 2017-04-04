@@ -17,6 +17,7 @@ pulse_cooper_host: "{{ cooper_elb_host|default(groups['docker-cooper-nodes'][0])
 pulse_cooper_user: cooper
 pulse_cooper_pass: pass
 pulse_pipeline_type: kafka
+pulse_pipeline_schema: doc.flat
 pulse_cooper_protocol: https://
 pulse_cooper_apipath: cooper/rules
 
