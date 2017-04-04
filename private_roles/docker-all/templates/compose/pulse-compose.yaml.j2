@@ -23,6 +23,7 @@ services:
       - PULSE_ANALYSIS_IFRAME_URL={{ pulse_admin_analysis_url|default('localhost:5601') }}
       - PULSE_PIPELINE_TYPE={{ pulse_pipeline_type }}
       - PULSE_PIPELINE_HOST_LIST={% for host in groups['kafka-nodes'] %}{{ host }}{% if not loop.last %},{% endif %}{% endfor %}
+
       - PULSE_PIPELINE_SCHEMA={{ pulse_pipeline_schema }}
       - PULSE_COOPER_PROTOCOL={{ pulse_cooper_protocol }}
       - PULSE_COOPER_HOST={{ pulse_cooper_host }}
