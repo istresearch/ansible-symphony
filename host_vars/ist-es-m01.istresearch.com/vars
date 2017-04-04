@@ -21,7 +21,7 @@ datadog_monitors:
   es_backup_status:
     enabled: true
     is_custom_check: true
-    collection_interval: 1200
+    collection_interval: 60
     host: localhost
     port: 9200
     cluster_name: ist
