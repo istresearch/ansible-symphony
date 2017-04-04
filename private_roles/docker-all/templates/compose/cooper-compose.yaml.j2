@@ -23,7 +23,7 @@ services:
       - KAFKA_TOPIC={{ sc_kafka_monitor_kafka_topic_prefix|default('crawl') }}.{{ sc_kafka_monitor_topic_main|default('incoming') }}
       - TELEGRAPTOR_API_OFFLINE=False
       - TELEGRAM_PEER_ID_LOOKUP_URL=http://tgapi:5000/lookup_peer/
-      - FACEBOOK_GRAPH_SCRAPER_API_URL=https://graphapi:5000/graph/api/graph/
+      - FACEBOOK_GRAPH_SCRAPER_API_URL=http://graphapi:5000/graph/api/graph/
       - FACEBOOK_PROFILE_SPIDER_NAME=profile-prod
       - STATSD_HOST_IP=172.17.0.1
       - YOUSCRAPE_API_URL=

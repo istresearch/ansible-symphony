@@ -2,19 +2,19 @@ version: '2'
 
 services:
 {% for creds in traptor_geo_creds %}
-  locations_{{ loop.index }}:
+  locations_{{ loop.index0 }}:
     image: istresearch/traptor:{{ traptor_tag }}
     volumes:
       - logs:/var/log/traptor
     environment:
       - TRAPTOR_TYPE=locations
-      - TRAPTOR_ID={{ loop.index }}
+      - TRAPTOR_ID={{ loop.index0 }}
       - RULE_CHECK_INTERVAL=60
       - USE_SENTRY=true
       - SENTRY_URL=https://{{ vault_sentry_url_un }}:{{ vault_sentry_url_pwd }}@sentry.io/55250
       - LOG_LEVEL=INFO
       - LOG_DIR=/var/log/traptor
-      - LOG_FILE_NAME=traptor_locations_{{ loop.index }}.log
+      - LOG_FILE_NAME=traptor_locations_{{ loop.index0 }}.log
       - KAFKA_ENABLED=true
       - KAFKA_HOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
 

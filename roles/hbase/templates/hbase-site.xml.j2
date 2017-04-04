@@ -115,4 +115,11 @@
     <value>{{ hbase_dfs_replication|default(3) }}</value>
   </property>
 
+  <property>
+    <name>hbase.thrift.minWorkerThreads</name>
+    <value>16</value>
+    <description>The "core size" of the thread pool. New threads are created on every
+    connection until this many threads are created.</description>
+  </property>
+
 </configuration>

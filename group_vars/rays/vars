@@ -117,6 +117,3 @@ storm_nimbus_extra_config:
 logstash_credentials: true
 logstash_es_user: "admin"
 logstash_es_pwd: "{{ vault_ec_pwd }}"
-
-#### TOPOLOGIES VARS ####
-topologies_logstash_component_tag: prod-topologies
