@@ -77,7 +77,7 @@ services:
   graphapi:
     image: istresearch/graph-api:{{ graphapi_tag }}
     environment:
-      - REDIS_HOST={{ groups['redis-master-node'][0] }}
+      - REDIS_HOST={{ grawler_redis_host }}
       - REDIS_PORT=6379
       - REDIS_DB={{ grawler_redis_db }}
       - REDIS_SHARED_QUEUE={{ grawler_shared_queue }}

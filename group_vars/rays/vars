@@ -38,6 +38,10 @@ cooper_elb_host: cooper.rays.istresearch.com
 
 #### TELEGRAM VARIABLES ####
 telegram_number: 5403706068
+telegram_redis_host: "{{ groups['redis-master-node'][1] }}"
+
+#### GRAWLER VARIABLES ####
+grawler_redis_host: "{{ groups['redis-master-node'][1] }}"
 
 #### COOPER VARIABLES ####
 cooper_twitter_oauth_token: "{{ vault_cooper_token }}"
@@ -64,7 +68,7 @@ pulse_admin_analysis_url: "https://50337660b0b9722e952771984d3bf14a.us-east-1.aw
 pulse_cooper_pass: "{{ vault_cooper_pass }}"
 
 #### SCRAPY VARIABLES ####
-scrapy_redis_node: "{{ groups['redis-master-node'][1] }}"
+scrapy_redis_host: "{{ groups['redis-master-node'][1] }}"
 
 #### DOCKER VARIABLES ####
 docker_repo_user: istuser

@@ -19,7 +19,7 @@ services:
       - KAFKA_HOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
 
       - KAFKA_TOPIC={{ traptor_kafka_topic }}
-      - REDIS_HOST={{ groups['redis-master-node'][0] }}
+      - REDIS_HOST={{ traptor_redis_host }}
       - REDIS_PORT=6379
       - REDIS_DB={{ traptor_redis_db }}
       - REDIS_PUBSUB_CHANNEL=traptor-notify-prod

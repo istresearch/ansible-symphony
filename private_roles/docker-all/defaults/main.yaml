@@ -27,7 +27,7 @@ phpmyadim_host: "{{ inventory.hostname }}"
 # redis db's for services
 gatekeeper_redis_db:      0
 grawler_redis_db:         1
-rulemanager_redis_db:     2
+rulemanager_redis_db:     2 # this may be reclaimed in future as rule manager is covered by telegraptor and traptor
 scrapy_cluster_redis_db:  3
 traptor_redis_db:         4
 telegraptor_redis_db:     5
@@ -85,7 +85,7 @@ sc_kafka_master_topic_prefix: crawl
 sc_kafka_monitor_topic_main: incoming
 sc_kafka_monitor_kafka_group: sc-kafka-monitor
 sc_kafka_monitor_kafka_topic_prefix: "{{ sc_kafka_master_topic_prefix }}"
-scrapy_redis_node: "{{ groups['redis-master-node'][0] }}"
+scrapy_redis_host: "{{ groups['redis-master-node'][0] }}"
 
 # Traptor specific vars
 traptor_tag: v1.4.6
@@ -93,6 +93,7 @@ traptor_kafka_topic: traptor.cooper_prod
 traptor_follow_creds: "{{ vault_traptor_follow_apikeys }}"
 traptor_geo_creds: "{{ vault_traptor_location_apikeys }}"
 traptor_track_creds: "{{ vault_traptor_track_apikeys }}"
+traptor_redis_host: "{{ groups['redis-master-node'][0] }}"
 
 # Telegram specific vars
 telegram_number: need_to_specify
@@ -101,6 +102,7 @@ telegram_tgcli_tag: tgcli-latest
 telegram_pycli_tag: pycli-2.0.5
 telegram_stream_tag: stream-2.0.5
 telegram_pubsub_tag: pubsub-2.0.5
+telegram_redis_host: "{{ groups['redis-master-node'][0] }}"
 
 # Facebook Graph specific vars
 graphapi_tag: graph-api-latest
@@ -118,6 +120,7 @@ grawler_creds:
   - app_id: blah4
     app_secret: blah4
 grawler_containers_per_box: 1
+grawler_redis_host: "{{ groups['redis-master-node'][0] }}"
 
 # Cooper specific vars
 cooper_tag: 1.7.11
