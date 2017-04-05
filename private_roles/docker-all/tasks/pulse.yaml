@@ -1,0 +1,11 @@
+---
+
+- name: Make sure Compose Directory exists
+  file:
+    path: "{{ pulse_mmr_parent_dir }}"
+    state: directory
+    owner: root
+    group: www-data
+    recurse: yes
+    mode: 0777
+  tags: docker-pulse-all
