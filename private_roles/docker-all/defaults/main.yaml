@@ -158,8 +158,8 @@ curator_pulse_prefix: pulse
 curator_pulse_interval: 3600
 
 # Rule Manager specific vars
-rulemanager_traptor_tag: traptor-3.0.3
-rulemanager_telegram_tag: telegram-3.0.3
+rulemanager_traptor_tag: traptor-3.0.4
+rulemanager_telegram_tag: telegram-3.0.4
 rulemanager_traptor_es_ssl: False
 rulemanager_traptor_es_credentials: False
 rulemanager_traptor_es_user: user

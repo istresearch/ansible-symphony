@@ -90,6 +90,10 @@
   command: "{{ docker_scripts_dir }}/{{ script_file_final }} down --remove-orphans"
   tags: docker-all
 
+- name: Pull new Container images
+  command: "{{ docker_scripts_dir }}/{{ script_file_final }} pull"
+  tags: docker-all
+
 - name: Start the Containers
   command: "{{ docker_scripts_dir }}/{{ script_file_final }} up -d"
   tags: docker-all

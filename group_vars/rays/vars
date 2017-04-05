@@ -63,9 +63,12 @@ pulse_mysql_pwd: "{{ vault_pulse_mysql_pwd }}"
 pulse_rds_master_user: rays
 pulse_rds_master_pwd: "{{ vault_pulse_rds_master_pwd }}"
 
-pulse_admin_analysis_url: "https://50337660b0b9722e952771984d3bf14a.us-east-1.aws.found.io"
+pulse_admin_analysis_url: "kibana-rays.istresearch.com"
 
 pulse_cooper_pass: "{{ vault_cooper_pass }}"
+
+pulse_analysis_user: admin
+pulse_analysis_pwd: "{{ vault_pulse_analysis_pwd }}"
 
 #### SCRAPY VARIABLES ####
 scrapy_redis_host: "{{ groups['redis-master-node'][1] }}"
