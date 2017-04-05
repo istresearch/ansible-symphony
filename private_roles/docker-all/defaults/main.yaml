@@ -77,6 +77,7 @@ sc_kafka_monitor_tag: kafka-monitor-153-dev
 sc_redis_monitor_tag: redis-monitor-153-dev
 sc_crawler_tag: crawler-153-dev
 sc_googler_tag: googler-0.0.2-master-10
+sc_googler_sleep_query: 60
 sc_crawling_kafka_topic_prefix: "{{ sc_kafka_master_topic_prefix }}"
 sc_crawling_queue_hits: 10
 sc_crawling_queue_window: 60

@@ -80,6 +80,7 @@ services:
       - LOG_JSON=True
       - LOG_LEVEL=INFO
       - LOG_BACKUPS=5
+      - SLEEP_QUERY={{ sc_googler_sleep_query }}
     volumes:
       - logs:/var/log/googler
     restart: "on-failure:3"
