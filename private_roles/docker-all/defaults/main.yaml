@@ -20,6 +20,9 @@ pulse_pipeline_type: kafka
 pulse_pipeline_schema: doc.flat
 pulse_cooper_protocol: https://
 pulse_cooper_apipath: cooper/rules
+pulse_analysis_user: replace_me
+pulse_analysis_pwd: replace_me
+pulse_mmr_parent_dir: /opt
 
 mysql_pwd: "{{ vault_mysql_pwd }}"
 mysql_root_pwd: "{{ vault_mysql_root_pwd }}"
@@ -73,11 +76,10 @@ logstash_use: true
 logstash_tag: latest
 
 # Scrapy Cluster specific vars
-sc_kafka_monitor_tag: kafka-monitor-153-dev
-sc_redis_monitor_tag: redis-monitor-153-dev
-sc_crawler_tag: crawler-153-dev
-sc_googler_tag: googler-0.0.2-master-10
-sc_googler_sleep_query: 60
+sc_kafka_monitor_tag: kafka-monitor-116-dev
+sc_redis_monitor_tag: redis-monitor-116-dev
+sc_crawler_tag: crawler-127-dev
+sc_googler_tag: googler-0.0.1
 sc_crawling_kafka_topic_prefix: "{{ sc_kafka_master_topic_prefix }}"
 sc_crawling_queue_hits: 10
 sc_crawling_queue_window: 60

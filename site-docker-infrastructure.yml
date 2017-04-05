@@ -200,6 +200,7 @@
   roles: [ docker-all ]
   vars:
     component: pulse
+    extra_tasks: true
   tags:
     - site-docker-pulse-all
     - site-docker-all
