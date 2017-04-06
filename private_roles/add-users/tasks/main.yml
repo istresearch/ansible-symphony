@@ -32,7 +32,7 @@
 
 - name: Add TechOps Users Key
   sudo: yes
-  authorized_key: user="{{ item.name }}" key="{{ item.key }}"
+  authorized_key: user="{{ item.name }}" key="{{ item.key }}" exclusive=true
   with_items: 
     - "{{ techops }}"
   when: people == "techops"

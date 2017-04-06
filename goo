@@ -1,0 +1,4 @@
+sudo rm /home/jhaas/.ssh/authorized_keys
+sudo rm /home/brose/.ssh/authorized_keys
+sudo rm /home/brandomr/.ssh/authorized_keys
+
