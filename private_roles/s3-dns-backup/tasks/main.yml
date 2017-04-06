@@ -11,4 +11,6 @@
   cron:
     minute: "0"
     hour: "1"
-    job: "/usr/local/bin/r53-backup.sh >> /dev/null"
+    user: "root"
+    cron_file: "s3-dns-backup"
+    job: "/usr/local/bin/r53-backup.sh >> /var/log/s3-backup.log"
