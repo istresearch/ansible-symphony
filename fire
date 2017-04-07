@@ -1,5 +1,0 @@
-you'll need to make sure you run `ansible-playbook -i qcr-aws.inventory -u <name> -e aws_customize=true -t aws-customize -l <your new storm instances> site-infrastructure.yml` and make sure the correct `/dev/xvd<b,f,g,etc>` is listed in the group_vars files so that it formats and attaches those volumes to the /data partition.  Let me know if you have any issues with that.  You'll need to do that probably right after you provision users on those servers
-
-ansible-playbook -i qcr-aws.inventory -u <name> -e aws_customize=true -t aws-customize -l <your new storm instances> site-infrastructure.yml
-
-
