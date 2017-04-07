@@ -6,6 +6,7 @@
 ## DEV PEOPLE ##
 dev:
    - { name: "aklintse", key: "{{ aklintse_key }}" }
+   - { name: "aklintse", key: "{{ aklintse_key2 }}" }
    - { name: "rdempsey", key: "{{ rdempsey_key }}" }
 
 #### CONTAINER SCALES ####
@@ -67,7 +68,7 @@ pulse_admin_analysis_url: "kibana-rays.istresearch.com"
 
 pulse_cooper_pass: "{{ vault_cooper_pass }}"
 
-pulse_analysis_user: admin
+pulse_analysis_user: rays
 pulse_analysis_pwd: "{{ vault_pulse_analysis_pwd }}"
 
 #### SCRAPY VARIABLES ####

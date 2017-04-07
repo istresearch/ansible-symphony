@@ -253,6 +253,9 @@ vagrant-ist-02
 [docker-youscrape-nodes]
 vagrant-ist-02
 
+[docker-kibana-nodes]
+vagrant-ist-02
+
 [portainer-nodes]
 vagrant-ist-01
 vagrant-ist-02

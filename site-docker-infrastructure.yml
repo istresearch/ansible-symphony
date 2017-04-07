@@ -225,3 +225,13 @@
   tags:
     - site-docker-curator-all
     - site-docker-all
+
+# Kibana ----------
+- name: Run Kibana role
+  hosts: docker-kibana-nodes
+  roles: [ docker-all ]
+  vars:
+    component: kibana
+  tags:
+    - site-docker-kibana-all
+    - site-docker-all
