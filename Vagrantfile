@@ -10,8 +10,8 @@ Vagrant.configure(2) do |config|
 
   # Configure general VM options
   config.vm.provider "virtualbox" do |vb|
-    vb.memory = 4096
-    vb.cpus = 2
+    vb.memory = 6096
+    vb.cpus = 4
   end
 
   # Configuration applying to all VMs
