@@ -4,6 +4,6 @@ services:
     image: image: docker.elastic.co/kibana/kibana:4.6.4
     container_name: rays_kibana
     volumes:
-      - /data/kibana/rays/:/opt/kibana/config/
+      - /opt/docker_configs/kibana/rays/:/opt/kibana/config/
     ports:
       - "5600:5601"

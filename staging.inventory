@@ -55,6 +55,9 @@ docker-gatekeeper-nodes
 docker-youscrape-nodes
 portainer-nodes
 
+[rays:children]
+staging
+
 [zookeeper-nodes]
 vagrant-ist-01
 

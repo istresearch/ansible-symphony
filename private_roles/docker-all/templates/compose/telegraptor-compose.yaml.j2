@@ -4,7 +4,7 @@ services:
   tgcli:
     image: istresearch/telegraptor:{{ telegram_tgcli_tag }}
     volumes:
-      - /tmp/.telegram-cli:/root/.telegram-cli
+      - /data/.telegram-cli:/root/.telegram-cli
     tty: true
     restart: always
 

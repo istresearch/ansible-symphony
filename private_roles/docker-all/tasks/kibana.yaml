@@ -1,0 +1,8 @@
+---
+
+# move template over because it is volume mounted within graphapi
+- name: copy kibana config
+  template:
+    src: "extras/kibana.yaml.j2"
+    dest: "{{ docker_configs_dir }}/kibana.{{ deploy_env }}.yaml"
+    mode: 0755

@@ -82,8 +82,6 @@ sc_crawler_tag: crawler-153-dev
 sc_googler_tag: googler-0.0.2-master-10
 sc_googler_sleep_query: 60
 
-sc_kafka_monitor_tag: kafka-monitor-116-dev
-sc_redis_monitor_tag: redis-monitor-116-dev
 sc_crawler_tag: crawler-127-dev
 sc_googler_tag: googler-0.0.1
 sc_crawling_kafka_topic_prefix: "{{ sc_kafka_master_topic_prefix }}"
@@ -98,7 +96,7 @@ sc_kafka_monitor_kafka_topic_prefix: "{{ sc_kafka_master_topic_prefix }}"
 scrapy_redis_host: "{{ groups['redis-master-node'][0] }}"
 
 # Traptor specific vars
-traptor_tag: v1.4.6
+traptor_tag: v1.4.7
 traptor_kafka_topic: traptor.cooper_prod
 traptor_follow_creds: "{{ vault_traptor_follow_apikeys }}"
 traptor_geo_creds: "{{ vault_traptor_location_apikeys }}"
@@ -184,5 +182,4 @@ rulemanager_cooper_ssl: False
 # `cooper_elb_host` is currently undefined
 # define it to override the final cooper host
 rulemanager_cooper_host: "{{ cooper_elb_host|default(groups['docker-cooper-nodes'][0]) }}"
-
 

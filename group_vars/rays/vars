@@ -73,6 +73,7 @@ pulse_analysis_pwd: "{{ vault_pulse_analysis_pwd }}"
 
 #### SCRAPY VARIABLES ####
 scrapy_redis_host: "{{ groups['redis-master-node'][1] }}"
+sc_kafka_monitor_kafka_group: sc-kafka-monitor2
 
 #### DOCKER VARIABLES ####
 docker_repo_user: istuser
@@ -121,3 +122,12 @@ storm_nimbus_extra_config:
 logstash_credentials: true
 logstash_es_user: "admin"
 logstash_es_pwd: "{{ vault_ec_pwd }}"
+
+#### KIBANA VARS ####
+kibana_user: rays
+kibana_user_pwd: "{{ vault_kibana_user_pwd }}"
+kibana_es_url: d78a39df4d432418e73dac451b39d6f2.us-east-1.aws.found.io
+kibana_es_port: 9243
+kibana_index: .kibana-rays-local
+kibana_admin_user: admin
+kibana_admin_pwd: "{{ vault_kibana_admin_pwd }}"
