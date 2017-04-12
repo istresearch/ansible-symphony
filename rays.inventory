@@ -26,6 +26,7 @@ docker-scrapy-nodes
 docker-telegraptor-nodes
 docker-traptor-nodes
 docker-pulse-nodes
+docker-kibana-nodes
 portainer-nodes
 elasticsearch-nodes
 
@@ -38,6 +39,7 @@ docker-scrapy-nodes
 docker-telegraptor-nodes
 docker-traptor-nodes
 docker-pulse-nodes
+docker-kibana-nodes
 
 [docker-engine]
 cooper-joka.rays.istresearch.com
@@ -127,6 +129,9 @@ crawler[01:04].rays.istresearch.com
 crawler01.rays.istresearch.com
 
 [docker-pulse-nodes]
+cooper-joka.rays.istresearch.com
+
+[docker-kibana-nodes]
 cooper-joka.rays.istresearch.com
 
 [portainer-nodes]
