@@ -232,7 +232,6 @@
   roles: [ docker-all ]
   vars:
     component: kibana
-    extra_tasks: true
   tags:
     - site-docker-kibana-all
     - site-docker-all

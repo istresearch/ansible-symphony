@@ -6,4 +6,4 @@ services:
     volumes:
       - "/opt/docker_configs/kibana/{{ kibana_deployment_name }}/:/opt/kibana/config/"
     ports:
-      - "{{ kibana_external_port|default(replace_me) }}:{{ kibana_port|default(5601) }}"
+      - "{{ kibana_external_port|default(5600) }}:{{ kibana_port|default(5601) }}"

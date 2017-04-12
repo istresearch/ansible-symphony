@@ -133,4 +133,4 @@ kibana_admin_user: admin
 kibana_admin_pwd: "{{ vault_kibana_admin_pwd }}"
 kibana_container_name: rays_kibana
 kibana_deployment_name: rays
-kibana_external_port: 5600
+kibana_external_port: 5601
