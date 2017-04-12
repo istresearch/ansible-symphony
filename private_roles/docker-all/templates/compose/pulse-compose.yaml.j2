@@ -32,4 +32,7 @@ services:
       - PULSE_COOPER_APIBASEPATH={{ pulse_cooper_apipath }}
     volumes:
       - /opt/pulse/mmr:/var/mmr
+      - {{ pollster_local_dir }}/appPollsterPrime-pre23-release-{{ pollster_version }}.apk:/opt/pulse/res/files/Pollster.Android5.apk
+      - {{ pollster_local_dir }}/appPollsterPrime-pre23-release-{{ pollster_version }}.apk:/opt/pulse/res/files/Pollster.Prime.apk
+      - {{ pollster_local_dir }}/appPollsterPrime-post23-release-{{ pollster_version }}.apk:/opt/pulse/res/files/Pollster.Android6.apk
     restart: always

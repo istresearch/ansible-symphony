@@ -24,6 +24,10 @@ pulse_analysis_user: replace_me
 pulse_analysis_pwd: replace_me
 pulse_mmr_parent_dir: /opt
 
+# POLLSTER VARIABLES
+pollster_local_dir: /opt/pulse/pollster
+pollster_version: 5.4.3
+
 mysql_pwd: "{{ vault_mysql_pwd }}"
 mysql_root_pwd: "{{ vault_mysql_root_pwd }}"
 phpmyadim_host: "{{ inventory.hostname }}"
@@ -183,3 +187,5 @@ rulemanager_cooper_ssl: False
 # define it to override the final cooper host
 rulemanager_cooper_host: "{{ cooper_elb_host|default(groups['docker-cooper-nodes'][0]) }}"
 
+# Kibana specific vars
+kibana_image_tag: 4.6.4

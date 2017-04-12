@@ -9,3 +9,27 @@
     recurse: yes
     mode: 0777
   tags: docker-pulse-all
+
+- name: Make sure Pollster Directory exists
+  file:
+    path: "{{ pollster_local_dir }}"
+    state: directory
+    owner: root
+    group: www-data
+    recurse: yes
+    mode: 0777
+  tags: docker-pulse-all
+
+- name: Download Pre23 Pollster Version
+  get_url:
+    url="{{ repository_pulse }}/pollster/appPollsterPrime-pre23-release-{{ pollster_version }}.apk"
+    dest="{{ pollster_local_dir }}/appPollsterPrime-pre23-release-{{ pollster_version }}.apk"
+    validate_certs=no
+  tags: docker-pulse-all
+
+- name: Download Post23 Pollster Version
+  get_url:
+    url="{{ repository_pulse }}/pollster/appPollsterPrime-post23-release-{{ pollster_version }}.apk"
+    dest="{{ pollster_local_dir }}/appPollsterPrime-post23-release-{{ pollster_version }}.apk"
+    validate_certs=no
+  tags: docker-pulse-all
