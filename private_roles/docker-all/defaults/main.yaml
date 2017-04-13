@@ -56,10 +56,6 @@ project_name: "{{ component }}"
 # extra_templates:
 #  - in: input/file
 #    out: output/file
-extra_templates:
- - in: kibana.yaml.j2
-   out: "{{ docker_configs_dir }}/kibana/{{ kibana_deployment_name }}/kibana.yml"
-
 
 # Use to scale each compose file on each host
 # this should be a list of dicts with component, name, and scale values like so

@@ -136,3 +136,8 @@ kibana_admin_pwd: "{{ vault_kibana_admin_pwd }}"
 kibana_container_name: rays_kibana
 kibana_deployment_name: rays
 kibana_external_port: 5601
+
+#### EXTRA TEMPLATES FILES FOR KIBANA ####
+extra_templates:
+ - in: kibana.yaml.j2
+   out: "{{ docker_configs_dir }}/kibana.{{ kibana_deployment_name }}.yml"

@@ -4,6 +4,6 @@ services:
     image: "kibana:{{ kibana_image_tag }}"
     container_name: "{{ kibana_container_name|default('default_name') }}"
     volumes:
-      - "/opt/docker_configs/kibana/{{ kibana_deployment_name }}/:/opt/kibana/config/"
+      - "/opt/docker_configs/kibana.{{ kibana_deployment_name }}.yml:/opt/kibana/config/kibana.yml"
     ports:
-      - "{{ kibana_external_port|default(5600) }}:{{ kibana_port|default(5601) }}"
+      - "{{ kibana_external_port|default(5601) }}:{{ kibana_port|default(5601) }}"
