@@ -8,6 +8,8 @@ dev:
    - { name: "aklintse", key: "{{ aklintse_key }}" }
    - { name: "aklintse", key: "{{ aklintse_key2 }}" }
    - { name: "rdempsey", key: "{{ rdempsey_key }}" }
+   - { name: "pasha", key: "{{ pasha_key }}" }
+   - { name: "pasha", key: "{{ pasha_key2 }}" }
 
 #### CONTAINER SCALES ####
 component_scales:
