@@ -10,6 +10,7 @@ dev:
    - { name: "rdempsey", key: "{{ rdempsey_key }}" }
    - { name: "pasha", key: "{{ pasha_key }}" }
    - { name: "pasha", key: "{{ pasha_key2 }}" }
+   - { name: "ayue", key: "{{ ayue_key }}" }
 
 #### CONTAINER SCALES ####
 component_scales:

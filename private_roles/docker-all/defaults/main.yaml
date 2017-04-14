@@ -12,7 +12,7 @@ virtualenv_path: /tmp/ansible
 # PULSE VARIABLES
 pulse_landing_page: 3
 pulse_mysql_host: "{{ inventory.hostname }}"
-pulse_tag: mas-latest
+pulse_tag: pulse-v3.1.3.1-release
 pulse_cooper_host: "{{ cooper_elb_host|default(groups['docker-cooper-nodes'][0]) }}"
 pulse_cooper_user: cooper
 pulse_cooper_pass: pass
@@ -86,8 +86,6 @@ sc_crawler_tag: crawler-153-dev
 sc_googler_tag: googler-0.0.2-master-10
 sc_googler_sleep_query: 60
 
-sc_crawler_tag: crawler-127-dev
-sc_googler_tag: googler-0.0.1
 sc_crawling_kafka_topic_prefix: "{{ sc_kafka_master_topic_prefix }}"
 sc_crawling_queue_hits: 10
 sc_crawling_queue_window: 60
