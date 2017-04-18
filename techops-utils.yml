@@ -1,0 +1,20 @@
+# ---------------------------------- Pip ---------------------------
+- name: Run the pip role
+  hosts: all
+  roles: [ pip ]
+  tags: site-pip
+#----------------------------------- AWS CLI -----------------------
+- name: Run the aws-cli role
+  hosts: all
+  roles: [aws-cli]
+  tags: aws-cli
+#-------------------------Install JQ for JSON processing------------
+- name: Run the ansible-jq role
+  hosts: all
+  roles: [ansible-jq]
+  tags: jq
+#------------------------Copy the r53-backup.sh file over-----------
+- name: Copy the r53 backup script
+  hosts: all
+  roles: [s3-dns-backup]
+  tags: s3-dns-backup

@@ -1,7 +1,7 @@
 ---
 
 #### ZOOKEEPER VARS ####
-zookeeper_maxClientCnxns: 240
+zookeeper_maxClientCnxns: 1240
 zookeeper_auto_purge_interval: 1
 zookeeper_auto_purge_snap_retain_count: 5
 zookeeper_data_dir: "/data/zookeeper/data"
@@ -24,11 +24,17 @@ kafka_num_partitions: 3
 kafka_replication_factor: 1
 
 #### STORM VARS ####
+storm_version: 0.10.0
+
 storm_worker_ports: [6701, 6702, 6703, 6704, 6705, 6706, 6707, 6708, 6709, 6710, 6711, 6712, 6713, 6714, 6715, 6716, 6717, 6718, 6719, 6720, 6721, 6722, 6723, 6724, 6725, 6726, 6727, 6728, 6729, 6730, 6731, 6732, 6733, 6734, 6735, 6736, 6737, 6738, 6739, 6740, 6741, 6742, 6743, 6744, 6745, 6746, 6747, 6748]
 
 storm_worker_extra_config:
     worker.childopts: "-Xmx1280m -XX:PermSize=128m -XX:MaxPermSize=256m -Xms256m -XX:+UseConcMarkSweepGC -Dcom.sun.management.jmxremote"
     supervisor.worker.timeout.secs: 60
+
+storm_nimbus_extra_config:
+    nimbus.childopts: "-Xmx1024m"
+    nimbus.thrift.max_buffer_size: 4194304
 
 #### TOPOLOGIES VARS ####
 topologies_virtualenv_dir: '/data/storm/virtualenvs'

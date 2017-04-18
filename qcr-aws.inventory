@@ -41,6 +41,7 @@ qcr-kafka01.istresearch.com
 [redis-master-node]
 qcr-redis.istresearch.com
 login-redis.istresearch.com
+qcr-storm01.istresearch.com
 
 [redis-slave-nodes]
 #leave empty
@@ -68,10 +69,24 @@ elasticsearch-data-nodes
 elasticsearch-client-nodes
 
 [storm-nimbus-node]
+qcr-storm01.istresearch.com
 
 [storm-ui-node]
+qcr-storm01.istresearch.com
 
 [storm-supervisor-nodes]
+qcr-storm01.istresearch.com
+qcr-storm02.istresearch.com
+qcr-storm03.istresearch.com
+qcr-storm04.istresearch.com
+qcr-storm05.istresearch.com
+qcr-storm06.istresearch.com
+qcr-storm07.istresearch.com
+qcr-storm08.istresearch.com
+qcr-storm09.istresearch.com
+qcr-storm10.istresearch.com
+qcr-storm11.istresearch.com
+qcr-storm12.istresearch.com
 
 [storm-nodes:children]
 storm-nimbus-node
