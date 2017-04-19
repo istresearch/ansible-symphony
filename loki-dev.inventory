@@ -100,17 +100,8 @@ storm-nodes
 spark-nodes
 gandalf-runner-node
 
-[elasticsearch-master-nodes]
-
-[elasticsearch-data-nodes]
-loki.dev.istresearch.com elasticsearch_is_master=true
-
-[elasticsearch-client-nodes]
-
-[elasticsearch-nodes:children]
-elasticsearch-master-nodes
-elasticsearch-data-nodes
-elasticsearch-client-nodes
+[elasticsearch-nodes]
+4a9153db9f4e5ae92b5a2999abb81138.us-east-1.aws.found.io
 
 [scrapy-cluster-kafka-monitor-node]
 loki.dev.istresearch.com

@@ -23,11 +23,14 @@ logstash_credentials: true
 logstash_es_user: "elastic"
 logstash_es_pwd: "{{ vault_ec_pwd }}"
 
+#### ELASTICSEARCH VARIABLES ####
+elasticsearch_network_http_port: 9243
+
+# deprecated since move to ES cloud
+elasticsearch_heap_size: 4g
+
 # Zookeeper
 zookeeper_maxClientCnxns: 6000
-
-# Elasticsearch
-elasticsearch_heap_size: 4g
 
 # HDFS
 dfs_internap: false
