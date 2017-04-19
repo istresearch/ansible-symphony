@@ -13,6 +13,7 @@ datadog_aws_secret_access_key: "{{ vault_datadog_aws_secret_access_key }}"
 
 repository_infrastructure: "https://{{ repository_un }}:{{ repository_pwd }}@{{ repository_host }}/infrastructure"
 repository_pip: "https://{{ repository_un }}:{{ repository_pwd }}@{{ repository_host }}/pip/prod/simple"
+repository_pulse: "https://{{ repository_un }}:{{ repository_pwd }}@{{ repository_host }}/pulse"
 
 ntp_server_host: pool.ntp.org
 

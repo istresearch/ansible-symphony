@@ -1,0 +1,120 @@
+version: '2'
+
+services:
+  cooper:
+    image: istresearch/cooper:{{ cooper_tag }}
+    volumes:
+      - logs:/var/log/cooper
+    ports:
+      - "5001:5001"
+    depends_on:
+      - logstash
+    restart: "on-failure:3"
+    environment:
+      - MYSQL_HOST={{ cooper_mysql_host }}
+      - MYSQL_USER={{ cooper_mysql_user }}
+      - MYSQL_PASSWORD={{ cooper_mysql_password }}
+      - MYSQL_DATABASE={{ cooper_mysql_database }}
+      - MYSQL_ROOT_PASSWORD={{ cooper_mysql_root_password }}
+      - MYSQL_ROOT_USER={{ cooper_mysql_root_user }}
+      - MYSQL_SCHEMA_PATH=schema.sql
+      - KAFKA_HOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
+
+      - KAFKA_TOPIC={{ sc_kafka_monitor_kafka_topic_prefix|default('crawl') }}.{{ sc_kafka_monitor_topic_main|default('incoming') }}
+      - TELEGRAPTOR_API_OFFLINE=False
+      - TELEGRAM_PEER_ID_LOOKUP_URL=http://tgapi:5000/lookup_peer/
+      - FACEBOOK_GRAPH_SCRAPER_API_URL=http://graphapi:5000/graph/api/graph/
+      - FACEBOOK_PROFILE_SPIDER_NAME=profile-prod
+      - STATSD_HOST_IP=172.17.0.1
+      - YOUSCRAPE_API_URL=
+      - GATEKEEPER_HISTORIC_QUERY_ENDPOINT=
+      - GATEKEEPER_JOB_STATUS_ENDPOINT=http://gatekeeper:5000/1.0/jobs/job-status/
+      - TWITTER_OAUTH_TOKEN_SECRET={{ cooper_twitter_oauth_token_secret|default('blah') }}
+      - TWITTER_APP_SECRET={{ cooper_twitter_app_secret|default('blah') }}
+      - TWITTER_OAUTH_TOKEN={{ cooper_twitter_oauth_token|default('blah') }}
+      - TWITTER_APP_KEY={{ cooper_twitter_app_key|default('blah') }}
+      - TWITTER_TWEETS_PER_SECOND=1.0
+      - TWITTER_RATE_LIMIT_URL=https://api.twitter.com/1.1/application/rate_limit_status.json
+      - TWITTER_SEARCH_API_URL=https://api.twitter.com/1.1/search/tweets.json
+      - ES_URL={{ groups['elasticsearch-nodes'][0] }}:{{ elasticsearch_network_http_port|default(9200) }}
+      - ES_INDEX={{ cooper_es_index }}
+      - LOG_NAME=cooper
+      - LOG_DIR=/var/log/cooper
+      - LOG_FILE=cooper.log
+      - LOG_STDOUT=False
+      - LOG_JSON=True
+      - LOG_LEVEL=INFO
+    volumes:
+      - logs:/var/log/cooper
+    extra_hosts:
+      - {{ inventory_hostname }}:172.17.0.1
+
+  tgapi:
+    image: istresearch/telegraptor:{{ telegram_tgapi_tag }}
+    environment:
+      - TELEGRAM_CLI_HOST=tgcli
+      - TELEGRAM_CLI_PORT=4458
+      - LOG_NAME=telegraptor-api
+      - LOG_DIR=/var/log/telegraptor
+      - LOG_FILE=telegraptor.log
+      - LOG_STDOUT=False
+      - LOG_JSON=True
+      - LOG_LEVEL=INFO
+    depends_on:
+      - tgcli
+    volumes:
+      - logs:/var/log/telegraptor
+    ports:
+      - "5000:5000"
+
+  tgcli:
+    image: istresearch/telegraptor:{{ telegram_tgcli_tag }}
+    volumes:
+      - /data/tmp/.telegram-cli-cooper:/root/.telegram-cli
+    tty: true
+    restart: always
+
+  graphapi:
+    image: istresearch/graph-api:{{ graphapi_tag }}
+    environment:
+      - REDIS_HOST={{ grawler_redis_host }}
+      - REDIS_PORT=6379
+      - REDIS_DB={{ grawler_redis_db }}
+      - REDIS_SHARED_QUEUE={{ grawler_shared_queue }}
+      - THROTTLE_BASE_DELAY=2
+      - THROTTLE_MAX_EXP=15
+      - THROTTLE_FLOOR=30
+      - ZOOKEEPER_HOSTS={% for host in groups['zookeeper-nodes'] %}{{ host }}:{{ zookeeper_port|default(2181) }}{% if not loop.last %},{% endif %}{% endfor %}
+
+      - ZOOKEEPER_ASSIGN_PATH=/graph-api/instance
+      - LOGGER_NAME=graph-api
+      - LOG_DIR=/var/log/graph-api
+      - LOG_FILE=graph-api.log
+      - LOG_STDOUT=False
+      - LOG_JSON=True
+      - LOG_LEVEL=INFO
+      - THROTTLE_HEADER=x-app-usage
+      - THROTTLE_ERROR_CODES=4,32
+      - THROTTLE_LIMIT_MS=600000      # sleep time when API returns an error
+      - THROTTLE_SPLAY_MS=2048        # max random added sleep time
+      - THROTTLE_MIN_EXP=8            # 2 ^ n = min base sleep time, 2^8 = 256ms
+      - THROTTLE_MAX_EXP=12           # 2 ^ n = max base sleep time, 2^12 = 4096ms
+    command: python app.py
+    restart: "on-failure:3"
+    volumes:
+      - logs:/var/log/graph-api
+      - {{ docker_configs_dir }}/facebook_cooper_config.{{ deploy_env }}.yaml:/app/facebook/facebook_config_000.yml
+    extra_hosts:
+      - {{ inventory_hostname }}:172.17.0.1
+
+  logstash:
+    image: logstash:{{ logstash_tag }}
+    command: logstash -f /etc/logstash/conf.d/logstash.conf
+    volumes:
+      - {{ docker_configs_dir }}/{{ logstash_file_final }}:/etc/logstash/conf.d/logstash.conf
+      - {{ docker_configs_dir }}/logs-template.{{ deploy_env }}.json:/etc/logstash/templates/logs-template.json
+      - logs:/var/log/container-logs
+    restart: "on-failure:3"
+
+volumes:
+  logs:

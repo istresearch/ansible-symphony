@@ -18,6 +18,11 @@ pulse_self_signed_ssl: false
 pulse_local_install: false
 mysql_root_password: "{{ vault_mysql_root_password }}"
 
+#### Connecting Logstash to ES Cloud ####
+logstash_credentials: true
+logstash_es_user: "elastic"
+logstash_es_pwd: "{{ vault_ec_pwd }}"
+
 # Zookeeper
 zookeeper_maxClientCnxns: 6000
 

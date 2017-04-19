@@ -61,34 +61,34 @@
 
 # ----------------------------- Add TechOps Users -----------------------------------
 - name: Add TechOps Users
-  hosts: 
+  hosts:
     - all
   roles:
     - add-users
-  tags: 
+  tags:
     - site-add-users
     - site-add-techops-users
 
 # ----------------------------- Add Development Users -----------------------------------
 
 - name: Add Developer Users
-  hosts: 
+  hosts:
     - all
   roles:
     - add-users
-  tags: 
+  tags:
     - site-add-users
     - site-add-dev-users
 
 # ----------------------------- Third-Party users -----------------------------------
 
-#- name: Run Third-Party Users
-#  hosts: 
-#  roles:
-#    - add-users
-#  tags: 
-#    - site-add-users
-#    - site-add-thirdparty-users
+# - name: Run Third-Party Users
+#   hosts:
+#   roles:
+#     - add-users
+#   tags:
+#     - site-add-users
+#     - site-add-thirdparty-users
 
 # ----------------------------- Virtualenv -----------------------------------
 
@@ -215,8 +215,8 @@
     - deps-scrapy-cluster
     - scrapy-services
     - deps-traptor
-    - deps-grawler 
-    
+    - deps-grawler
+
 - name: Run tor role
   hosts: tor-proxy
   roles: [ tor ]
@@ -559,7 +559,7 @@
     - site-grawler
     - deps-grawler
 
-# ---------------------------------- Docker Bumblebee --------------------------------
+#---------------------------------- Docker Bumblebee --------------------------------
 
 - name: Run Docker Bumblebee role
   hosts: docker-bumblebee-nodes
@@ -675,3 +675,118 @@
   roles: [ portainer ]
   tags:
     - site-portainer
+
+# ----------------------------------- Docker Master ---------------------------
+
+# Scrapy --------
+- name: Run Docker Scrapy role
+  hosts: docker-scrapy-nodes
+  roles: [ docker-all ]
+  tags:
+    - site-docker-scrapy-all
+    - site-docker-all
+  vars:
+    component: scrapy-cluster
+
+# Traptor --------
+- name: Run Docker Traptor Follow role
+  hosts: docker-traptor-follow-nodes
+  roles: [ docker-all ]
+  vars:
+    component: traptor-follow
+    logstash_file_final: "logstash-traptor.{{ deploy_env }}.conf"
+    logstash_component_tag: traptor
+    project_name: traptor
+  tags:
+    - site-docker-traptor-all
+    - site-docker-traptor-follow-all
+    - site-docker-all
+
+- name: Run Docker Traptor Track role
+  hosts: docker-traptor-track-nodes
+  roles: [ docker-all ]
+  vars:
+    component: traptor-track
+    logstash_file_final: "logstash-traptor.{{ deploy_env }}.conf"
+    logstash_component_tag: traptor
+    project_name: traptor
+  tags:
+    - site-docker-traptor-all
+    - site-docker-traptor-track-all
+    - site-docker-all
+
+- name: Run Docker Traptor Geo role
+  hosts: docker-traptor-geo-nodes
+  roles: [ docker-all ]
+  vars:
+    component: traptor-geo
+    logstash_file_final: "logstash-traptor.{{ deploy_env }}.conf"
+    logstash_component_tag: traptor
+    project_name: traptor
+  tags:
+    - site-docker-traptor-all
+    - site-docker-traptor-geo-all
+    - site-docker-all
+
+# Cooper --------
+- name: Run Docker Cooper role
+  hosts: docker-cooper-nodes
+  roles: [ docker-all ]
+  tags:
+    - site-docker-cooper-all
+    - site-docker-all
+  vars:
+    component: cooper
+    extra_tasks: true
+
+# Grawler ----------
+- name: Run Grawler role
+  hosts: docker-grawler-nodes
+  roles: [ docker-all ]
+  vars:
+    component: grawler
+    extra_tasks: true
+  tags:
+    - site-docker-grawler-all
+    - site-docker-all
+
+# Telegraptor ----------
+- name: Run Telegraptor role
+  hosts: docker-telegraptor-nodes
+  roles: [ docker-all ]
+  vars:
+    component: telegraptor
+  tags:
+    - site-docker-telegraptor-all
+    - site-docker-all
+
+# Pulse ----------
+- name: Run Pulse role
+  hosts: docker-pulse-nodes
+  roles: [ docker-all ]
+  vars:
+    component: pulse
+  tags:
+    - site-docker-pulse-all
+    - site-docker-all
+
+# Rule Manager ----------
+- name: Run Rule Manager role
+  hosts: docker-rule-manager-nodes
+  roles: [ docker-all ]
+  vars:
+    component: rule-manager
+  tags:
+    - site-docker-rule-manager-all
+    - site-docker-all
+
+# Curator ----------
+- name: Run Curator role
+  hosts: docker-curator-nodes
+  roles: [ docker-all ]
+  vars:
+    component: curator
+    logstash_use: false
+  tags:
+    - site-docker-curator-all
+    - site-docker-all

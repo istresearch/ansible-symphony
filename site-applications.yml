@@ -205,7 +205,7 @@
 
 # ------------------------------- Topologies ------------------------
 - name: Run the Topologies role
-  hosts: storm-supervisor-nodes
+  hosts: storm-nodes
   vars:
     - logstash_auto_start: True
   roles: [ topologies ]

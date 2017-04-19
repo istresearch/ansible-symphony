@@ -1,0 +1,144 @@
+---
+
+### Variables specific for webops customer
+
+#### Allowed Developers ####
+## DEV PEOPLE ##
+dev:
+   - { name: "aklintse", key: "{{ aklintse_key }}" }
+   - { name: "aklintse", key: "{{ aklintse_key2 }}" }
+   - { name: "rdempsey", key: "{{ rdempsey_key }}" }
+   - { name: "pasha", key: "{{ pasha_key }}" }
+   - { name: "pasha", key: "{{ pasha_key2 }}" }
+   - { name: "ayue", key: "{{ ayue_key }}" }
+
+#### CONTAINER SCALES ####
+component_scales:
+  - component: scrapy-cluster
+    containers:
+      - name: crawler
+        scale: 10
+
+#### CURATOR VARIABLES ####
+curator_es_credentials: true
+curator_es_ssl: true
+curator_es_user: admin
+curator_es_pass: "{{ vault_ec_pwd }}"
+
+#### RULE MANAGER VARIABLES ####
+rulemanager_traptor_es_ssl: true
+rulemanager_traptor_es_credentials: true
+rulemanager_traptor_es_user: admin
+rulemanager_traptor_es_pass: "{{ vault_ec_pwd }}"
+rulemanager_traptor_es_index: collection-rules
+rulemanager_traptor_refresh_rate: 600
+rulemanager_telegram_refresh_rate: 60
+rulemanager_telegram_channel: telegram.notify
+rulemanager_cooper_credentials: true
+rulemanager_cooper_user: cooper
+rulemanager_cooper_pass: "{{ vault_cooper_pass }}"
+rulemanager_cooper_ssl: true
+cooper_elb_host: cooper.rays.istresearch.com
+
+#### TELEGRAM VARIABLES ####
+telegram_number: 5403706068
+telegram_redis_host: "{{ groups['redis-master-node'][1] }}"
+
+#### GRAWLER VARIABLES ####
+grawler_redis_host: "{{ groups['redis-master-node'][1] }}"
+
+#### COOPER VARIABLES ####
+cooper_twitter_oauth_token: "{{ vault_cooper_token }}"
+cooper_twitter_oauth_token_secret: "{{ vault_cooper_token_secret }}"
+cooper_twitter_app_secret: "{{ vault_cooper_app_secret }}"
+cooper_twitter_app_key: "{{ vault_cooper_app_key }}"
+
+cooper_mysql_host: rds.rays.istresearch.com
+cooper_mysql_user: cooper
+cooper_mysql_password: "{{ vault_mysql_password }}"
+cooper_mysql_root_user: rays
+cooper_mysql_root_password: "{{ vault_mysql_root_password }}"
+
+#### PULSE VARIABLES ####
+pulse_user: rays
+pulse_user_pwd: "{{ vault_pulse_user_pwd }}"
+pulse_mysql_host: rds.rays.istresearch.com
+pulse_mysql_pwd: "{{ vault_pulse_mysql_pwd }}"
+pulse_rds_master_user: rays
+pulse_rds_master_pwd: "{{ vault_pulse_rds_master_pwd }}"
+
+pulse_admin_analysis_url: "kibana-rays.istresearch.com"
+
+pulse_cooper_pass: "{{ vault_cooper_pass }}"
+
+pulse_analysis_user: rays
+pulse_analysis_pwd: "{{ vault_pulse_analysis_pwd }}"
+
+#### SCRAPY VARIABLES ####
+scrapy_redis_host: "{{ groups['redis-master-node'][1] }}"
+sc_kafka_monitor_kafka_group: sc-kafka-monitor2
+
+#### DOCKER VARIABLES ####
+docker_repo_user: istuser
+docker_repo_pwd: "{{ vault_repo_pwd }}"
+
+#### AWS Customize Variables ####
+data_volume: /dev/xvdf
+
+#### ELASTICSEARCH VARIABLES ####
+elasticsearch_network_http_port: 9243
+
+#### ZOOKEEPER VARS ####
+zookeeper_maxClientCnxns: 1200
+
+#### KAFKA VARS ####
+# Internap slaves have 6 data disks, striping data across them.
+kafka_data_log_dir:
+   - /data/kafka/topic-logs
+
+kafka_data_dir:
+   - /data/kafka
+
+# According to Apache Docs, num io threads should be at least equal number of disks.
+kafka_num_io_threads: 2
+
+kafka_heap: 8G
+
+# Retain for 1 week by default
+kafka_log_retention_hours: 168
+kafka_num_partitions: 8
+kafka_replication_factor: 2
+
+#### STORM VARS ####
+storm_version: 0.10.0
+storm_worker_ports: [6701, 6702, 6703, 6704, 6705, 6706, 6707, 6708, 6709, 6710, 6711, 6712, 6713, 6714, 6715, 6716, 6717, 6718, 6719, 6720, 6721, 6722, 6723, 6724, 6725, 6726, 6727, 6728, 6729, 6730, 6731, 6732, 6733, 6734, 6735, 6736, 6737, 6738, 6739, 6740, 6741, 6742, 6743, 6744, 6745, 6746, 6747, 6748]
+
+storm_worker_extra_config:
+    worker.childopts: "-Xmx1280m -XX:PermSize=128m -XX:MaxPermSize=256m -Xms256m -XX:+UseConcMarkSweepGC -Dcom.sun.management.jmxremote"
+    supervisor.worker.timeout.secs: 60
+
+storm_nimbus_extra_config:
+    nimbus.childopts: "-Xmx1024m"
+    nimbus.thrift.max_buffer_size: 4194304
+
+#### Connecting Logstash to ES Cloud ####
+logstash_credentials: true
+logstash_es_user: "admin"
+logstash_es_pwd: "{{ vault_ec_pwd }}"
+
+#### KIBANA VARS ####
+kibana_user: rays
+kibana_user_pwd: "{{ vault_kibana_user_pwd }}"
+kibana_es_url: d78a39df4d432418e73dac451b39d6f2.us-east-1.aws.found.io
+kibana_es_port: 9243
+kibana_index: .kibana-rays-local
+kibana_admin_user: admin
+kibana_admin_pwd: "{{ vault_kibana_admin_pwd }}"
+kibana_container_name: rays_kibana
+kibana_deployment_name: rays
+kibana_external_port: 5601
+
+#### EXTRA TEMPLATES FILES FOR KIBANA ####
+extra_templates:
+ - in: kibana.yaml.j2
+   out: "{{ docker_configs_dir }}/kibana.{{ kibana_deployment_name }}.yml"

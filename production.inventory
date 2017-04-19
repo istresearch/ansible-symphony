@@ -118,7 +118,7 @@ spark-nodes
 ist-es-m[01:03].istresearch.com
 
 [elasticsearch-data-nodes]
-ist-es[01:10].istresearch.com
+ist-es[01:15].istresearch.com
 
 [elasticsearch-client-nodes]
 

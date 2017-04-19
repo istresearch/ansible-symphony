@@ -1,0 +1,237 @@
+---
+# --------------------------- Slack Integration -----------------------------
+- name: Slack
+  connection: local
+  hosts: all
+  become: no
+  tasks:
+    - block:
+      - name: get the command
+        shell: ps -o user -o command | grep ansible-playboo[k]
+        register: the_command
+
+      - name: get the current branch
+        shell: git symbolic-ref --short HEAD
+        register: git_branch
+
+      - name: Push to Slack
+        slack:
+          channel: "#monitoring-ansible"
+          username: "Ansible"
+          token: "{{ vault_slackbot_ansible }}"
+          msg: "```(On branch {{ git_branch.stdout }}) {{ the_command['stdout_lines'][0] }}```"
+
+      run_once: true
+      when: (slack_report is not defined or slack_report | bool == true) and not ansible_check_mode
+  tags:
+    - always
+
+# ------------------------------ Common roles -------------------------------
+
+- name: Run common role
+  hosts: all
+  roles:
+    - common
+  tags:
+    - site-common
+
+# ------------------------------ Customize AWS ------------------------
+
+- name: Run AWS customize
+  hosts: all
+  roles:
+    - aws-customize
+  tags: aws-customize
+  strategy: free
+
+# ----------------------------- Add TechOps Users -----------------------------------
+- name: Add TechOps Users
+  hosts:
+    - all
+  roles:
+    - add-users
+  tags:
+    - site-add-users
+    - site-add-techops-users
+
+# ----------------------------- Add Development Users -----------------------------------
+
+- name: Add Developer Users
+  hosts:
+    - all
+  roles:
+    - add-users
+  tags:
+    - site-add-users
+    - site-add-dev-users
+
+# ----------------------------- Third-Party users -----------------------------------
+
+# - name: Run Third-Party Users
+#   hosts:
+#   roles:
+#     - add-users
+#   tags:
+#     - site-add-users
+#     - site-add-thirdparty-users
+
+# ----------------------------- Virtualenv -----------------------------------
+
+- name: Run virtualenv role
+  hosts: all
+  roles:
+    - virtualenv
+  tags:
+    - virtual-env
+    - deps-scrapy-cluster
+
+# ----------------------------- Miniconda -----------------------------------
+
+- name: Run miniconda role
+  hosts: all
+  roles:
+    - miniconda
+  tags:
+    - miniconda
+    - deps-traptor
+    - deps-grawler
+
+- name: Run logrotate role
+  hosts: all
+  roles:
+    - logrotate
+  tags:
+    - site-logrotate
+
+- name: Run exim role
+  hosts: all
+  roles:
+    - exim
+  tags:
+    - site-exim
+
+# ----------------------------------- Docker Master ---------------------------
+
+# Scrapy --------
+- name: Run Docker Scrapy role
+  hosts: docker-scrapy-nodes
+  roles: [ docker-all ]
+  tags:
+    - site-docker-scrapy-all
+    - site-docker-all
+  vars:
+    component: scrapy-cluster
+
+# Traptor --------
+- name: Run Docker Traptor Follow role
+  hosts: docker-traptor-follow-nodes
+  roles: [ docker-all ]
+  vars:
+    component: traptor-follow
+    logstash_file_final: "logstash-traptor.{{ deploy_env }}.conf"
+    logstash_component_tag: traptor
+    project_name: traptor
+  tags:
+    - site-docker-traptor-all
+    - site-docker-traptor-follow-all
+    - site-docker-all
+
+- name: Run Docker Traptor Track role
+  hosts: docker-traptor-track-nodes
+  roles: [ docker-all ]
+  vars:
+    component: traptor-track
+    logstash_file_final: "logstash-traptor.{{ deploy_env }}.conf"
+    logstash_component_tag: traptor
+    project_name: traptor
+  tags:
+    - site-docker-traptor-all
+    - site-docker-traptor-track-all
+    - site-docker-all
+
+- name: Run Docker Traptor Geo role
+  hosts: docker-traptor-geo-nodes
+  roles: [ docker-all ]
+  vars:
+    component: traptor-geo
+    logstash_file_final: "logstash-traptor.{{ deploy_env }}.conf"
+    logstash_component_tag: traptor
+    project_name: traptor
+  tags:
+    - site-docker-traptor-all
+    - site-docker-traptor-geo-all
+    - site-docker-all
+
+# Cooper --------
+- name: Run Docker Cooper role
+  hosts: docker-cooper-nodes
+  roles: [ docker-all ]
+  tags:
+    - site-docker-cooper-all
+    - site-docker-all
+  vars:
+    component: cooper
+    extra_tasks: true
+
+# Grawler ----------
+- name: Run Grawler role
+  hosts: docker-grawler-nodes
+  roles: [ docker-all ]
+  vars:
+    component: grawler
+    extra_tasks: true
+  tags:
+    - site-docker-grawler-all
+    - site-docker-all
+
+# Telegraptor ----------
+- name: Run Telegraptor role
+  hosts: docker-telegraptor-nodes
+  roles: [ docker-all ]
+  vars:
+    component: telegraptor
+  tags:
+    - site-docker-telegraptor-all
+    - site-docker-all
+
+# Pulse ----------
+- name: Run Pulse role
+  hosts: docker-pulse-nodes
+  roles: [ docker-all ]
+  vars:
+    component: pulse
+    extra_tasks: true
+  tags:
+    - site-docker-pulse-all
+    - site-docker-all
+
+# Rule Manager ----------
+- name: Run Rule Manager role
+  hosts: docker-rule-manager-nodes
+  roles: [ docker-all ]
+  vars:
+    component: rule-manager
+  tags:
+    - site-docker-rule-manager-all
+    - site-docker-all
+
+# Curator ----------
+- name: Run Curator role
+  hosts: docker-curator-nodes
+  roles: [ docker-all ]
+  vars:
+    component: curator
+    logstash_use: false
+  tags:
+    - site-docker-curator-all
+    - site-docker-all
+
+# Kibana ----------
+- name: Run Kibana role
+  hosts: docker-kibana-nodes
+  roles: [ docker-all ]
+  vars:
+    component: kibana
+  tags:
+    - site-docker-kibana-all
+    - site-docker-all

@@ -1,0 +1,13 @@
+{% for host in groups['docker-grawler-nodes'] %}
+{% set outer_loop = loop %}
+{% for count in range(grawler_containers_per_box) %}
+{% set the_index = outer_loop.index0 * grawler_containers_per_box + loop.index0 %}
+id: {{ outer_loop.index }}0{{ loop.index }}
+facebook.app_id:  {{ grawler_creds[the_index].app_id }}
+facebook.app_secret: {{ grawler_creds[the_index].app_secret }}
+downloaddelay: 10
+
+{% if not outer_loop.last or not loop.last %}DELIM{% endif %}
+
+{% endfor %}
+{% endfor %}
