@@ -39,6 +39,7 @@ docker-telegraptor-api-nodes
 docker-traptor-nodes
 docker-gatekeeper-nodes
 docker-youscrape-nodes
+docker-kibana-nodes
 portainer-nodes
 
 [zookeeper-nodes]
@@ -256,6 +257,9 @@ docker-traptor-geo-nodes
 docker.dev.istresearch.com
 
 [docker-youscrape-nodes]
+docker.dev.istresearch.com
+
+[docker-kibana-nodes]
 docker.dev.istresearch.com
 
 [portainer-nodes]
