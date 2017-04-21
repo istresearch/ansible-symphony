@@ -1,4 +1,6 @@
 ---
+deploy_env: "dev"
+
 # Pulse
 pulse_titan_pw: "{{ vault_pulse_password }}"
 
