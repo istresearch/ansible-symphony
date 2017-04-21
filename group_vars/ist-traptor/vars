@@ -23,6 +23,8 @@ traptor_type: 'track'
 traptor_ist_es: "{{ vault_traptor_ist_es }}"
 
 ## GIVE THESE SPECIFIC USERS ACCESS TO THE IST-TRAPTOR CLUSTER
-techops:
+dev:
    - { name: rdempsey, key: "{{ vault_rdempsey_key }}" }
    - { name: ayue, key: "{{ vault_ayue_key }}" }
+   - { name: aklintse, key: "{{ vault_aklintse_key }}" }
+   - { name: jsteele, key: "{{ vault_jsteele_key }}" }

@@ -4,6 +4,8 @@
 dev:
    - { name: ayue, key: "{{ vault_ayue_key }}" }
    - { name: rdempsey, key: "{{ vault_rdempsey_key }}" }
+   - { name: aklintse, key: "{{ vault_aklintse_key }}" }
+   - { name: jsteele, key: "{{ vault_jsteele_key }}" }
 
 datadog_monitors:
   ist_supervisord:

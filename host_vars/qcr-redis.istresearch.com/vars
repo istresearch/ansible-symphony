@@ -1,4 +1,9 @@
 ---
+## GIVE THESE SPECIFIC USERS ACCESS TO THE SERVER
+dev:
+   - { name: aklintse, key: "{{ vault_aklintse_key }}" }
+   - { name: jsteele, key: "{{ vault_jsteele_key }}" }
+
 datadog_monitors:
   disk:
     enabled: true
