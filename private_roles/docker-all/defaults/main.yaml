@@ -12,7 +12,7 @@ virtualenv_path: /tmp/ansible
 # PULSE VARIABLES
 pulse_landing_page: 3
 pulse_mysql_host: "{{ inventory.hostname }}"
-pulse_tag: pulse-v3.1.3.1-release
+pulse_tag: pulse-v3.1.4-release
 pulse_cooper_host: "{{ cooper_elb_host|default(groups['docker-cooper-nodes'][0]) }}"
 pulse_cooper_user: cooper
 pulse_cooper_pass: pass
@@ -26,7 +26,7 @@ pulse_mmr_parent_dir: /opt
 
 # POLLSTER VARIABLES
 pollster_local_dir: /opt/pulse/pollster
-pollster_version: 5.4.3
+pollster_version: 5.4.4
 
 mysql_pwd: "{{ vault_mysql_pwd }}"
 mysql_root_pwd: "{{ vault_mysql_root_pwd }}"
@@ -187,3 +187,21 @@ rulemanager_cooper_host: "{{ cooper_elb_host|default(groups['docker-cooper-nodes
 
 # Kibana specific vars
 kibana_image_tag: 4.6.4
+
+# YouScrape specific vars
+youscrape_api_tag: api-1.0.0
+youscrape_redis_host: "{{ groups['redis-master-node'][0] }}"
+youscrape_queue_new: youscrape_q_new
+youscrape_queue_users: youscrape_q_users
+youscrape_queue_videos: youscrape_q_videos
+youscrape_acct_phone: replace_me
+youscrape_api_key: replace_me
+youscrape_scraper_tag: scraper-1.0.0
+youscrape_kafka_topic_prefix: crawl
+youscrape_kafka_topic_main: youtube
+youscrape_project_id: replace_me
+youscrape_private_key_id: replace_me
+youscrape_private_key: replace_me
+youscrape_client_email: replace_me
+youscrape_client_id: replace_me
+youscrape_x509_cert_url: replace_me

@@ -74,6 +74,29 @@ services:
     tty: true
     restart: always
 
+  youscrapeapi:
+     image: istresearch/youscrape:{{ youscrape_api_tag }}
+     environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/usr/src/app/YouScrape.json
+      - YOUTUBE_TYPES=youtube,youtube_channel,youtube_video,youtube_playlist,youtube_user,youtube_url
+      - REDIS_HOST={{ youscrape_redis_host }}
+      - REDIS_PORT=6379
+      - REDIS_DB={{ youscrape_redis_db }}
+      - REDIS_QUEUE_NEW={{ youscrape_queue_new }}
+      - REDIS_QUEUE_USERS={{ youscrape_queue_users }}
+      - REDIS_QUEUE_VIDEOS={{ youscrape_queue_videos }}
+      - LOGGER_NAME=youscrape-api
+      - LOG_DIR=/var/log/youscrape-api
+      - LOG_FILE=youscrape-api.log
+      - LOG_STDOUT=False
+      - LOG_JSON=True
+      - LOG_LEVEL=INFO
+     restart: always
+     volumes:
+       # Get the JSON creds from the YouTube App Dashboard
+      - {{ docker_configs_dir }}/YouScrape-creds.{{ youscrape_acct_phone }}.json:/usr/src/app/YouScrape.json
+      - logs:/var/log/youscrape-api 
+
   graphapi:
     image: istresearch/graph-api:{{ graphapi_tag }}
     environment:

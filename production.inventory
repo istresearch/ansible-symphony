@@ -130,23 +130,17 @@ elasticsearch-client-nodes
 # SCRAPY CLUSTER NODES --------------------
 
 [scrapy-cluster-kafka-monitor-node]
-ist-crawler01.istresearch.com
-ist-crawler03.istresearch.com
-ist-crawler05.istresearch.com
 login-crawler01.istresearch.com
 login-crawler03.istresearch.com
 login-crawler05.istresearch.com
 
 [scrapy-cluster-redis-monitor-node]
-ist-crawler01.istresearch.com
 login-crawler01.istresearch.com
 
 [scrapy-cluster-crawler-nodes]
-ist-crawler[01:06].istresearch.com
 login-crawler[01:06].istresearch.com
 
 [scrapy-cluster-indexer-nodes]
-ist-crawler[01:06].istresearch.com
 login-crawler[01:06].istresearch.com
 
 [scrapy-cluster-nodes:children]
@@ -156,7 +150,6 @@ scrapy-cluster-crawler-nodes
 scrapy-cluster-indexer-nodes
 
 [googler-nodes]
-ist-crawler[04:06].istresearch.com
 login-crawler[04:06].istresearch.com
 
 [tor-proxy]
@@ -178,7 +171,6 @@ traptor-location-nodes
 traptor-track-nodes
 
 [logstash-nodes]
-ist-crawler[01:06].istresearch.com
 crew[06:08].istresearch.com
 traptor[01:03].istresearch.com
 
@@ -186,51 +178,6 @@ traptor[01:03].istresearch.com
 login-crawler[01:06].istresearch.com
 traptor[01:03].istresearch.com
 limes.istresearch.com
-
-[docker-bumblebee-nodes]
-dockerva.istresearch.com
-
-[docker-cooper-nodes]
-dockerva.istresearch.com
-
-[docker-rule-manager-nodes]
-dockerva.istresearch.com
-
-[docker-scrapy-nodes]
-login-crawler[01:06].istresearch.com
-
-[docker-telegraptor-nodes]
-dockerva.istresearch.com
-
-[docker-telegraptor-api-nodes]
-dockerva.istresearch.com
-
-[docker-curator-nodes]
-dockerva.istresearch.com
-
-[docker-grawler-nodes]
-login-crawler[01:06].istresearch.com
-
-[docker-telegraptor-api-nodes]
-dockerva.istresearch.com
-
-[docker-traptor-follow-nodes]
-traptor01.istresearch.com
-
-[docker-traptor-track-nodes]
-traptor03.istresearch.com
-
-[docker-traptor-geo-nodes]
-traptor02.istresearch.com
-
-[docker-traptor-nodes:children]
-docker-traptor-follow-nodes
-docker-traptor-track-nodes
-docker-traptor-geo-nodes
-
-[portainer-nodes]
-dockerva.istresearch.com
-login-crawler[01:06].istresearch.com
 
 [tarsnap-nodes]
 odin.istresearch.com
@@ -252,5 +199,4 @@ proxy-redis.istresearch.com
 pasha.istresearch.com
 
 [grawler-nodes] 
-ist-crawler[01:06].istresearch.com 
 login-crawler[01:06].istresearch.com 
