@@ -13,3 +13,6 @@ additional_checksd: {{ additional_checksd_dir }}
 
 # Required for Docker
 non_local_traffic: yes
+
+# Solves false alarms of the host reporting it is down.  See TEC-1378
+use_curl_http_client: yes
