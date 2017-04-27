@@ -167,6 +167,7 @@ cooper_graphapi_app_secret: "{{ grawler_creds[0].app_secret|default('secret') }}
 # Curator Script specific vars
 curator_pulse_tag: curator-pulse-0.1
 curator_logs_tag: curator-logs-0.1
+curator_alias_tag: curator-custom-alias-0.1
 curator_logs:
   # this should list all log indices, that match all 'logstash_component_tag's in the infrastructure playbook
   - cooper
@@ -185,6 +186,12 @@ curator_es_user: user
 curator_es_pass: password
 curator_pulse_prefix: pulse
 curator_pulse_interval: 3600
+curator_alias_interval: 60
+# curator_alias:
+#   # custom alias configurations can be defined like so
+#   - name: bracket
+#     regex: pulse-default-default-2016\.1.*|^(?!pulse-default-default-2016)pulse-default-default.*
+#     file: alias_appid.json.j2
 
 # Rule Manager specific vars
 rulemanager_traptor_tag: traptor-3.0.4

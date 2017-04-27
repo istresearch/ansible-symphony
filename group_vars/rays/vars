@@ -25,6 +25,11 @@ curator_es_ssl: true
 curator_es_user: admin
 curator_es_pass: "{{ vault_ec_pwd }}"
 
+curator_alias:
+  - name: bracket
+    regex: pulse-default-default-2016\.1.*|^(?!pulse-default-default-2016)pulse-default-default.*
+    file: alias_appid.json.j2
+
 #### RULE MANAGER VARIABLES ####
 rulemanager_traptor_es_ssl: true
 rulemanager_traptor_es_credentials: true

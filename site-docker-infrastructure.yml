@@ -222,6 +222,7 @@
   vars:
     component: curator
     logstash_use: false
+    extra_tasks: true
   tags:
     - site-docker-curator-all
     - site-docker-all

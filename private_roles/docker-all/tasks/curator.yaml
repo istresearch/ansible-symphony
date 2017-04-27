@@ -1,0 +1,10 @@
+---
+# note that it may be possible in the future to supply the json for
+# the alias as part of the ansible dictionary, however this route is easier at
+# the moment
+- name: Move over all alias files
+  template:
+    src: "docker_configs/{{ item.file }}"
+    dest: "{{ docker_configs_dir }}/alias_{{ item.name }}.{{ deploy_env }}.json"
+  with_items:
+    - "{{ curator_alias|default([]) }}"
