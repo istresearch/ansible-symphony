@@ -53,6 +53,7 @@ docker-telegraptor-api-nodes
 docker-traptor-nodes
 docker-gatekeeper-nodes
 docker-youscrape-nodes
+docker-vk-nodes
 portainer-nodes
 
 [rays:children]
@@ -254,6 +255,9 @@ docker-traptor-geo-nodes
 vagrant-ist-02
 
 [docker-youscrape-nodes]
+vagrant-ist-02
+
+[docker-vk-nodes]
 vagrant-ist-02
 
 [docker-kibana-nodes]

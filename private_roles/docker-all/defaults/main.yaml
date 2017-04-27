@@ -190,7 +190,7 @@ kibana_image_tag: 4.6.4
 
 # YouScrape specific vars
 youscrape_api_tag: api-1.0.0
-youscrape_redis_host: "{{ groups['redis-master-node'][0] }}"
+youscrape_redis_host: "{{ groups['redis-master-node'][1] }}"
 youscrape_queue_new: youscrape_q_new
 youscrape_queue_users: youscrape_q_users
 youscrape_queue_videos: youscrape_q_videos
@@ -205,3 +205,10 @@ youscrape_private_key: replace_me
 youscrape_client_email: replace_me
 youscrape_client_id: replace_me
 youscrape_x509_cert_url: replace_me
+
+# VK specific vars
+vk_redis_host: "{{ groups['redis-master-node'][1] }}"
+vk_api_tag: 1.0.3
+vk_worker_tag: 1.0.3
+vk_kafka_topic_prefix: crawl
+vk_kafka_topic_main: vkollect

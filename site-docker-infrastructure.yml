@@ -246,3 +246,13 @@
   tags:
     - site-docker-youscrape-all
     - site-docker-all
+
+# VK ----------
+- name: Run VK role
+  hosts: docker-vk-nodes
+  roles: [ docker-all ]
+  vars:
+    component: vk
+  tags:
+    - site-docker-vk-all
+    - site-docker-all
