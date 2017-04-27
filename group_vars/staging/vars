@@ -10,7 +10,7 @@ yarn_nodemanager_local_dirs:
    - /data/yarn/local
 yarn_nodemanager_log_dirs:
    - /data/yarn/logs
-   
+
 #### HBASE VARS ####
 hbase_dfs_replication: 2
 
@@ -86,13 +86,25 @@ pulse_self_signed_url: true
 pulse_local_install: false
 mysql_root_password: "{{ vault_mysql_root_password }}"
 
+pulse_multi_instance:
+  - name: "pulse"
+    pulse_mysql_database: pulse
+    pulse_user: "pulse"
+    pulse_email: email1@email.com
+    pulse_user_pwd: password
+    pulse_mysql_user: pulse
+    pulse_mysql_pwd: password
+    pulse_analysis_user: "pulse"
+    pulse_analysis_pwd: pw
+    pulse_admin_analysis_url: "localhost"
+
 #### PULSE MYSQL ES HOST ####
 ql_db_host: vagrant-ist-01
 
 #### KIBANA VARS ####
 kibana_user: admin
 kibana_user_pwd: "{{ vault_kibana_admin_pwd }}"
-kibana_es_url: 4a9153db9f4e5ae92b5a2999abb81138.us-east-1.aws.found.io 
+kibana_es_url: 4a9153db9f4e5ae92b5a2999abb81138.us-east-1.aws.found.io
 kibana_es_port: 9243
 kibana_index: .kibana-loki-local
 kibana_admin_user: admin
@@ -101,11 +113,6 @@ kibana_container_name: loki_5.3_kibana
 kibana_deployment_name: loki_5.3
 kibana_external_port: 5601
 kibana_image_tag: 5.3
-
-#### EXTRA TEMPLATES FILES FOR KIBANA ####
-extra_templates:
- - in: kibana.yaml.j2
-   out: "{{ docker_configs_dir }}/kibana.{{ kibana_deployment_name }}.yml"
 
 #### DATADOG ####
 datadog_api_key: "{{ vault_datadog_api_key }}"

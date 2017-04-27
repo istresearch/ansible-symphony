@@ -29,7 +29,6 @@ kibana_es_port: 9243
 kibana_index: .kibana-loki-local
 kibana_admin_user: elastic
 kibana_admin_pwd: "{{ vault_kibana_admin_pwd }}"
-kibana_container_name: loki_5.3_kibana
 kibana_deployment_name: loki_5.3
 kibana_external_port: 5601
 kibana_image_tag: 5.3.0

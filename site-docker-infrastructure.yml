@@ -232,6 +232,8 @@
   roles: [ docker-all ]
   vars:
     component: kibana
+    logstash_use: false
+    extra_tasks: true
   tags:
     - site-docker-kibana-all
     - site-docker-all

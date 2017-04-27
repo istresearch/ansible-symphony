@@ -74,6 +74,31 @@ pulse_cooper_pass: "{{ vault_cooper_pass }}"
 pulse_analysis_user: rays
 pulse_analysis_pwd: "{{ vault_pulse_analysis_pwd }}"
 
+# Pulse multi instance setup
+pulse_multi_instance_1: rays
+pulse_multi_instance_2: bracket
+pulse_multi_instance:
+  - name: "{{ pulse_multi_instance_1 }}"
+    pulse_mysql_database: pulse
+    pulse_user: "{{ pulse_multi_instance_1 }}"
+    pulse_email: email1@email.com
+    pulse_user_pwd:
+    pulse_mysql_user: pulse
+    pulse_mysql_pwd:
+    pulse_analysis_user: "{{ pulse_multi_instance_1 }}"
+    pulse_analysis_pwd:
+    pulse_admin_analysis_url: "kibana-{{ pulse_multi_instance_1 }}.istresearch.com"
+  - name: "{{ pulse_multi_instance_2 }}"
+    pulse_mysql_database: bracket
+    pulse_user: "{{ pulse_multi_instance_2 }}"
+    pulse_email: email2@email.com
+    pulse_user_pwd:
+    pulse_mysql_user: bracket
+    pulse_mysql_pwd:
+    pulse_analysis_user: "{{ pulse_multi_instance_2 }}"
+    pulse_analysis_pwd:
+    pulse_admin_analysis_url: "kibana-{{ pulse_multi_instance_2 }}.istresearch.com"
+
 #### SCRAPY VARIABLES ####
 scrapy_redis_host: "{{ groups['redis-master-node'][1] }}"
 sc_kafka_monitor_kafka_group: sc-kafka-monitor2
@@ -127,20 +152,10 @@ logstash_es_user: "admin"
 logstash_es_pwd: "{{ vault_ec_pwd }}"
 
 #### KIBANA VARS ####
-kibana_user: rays
-kibana_user_pwd: "{{ vault_kibana_user_pwd }}"
 kibana_es_url: d78a39df4d432418e73dac451b39d6f2.us-east-1.aws.found.io
 kibana_es_port: 9243
-kibana_index: .kibana-rays-local
 kibana_admin_user: admin
 kibana_admin_pwd: "{{ vault_kibana_admin_pwd }}"
-kibana_container_name: rays_kibana
-kibana_deployment_name: rays
 kibana_external_port: 5601
 kibana_repo: kibana
 kibana_remote_path: /opt/kibana/config
-
-#### EXTRA TEMPLATES FILES FOR KIBANA ####
-extra_templates:
- - in: kibana.yaml.j2
-   out: "{{ docker_configs_dir }}/kibana.{{ kibana_deployment_name }}.yml"

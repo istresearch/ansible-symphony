@@ -20,9 +20,29 @@ pulse_pipeline_type: kafka
 pulse_pipeline_schema: doc.flat
 pulse_cooper_protocol: https://
 pulse_cooper_apipath: cooper/rules
-pulse_analysis_user: replace_me
-pulse_analysis_pwd: replace_me
 pulse_mmr_parent_dir: /opt
+# used to configure your pulse ui setups
+pulse_multi_instance:
+  - name: instance1
+    pulse_mysql_database: pulse1
+    pulse_user: user1
+    pulse_email: email1@email.com
+    pulse_user_pwd: password1
+    pulse_mysql_user: u1
+    pulse_mysql_pwd: p2
+    pulse_analysis_user: url.com
+    pulse_analysis_pwd: pw2
+    pulse_admin_analysis_url: localhost:5601
+#   - name: instance2
+#     pulse_mysql_database: pulse12
+#     pulse_user: user12
+#     pulse_email: email1@email.com2
+#     pulse_user_pwd: password12
+#     pulse_mysql_user: u12
+#     pulse_mysql_pwd: p22
+#     pulse_analysis_user: url.com2
+#     pulse_analysis_pwd: pw22
+#     pulse_admin_analysis_url: localhost:56012
 
 # POLLSTER VARIABLES
 pollster_local_dir: /opt/pulse/pollster
