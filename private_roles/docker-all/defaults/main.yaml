@@ -12,7 +12,7 @@ virtualenv_path: /tmp/ansible
 # PULSE VARIABLES
 pulse_landing_page: 3
 pulse_mysql_host: "{{ inventory.hostname }}"
-pulse_tag: pulse-v3.1.3.1-release
+pulse_tag: pulse-v3.1.4-release
 pulse_cooper_host: "{{ cooper_elb_host|default(groups['docker-cooper-nodes'][0]) }}"
 pulse_cooper_user: cooper
 pulse_cooper_pass: pass
@@ -46,7 +46,7 @@ pulse_multi_instance:
 
 # POLLSTER VARIABLES
 pollster_local_dir: /opt/pulse/pollster
-pollster_version: 5.4.3
+pollster_version: 5.4.4
 
 mysql_pwd: "{{ vault_mysql_pwd }}"
 mysql_root_pwd: "{{ vault_mysql_root_pwd }}"
