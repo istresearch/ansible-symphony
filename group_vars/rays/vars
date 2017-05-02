@@ -25,6 +25,11 @@ curator_es_ssl: true
 curator_es_user: admin
 curator_es_pass: "{{ vault_ec_pwd }}"
 
+curator_alias:
+  - name: bracket
+    regex: pulse-default-default-2016\.1.*|^(?!pulse-default-default-2016)pulse-default-default.*
+    file: alias_appid.json.j2
+
 #### RULE MANAGER VARIABLES ####
 rulemanager_traptor_es_ssl: true
 rulemanager_traptor_es_credentials: true
@@ -71,8 +76,33 @@ pulse_admin_analysis_url: "kibana-rays.istresearch.com"
 
 pulse_cooper_pass: "{{ vault_cooper_pass }}"
 
-pulse_analysis_user: rays
-pulse_analysis_pwd: "{{ vault_pulse_analysis_pwd }}"
+#pulse_analysis_user: rays
+#pulse_analysis_pwd: "{{ vault_pulse_analysis_pwd }}"
+
+# Pulse multi instance setup
+pulse_multi_instance_1: rays
+pulse_multi_instance_2: bracket
+pulse_multi_instance:
+  - name: "{{ pulse_multi_instance_1 }}"
+    pulse_mysql_database: pulse
+    pulse_user: "{{ pulse_multi_instance_1 }}"
+    pulse_email: email1@email.com
+    pulse_user_pwd: "{{ vault_pulse_user_pwd_1 }}"
+    pulse_mysql_user: pulse
+    pulse_mysql_pwd: "{{ vault_pulse_user_pwd_1 }}"
+    pulse_analysis_user: "{{ pulse_multi_instance_1 }}"
+    pulse_analysis_pwd: "{{ vault_pulse_analysis_pwd_1 }}"
+    pulse_admin_analysis_url: "kibana-{{ pulse_multi_instance_1 }}.istresearch.com"
+  - name: "{{ pulse_multi_instance_2 }}"
+    pulse_mysql_database: bracket
+    pulse_user: "{{ pulse_multi_instance_2 }}"
+    pulse_email: email2@email.com
+    pulse_user_pwd: "{{ vault_pulse_user_pwd_2 }}"
+    pulse_mysql_user: bracket
+    pulse_mysql_pwd: "{{ vault_pulse_mysql_pwd_2 }}"
+    pulse_analysis_user: "{{ pulse_multi_instance_2 }}"
+    pulse_analysis_pwd: "{{ vault_pulse_analysis_pwd_2 }}"
+    pulse_admin_analysis_url: "kibana-{{ pulse_multi_instance_2 }}.istresearch.com"
 
 #### SCRAPY VARIABLES ####
 scrapy_redis_host: "{{ groups['redis-master-node'][1] }}"
@@ -127,30 +157,10 @@ logstash_es_user: "admin"
 logstash_es_pwd: "{{ vault_ec_pwd }}"
 
 #### KIBANA VARS ####
-kibana_user: rays
-kibana_user_pwd: "{{ vault_kibana_user_pwd }}"
 kibana_es_url: d78a39df4d432418e73dac451b39d6f2.us-east-1.aws.found.io
 kibana_es_port: 9243
-kibana_index: .kibana-rays-local
 kibana_admin_user: admin
 kibana_admin_pwd: "{{ vault_kibana_admin_pwd }}"
-kibana_container_name: rays_kibana
-kibana_deployment_name: rays
 kibana_external_port: 5601
 kibana_repo: kibana
 kibana_remote_path: /opt/kibana/config
-
-#### EXTRA TEMPLATES FILES FOR KIBANA ####
-extra_templates:
- - in: kibana.yaml.j2
-   out: "{{ docker_configs_dir }}/kibana.{{ kibana_deployment_name }}.yml"
-
-#### YOUSCRAPE VARS ####
-youscrape_acct_phone: 5404248355
-youscrape_api_key: "{{ vault_youscrape_api_key }}"
-youscrape_project_id: dev-fusion-162816
-youscrape_private_key_id: "{{ vault_youscrape_private_key_id }}"
-youscrape_private_key: "{{ vault_youscrape_private_key }}"
-youscrape_client_email: 261926982633-compute@developer.gserviceaccount.com
-youscrape_client_id: "{{ vault_youscrape_client_id }}"
-youscrape_x509_cert_url: https://www.googleapis.com/robot/v1/metadata/x509/261926982633-compute%40developer.gserviceaccount.com
