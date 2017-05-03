@@ -238,3 +238,24 @@
   tags:
     - site-docker-kibana-all
     - site-docker-all
+
+# YouScrape ----------
+- name: Run YouScrape role
+  hosts: docker-youscrape-nodes
+  roles: [ docker-all ]
+  vars:
+    component: youscrape
+    extra_tasks: true
+  tags:
+    - site-docker-youscrape-all
+    - site-docker-all
+
+# VK ----------
+- name: Run VK role
+  hosts: docker-vk-nodes
+  roles: [ docker-all ]
+  vars:
+    component: vk
+  tags:
+    - site-docker-vk-all
+    - site-docker-all

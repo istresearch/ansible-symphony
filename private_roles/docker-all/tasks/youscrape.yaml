@@ -1,0 +1,8 @@
+---
+
+# move template over because it is volume mounted within graphapi
+- name: copy YouScrape creds file
+  template:
+    src: "extras/YouScrape-creds.json.j2"
+    dest: "{{ docker_configs_dir }}/YouScrape-creds.{{ youscrape_acct_phone }}.json"
+    mode: 0755
