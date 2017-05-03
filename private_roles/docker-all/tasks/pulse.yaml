@@ -1,6 +1,6 @@
 ---
 
-- name: Make sure Compose Directory exists
+- name: Make sure MMR Directory exists
   file:
     path: "{{ pulse_mmr_parent_dir }}"
     state: directory

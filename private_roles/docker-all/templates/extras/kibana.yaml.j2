@@ -5,7 +5,7 @@ port: {{ kibana_port|default(5601) }}
 host: "0.0.0.0"
 
 # The Elasticsearch instance to use for all your queries.
-elasticsearch_url: "https://{{ kibana_user|default(replace_me) }}:{{ kibana_user_pwd|default(replace_me) }}@{{ kibana_es_url|default(localhost) }}:{{ kibana_es_port|default(9200) }}"
+elasticsearch_url: "https://{{ item.name|default(replace_me) }}:{{ item.pulse_analysis_pwd|default(replace_me) }}@{{ kibana_es_url|default(localhost) }}:{{ kibana_es_port|default(9200) }}"
 
 # preserve_elasticsearch_host true will send the hostname specified in `elasticsearch`. If you set it to false,
 # then the host you use to connect to *this* Kibana instance will be sent.
@@ -13,7 +13,7 @@ elasticsearch_preserve_host: false
 
 # Kibana uses an index in Elasticsearch to store saved searches, visualizations
 # and dashboards. It will create a new index if it doesn't already exist.
-kibana_index: "{{ kibana_index|default('.kibana') }}"
+kibana_index: ".kibana-{{ item.name }}-local"
 
 # If your Elasticsearch is protected with basic auth, this is the user credentials
 # used by the Kibana server to perform maintence on the kibana_index at statup. Your Kibana

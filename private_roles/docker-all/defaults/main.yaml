@@ -20,9 +20,29 @@ pulse_pipeline_type: kafka
 pulse_pipeline_schema: doc.flat
 pulse_cooper_protocol: https://
 pulse_cooper_apipath: cooper/rules
-pulse_analysis_user: replace_me
-pulse_analysis_pwd: replace_me
 pulse_mmr_parent_dir: /opt
+# used to configure your pulse ui setups
+pulse_multi_instance:
+  - name: instance1
+    pulse_mysql_database: pulse1
+    pulse_user: user1
+    pulse_email: email1@email.com
+    pulse_user_pwd: password1
+    pulse_mysql_user: u1
+    pulse_mysql_pwd: p2
+    pulse_analysis_user: url.com
+    pulse_analysis_pwd: pw2
+    pulse_admin_analysis_url: localhost:5601
+#   - name: instance2
+#     pulse_mysql_database: pulse12
+#     pulse_user: user12
+#     pulse_email: email1@email.com2
+#     pulse_user_pwd: password12
+#     pulse_mysql_user: u12
+#     pulse_mysql_pwd: p22
+#     pulse_analysis_user: url.com2
+#     pulse_analysis_pwd: pw22
+#     pulse_admin_analysis_url: localhost:56012
 
 # POLLSTER VARIABLES
 pollster_local_dir: /opt/pulse/pollster
@@ -98,7 +118,7 @@ sc_kafka_monitor_kafka_topic_prefix: "{{ sc_kafka_master_topic_prefix }}"
 scrapy_redis_host: "{{ groups['redis-master-node'][0] }}"
 
 # Traptor specific vars
-traptor_tag: v1.4.7
+traptor_tag: v1.4.8
 traptor_kafka_topic: traptor.cooper_prod
 traptor_follow_creds: "{{ vault_traptor_follow_apikeys }}"
 traptor_geo_creds: "{{ vault_traptor_location_apikeys }}"
@@ -147,6 +167,7 @@ cooper_graphapi_app_secret: "{{ grawler_creds[0].app_secret|default('secret') }}
 # Curator Script specific vars
 curator_pulse_tag: curator-pulse-0.1
 curator_logs_tag: curator-logs-0.1
+curator_alias_tag: curator-custom-alias-0.1
 curator_logs:
   # this should list all log indices, that match all 'logstash_component_tag's in the infrastructure playbook
   - cooper
@@ -165,6 +186,12 @@ curator_es_user: user
 curator_es_pass: password
 curator_pulse_prefix: pulse
 curator_pulse_interval: 3600
+curator_alias_interval: 60
+# curator_alias:
+#   # custom alias configurations can be defined like so
+#   - name: bracket
+#     regex: pulse-default-default-2016\.1.*|^(?!pulse-default-default-2016)pulse-default-default.*
+#     file: alias_appid.json.j2
 
 # Rule Manager specific vars
 rulemanager_traptor_tag: traptor-3.0.4

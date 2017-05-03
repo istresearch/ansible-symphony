@@ -80,7 +80,7 @@
 
 # Container specific tasking -------------------------
 - include: "{{ component }}.yaml"
-  when: "{{ extra_tasks is defined and extra_tasks == true }}"
+  when: extra_tasks is defined and extra_tasks == true
   tags:
     - docker-all
 # END Container specific tasking -------------------------

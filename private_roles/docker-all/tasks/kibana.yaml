@@ -1,0 +1,7 @@
+---
+- name: configure kibana yaml files
+  template:
+    src: extras/kibana.yaml.j2
+    dest: "{{ docker_configs_dir }}/kibana.{{ item.name }}.yml"
+  with_items:
+    - "{{ pulse_multi_instance }}"

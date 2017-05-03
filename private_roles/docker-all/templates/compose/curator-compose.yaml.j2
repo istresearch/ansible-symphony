@@ -24,3 +24,18 @@ services:
       - ES_VERIFY_SSL=True
 {% endif %}
 {% endfor %}
+{% for component in curator_alias|default([]) %}
+  alias_{{ component.name }}:
+    image: istresearch/gandalf:{{ curator_alias_tag }}
+    environment:
+      - REGEX={{ component.regex }}
+      - ALIAS={{ component.name }}
+      - INTERVAL={{ curator_alias_interval }}
+      - ES_HOSTS=http{% if curator_es_ssl %}s{% endif %}://{% if curator_es_credentials %}{{ curator_es_user }}:{{ curator_es_pass }}@{% endif %}{{ groups['elasticsearch-nodes'][0] }}:{{ elasticsearch_network_http_port|default(9200) }}
+{% if curator_es_ssl %}
+      - ES_SSL=True
+      - ES_VERIFY_SSL=True
+{% endif %}
+    volumes:
+      - {{ docker_configs_dir }}/alias_{{ component.name }}.{{ deploy_env }}.json:/usr/src/app/filter.json
+{% endfor %}
