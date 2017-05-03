@@ -118,7 +118,7 @@ sc_kafka_monitor_kafka_topic_prefix: "{{ sc_kafka_master_topic_prefix }}"
 scrapy_redis_host: "{{ groups['redis-master-node'][0] }}"
 
 # Traptor specific vars
-traptor_tag: v1.4.7
+traptor_tag: v1.4.8
 traptor_kafka_topic: traptor.cooper_prod
 traptor_follow_creds: "{{ vault_traptor_follow_apikeys }}"
 traptor_geo_creds: "{{ vault_traptor_location_apikeys }}"
