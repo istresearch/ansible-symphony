@@ -100,9 +100,9 @@ logstash_use: true
 logstash_tag: latest
 
 # Scrapy Cluster specific vars
-sc_kafka_monitor_tag: kafka-monitor-153-dev
-sc_redis_monitor_tag: redis-monitor-153-dev
-sc_crawler_tag: crawler-153-dev
+sc_kafka_monitor_tag: kafka-monitor-1.2.1-release
+sc_redis_monitor_tag: redis-monitor-1.2.1-release
+sc_crawler_tag: crawler-1.2.1-release
 sc_googler_tag: googler-0.0.2-master-10
 sc_googler_sleep_query: 60
 
@@ -116,6 +116,12 @@ sc_kafka_monitor_topic_main: incoming
 sc_kafka_monitor_kafka_group: sc-kafka-monitor
 sc_kafka_monitor_kafka_topic_prefix: "{{ sc_kafka_master_topic_prefix }}"
 scrapy_redis_host: "{{ groups['redis-master-node'][0] }}"
+sc_dogwhistle_enabled: False
+sc_dogwhistle_local: True
+sc_dogwhistle_statsd_host: 172.17.0.1
+sc_stats_status_codes: False
+sc_stats_plugins: False
+sc_stats_total: False
 
 # Traptor specific vars
 traptor_tag: v1.4.8

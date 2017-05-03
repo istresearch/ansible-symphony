@@ -107,6 +107,8 @@ pulse_multi_instance:
 #### SCRAPY VARIABLES ####
 scrapy_redis_host: "{{ groups['redis-master-node'][1] }}"
 sc_kafka_monitor_kafka_group: sc-kafka-monitor2
+sc_dogwhistle_enabled: True
+
 
 #### DOCKER VARIABLES ####
 docker_repo_user: istuser

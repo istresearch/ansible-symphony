@@ -15,6 +15,11 @@ services:
       - KAFKA_GROUP={{ sc_kafka_monitor_kafka_group }}
       - LOG_STDOUT=False
       - LOG_JSON=True
+      - DW_ENABLED={{ sc_dogwhistle_enabled }}
+      - DATADOG_LOCAL={{ sc_dogwhistle_local }}
+      - DATADOG_STATSD_HOST={{ sc_dogwhistle_statsd_host }}
+      - STATS_TOTAL={{ sc_stats_total }}
+      - STATS_PLUGINS={{ sc_stats_plugins }}
     volumes:
       - logs:/usr/src/app/logs
     extra_hosts:
@@ -34,6 +39,11 @@ services:
 
       - LOG_STDOUT=False
       - LOG_JSON=True
+      - DW_ENABLED={{ sc_dogwhistle_enabled }}
+      - DATADOG_LOCAL={{ sc_dogwhistle_local }}
+      - DATADOG_STATSD_HOST={{ sc_dogwhistle_statsd_host }}
+      - STATS_TOTAL={{ sc_stats_total }}
+      - STATS_PLUGINS={{ sc_stats_plugins }}
     volumes:
       - logs:/usr/src/app/logs
     extra_hosts:
@@ -57,6 +67,11 @@ services:
       - SC_LOG_STDOUT=False
       - SC_LOG_JSON=True
       - KAFKA_BASE_64_ENCODE={{ sc_crawling_kafka_base_64 }}
+
+      - DW_ENABLED={{ sc_dogwhistle_enabled }}
+      - DATADOG_LOCAL={{ sc_dogwhistle_local }}
+      - DATADOG_STATSD_HOST={{ sc_dogwhistle_statsd_host }}
+      - STATS_STATUS_CODES={{ sc_stats_status_codes }}
     volumes:
       - logs:/usr/src/app/logs
     extra_hosts:
