@@ -107,7 +107,7 @@ sc_googler_tag: googler-0.0.2-master-10
 sc_googler_sleep_query: 60
 
 sc_crawling_kafka_topic_prefix: "{{ sc_kafka_master_topic_prefix }}"
-sc_crawling_queue_hits: 10
+sc_crawling_queue_hits: 30
 sc_crawling_queue_window: 60
 sc_crawling_queue_moderated: True
 sc_crawling_kafka_base_64: False
