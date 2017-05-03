@@ -164,3 +164,13 @@ kibana_admin_pwd: "{{ vault_kibana_admin_pwd }}"
 kibana_external_port: 5601
 kibana_repo: kibana
 kibana_remote_path: /opt/kibana/config
+
+#### YOUSCRAPE VARS ####
+youscrape_acct_phone: 5404248355
+youscrape_api_key: "{{ vault_youscrape_api_key }}"
+youscrape_project_id: dev-fusion-162816
+youscrape_private_key_id: "{{ vault_youscrape_private_key_id }}"
+youscrape_private_key: "{{ vault_youscrape_private_key }}"
+youscrape_client_email: 261926982633-compute@developer.gserviceaccount.com
+youscrape_client_id: "{{ vault_youscrape_client_id }}"
+youscrape_x509_cert_url: https://www.googleapis.com/robot/v1/metadata/x509/261926982633-compute%40developer.gserviceaccount.com
