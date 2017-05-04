@@ -1,6 +1,7 @@
 ## GIVE THESE SPECIFIC USERS ACCESS TO THE SERVER
 dev:
    - { name: aklintse, key: "{{ vault_aklintse_key }}" }
+   - { name: aklintse, key: "{{ vault_aklintse_key2 }}" }
    - { name: jsteele, key: "{{ vault_jsteele_key }}" }
 
 datadog_monitors:

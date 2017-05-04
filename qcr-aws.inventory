@@ -19,8 +19,6 @@ elasticsearch-nodes
 kibana-node
 storm-nodes
 phantomjs-nodes
-
-[aws:children]
 zookeeper-nodes
 kafka-nodes
 redis-nodes

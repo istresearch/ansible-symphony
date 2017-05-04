@@ -11,11 +11,6 @@ repository_host=repo.istresearch.com
 #
 # Memex infrastructure and software topology
 #
-[ist-traptor:children]
-traptor-nodes
-
-[ist-crawlers:children]
-scrapy-cluster-nodes
 
 [ist-es-nodes:children]
 elasticsearch-nodes
@@ -28,7 +23,8 @@ hbase-nodes
 spark-nodes
 storm-nodes
 
-[aws:children]
+[ist:children]
+internap
 redis-nodes
 scrapy-cluster-nodes
 traptor-nodes
@@ -181,20 +177,6 @@ login-crawler[04:06].istresearch.com
 [tor-proxy]
 memex-services.istresearch.com
 tor.istresearch.com
-
-[traptor-follow-nodes]
-traptor01.istresearch.com
-
-[traptor-location-nodes]
-traptor02.istresearch.com
-
-[traptor-track-nodes]
-traptor03.istresearch.com
-
-[traptor-nodes:children]
-traptor-follow-nodes
-traptor-location-nodes
-traptor-track-nodes
 
 [logstash-nodes]
 crew[06:08].istresearch.com
