@@ -218,8 +218,21 @@ rulemanager_cooper_ssl: False
 # define it to override the final cooper host
 rulemanager_cooper_host: "{{ cooper_elb_host|default(groups['docker-cooper-nodes'][0]) }}"
 
+# Elasticsearch
+elasticsearch_repo: docker.elastic.co/elasticsearch/elasticsearch
+elasticsearch_image_tag: 5.3.0
+elasticsearch_port: 9200
+elasticsearch_transport_port: 9300
+elasticsearch_data_path: /data/elasticsearch
+
 # Kibana specific vars
-kibana_image_tag: 4.6.4
+kibana_repo: docker.elastic.co/kibana/kibana
+kibana_image_tag: 5.3.0
+kibana_elasticsearch_url: "https://{{ item.name|default('replace_me') }}:{{ item.pulse_analysis_pwd|default('replace_me') }}@{{ kibana_es_url|default('localhost') }}:{{ kibana_es_port|default(9200) }}"
+kibana_verify_ssl: true
+kibana_remote_path: /usr/share/kibana/config
+# List of plugins (http, file, or ES repo name)
+kibana_plugin_list:
 
 # YouScrape specific vars
 youscrape_api_tag: api-1.0.0

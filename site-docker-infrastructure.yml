@@ -227,6 +227,17 @@
     - site-docker-curator-all
     - site-docker-all
 
+# Elasticsearch ----------
+- name: Run Elasticsearch role
+  hosts: docker-es-nodes
+  roles: [ docker-all ]
+  vars:
+    component: elasticsearch
+    extra_tasks: true
+  tags:
+    - site-docker-elasticsearch-all
+    - site-docker-all
+
 # Kibana ----------
 - name: Run Kibana role
   hosts: docker-kibana-nodes

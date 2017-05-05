@@ -1,4 +1,17 @@
 ---
+
+- name: make sure dockerfiles directory exists
+  file:
+    path: "{{ docker_compose_dir }}/dockerfiles/kibana/"
+    state: directory
+    recurse: yes
+    mode: 0755
+
+- name: copy kibana dockerfile with plugins
+  template:
+    src: 'dockerfiles/kibana/Dockerfile.j2'
+    dest: '{{ docker_compose_dir }}/dockerfiles/kibana/Dockerfile'
+
 - name: configure kibana yaml files
   template:
     src: extras/kibana.yaml.j2

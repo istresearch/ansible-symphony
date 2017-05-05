@@ -3,7 +3,7 @@ services:
 {% for item in pulse_multi_instance %}
 {% set port = 5601 + loop.index0 %}
   {{ item.name }}_kibana:
-    image: "{{ kibana_repo }}:{{ kibana_image_tag }}"
+    build: dockerfiles/kibana
     container_name: "{{ item.name }}_kibana"
     volumes:
       - "{{ docker_configs_dir }}/kibana.{{ item.name }}.yml:{{ kibana_remote_path }}/kibana.yml"

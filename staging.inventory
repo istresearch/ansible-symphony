@@ -43,6 +43,8 @@ pulse-mysql-es-host
 phantomjs-nodes
 gandalf-runner-node
 docker-bumblebee-nodes
+docker-es-nodes
+docker-kibana-nodes
 docker-cooper-nodes
 docker-curator-nodes
 docker-grawler-nodes
@@ -260,8 +262,11 @@ vagrant-ist-02
 [docker-vk-nodes]
 vagrant-ist-02
 
+[docker-es-nodes]
+vagrant-ist-01
+
 [docker-kibana-nodes]
-vagrant-ist-02
+vagrant-ist-01
 
 [portainer-nodes]
 vagrant-ist-01

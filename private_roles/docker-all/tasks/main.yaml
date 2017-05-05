@@ -95,7 +95,7 @@
   tags: docker-all
 
 - name: Start the Containers
-  command: "{{ docker_scripts_dir }}/{{ script_file_final }} up -d"
+  command: "{{ docker_scripts_dir }}/{{ script_file_final }} up --build -d"
   tags: docker-all
 
 - name: scale components

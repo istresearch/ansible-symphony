@@ -13,3 +13,5 @@ _build_html
 *.*~
 *.swp
 *.retry
+.idea
+*.iml

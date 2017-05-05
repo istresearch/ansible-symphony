@@ -21,9 +21,13 @@ datadog_monitors:
 dev:
    - { name: jrgoulet, key: '{{ vault_jrgoulet_key }}' }
 
+pulse_multi_instance:
+  - name: "loki"
+
 #### KIBANA VARS ####
 kibana_user: elastic
 kibana_user_pwd: "{{ vault_kibana_user_pwd }}"
+kibana_elasticsearch_url: "https://{{ kibana_user|default('replace_me') }}:{{ kibana_user_pwd|default('replace_me') }}@{{ kibana_es_url|default('localhost') }}:{{ kibana_es_port|default(9200) }}"
 kibana_es_url: 4a9153db9f4e5ae92b5a2999abb81138.us-east-1.aws.found.io
 kibana_es_port: 9243
 kibana_index: .kibana-loki-local
@@ -34,8 +38,6 @@ kibana_external_port: 5601
 kibana_image_tag: 5.3.0
 kibana_repo: docker.elastic.co/kibana/kibana
 kibana_remote_path: /usr/share/kibana/config
+kibana_plugin_list:
+  - "https://github.com/istresearch/kibana-object-format/releases/download/v0.1.0/kibana_object_format-0.1.0-kbn_{{ kibana_image_tag }}.zip"
 
-#### EXTRA TEMPLATES FILES FOR KIBANA ####
-extra_templates:
- - in: kibana.yaml.j2
-   out: "{{ docker_configs_dir }}/kibana.{{ kibana_deployment_name }}.yml"

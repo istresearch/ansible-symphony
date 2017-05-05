@@ -101,18 +101,26 @@ pulse_multi_instance:
 #### PULSE MYSQL ES HOST ####
 ql_db_host: vagrant-ist-01
 
+#### Elasticsearch ####
+elasticsearch_image_tag: 5.3.0
+
 #### KIBANA VARS ####
 kibana_user: admin
 kibana_user_pwd: "{{ vault_kibana_admin_pwd }}"
-kibana_es_url: 4a9153db9f4e5ae92b5a2999abb81138.us-east-1.aws.found.io
-kibana_es_port: 9243
-kibana_index: .kibana-loki-local
-kibana_admin_user: admin
-kibana_admin_pwd: "{{ vault_kibana_admin_pwd }}"
-kibana_container_name: loki_5.3_kibana
-kibana_deployment_name: loki_5.3
+kibana_elasticsearch_url: "http://{{ kibana_es_url }}:{{ kibana_es_port }}"
+kibana_es_url: "{{ hostvars[groups['docker-es-nodes'][0]]['ansible_eth1']['ipv4']['address'] }}"
+kibana_verify_ssl: false
+kibana_es_port: 9200
+kibana_index: .kibana-staging-local
+kibana_admin_user:
+kibana_admin_pwd:
+kibana_container_name: 5.3_kibana
+kibana_deployment_name: staging_5.3
 kibana_external_port: 5601
-kibana_image_tag: 5.3
+kibana_image_tag: 5.3.0
+kibana_remote_path: /usr/share/kibana/config
+kibana_plugin_list:
+ - "https://github.com/istresearch/kibana-object-format/releases/download/v0.1.0/kibana_object_format-0.1.0-kbn_{{ kibana_image_tag }}.zip"
 
 #### DATADOG ####
 datadog_api_key: "{{ vault_datadog_api_key }}"
