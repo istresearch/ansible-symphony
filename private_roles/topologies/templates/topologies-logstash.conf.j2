@@ -1,0 +1,38 @@
+input {
+  file {
+    path => ['{{ topologies_log_dir }}/*.log']
+    codec => json
+    tags => ['topologies']
+    sincedb_path => "{{ logstash_sincedb_dir }}/since.db"
+  }
+}
+
+filter {
+    if 'topologies' in [tags] and [message] == "Tuple Emit" {
+      drop { }
+    }
+    else if [level] =~ /^DEBUG/ {
+        drop { }
+    }
+}
+
+output {
+{% if groups['elasticsearch-nodes'] is defined and (groups['elasticsearch-nodes']|length > 0) %}
+  if 'topologies' in [tags]{
+    elasticsearch {
+      hosts => "{{ groups['elasticsearch-nodes'][0] }}:{{ elasticsearch_network_http_port|default(9200) }}"
+      template => "{{ logstash_template_dir|default('/etc/logstash.d/templates') }}/logs-topologies-template.json"
+      template_name => "logs-*-topologies-*"
+      template_overwrite => false
+      index => "logs-{{ deploy_env|default("prod") }}-{{ topologies_logstash_component_tag }}-%{+YYYY.MM.dd}"
+      document_type => "%{[logger]}"
+      flush_size => {{ topologies_logstash_flush_size }}
+{% if logstash_credentials is defined and logstash_credentials == true %}
+      ssl => {{ logstash_es_ssl|default('true')}}
+      user => "{{ logstash_es_user }}"
+      password => "{{ logstash_es_pwd }}"
+{% endif %}
+    }
+  }
+{% endif %}
+}

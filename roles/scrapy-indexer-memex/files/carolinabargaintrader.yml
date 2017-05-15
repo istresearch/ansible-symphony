@@ -1,0 +1,9 @@
+campaignid: memex
+downloaddelay: 30
+engagementid: eng1
+findurlregex:
+- category\/\d+\/.*\/listings/\d+\/.*\.html
+rediskey: indexer-carolinabargaintrader
+urllist:
+- http://www.carolinabargaintrader.net/category/225/GunsandHunting.html
+- http://www.carolinabargaintrader.net/category/168/Sporting-Goods.html

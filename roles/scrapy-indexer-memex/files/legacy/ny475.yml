@@ -1,0 +1,11 @@
+---
+rediskey: indexer-ny475
+downloaddelay: 30
+findadregex: forum\.php\S+extra=page\S+\d
+paginateregex: forum\.php\?\S+page=\d+
+paginatenum: 150
+urllist:
+ - http://www.ny475.com/forum.php?mod=forumdisplay&fid=2&filter=typeid&typeid=6
+ - http://www.ny475.com/forum.php?mod=forumdisplay&fid=2&filter=typeid&typeid=1
+ - http://www.ny475.com/forum.php?mod=forumdisplay&fid=2&filter=typeid&typeid=4
+ - http://www.ny475.com/forum.php?mod=forumdisplay&fid=2&filter=typeid&typeid=5

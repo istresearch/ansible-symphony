@@ -1,0 +1,43 @@
+---
+###########################################################################
+# Referrenced external variables:
+#     * datadog_api_key
+#     * repository_infrastructure
+#     * ddagent_dir
+#     * additional_checksd_dir
+############################################################################
+
+datadog_monitor_install_dir: "{{ ddagent_dir }}/monitors"
+datadog_embedded_python_lib_dir: /opt/datadog-agent/embedded/lib/python2.7/site-packages
+datadog_dogstream_dir: "{{ datadog_monitor_install_dir }}/custom_monitors/dd-agent/dogstreams/parsers"
+
+
+####################################################################################
+# View available monitors
+# https://github.com/istresearch/ist-sysadmin/blob/master/datadog/datadog-vars.yml.sample
+#
+# You must define the following variables for each monitor:
+# enabled: Whether the monitor should be enabled
+# is_custom_check: Whether this monitor is corresponding to an agent check python
+#                  script in the ist-sysadmin repo under datadog/checks-available
+####################################################################################
+datadog_monitors:
+  disk:
+    enabled: true
+    is_custom_check: false
+    use_mount: no
+  network:
+    enabled: true
+    is_custom_check: false
+    collect_connection_state: yes
+  ntp:
+    enabled: true
+    is_custom_check: false
+    offset_threshold: 60
+
+####################################################################################
+# View available dogstreams (log parsers)
+# https://github.com/istresearch/ist-sysadmin/blob/master/datadog/es_slowlog_parse/datadog/dd-agent/log_parsers
+####################################################################################
+datadog_dogstreams: []
+  #- /path/to/log1:/path/to/parsers_module.py:parser_function_name

@@ -25,3 +25,7 @@ files={{ supervisord_programs_dir }}/*.conf
 
 [inet_http_server]
 port={{ supervisord_inet_http_server }}
+
+[ctlplugin:wildcards]
+supervisor.ctl_factory = supervisorwildcards.controllerplugin:make_wildcards_controllerplugin
+match_group = 1

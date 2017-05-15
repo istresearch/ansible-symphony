@@ -1,0 +1,228 @@
+---
+# --------------------------- Slack Integration -----------------------------
+- name: Slack
+  connection: local
+  hosts: all
+  become: no
+  tasks:
+    - block:
+      - name: get the command
+        shell: ps -o user -o command | grep ansible-playboo[k]
+        register: the_command
+
+      - name: get the current branch
+        shell: git symbolic-ref --short HEAD
+        register: git_branch
+
+      - name: Push to Slack
+        slack:
+          channel: "#monitoring-ansible"
+          username: "Ansible"
+          token: "{{ vault_slackbot_ansible }}"
+          msg: "```(On branch {{ git_branch.stdout }}) {{ the_command['stdout_lines'][0] }}```"
+
+      run_once: true
+      when: (slack_report is not defined or slack_report | bool == true) and not ansible_check_mode
+  tags:
+    - always
+
+# ---------------------------------- Pip ---------------------------
+- name: Run the pip role
+  hosts: all
+  roles: [ pip ]
+  tags: site-pip
+
+# ---------------------------------- DataDog --------------------------------
+
+- name: Run Datadog monitor roles
+  hosts: all
+  roles: [ datadog-monitors ]
+  tags:
+    - site-datadog-monitors
+
+# ------------------------------- Elastalert ---------------------------------
+- name: Run Elastalert role
+  hosts: elastalert-nodes
+  roles: [ elastalert ]
+  tags: site-elastalert
+
+# ------------------------------- Logrotate ---------------------------------
+- name: Run Logrotate role
+  hosts: all
+  roles: [ logrotate ]
+  tags: site-logrotate
+
+# -------------------------------- Cooper the Dog ------------------------------------
+- name: Run Cooper the Dog role
+  hosts: cooper-node
+  roles: [ cooper-the-dog ]
+  tags: cooper-the-dog
+
+# -------------------------------- Cooper Rule Manager ------------------------------------
+- name: Run Cooper Rulemanager role
+  hosts: cooper-node
+  roles: [ cooper-rulemanager ]
+  tags: cooper-rulemanager
+
+# ------------------------------- Gdelt Monitor ------------------------------
+- name: Run Gdelt monitor role
+  hosts: gdelt-monitor-node
+  roles: [ gdelt-monitor ]
+  tags: site-gdelt-monitor
+
+# ------------------------------- GNIP Monitor ------------------------------
+- name: Run GNIP monitor role
+  hosts: gnip-monitor-node
+  roles: [ gnip-monitor ]
+  tags: site-gnip-monitor
+
+# ----------------------------- Logstash Monitor -----------------------------
+- name: Run logstash datadog role
+  hosts: logstash-nodes
+  roles: [ logstash-datadog ]
+  tags: site-logstash-datadog
+
+# -------------------------------- Traptor ----------------------------------
+- name: Run Traptor role
+  hosts: traptor-nodes
+  roles: [ traptor ]
+  tags: site-traptor
+
+# -------------------------------- Elasticsearch App -------------------------
+- name: Run Elasticsearch app role
+  hosts: elasticsearch-nodes
+  roles: [ elasticsearch-app ]
+  tags: site-elasticsearch-app
+
+# -------------------------------- Kibana App --------------------------------
+- name: Run Kibana4 app role
+  hosts: kibana-node
+  roles: [ kibana4-app ]
+  tags: site-kibana4-app
+
+# -------------------------------- Scrapy Crawler App ------------------------
+# - name: Run Scrapy Crawler App role
+#   hosts: scrapy-crawler-nodes
+#   handlers:
+#     - include: roles/supervisord/handlers/main.yml
+#     - include: roles/logstash/handlers/main.yml
+#   roles: [ scrapy-crawler-app ]
+#   tags: site-scrapy-crawler-app
+
+# # -------------------------------- Scrapy Indexer App ------------------------
+# - name: Run Scrapy Indexer App role
+#   hosts: scrapy-indexer-nodes
+#   handlers:
+#     - include: roles/supervisord/handlers/main.yml
+#     - include: roles/logstash/handlers/main.yml
+#   roles: [ scrapy-indexer-app ]
+#   tags: site-scrapy-indexer-app
+
+# # --------------------------------- Kafka Monitor App ------------------------
+# - name: Run Kafka Monitor App role
+#   hosts: scrapy-kafka-monitor-node
+#   handlers:
+#     - include: roles/supervisord/handlers/main.yml
+#     - include: roles/logstash/handlers/main.yml
+#     - include: roles/iptables/handlers/main.yml
+#   roles: [ scrapy-kafka-monitor-app ]
+#   tags: site-kafka-monitor-app
+
+# # -------------------------------- Scrapy Redis App ---------------------------
+# - name: Run Redis Monitor App role
+#   hosts: scrapy-redis-monitor-node
+#   handlers:
+#     - include: roles/supervisord/handlers/main.yml
+#     - include: roles/logstash/handlers/main.yml
+#   roles: [ scrapy-redis-monitor-app ]
+#   tags: site-scrapy-redis-app
+
+# -------------------------------- Pulse App ----------------------------------
+- name: Pulse UI Application Update
+  hosts:
+    - pulse-ui-node
+    - mysql-node
+  tasks:
+    - set_fact: pulse_version_update=true
+  tags:
+    - site-pulse-app-update
+
+- name: Pulse UI Application
+  hosts: pulse-ui-node
+  handlers:
+    - include: roles/apache2/handlers/main.yml
+  vars_files:
+    - roles/kibana4/defaults/main.yml
+  roles: [ pulse-ui-app ]
+  tags:
+    - site-pulse-app
+    - site-pulse-app-with-connector
+    - site-pulse-ui
+    - site-pulse-app-update
+
+- name: Pulse DB Initialization
+  hosts: mysql-node
+  handlers:
+    - include: roles/apache2/handlers/main.yml
+  vars_files:
+    - private_roles/pulse-ui-app/defaults/main.yml
+    - roles/kibana4/defaults/main.yml
+  roles: [ pulse-ui-db-app]
+  tags:
+    - site-pulse-app
+    - site-pulse-app-with-connector
+    - site-pulse-db
+
+- name: Pulse MySQL-ES Connector Initialization
+  hosts: pulse-mysql-es-host
+  vars_files:
+    - private_roles/pulse-ui-db-app/defaults/main.yml
+  roles: [ mysql-es-connector ]
+  tags:
+    - site-pulse-app-with-connector
+    - site-pulse-es-conn
+
+- name: Pulse Data Load
+  hosts: pulse-ui-node
+  vars_files:
+    - private_roles/pulse-ui-app/defaults/main.yml
+  roles: [ pulse-ui-data-app ]
+  tags: site-pulse-app-data
+
+# --------------------------------- Googler -----------------------------------
+- name: Run the Googler role
+  hosts: googler-nodes
+  roles: [ googler ]
+  tags: site-googler
+
+# ------------------------------- Scrapy Cluster Pulse ------------------------
+- name: Run the Scrapy Cluster Pulse role
+  hosts: scrapy-cluster-nodes
+  vars:
+    - logstash_auto_start: True
+  roles: [ scrapy-cluster-pulse ]
+  tags: site-scrapy-cluster-pulse
+
+# ------------------------------- Topologies ------------------------
+- name: Run the Topologies role
+  hosts: storm-nodes
+  vars:
+    - logstash_auto_start: True
+  roles: [ topologies ]
+  tags: site-topologies
+
+# ---------------------------------- Gandalf Runner ---------------------------
+- name: Run the Gandalf Runner role
+  hosts: gandalf-runner-node
+  roles: [ gandalf-runner ]
+  vars:
+    - logstash_auto_start: True
+  tags: site-gandalf-runner
+
+# -------------------------------- Grawler ----------------------------------
+- name: Run Grawler role
+  hosts: grawler-nodes
+  vars:
+    - logstash_auto_start: True  
+  roles: [ grawler ]
+  tags: site-grawler

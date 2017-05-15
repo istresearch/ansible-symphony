@@ -1,0 +1,12 @@
+---
+urllist:
+ - http://www.alibaba.com/catalogs/products/CID2813
+ - http://www.alibaba.com/catalogs/products/CID2812
+findadregex:
+ - \S*product-detail\S*
+ - \S*contactinfo\.html
+ - \S*company_profile\.html
+downloaddelay: 10
+paginateregex: catalogs\/products\/CID\d+\/\d+
+paginatenum: 30
+rediskey: indexer-alibaba

@@ -1,0 +1,126 @@
+---
+
+#### HADOOP VARS ####
+dfs_internap: false
+dfs_replication: 1
+dfs_block_size: 67109888
+dfs_datanode_data_dir:
+   - /data/dfs/dn
+yarn_nodemanager_local_dirs:
+   - /data/yarn/local
+yarn_nodemanager_log_dirs:
+   - /data/yarn/logs
+
+#### HBASE VARS ####
+hbase_dfs_replication: 2
+
+#### STORM VARS ####
+storm_nimbus_extra_config:
+    nimbus.childopts: "-Xmx128m"
+storm_supervisor_extra_config:
+    supervisor.childopts: "-Xmx128m"
+storm_ui_extra_config:
+    ui.childopts: "-Xmx64m"
+storm_worker_extra_config:
+    worker.childopts: "-XX:MaxPermSize=48m -XX:+UseConcMarkSweepGC"
+
+#### ZOOKEEPER VARS ####
+zookeeper_data_dir: /data/zookeeper
+
+#### KAFKA VARS ####
+#kafka_inter_broker_protocol_version: "0.9.0"
+#kafka_log_message_format_version: "0.9.0"
+
+kafka_heap: 512m
+kafka_num_partitions: 2
+kafka_replication_factor: 2
+kafka_data_log_dir:
+  - '/data/kafka/topic-logs'
+kafka_data_dir:
+  - '/data/kafka'
+
+# TRAPTOR VARS
+traptor_es_port: 9200
+
+#### SCRAPY VARS ####
+crawler_es_port: 9200
+monitis: false
+sc_crawling_interface: eth0
+
+#### ELASTICSEARCH VARS ####
+elasticsearch_heap_size: 2g
+elasticsearch_is_master: "true"
+elasticsearch_is_data: "true"
+elasticsearch_discovery_zen_minimum_master_nodes: 1
+elasticsearch_data_dir:
+  - /data/elasticsearch
+
+#### PULSE STUFF ####
+pulse_user: "{{ vault_pulse_user }}"
+pulse_password: "{{ vault_pulse_password }}"
+
+pulse_repo_user: "{{ vault_pulse_repo_user }}"
+pulse_repo_password: "{{ vault_pulse_repo_password }}"
+
+pulse_serial: "{{ vault_pulse_serial }}"
+pulse_titan_user: "{{ vault_pulse_titan_user }}"
+pulse_titan_pw: "{{ vault_pulse_password }}"
+pulse_password_hash: "{{ vault_pulse_password_hash }}"
+
+pulse_db_user_name: "{{ vault_pulse_db_user_name }}"
+pulse_db_password: "{{ vault_pulse_password }}"
+
+mysql_root_username: "{{ vault_mysql_root_username }}"
+mysql_root_password: "{{ vault_mysql_root_password }}"
+
+pulse_titan_pw: "{{ vault_pulse_password }}"
+
+pulse_db_password: "{{ vault_pulse_password }}"
+
+pulse_mysql_admin_login:
+  user: "{{ mysql_root_username }}"
+  password: "{{ mysql_root_password }}"
+
+pulse_self_signed_ssl: true
+pulse_self_signed_url: true
+pulse_local_install: false
+mysql_root_password: "{{ vault_mysql_root_password }}"
+
+pulse_multi_instance:
+  - name: "pulse"
+    pulse_mysql_database: pulse
+    pulse_user: "pulse"
+    pulse_email: email1@email.com
+    pulse_user_pwd: password
+    pulse_mysql_user: pulse
+    pulse_mysql_pwd: password
+    pulse_analysis_user: "pulse"
+    pulse_analysis_pwd: pw
+    pulse_admin_analysis_url: "localhost"
+
+#### PULSE MYSQL ES HOST ####
+ql_db_host: vagrant-ist-01
+
+#### Elasticsearch ####
+elasticsearch_image_tag: 5.3.0
+
+#### KIBANA VARS ####
+kibana_user: admin
+kibana_user_pwd: "{{ vault_kibana_admin_pwd }}"
+kibana_elasticsearch_url: "http://{{ kibana_es_url }}:{{ kibana_es_port }}"
+kibana_es_url: "{{ hostvars[groups['docker-es-nodes'][0]]['ansible_eth1']['ipv4']['address'] }}"
+kibana_verify_ssl: false
+kibana_es_port: 9200
+kibana_index: .kibana-staging-local
+kibana_admin_user:
+kibana_admin_pwd:
+kibana_container_name: 5.3_kibana
+kibana_deployment_name: staging_5.3
+kibana_external_port: 5601
+kibana_image_tag: 5.3.0
+kibana_remote_path: /usr/share/kibana/config
+kibana_plugin_list:
+ - "https://github.com/istresearch/kibana-object-format/releases/download/v0.1.0/kibana_object_format-0.1.0-kbn_{{ kibana_image_tag }}.zip"
+
+#### DATADOG ####
+datadog_api_key: "{{ vault_datadog_api_key }}"

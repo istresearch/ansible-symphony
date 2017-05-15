@@ -2,7 +2,7 @@
 storm_install_dir: /opt/storm
 storm_user: storm
 storm_group: storm
-storm_version: 0.10.0
+storm_version: 1.0.3
 
 nimbus_thrift_port: 6627
 storm_drpc_port: 3772

@@ -1,11 +1,13 @@
 SENTRY_SECRET = "{{ traptor_sentry_secret }}"
 LOG_LEVEL = "{{ traptor_log_level }}"
+
 KAFKA_HOSTS = "{% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}"
+KAFKA_TOPIC = "{{ traptor_kafka_topic }}"
+
 REDIS_HOST = "{{ groups['redis-master-node'][0] }}"
 REDIS_PORT = {{ traptor_redis_port }}
 REDIS_DB = {{ traptor_redis_db }}
-
-KAFKA_TOPIC = "{{ traptor_kafka_topic }}"
+REDIS_PUBSUB_CHANNEL = "{{ traptor_redis_pubsub }}"
 
 # Twitter API Keys
 {% if inventory_hostname in groups['traptor-track-nodes'] %}
@@ -21,7 +23,6 @@ APIKEYS = (
 )
 {% endif %}
 
-
 {% if inventory_hostname in groups['traptor-follow-nodes'] %}
 APIKEYS = (
 {% for key in traptor_follow_apikeys %}
@@ -34,7 +35,6 @@ APIKEYS = (
 {% endfor %}
 )
 {% endif %}
-
 
 {% if inventory_hostname in groups['traptor-location-nodes'] %}
 APIKEYS = (

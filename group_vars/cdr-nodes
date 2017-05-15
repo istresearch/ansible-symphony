@@ -1,0 +1,29 @@
+---
+## PUT VARIABLES THAT PERTAIN TO BOTH MASTER AND DATA NODES IN THIS FILE
+
+elasticsearch_discovery_zen_minimum_master_nodes: 2
+
+elasticsearch_disk_threshold_enabled: True
+elasticsearch_watermark_low: 300gb
+elasticsearch_watermark_high: 250gb
+elasticsearch_update_interval: 1m
+
+datadog_monitors:
+  supervisord:
+    enabled: true
+    is_custom_check: false
+    server_name: '{{ inventory_hostname }}'
+  elastic:
+    enabled: true
+    is_custom_check: false
+    es_instances:
+        - url: http://localhost:9200
+          tag: "es-cluster:cdr"
+  disk:
+    enabled: true
+    is_custom_check: false
+    use_mount: no
+  network:
+    enabled: true
+    is_custom_check: false
+    collect_connection_state: yes

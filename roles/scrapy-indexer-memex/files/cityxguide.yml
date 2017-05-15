@@ -1,0 +1,11 @@
+campaignid: memex
+downloaddelay: 10
+engagementid: eng1
+findurlregex:
+- http:\/\/cityxguide.com\/\S+
+rediskey: indexer-cityxguide
+urllist:
+- http://asia.cityxguide.com/
+- http://europe.cityxguide.com/
+- http://south-america.cityxguide.com/
+- http://north-america.cityxguide.com/

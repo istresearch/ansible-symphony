@@ -1,0 +1,47 @@
+version: '2.0'
+services:
+{% for item in pulse_multi_instance %}
+{% set port = 443 + loop.index0 %}
+  {{ item.name }}_ui:
+    image: istresearch/pulse-ui:{{ pulse_tag }}
+    container_name: {{ item.name }}_pulse
+    ports:
+      - "{{ port }}:443"
+    environment:
+      # Static vars
+      - ENVIRONMENT={{ deploy_env|default('prod') }}
+      - PULSE_UI_AUTO_INSTALL={{ pulse_ui_auto_install|default('yes') }}
+      - PULSE_LANDING_PAGE={{ pulse_landing_page }}
+      - PULSE_MYSQL_PRIVILEGED_USER={{ pulse_rds_master_user }}
+      - PULSE_MYSQL_PRIVILEGED_USER_PASSWORD={{ pulse_rds_master_pwd }}
+      - PULSE_MYSQL_DATABASE_CREATE={{ pulse_mysql_db_create|default('yes') }}
+      - PULSE_MYSQL_HOST={{ pulse_mysql_host }}
+      - PULSE_MYSQL_PORT={{ pulse_mysql_port|default('3306') }}
+      - PULSE_PIPELINE_TYPE={{ pulse_pipeline_type }}
+      - PULSE_PIPELINE_HOST_LIST={% for host in groups['kafka-nodes'] %}{{ host }}{% if not loop.last %},{% endif %}{% endfor %}
+
+      - PULSE_PIPELINE_SCHEMA={{ pulse_pipeline_schema }}
+      - PULSE_COOPER_PROTOCOL={{ pulse_cooper_protocol }}
+      - PULSE_COOPER_HOST={{ pulse_cooper_host }}
+      - PULSE_COOPER_PASSWORD={{ pulse_cooper_pass }}
+      - PULSE_COOPER_USERNAME={{ pulse_cooper_user }}
+      - PULSE_COOPER_APIBASEPATH={{ pulse_cooper_apipath }}
+
+      # Per instance vars
+      - PULSE_INSTANCE_NAME={{ item.name }}
+      - PULSE_MYSQL_DATABASE={{ item.pulse_mysql_database|default('pulse') }}
+      - PULSE_USER={{ item.pulse_user|default('pulse') }}
+      - PULSE_USER_EMAIL={{ item.pulse_user_email|default('fake@fakemail.com') }}
+      - PULSE_USER_PASSWORD={{ item.pulse_user_pwd }}
+      - PULSE_MYSQL_USER={{ item.pulse_mysql_user|default('pulse') }}
+      - PULSE_MYSQL_PASSWORD={{ item.pulse_mysql_pwd }}
+      - PULSE_ANALYSIS_IFRAME_URL=https://{{ item.pulse_analysis_user }}:{{ item.pulse_analysis_pwd }}@{{ item.pulse_admin_analysis_url|default('localhost:5601') }}
+
+    volumes:
+      - {{ pulse_mmr_parent_dir }}/pulse/{{ item.name }}/mmr:/var/mmr
+      - {{ pollster_local_dir }}/appPollsterPrime-pre23-release-{{ pollster_version }}.apk:/opt/pulse/res/files/Pollster.Android5.apk
+      - {{ pollster_local_dir }}/appPollsterPrime-pre23-release-{{ pollster_version }}.apk:/opt/pulse/res/files/Pollster.Prime.apk
+      - {{ pollster_local_dir }}/appPollsterPrime-post23-release-{{ pollster_version }}.apk:/opt/pulse/res/files/Pollster.Android6.apk
+    restart: always
+
+{% endfor %}

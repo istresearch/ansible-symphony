@@ -1,0 +1,43 @@
+---
+- name: create indexer log directory
+  file:
+    path: "{{ sc_indexer_log_dir }}/"
+    state: directory
+    mode: 0755
+    group: "{{ sc_group }}"
+    owner: "{{ sc_user }}"
+
+- name: copy indexer settings
+  template:
+    src: indexer_settings.py.j2
+    dest: "{{ sc_install_dir }}/default/indexer/{{ sc_indexer_bot_name }}/localsettings.py"
+    mode: 0644
+  notify:
+    - restart scrapy-indexer
+
+- name: copy scrapy settings
+  template:
+    src: scrapy.cfg.j2
+    dest: "{{ sc_install_dir }}/default/indexer/scrapy.cfg"
+    mode: 0644
+  notify:
+    - restart scrapy-indexer
+
+- name: copy supervisord config
+  template:
+    src: scrapy-indexer-supervisord.conf.j2
+    dest: "{{ supervisord_programs_dir|default('/etc/supervisor/conf.d') }}/scrapy-indexer-supervisord.conf"
+    mode: 0644
+  notify:
+    - reread supervisord
+    - restart scrapy-indexer
+
+- name: add indexers to supervisord
+  supervisorctl:
+    name: "{{ sc_indexer_name }}:"
+    state: present
+
+- name: ensure indexers are started
+  supervisorctl:
+    name: "{{ sc_indexer_name }}:"
+    state: started

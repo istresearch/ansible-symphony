@@ -121,6 +121,11 @@
   </property>
 
   <property>
+    <name>dfs.permissions.enabled</name>
+    <value>{{ dfs_permissions_enabled|default(false) }}</value>
+  </property>
+
+  <property>
     <name>dfs.webhdfs.enabled</name>
     <value>{{ dfs_webhdfs_enabled }}</value>
   </property>

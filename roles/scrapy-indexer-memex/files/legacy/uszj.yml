@@ -1,0 +1,11 @@
+---
+rediskey: indexer-uszj
+downloaddelay: 30
+findadregex: html\/\d+.htm
+paginateregex: type.asp\?\S+PageType=\d+&Page=\d+
+paginatenum: 50
+urllist:
+ - http://uszj.net/type.asp?t=1&C=0,0,0
+ - http://uszj.net/type.asp?t=6&C=0,0,0
+ - http://uszj.net/type.asp?t=7&C=0,0,0
+ - http://uszj.net/type.asp?t=8&C=0,0,0

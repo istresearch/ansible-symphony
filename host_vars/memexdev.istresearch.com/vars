@@ -1,0 +1,73 @@
+---
+datadog_monitors:
+  ist_supervisord:
+    enabled: true
+    is_custom_check: true
+    server_name: '{{ inventory_hostname }}'
+  disk:
+    enabled: true
+    is_custom_check: false
+    use_mount: no
+  network:
+    enabled: true
+    is_custom_check: false
+    collect_connection_state: yes
+  ist_dns_check:
+    enabled: true
+    is_custom_check: true
+    aws_access_key: '{{ datadog_aws_access_key_id }}'
+    aws_secret_access_key: '{{ datadog_aws_secret_access_key }}'
+    public_zone_id: '{{ vault_aws_public_zone_id }}'
+    private_zone_id: '{{ vault_aws_private_zone_id }}'
+    region: us-east-1
+  ist_http_check:
+    enabled: true
+    is_custom_check: true
+    http_checks:
+      -  name: Rescue Forensics
+         url: https://secure.rescueforensics.com/user/login
+         method: POST
+         timeout: 10
+         data:
+           email: '{{ vault_rescue_forensics_auth.email }}'
+           password: '{{ vault_rescue_forensics_auth.password }}'
+         expected_status_code: 302
+         allow_redirects: false
+      -  name: Dig2
+         url: https://dig2.istresearch.com/
+         method: GET
+         auth:
+           username: '{{ vault_dig2_auth.user }}'
+           password: '{{ vault_dig2_auth.password }}'
+         timeout: 10
+         expected_status_code: 200
+         allow_redirects: false
+      -  name: Dig2 CDR proxy
+         url: https://dig2.istresearch.com/cdr/
+         method: GET
+         auth:
+           username: '{{ vault_dig2_auth.user }}'
+           password: '{{ vault_dig2_auth.password }}'
+         timeout: 10
+         expected_status_code: 200
+         allow_redirects: false
+  ist_json_http_check:
+    enabled: true
+    is_custom_check: true
+    apis:
+      - name: QCR Annotation
+        base_url: https://qcr-annotation.istresearch.com
+        endpoints:
+          - url: /status
+            method: GET
+            matches:
+            - json_path: status
+              pattern: ok
+            - json_path: components.elasticsearch
+              pattern: ok
+            - json_path: components.sql
+              pattern: ok
+            - json_path: components.redis
+              pattern: ok
+            - json_path: components.kafka
+              pattern: ok

@@ -1,0 +1,12 @@
+campaignid: memex
+downloaddelay: 30
+engagementid: eng1
+findurlregex: forum\.php\S+extra=page\S+\d
+paginatenum: 150
+paginateregex: forum\.php\?\S+page=\d+
+rediskey: indexer-ny475
+urllist:
+- http://www.ny475.com/forum.php?mod=forumdisplay&fid=2&filter=typeid&typeid=6
+- http://www.ny475.com/forum.php?mod=forumdisplay&fid=2&filter=typeid&typeid=1
+- http://www.ny475.com/forum.php?mod=forumdisplay&fid=2&filter=typeid&typeid=4
+- http://www.ny475.com/forum.php?mod=forumdisplay&fid=2&filter=typeid&typeid=5

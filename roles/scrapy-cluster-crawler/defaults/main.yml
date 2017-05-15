@@ -1,0 +1,61 @@
+---
+crawling_name: scrapy-crawler
+crawling_install_dir: "/opt/{{ crawling_name }}"
+crawling_miniconda_path: "{{ miniconda_install_dir|default('/opt/miniconda') }}/lib/python2.7/site-packages/{{ crawling_name }}"
+
+crawling_kafka_topic_prefix: memex
+crawling_zookeeper_dir: /crawlers_conf/
+crawling_zookeeper_id: all
+
+crawling_bot_name: crawling
+crawling_spider_folder: spiders
+crawling_pipeline_file: pipelines
+crawling_scrapy_logging_enabled: "False"
+crawling_httperror_all: "True"
+
+crawling_idle_before_close: 0
+crawling_download_delay: 2.0
+crawling_images_pipeline_rank: 90
+crawling_kafka_pipeline_rank: 100
+crawling_log_retry_middleware_rank: 505
+crawling_retry_times: 3
+crawling_download_timeout: 30
+
+crawling_persist: True
+crawling_queue_refresh: 10
+crawling_queue_hits: 60
+crawling_queue_window: 60
+crawling_queue_moderated: True
+crawling_dupefilter_timeout: 600
+crawling_ip_refresh: 60
+crawling_type_enabled: "True"
+crawling_ip_enabled: "True"
+crawling_item_retries: 3
+
+crawling_num_procs: 5
+crawling_start_secs: 5
+crawling_start_retries: 100
+crawling_stdout_logfile_maxbytes: 50MB
+crawling_stderr_logfile_maxbytes: 50MB
+
+crawling_logger_name: "{{ crawling_name }}"
+crawling_log_dir: /var/log
+crawling_log_file: "{{ crawling_name }}.log"
+crawling_log_max_bytes: 25000000
+crawling_log_backups: 5
+crawling_logstash_tag: "{{ crawling_name }}"
+crawling_logging_before_pipeline_rank: 1
+crawling_logging_after_pipeline_rank: 101
+
+crawling_site_capture_pipeline_rank: 25
+crawling_site_raw_content_capture_pipeline_rank: 26
+crawling_site_images_capture_pipeline_rank: 27
+crawling_s3_access_key: "AKIAIKYEKO7ZHSAHHFZQ"
+crawling_s3_secret_key: "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"
+crawling_s3_image_bucket: "memex-images"
+crawling_archive_api_url: "https://memexproxy.com/ist-memex-api/v2/artifacts"
+crawling_archive_api_token: "16a5aefb1ab92aba0e264472a2321e41c62b1aff"
+crawling_archive_api_max_concurrent_requests: 1
+crawling_archive_api_upload_delay: 0
+
+crawling_onion_proxy: "{{ groups['tor-proxy'][0] }}:8123"

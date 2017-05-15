@@ -15,3 +15,4 @@ spark.eventLog.enabled             {{ spark_history_enabled }}
 spark.yarn.historyServer.address   {{ yarn_historyserver_hostname }}:{{ mapreduce_jobhistory_webapp_address_port|default(19888) }}
 spark.driver.extraClassPath        {{ spark_install_dir }}/default/lib/spark-examples-{{ spark_version }}-hadoop{{ spark_hadoop_version }}.0.jar:{{ es_hadoop_install_dir }}/elasticsearch-hadoop-{{ es_hadoop_version }}/dist/elasticsearch-hadoop-{{ es_hadoop_version }}.jar
 spark.executor.extraClassPath      {{ spark_install_dir }}/default/lib/spark-examples-{{ spark_version }}-hadoop{{ spark_hadoop_version }}.0.jar:{{ es_hadoop_install_dir }}/elasticsearch-hadoop-{{ es_hadoop_version }}/dist/elasticsearch-hadoop-{{ es_hadoop_version }}.jar
+spark.local.dir                    /var/tmp

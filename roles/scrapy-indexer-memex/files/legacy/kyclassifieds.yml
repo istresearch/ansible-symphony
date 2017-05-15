@@ -1,0 +1,7 @@
+---
+rediskey: indexer-kyclassifieds
+downloaddelay: 30
+urllist:
+ - http://www.kyclassifieds.com/ad-category/guns/
+findadregex:
+ - http:\/\/www.kyclassifieds.com\/ads\/[^/]+\/

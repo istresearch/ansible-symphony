@@ -1,0 +1,12 @@
+campaignid: memex
+downloaddelay: 30
+engagementid: eng1
+findurlregex: forum\.php\?mod=viewthread\S+\d
+paginatenum: 60
+paginateregex: forum\.php\?\S+page=\d+
+rediskey: indexer-windplum
+urllist:
+- http://wx.windplum.com/forum.php?mod=forumdisplay&fid=2&filter=typeid&typeid=6
+- http://wx.windplum.com/forum.php?mod=forumdisplay&fid=2&filter=typeid&typeid=4
+- http://wx.windplum.com/forum.php?mod=forumdisplay&fid=2&filter=typeid&typeid=1
+- http://wx.windplum.com/forum.php?mod=forumdisplay&fid=2&filter=typeid&typeid=5

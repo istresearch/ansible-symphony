@@ -1,0 +1,39 @@
+es_host: {{ elastalert_es_host }}
+es_port: {{ elastalert_es4_port }}
+
+name: Kafka monitor flatline
+type: flatline
+index: crawler-*
+threshold: 10
+timeframe:
+  minutes: 5
+filter:
+- query:
+    query_string:
+      query: "logger: scrapy-kafka-monitor-crawling"
+alert:
+# - {{elastalert_slack_alerter}}
+- {{elastalert_pg_alerter}}
+
+# Slack required options
+slack_hook: {{slackbot}}
+slack_channel: {{elastalert_service_monitoring_channel}}
+
+# PagerDuty required options
+incident_key: 'kafka-monitor_flatline'
+event_type: 'trigger'
+description: 'Kafka monitor logger has reported no data in the last 5 minutes.'
+client_url: "http://dev-kibana.istresearch.com"
+
+# PagerDuty optional fields
+details:
+  es_host: {{ elastalert_es_host }}
+  es_port: {{ elastalert_es4_port }}
+  index: "crawler-*"
+  query: "logger: scrapy-kafka-monitor-crawling"
+  threshold: 10
+  timeframe_min: 5
+
+# context: 
+
+use_local_time: {{elastalert_local_time}}

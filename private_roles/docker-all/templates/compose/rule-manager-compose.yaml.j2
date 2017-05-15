@@ -1,0 +1,55 @@
+version: '2'
+services:
+  traptor:
+    image: istresearch/rule-manager:{{ rulemanager_traptor_tag }}
+    environment:
+      - COOPER_URL=http{% if rulemanager_cooper_ssl %}s{% endif %}://{% if rulemanager_cooper_credentials %}{{ rulemanager_cooper_user }}:{{ rulemanager_cooper_pass }}@{% endif %}{{ rulemanager_cooper_host }}/cooper/rules/list
+      - REDIS_HOST={{ traptor_redis_host }}
+      - REDIS_PORT=6379
+      - REDIS_DB={{ traptor_redis_db }}
+      - REDIS_KEY_PREFIX=traptor
+      - REDIS_NOTIFY_CHANNEL=traptor-notify-prod
+      - ES_USE_SSL={{ rulemanager_traptor_es_ssl }}
+      - ES_HOST={% if rulemanager_traptor_es_credentials %}{{ rulemanager_traptor_es_user }}:{{ rulemanager_traptor_es_pass }}@{% endif %}{{ groups['elasticsearch-nodes'][0] }}:{{ elasticsearch_network_http_port|default(9200) }}
+      - ES_RULE_INDEX={{ rulemanager_traptor_es_index }}
+      - ES_RULE_DOC_TYPE=document
+      - LOG_LEVEL=INFO
+      - LOG_DIR=/var/log/rulemanager
+      - LOG_FILE_NAME=rulemanager_traptor.log
+      - REFRESH_RATE={{ rulemanager_traptor_refresh_rate }}
+    restart: "on-failure:3"
+    volumes:
+     - logs:/var/log/rulemanager
+  telegram:
+    image: istresearch/rule-manager:{{ rulemanager_telegram_tag }}
+    environment:
+      - COOPER_URL=http{% if rulemanager_cooper_ssl %}s{% endif %}://{% if rulemanager_cooper_credentials %}{{ rulemanager_cooper_user }}:{{ rulemanager_cooper_pass }}@{% endif %}{{ rulemanager_cooper_host }}/cooper/rules/list
+      - COOPER_TYPE=telegram_public_channel
+      - COOPER_RULE_ID_KEY=rule_id
+      - REDIS_HOST={{ telegram_redis_host }}
+      - REDIS_PORT=6379
+      - REDIS_DB={{ telegraptor_redis_db }}
+      - REDIS_KEY_PREFIX=telegram
+      - REDIS_NOTIFY_CHANNEL={{ rulemanager_telegram_channel }}
+      - LOG_LEVEL=INFO
+      - LOG_DIR=/var/log/rulemanager
+      - LOG_FILE_NAME=rulemanager_telegram.log
+      - REFRESH_RATE={{ rulemanager_telegram_refresh_rate }}
+    restart: "on-failure:3"
+    volumes:
+     - logs:/var/log/rulemanager
+
+  logstash:
+    image: logstash:{{ logstash_tag }}
+    command: logstash -f /etc/logstash/conf.d/logstash.conf
+    volumes:
+      - {{ docker_configs_dir }}/{{ logstash_file_final }}:/etc/logstash/conf.d/logstash.conf
+      - {{ docker_configs_dir }}/logs-template.{{ deploy_env }}.json:/etc/logstash/templates/logs-template.json
+      - logs:/var/log/container-logs
+    extra_hosts:
+      - {{ inventory_hostname }}:172.17.0.1
+    restart: "on-failure:3"
+
+volumes:
+  logs:
+

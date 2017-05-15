@@ -1,0 +1,10 @@
+campaignid: memex
+downloaddelay: 10
+engagementid: eng1
+findurlregex:
+- http:\/\/www\.tradekey\.com\/product-free\S*\d+\.html
+- http:\/\/www\.tradekey\.com\/company\/\S*\d+\.html
+rediskey: indexer-tradekey
+urllist:
+- http://www.tradekey.com/Passport-Visa_pid2517.htm
+- http://www.tradekey.com/Labour-Employment_pid2514.htm

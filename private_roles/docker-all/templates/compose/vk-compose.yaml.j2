@@ -1,0 +1,15 @@
+---
+
+version: '2'
+services:
+  scraper:
+    image: istresearch/vkollect:{{ vk_worker_tag }}
+    environment:
+      - KAFKA_HOSTS={% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}
+      - KAFKA_TOPIC={{ vk_kafka_topic_prefix }}.{{ vk_kafka_topic_main }}
+      - REDIS_HOST={{ vk_redis_host }}
+      - REDIS_PORT=6379
+      - REDIS_DB={{ vk_redis_db }}
+      - REDIS_QUEUE=vk
+    command: python run.py -s
+    restart: always

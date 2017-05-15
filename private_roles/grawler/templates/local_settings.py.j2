@@ -1,0 +1,44 @@
+GRAWLER_ID = {% for host in groups['grawler-nodes'] %}{%- if host == inventory_hostname -%}"{{ loop.index }}"{%- endif -%}{% endfor %}
+
+# Redis 
+REDIS = {
+    'host': "{{ groups['redis-master-node'][0] }}",
+    'port': {{ grawler_redis_port }},
+    'db': {{ grawler_redis_db }},
+    'queue': "{{ grawler_queue }}",
+    'shared_queue': "{{ grawler_shared_queue }}",
+    'cache': "{{ grawler_cache_key }}"
+}
+
+# Kafka
+KAFKA = {
+    'hosts': "{% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}",
+    'topic': "{{ grawler_kafka_topic }}",
+    'consumer': "{{ grawler_kafka_consumer }}",
+}
+
+ZOOKEEPER_ASSIGN_PATH = "{{ grawler_zookeeper_dir }}"
+ZOOKEEPER_HOSTS = "{% for host in groups['zookeeper-nodes'] %}{{ host }}:{{ zookeeper_port|default(2181) }}{% if not loop.last %},{% endif %}{% endfor %}"
+
+# Worker
+WORKER_SLEEP_TIME = {{ grawler_sleep_time }}
+#seconds
+CRAWL_INTERVAL = {{ grawler_crawl_interval }}
+MAX_CRAWL_DEPTH = {{ grawler_crawl_depth }}
+
+# Graph Scoring
+GRAPH_FEED_ENGAGEMENT_BASE = {{ grawler_feed_engagement_base }}
+
+LOGGER_NAME = "{{ grawler_logger_name }}"
+LOG_DIR = "{{ grawler_log_dir }}"
+LOG_FILE = "{{ grawler_log_file }}"
+LOG_MAX_BYTES = "{{ grawler_log_max_bytes }}"
+LOG_BACKUPS = {{ grawler_log_backups }}
+LOG_STDOUT = {{ grawler_log_stdout }}
+LOG_JSON = {{ grawler_log_json }}
+LOG_LEVEL = "{{ grawler_log_level }}"
+
+try:
+    from local_settings import *
+except ImportError:
+    pass

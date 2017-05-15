@@ -1,0 +1,43 @@
+# Redis host information
+REDIS_HOST = "{{ groups['redis-master-node'][0] }}"
+REDIS_PORT = {{ redis_port|default(6379) }}
+REDIS_DB = {{ sc_redis_master_db }}
+
+# Kafka server information
+KAFKA_HOSTS = "{% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}"
+KAFKA_INCOMING_TOPIC = '{{ sc_kafka_monitor_kafka_topic_prefix }}.{{ sc_kafka_monitor_topic_main }}'
+KAFKA_GROUP = '{{ sc_kafka_monitor_kafka_group }}'
+KAFKA_FEED_TIMEOUT = {{ sc_kafka_monitor_feed_timeout }}
+KAFKA_CONN_TIMEOUT = {{ sc_kafka_monitor_conn_timeout }}
+
+# plugin setup
+PLUGIN_DIR = '{{ sc_kafka_monitor_plugin_dir }}/'
+PLUGINS = {
+{% for item in sc_kafka_monitor_plugins %}
+    {{ item }}{% if not loop.last %},{% endif %}
+
+{% endfor %}
+}
+
+# logging setup
+LOGGER_NAME = '{{ sc_kafka_monitor_logger_name }}'
+LOG_DIR = '{{ sc_kafka_monitor_log_dir }}'
+LOG_FILE = '{{ sc_kafka_monitor_log_file }}'
+LOG_MAX_BYTES = {{ sc_kafka_monitor_log_max_bytes }}
+LOG_BACKUPS = {{ sc_kafka_monitor_log_backups }}
+LOG_STDOUT = {{ sc_kafka_monitor_log_stdout }}
+LOG_JSON = {{ sc_kafka_monitor_log_json }}
+LOG_LEVEL = '{{ sc_kafka_monitor_log_level }}'
+
+# stats setup
+STATS_TOTAL = {{ sc_kafka_monitor_stats_total }}
+STATS_PLUGINS = {{ sc_kafka_monitor_stats_plugins }}
+STATS_CYCLE = {{ sc_kafka_monitor_stats_cycle }}
+STATS_DUMP = {{ sc_kafka_monitor_stats_dump }}
+# from time variables in scutils.stats_collector class
+STATS_TIMES = [
+{% for item in sc_kafka_monitor_stats_times %}
+    '{{ item }}'{% if not loop.last %},{% endif %}
+
+{% endfor %}
+]

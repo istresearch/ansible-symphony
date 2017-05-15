@@ -15,6 +15,7 @@ elasticsearch_start_retries: 3
 
 elasticsearch_install_kopf: true
 elasticsearch_install_icu_analysis: false
+elasticsearch_install_cloud_aws: true
 
 elasticsearch_install_marvel: false
 elasticsearch_marvel_with_shield: false
@@ -25,9 +26,12 @@ elasticsearch_marvel_agent_password: none
 elasticsearch_plugin_dir: "{{ elasticsearch_install_dir }}/elasticsearch-{{ elasticsearch_version }}/plugins"
 elasticsearch_bin_dir: "{{ elasticsearch_install_dir }}/elasticsearch-{{ elasticsearch_version }}/bin"
 elasticsearch_log_dir: /var/log/elasticsearch
-elasticsearch_data_dir: /var/lib/elasticsearch
+elasticsearch_data_dir: 
+   - '/data/elasticsearch'
 elasticsearch_work_dir: /tmp/elasticsearch
 elasticsearch_conf_dir: "{{ elasticsearch_install_dir }}/elasticsearch-{{ elasticsearch_version }}/config"
+
+elasticsearch_volume: /dev/xvdb
 
 elasticsearch_is_master: "false"
 elasticsearch_is_data: "false"
@@ -110,8 +114,24 @@ elasticsearch_logger_search: "{{ elasticsearch_log_trace }}"
 elasticsearch_logger_indexing: "{{ elasticsearch_log_trace }}"
 elasticsearch_additivity_search: "false"
 elasticsearch_additivity_indexing: "false"
+# dynamic scripting
+script_inline: false
+script_indexed: false
+
 
 elasticsearch_logging_slowlog_mode: "standard" # standard, showall, off
 elasticsearch_logger_type: "dailyRollingFile" # dailyRollingFile, file
 
 repository_infrastructure: "https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/{{ elasticsearch_version }}"
+
+###########################################
+# Nginx proxy
+###########################################
+elasticsearch_nginx_proxy_enabled: false
+elasticsearch_nginx_proxy_conf:
+  listen_port: 9201
+  upstream_port: "{{ elasticsearch_network_http_port|default(9200) }}"
+elasticsearch_nginx_proxy_auth:
+  user: 'user'
+  password: 'password'
+  htpasswd_file: "{{ nginx_htpasswd_file|default('/etc/nginx/.htpasswd') }}"

@@ -71,7 +71,7 @@ path.conf: {{ elasticsearch_conf_dir }}
 # Path to directory where to store the data (separate multiple locations by comma):
 #
 # path.data: /path/to/data
-path.data: {{ elasticsearch_data_dir }}_{{ conf_name }}
+path.data: {% for path in elasticsearch_data_dir %}{{ path }}_{{ conf_name }}{% if not loop.last %},{% endif %}{% endfor %}
 
 # path.work: /path/to/work
 path.work: {{ elasticsearch_work_dir }}_{{ conf_name }}
@@ -168,7 +168,7 @@ network.publish_host: {{ inventory_hostname }}
 # Set the bind address to a specific IP (IPv4 or IPv6):
 #
 # network.host: 192.168.0.1
-network.host: {{ inventory_hostname }}
+network.host: ["{{ inventory_hostname }}", "127.0.0.1"]
 #
 # Set a custom port for the node to node communication (9300 by default):
 #
@@ -282,3 +282,12 @@ node.max_local_storage_nodes: {{ elasticsearch_node_max_local_storage_nodes }}
 action.destructive_requires_name: true
 
 action.auto_create_index: {{ elasticsearch_misc_auto_create_index }}
+
+# ------------------------ Dynamic Scripting --------------------------------
+#
+# Default values
+# script.inline: false
+# script.indexed: false
+#
+script.inline: {{ script_inline }}
+script.indexed: {{ script_indexed }}

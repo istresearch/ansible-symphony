@@ -1,0 +1,136 @@
+---
+
+- name: Install Miniconda packages
+  shell: "{{ miniconda_install_dir|default('/opt/miniconda') }}/bin/conda install {{ item }} --yes"
+  with_items:
+    - pip
+
+- name: create elastalert install directory
+  file:
+    path={{ elastalert_install_dir }}
+    state=directory
+    mode=0744
+  tags: elastalert
+
+- name: create elastalert log directory
+  file:
+    path={{ elastalert_log_dir }}/
+    state=directory
+    mode=0755
+  tags: elastalert
+
+- name: check for existing elastalert install
+  stat: path={{ elastalert_install_dir }}/{{ elastalert_name }}-{{ elastalert_version }}
+  register: elastalert
+  tags: elastalert
+
+- name: download elastalert
+  get_url:
+    validate_certs=no
+    url="{{ repository_pip }}/elastalert/{{ elastalert_name }}-{{ elastalert_version }}.tar.gz"
+    dest=/tmp/{{ elastalert_name }}-{{ elastalert_version }}.tar.gz
+    mode=0644
+  when: elastalert.stat.isdir is not defined
+  tags: elastalert
+
+- name: extract elastalert
+  unarchive:
+    src=/tmp/{{ elastalert_name }}-{{ elastalert_version }}.tar.gz
+    dest={{ elastalert_install_dir }}/
+    copy=no
+  when: elastalert.stat.isdir is not defined
+  tags: elastalert
+
+- name: delete temporary elastalert file
+  file:
+    path=/tmp/{{ elastalert_name }}-{{ elastalert_version }}.tar.gz
+    state=absent
+  ignore_errors: yes
+  tags: elastalert
+
+- name: create elastalert symlink
+  file:
+    path={{ elastalert_install_dir }}/default
+    state=link
+    src={{ elastalert_install_dir }}/{{ elastalert_name }}-{{ elastalert_version }}
+  tags: elastalert
+
+- name: install elast alert
+  shell: "{{ miniconda_install_dir|default('/opt/miniconda') }}/bin/python setup.py install"
+  args:
+    chdir: "{{elastalert_install_dir}}/default/"
+  tags: elastalert
+
+- name: create elastalert module directory
+  file:
+    path={{elastalert_install_dir}}/default/{{elastalert_module_dir}}/
+    state=directory
+    mode=0755
+  tags: elastalert
+
+- name: create __init__.py file for modules
+  file:
+    path={{elastalert_install_dir}}/default/{{elastalert_module_dir}}/__init__.py
+    state=touch
+    mode=0755
+  tags: elastalert
+
+- name: copy over elastalert modules
+  template:
+    src=my_alerts.py.j2
+    dest={{elastalert_install_dir}}/default/{{elastalert_module_dir}}/my_alerts.py
+    mode=0644
+  tags: elastalert
+
+- name: copy over elastalert config file
+  template:
+    src=config.yaml.j2
+    dest={{elastalert_install_dir}}/default/config.yaml
+    mode=0644
+  tags: elastalert
+
+- name: create elastalert rules directory
+  file:
+    path={{elastalert_install_dir}}/default/{{elastalert_rules_dir}}/
+    state=directory
+    mode=0755
+  tags: elastalert
+
+- name: copy over elastalert rules
+  template:
+    src="{{item}}.yaml.j2"
+    dest="{{elastalert_install_dir}}/default/{{elastalert_rules_dir}}/{{item}}.yaml"
+    mode=0644
+  with_items:
+    # - justpaste_freq
+    # - justpaste_spike
+    # - sendvid_freq
+    # - tweet_spike
+    # - twitmail_freq
+    - user_change
+    - editable_links
+    # - tweet_flatline
+    # - scrapy-crawler_flatline
+    # - scrapy-kafka-monitor_flatline
+    # - scrapy-indexer_flatline
+    - scrapy-redis_spike
+  tags: elastalert
+
+- name: copy over service monitoring elastalert rules
+  template:
+    src="{{item}}.yaml.j2"
+    dest="{{elastalert_install_dir}}/default/{{elastalert_rules_dir}}/{{item}}.yaml"
+    mode=0644
+  with_items:
+    - tweet_flatline
+  tags: elastalert
+
+- name: copy supervisord config
+  template:
+    src={{ elastalert_name }}-supervisord.conf.j2
+    dest={{ supervisord_programs_dir }}/{{ elastalert_name }}-supervisord.conf
+    mode=0644
+  notify:
+    - reread supervisord
+  tags: elastalert
+

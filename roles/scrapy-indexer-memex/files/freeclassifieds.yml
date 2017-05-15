@@ -1,0 +1,9 @@
+campaignid: memex
+downloaddelay: 30
+engagementid: eng1
+findurlregex:
+- http:\/\/.*.freeclassifieds.com\/classified_ads\/[^/"]+\/[^/"]+\/[^"]+
+rediskey: indexer-freeclassifieds
+urllist:
+- http://usa.freeclassifieds.com/classified_ads/For_Sale/Firearms
+- http://usa.freeclassifieds.com/classified_ads/For_Sale/Outdoor_Sporting

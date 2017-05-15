@@ -1,0 +1,19 @@
+campaignid: memex
+downloaddelay: 10
+engagementid: eng1
+findurlregex: https://www\.tnaboard\.com/showthread\.php\?\d+
+paginatenum: 1
+paginateregex: https://www\.tnaboard\.com/forumdisplay.php\?\d+.+/page\d+
+prunevars:
+- regex: showthread\.php\?\d+(-.+)
+  sub: ''
+rediskey: indexer-tnaboard
+urllist:
+- https://www.tnaboard.com/forumdisplay.php?f=98
+- https://www.tnaboard.com/forumdisplay.php?f=116
+- https://www.tnaboard.com/forumdisplay.php?f=165
+- https://www.tnaboard.com/forumdisplay.php?f=158
+- https://www.tnaboard.com/forumdisplay.php?f=151
+- https://www.tnaboard.com/forumdisplay.php?f=144
+- https://www.tnaboard.com/forumdisplay.php?f=137
+- https://www.tnaboard.com/forumdisplay.php?f=130

@@ -1,0 +1,9 @@
+To back up your Kibana4 Dashboard:
+
+./backup_kibana_index.sh <es_location> <es_port> <backup_folder> <index_name>
+- Creates a .tar file with your dashboard inside of it
+
+To restore your Kibana4 Dashboard from a backup:
+
+./restore_kibana_index.sh <es_location> <es_port> <backup_tar>
+- Unpacks your tar file and pushes it into Kibana4

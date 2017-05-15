@@ -1,0 +1,34 @@
+---
+# file: group_vars/pulse-comicbooks-ist
+# Override group_vars for local vagrant testing
+
+swap_run: false
+pip_local: false
+
+elasticsearch_heap_size: 2g
+gnip_monitor_autostart: "false"
+gnip_monitor_data_dir: /tmp
+gnip_monitor_es_port: 9200
+kafka_data_log_dir:
+  - "/opt/kafka/topic-logs"
+crawler_es_port: 9200
+monitis: false
+elastalert_autostart: false
+elastalert_es1_port: 9200
+elastalert_es2_port: 9200
+elastalert_es3_port: 9200
+elastalert_es4_port: 9200
+elastalert_es5_port: 9200
+storm_worker_ports: [ 6701 ]
+
+pulse_url_host: "{{ inventory_hostname }}"
+pulse_listen_port: 443
+
+pulse_self_signed_ssl: true
+pulse_self_signed_url: true
+pulse_local_install: false
+
+mysql_db_host: comic-books.istresarch.com
+pulse_mysql_admin_login:
+  user: "{{ mysql_root_username }}"
+  password: "{{ mysql_root_password }}"

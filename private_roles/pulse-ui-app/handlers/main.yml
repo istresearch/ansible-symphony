@@ -1,0 +1,9 @@
+---
+  - name: apache add pulse
+    shell: a2ensite pulse.conf
+
+  - name: apache add kibana
+    shell: a2ensite kibana_{{ kibana4_port | default('5601') }}.conf
+
+  - name: create kibana pwd
+    shell: htpasswd -b -c /etc/apache2/elastic.htpwd {{ pulse_user }} {{ pulse_password }}

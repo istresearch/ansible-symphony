@@ -1,0 +1,43 @@
+---
+- name: create crawling log directory
+  file:
+    path: "{{ sc_crawling_log_dir }}/"
+    state: directory
+    mode: 0755
+    group: "{{ sc_group }}"
+    owner: "{{ sc_user }}"
+
+- name: copy crawling settings
+  template:
+    src: crawler_settings.py.j2
+    dest: "{{ sc_install_dir }}/default/crawler/{{ sc_crawling_bot_name }}/localsettings.py"
+    mode: 0644
+  notify:
+    - restart scrapy-crawling
+
+- name: copy scrapy settings
+  template:
+    src: scrapy.cfg.j2
+    dest: "{{ sc_install_dir }}/default/crawler/scrapy.cfg"
+    mode: 0644
+  notify:
+    - restart scrapy-crawling
+
+- name: copy supervisord config
+  template:
+    src: scrapy-crawler-link-supervisord.conf.j2
+    dest: "{{ supervisord_programs_dir|default('/etc/supervisor/conf.d') }}/scrapy-crawler-link-supervisord.conf"
+    mode: 0644
+  notify:
+    - reread supervisord
+    - restart scrapy-crawling
+
+- name: add crawler to supervisord
+  supervisorctl:
+    name: "{{ sc_crawling_name }}:"
+    state: present
+
+- name: ensure crawler is started
+  supervisorctl:
+    name: "{{ sc_crawling_name }}:"
+    state: started

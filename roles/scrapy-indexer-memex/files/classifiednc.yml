@@ -1,0 +1,8 @@
+campaignid: memex
+downloaddelay: 30
+engagementid: eng1
+findurlregex:
+- http:\/\/www.classifiednc.com\/[^/]+\/\d+\/
+rediskey: indexer-classifiednc
+urllist:
+- http://www.classifiednc.com/for-sale/guns-hunting/

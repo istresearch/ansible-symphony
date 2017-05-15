@@ -1,0 +1,7 @@
+campaignid: memex
+downloaddelay: 10
+engagementid: eng1
+findurlregex: http://.+backpage.com/FemaleEscorts/.+/\d+
+rediskey: indexer-backpage
+urllist:
+- http://baltimore.backpage.com/FemaleEscorts/

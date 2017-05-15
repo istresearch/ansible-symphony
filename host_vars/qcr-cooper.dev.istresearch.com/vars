@@ -1,0 +1,59 @@
+---
+datadog_monitors:
+  ist_supervisord:
+    enabled: true
+    is_custom_check: false
+    server_name: '{{ inventory_hostname }}'
+  disk:
+    enabled: true
+    is_custom_check: false
+    use_mount: no
+  network:
+    enabled: true
+    is_custom_check: false
+    collect_connection_state: yes
+  docker_daemon:
+    enabled: true
+    is_custom_check: false
+    socket_path: "unix://var/run/docker.sock"
+    labels_as_tags: ["com.docker.compose.service", "com.docker.compose.project"]
+  es_doc_count:
+    enabled: true
+    is_custom_check: true
+    es_instances:
+      - host: '10.105.92.100'
+        protocol: http
+        port: 9200
+        doctypes:
+          ##########################
+          # QCR Dev storm
+          ##########################
+          - doc_type: normalizer-traptor-topology
+            index: logs-topologies-*
+            metric_name: storm.check.logs.count
+            timestamp_field: timestamp
+            query:
+              bool:
+                must:
+                 - match:
+                     message: Tuple acked in spout.
+                 - match:
+                     path: /var/log/topologies/topology-dev.log
+            tags:
+              - 'storm_log:normalizer-traptor-topology'
+              - 'storm_env:development'
+
+          - doc_type: normalizer-voyager-topology
+            index: logs-topologies-*
+            metric_name: storm.check.logs.count
+            timestamp_field: timestamp
+            query:
+              bool:
+                must:
+                 - match:
+                     message: Tuple acked in spout.
+                 - match:
+                     path: /var/log/topologies/topology-dev.log
+            tags:
+              - 'storm_log:normalizer-voyager-topology'
+              - 'storm_env:development'

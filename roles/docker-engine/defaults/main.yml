@@ -7,6 +7,8 @@ docker_user: docker
 docker_group: docker
 docker_start_secs: 10
 docker_start_retries: 3
+docker_repo_user: dumbuser
+docker_repo_pwd: dumbpassword
 
 # docker dns path for docker.io package ( changed at ubuntu 14.04 from docker to docker.io )
 docker_defaults_file_path: /etc/default/docker
@@ -18,9 +20,9 @@ docker_apt_repository: deb https://apt.dockerproject.org/repo ubuntu-{{ ansible_
 
 docker_opts: "-H tcp://127.0.0.1:4243 -H unix:///var/run/docker.sock --dns 8.8.8.8 --dns 8.8.4.4"
 
-# Versions for the python packages that are installed installed
-docker_py_version: latest
-docker_compose_version: latest
+# Versions for the python packages that are installed
+docker_py_version: 1.10.6
+docker_compose_version: 1.11.2
 
 # Set to 'yes' or 'true' to enable updates (sets 'latest' in apt module)
 docker_update_package: yes
@@ -31,3 +33,5 @@ docker_kernel_pkg_state: latest
 docker_pidproxy_install_dir: /opt/pidproxy
 docker_pid_file: "{{ docker_pidproxy_install_dir }}/docker.pid"
 docker_stop_signal: INT
+
+docker_install_ctop: true

@@ -1,0 +1,38 @@
+---
+- block:
+    - name: install pip packages
+      pip:
+        name: "{{ item }}"
+        virtualenv: "{{ virtualenv_path }}"
+      with_items:
+        - kazoo
+        - pyyaml
+
+    - name: configure scripts
+      template:
+        src: "extras/facebook_config_special.yaml.j2"
+        dest: "{{ workdir }}/grawler_config.{{ deploy_env }}.yaml"
+        mode: 0755
+
+    - name: move file pusher over
+      copy:
+        src: file_pusher.py
+        dest: "{{ workdir }}/file_pusher.py"
+        mode: 0755
+
+    - name: run parser/pusher python file
+      command: "{{ virtualenv_path }}/bin/python file_pusher.py -z {{ groups['zookeeper-nodes'][0] }} -f grawler_config.{{ deploy_env }}.yaml"
+      args:
+        chdir: "{{ workdir }}"
+
+    # clean up
+    - name: Clean up files
+      file:
+        state: absent
+        path: "{{ item }}"
+      with_items:
+        - "{{ workdir }}/grawler_config.{{ deploy_env }}.yaml"
+        - "{{ workdir }}/file_pusher.py"
+        - "{{ virtualenv_path }}"
+
+  run_once: true

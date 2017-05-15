@@ -1,0 +1,29 @@
+---
+gnip_monitor_name: gnip-monitor
+
+gnip_monitor_install_dir: "/opt/{{ gnip_monitor_name }}"
+
+gnip_monitor_version: mem_0.7-96f4c2
+
+gnip_monitor_num_procs: 1
+gnip_monitor_start_secs: 5
+gnip_monitor_start_retries: 100
+gnip_monitor_stderr_logfile_maxbytes: 50MB
+
+gnip_monitor_logger_name: "{{ gnip_monitor_name }}"
+gnip_monitor_log_dir: /var/log
+gnip_monitor_log_file: "{{ gnip_monitor_name }}.log"
+gnip_monitor_log_max_bytes: 25000000
+gnip_monitor_log_backups: 5
+
+gnip_monitor_doc_type: gnip_tweet
+gnip_monitor_es_port: 9200
+gnip_monitor_es_user: changeme
+gnip_monitor_es_password: changeme
+gnip_monitor_ssl: "false"
+gnip_monitor_autostart: "true"
+
+gnip_monitor_data_dir: /tmp
+
+# should be the same as kafka_num_partitions
+gnip_monitor_consumer_threads: 3

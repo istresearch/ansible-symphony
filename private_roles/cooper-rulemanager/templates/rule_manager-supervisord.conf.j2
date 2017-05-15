@@ -1,0 +1,20 @@
+[program:{{ cooper_rulemanager_name }}]
+process_name=%(program_name)s
+command={{ miniconda_install_dir|default('/opt/miniconda') }}/bin/python {{ cooper_rulemanager_install_dir }}/rule_manager.py --info
+directory={{ cooper_rulemanager_install_dir }}
+environment=PATH={{ cooper_rulemanager_install_dir }}
+stdout_logfile_maxbytes = 100MB
+stderr_logfile_maxbytes = 100MB
+stderr_logfile = AUTO
+stdout_logfile = AUTO
+autostart=true
+autorestart=true
+startsecs={{ cooper_rulemanager_start_secs }}
+startretries={{ cooper_rulemanager_start_retries }}
+stopsignal=KILL
+numprocs={{ cooper_rulemanager_num_procs }}
+exitcodes=0,2,3
+redirect_stderr=true
+redirect_stdout=true
+stderr_logfile=AUTO
+stderr_logfile_maxbytes={{ cooper_rulemanager_stderr_logfile_maxbytes }}

@@ -1,0 +1,9 @@
+# https://github.com/elastic/kibana-docker
+FROM {{ kibana_repo }}:{{ kibana_image_tag }}
+
+# Add your kibana plugins setup here
+{% if kibana_plugin_list %}
+{% for kibana_plugin in kibana_plugin_list %}
+RUN kibana-plugin install {{ kibana_plugin }}
+{% endfor %}
+{% endif %}

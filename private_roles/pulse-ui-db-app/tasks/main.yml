@@ -1,0 +1,203 @@
+---
+- name: Create MySQL db
+  mysql_db:
+    name: "{{ item.name }}"
+    state: present
+    login_host: "{{ pulse_db_host }}"
+    login_user: "{{ pulse_mysql_admin_login.user }}"
+    login_password: "{{ pulse_mysql_admin_login.password }}"
+    collation: "{{ item.collation | default('utf8_general_ci') }}"
+    encoding: "{{ item.encoding | default('utf8') }}"
+  with_items: "{{ pulse_mysql_databases }}"
+  tags: pulse-ui-db-app
+
+- name: Ensure MySQL users are present
+  mysql_user:
+    name: "{{ item.name }}"
+    state: present
+    login_host: "{{ pulse_db_host }}"
+    login_user: "{{ pulse_mysql_admin_login.user }}"
+    login_password: "{{ pulse_mysql_admin_login.password }}"
+    host: "{{ item.host | default('{{ inventory_hostname }}') }}"
+    password: "{{ item.password }}"
+    priv: "{{ item.priv | default('*.*:USAGE') }}"
+  with_items: "{{ pulse_mysql_users }}"
+  tags: pulse-ui-db-app
+
+# ####################################################################
+# Start updated database setup process for newer versions of Pulse
+# ####################################################################
+- name: Retrieve passwd
+  shell: cat {{ pulse_install_dir }}/joka-{{ pulse_version }}/install.pw
+  register: passwd
+  when: not pulse_db_legacy_setup
+  tags: pulse-ui-db-app
+
+- name: Set directory permissions for install
+  file: 
+    path: "{{ pulse_configs_dir }}/anyhost"
+    mode: 0777
+    recurse: yes
+  when: not pulse_db_legacy_setup
+  tags: pulse-ui-db-app
+
+- name: DB setup using SSL
+  uri:
+    url: "https://{{ pulse_url_host }}/{{ pulse_name }}/install/setupWebsite"
+    method: POST
+    body: "{ \"installpw\": \"{{ passwd.stdout }}\", {{ pulse_db_setup_json }} }"
+    body_format: json
+    return_content: yes
+    validate_certs: no
+    timeout: 60
+  register: http_response
+  until: http_response.status == 200
+  retries: 3
+  delay: 5
+  when: not pulse_db_legacy_setup and not pulse_self_signed_url
+  tags: pulse-ui-db-app
+
+- name: DB setup NOT using SSL
+  uri:
+    url: "http://{{ pulse_url_host }}/{{ pulse_name }}/install/setupWebsite"
+    method: POST
+    body: "{ \"installpw\": \"{{ passwd.stdout }}\", {{ pulse_db_setup_json }} }"
+    body_format: json
+    return_content: yes
+    validate_certs: no
+    timeout: 60
+  register: http_response
+  until: http_response.status == 200
+  retries: 3
+  delay: 5
+  when: not pulse_db_legacy_setup and pulse_self_signed_url
+  tags: pulse-ui-db-app
+
+- name: Revert directory permissions after install
+  file: 
+    path: "{{ pulse_configs_dir }}/anyhost"
+    mode: 0755
+    recurse: yes
+  when: not pulse_db_legacy_setup
+  tags: pulse-ui-db-app
+
+- name: Check for existing common configs directory
+  stat: path={{ pulse_common_dir }}/configs
+  register: pulse_common_configs
+  tags: pulse-ui-db-app
+
+- name: Copy configs to pulse common directory
+  copy:
+    src={{ pulse_configs_dir }}
+    dest={{ pulse_common_dir }}
+    remote_src=False
+    directory_mode=0755
+  when: not pulse_common_configs.stat.exists
+  tags: pulse-ui-db-app
+
+- name: Delete configs directory
+  file:
+    path={{ pulse_configs_dir }}
+    state=absent
+  ignore_errors: yes
+  tags: pulse-ui-db-app
+
+- name: Create configs symlink
+  file:
+    path={{ pulse_configs_dir }}
+    state=link
+    src={{ pulse_common_dir }}/configs
+  tags: pulse-ui-db-app
+
+# ####################################################################
+# Start original database setup process for older versions of Pulse
+# ####################################################################
+- name: Move dbconn-webapp template over
+  template:
+    src=dbconn-webapp.ini.j2
+    dest={{ pulse_install_dir }}/joka-{{ pulse_version }}/app/configs/anyhost/dbconn-webapp.ini
+    mode=0755
+  notify:
+    - restart apache
+  when: pulse_db_legacy_setup
+  tags: pulse-ui-db-app
+
+- name: Move dbconn-pulse template over
+  template:
+    src=dbconn-pulse.ini.j2
+    dest={{ pulse_install_dir }}/joka-{{ pulse_version }}/app/configs/anyhost/dbconn-pulse.ini
+    mode=0755
+  notify:
+    - restart apache
+  when: pulse_db_legacy_setup
+  tags: pulse-ui-db-app
+
+- name: Move Settings.php template over
+  template:
+    src=Settings.php.j2
+    dest={{ pulse_install_dir }}/joka-{{ pulse_version }}/app/configs/anyhost/Settings.php
+    mode=0755
+  notify:
+    - restart apache
+  when: pulse_db_legacy_setup
+  tags: pulse-ui-db-app
+
+- name: Move I18N.php over
+  copy:
+    src=I18N.php
+    dest={{ pulse_install_dir }}/joka-{{ pulse_version }}/app/configs/anyhost/
+    mode=0755
+  when: pulse_db_legacy_setup
+  tags: pulse-ui-db-app
+
+- name: Curl legacy DB setup
+  command: /usr/bin/curl {{ inventory_hostname }}/{{ pulse_name }}/install/resetup_db/
+  when: pulse_db_legacy_setup
+  tags: pulse-ui-db-app
+
+- name: Move titan sql script over
+  template:
+    src=setup_titan.sql.j2
+    dest=/tmp/setup_titan.sql
+  when: pulse_db_legacy_setup
+  tags: pulse-ui-db-app
+
+- name: Setup mysql titan user
+  mysql_db:
+    name={{ pulse_db_name }}
+    state=import
+    target=/tmp/setup_titan.sql
+  when: pulse_db_legacy_setup
+  tags: pulse-ui-db-app
+
+- name: Remove titan sql script
+  file:
+    path=/tmp/setup_titan.sql
+    state=absent
+  ignore_errors: yes
+  when: pulse_db_legacy_setup
+  tags: pulse-ui-db-app
+
+- name: Move mmr setup sql script over
+  template:
+    src=setup_mmr.sql.j2
+    dest=/tmp/setup_mmr.sql
+  when: pulse_db_legacy_setup
+  tags: pulse-ui-db-app
+
+- name: Setup default mmr directory in the Pulse instance
+  mysql_db:
+    name={{ pulse_db_name }}
+    state=import
+    target=/tmp/setup_mmr.sql
+  when: pulse_db_legacy_setup
+  tags: pulse-ui-db-app
+
+- name: Remove mmr setup sql script
+  file:
+    path=/tmp/setup_mmr.sql
+    state=absent
+  ignore_errors: yes
+  when: pulse_db_legacy_setup
+  tags: pulse-ui-db-app
+

@@ -1,0 +1,16 @@
+---
+- name: Copy S3 backup file
+  copy: 
+    src: templates/r53-backup.sh
+    dest: /usr/local/bin/r53-backup.sh
+    owner: root
+    group: root
+    mode: "u+rwx,g+wx,o+rx"
+
+- name: Setup crontab to run this every night 
+  cron:
+    minute: "0"
+    hour: "1"
+    user: "root"
+    cron_file: "s3-dns-backup"
+    job: "/usr/local/bin/r53-backup.sh >> /var/log/s3-backup.log"

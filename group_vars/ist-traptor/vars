@@ -1,0 +1,30 @@
+---
+# file: group_vars/traptor-nodes/vars
+
+traptor_sentry_secret: "{{ vault_traptor_sentry_secret }}"
+
+traptor_kafka_topic: "{{ vault_traptor_kafka_topic }}"
+
+traptor_track_count: 5
+traptor_follow_count: 3
+traptor_location_count: 6
+
+traptor_track_apikeys: "{{ vault_traptor_track_apikeys }}"
+traptor_follow_apikeys: "{{ vault_traptor_follow_apikeys }}"
+traptor_location_apikeys: "{{ vault_traptor_location_apikeys }}"
+
+# Only for production memex cluster.  For vagrant testing, host_vars is used
+traptor_es_port: 59200
+traptor_log_level: "INFO"
+traptor_redis_port: 6379
+
+traptor_type: 'track'
+
+traptor_ist_es: "{{ vault_traptor_ist_es }}"
+
+## GIVE THESE SPECIFIC USERS ACCESS TO THE IST-TRAPTOR CLUSTER
+dev:
+   - { name: rdempsey, key: "{{ vault_rdempsey_key }}" }
+   - { name: ayue, key: "{{ vault_ayue_key }}" }
+   - { name: aklintse, key: "{{ vault_aklintse_key }}" }
+   - { name: jsteele, key: "{{ vault_jsteele_key }}" }

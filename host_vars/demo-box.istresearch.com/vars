@@ -1,0 +1,40 @@
+---
+
+pulse_titan_pw: "{{ vault_pulse_password }}"
+pulse_db_password: "{{ vault_pulse_password }}"
+pulse_url_host: demo.istresearch.com
+pulse_listen_port: 80
+
+pulse_self_signed_ssl: false
+pulse_local_install: false
+mysql_root_password: "{{ vault_mysql_root_password }}"
+elasticsearch_heap_size: 4g
+kafka_data_log_dir:
+   - /data/kafka/topic-logs
+dfs_internap: false
+dfs_replication: 1
+dfs_block_size: 67109888
+yarn_nodemanager_local_dirs:
+   - /data/yarn/local
+yarn_nodemanager_log_dirs:
+   - /data/yarn/logs
+zookeeper_data_dir: /data/zookeeper
+dfs_datanode_data_dir:
+   - /data/dfs/dn
+storm_nimbus_extra_config:
+    nimbus.childopts: "-Xmx128m"
+storm_supervisor_extra_config:
+    supervisor.childopts: "-Xmx128m"
+storm_ui_extra_config:
+    ui.childopts: "-Xmx64m"
+storm_worker_extra_config:
+    worker.childopts: "-XX:MaxPermSize=48m -XX:+UseConcMarkSweepGC"
+storm_worker_ports: [6701, 6702, 6703, 6704, 6705, 6706, 6707, 6708, 6709, 6710]
+
+## GIVE THESE USERS SUDO ACCESS ON DEMO-BOX
+techops:
+   - { name: ryanf, key: "{{ vault_ryanf_key1 }}" }
+   - { name: ryanf, key: "{{ vault_ryanf_key2 }}" }
+   - { name: rselfridge, key: "{{ vault_rselfridge_key1 }}" }
+   - { name: rselfridge, key: "{{ vault_rselfridge_key2 }}" }
+   - { name: pasha, key: "{{ vault_pasha_key }}" }

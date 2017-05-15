@@ -1,0 +1,66 @@
+#!/bin/bash
+
+APP="{{ pulse_name }}"
+CONTAINER_E="{{ pulse_docker_elasticsearch_image }}"
+CONTAINER_K="{{ pulse_docker_kibana4_image }}"
+ES_PORT={{ pulse_docker_elasticsearch_network_http_port }}
+KIBANA_PORT={{ pulse_docker_kibana4_port }}
+ES_TAG="{{ pulse_docker_elasticsearch_name }}"
+KIBANA_TAG="{{ pulse_docker_kibana4_name }}"
+ES_HEAP_SIZE="{{ pulse_docker_elasticsearch_heap_size }}"
+
+stop() {
+    echo "Stopping..."
+    docker stop $ES_TAG
+    docker rm $ES_TAG
+    docker stop $KIBANA_TAG
+    docker rm $KIBANA_TAG
+    echo "done"
+}
+
+start() {
+    echo "Starting Elasticsearch..."
+    docker run \
+    -e ES_HEAP_SIZE=$ES_HEAP_SIZE \
+    -p $ES_PORT:$ES_PORT \
+    --name $ES_TAG \
+    -v "{{ pulse_docker_elasticsearch_data_dir }}":/usr/share/elasticsearch/data \
+    -v "{{ pulse_docker_elasticsearch_conf_dir }}":/usr/share/elasticsearch/config \
+    -v "{{ pulse_docker_elasticsearch_scripts_dir }}":/usr/share/elasticsearch/config/scripts \
+    -d $CONTAINER_E
+    echo "done with $ES_TAG"
+
+    echo "Starting Kibana..."
+    docker run \
+    --name $KIBANA_TAG \
+    --expose $KIBANA_PORT \
+    -p $KIBANA_PORT:$KIBANA_PORT \
+    --link $ES_TAG:elasticsearch \
+    -v {{ pulse_docker_kibana4_conf_dir }}:/usr/share/kibana/config \
+    -d $CONTAINER_K
+    echo "done with $KIBANA_TAG"
+}
+
+case "$1" in
+start)
+    start
+    ;;
+restart)
+    stop
+    start
+    ;;
+refresh)
+    pull
+    stop
+    start
+    ;;
+stop)
+    stop
+    ;;
+*)
+    echo "usage: $0 [start|restart|refresh|stop]"
+    exit 1
+    ;;
+esac
+
+exit 0

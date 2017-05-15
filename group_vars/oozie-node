@@ -1,0 +1,8 @@
+---
+hadoop_proxyusers:
+  - user: 'mapred'
+    hosts: '*'
+    groups: '*'
+  - user: 'oozie'
+    hosts: '*'
+    groups: '*'

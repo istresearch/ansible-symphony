@@ -1,0 +1,8 @@
+KAFKA_SERVER = "{% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}"
+KAFKA_PREFIX = "{{ gnip_kafka_prefix }}"
+KAFKA_PROD = "{{ gnip_kafka_prod }}"
+KAFKA_DEV = "{{ gnip_kafka_dev }}"
+DEV = "{{ gnip_dev }}"
+PROD = "{{ gnip_prod }}"
+UN = "{{ gnip_un }}"
+PWD = "{{ gnip_pwd }}"

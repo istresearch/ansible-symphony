@@ -1,0 +1,7 @@
+campaignid: memex
+downloaddelay: 10
+engagementid: eng1
+findurlregex: http://myproviderguide.com/\S+/escorts/\d+
+rediskey: indexer-myproviderguide
+urllist:
+- http://myproviderguide.com/washington-dc/escorts

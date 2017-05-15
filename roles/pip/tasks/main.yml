@@ -19,6 +19,21 @@
   ignore_errors: yes
   tags: pip
 
+- name: configure pip to use the local repository
+  template:
+    src: pip.conf.j2
+    dest: /etc/pip.conf
+    mode: 0775
+  when: pip_local
+  tags: pip
+
+- name: pip environment configuration
+  lineinfile:
+    dest: /etc/environment
+    line: "export PIP_CONFIG_FILE=/etc/pip.conf"
+  when: pip_local
+  tags: pip
+
 - name: Set fact pip_has_run
   set_fact:
     pip_has_run: true

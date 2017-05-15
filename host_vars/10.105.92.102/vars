@@ -1,0 +1,31 @@
+---
+
+## TECHOPS PEOPLE ##
+techops:
+   - { name: "madisonb", key: "{{ madisonb_key }}" }
+   - { name: "jhaas", key: "{{ jhaas_key }}" }
+   - { name: "scambria", key: "{{ scambria_key }}" }
+   - { name: "andrew.carter", key: "{{ andrew_key }}" }
+   - { name: "dcavitt", key: "{{ dcavitt_key }}" }
+   - { name: "marti", key: "{{ marti_key }}" }
+   - { name: "jcortmaior", key: "{{ jcortmaior_key }}" }
+
+datadog_monitors:
+  ist_supervisord:
+    enabled: true
+    is_custom_check: true
+    server_name: '{{ inventory_hostname }}'
+  elastic:
+    enabled: true
+    is_custom_check: false
+    es_instances:
+        - url: http://localhost:9200
+          tag: "es-cluster:qcr"
+  disk:
+    enabled: true
+    is_custom_check: false
+    use_mount: yes
+  network:
+    enabled: true
+    is_custom_check: false
+    collect_connection_state: yes

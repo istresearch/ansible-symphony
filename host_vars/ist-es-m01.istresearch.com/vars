@@ -1,0 +1,115 @@
+---
+datadog_monitors:
+  ist_supervisord:
+    enabled: true
+    is_custom_check: true
+    server_name: '{{ inventory_hostname }}'
+  elastic:
+    enabled: true
+    is_custom_check: false
+    es_instances:
+        - url: http://localhost:9200
+          tag: "es-cluster:ist"
+  disk:
+    enabled: true
+    is_custom_check: false
+    use_mount: no
+  network:
+    enabled: true
+    is_custom_check: false
+    collect_connection_state: yes
+  es_backup_status:
+    enabled: true
+    is_custom_check: true
+    collection_interval: 60
+    host: localhost
+    port: 9200
+    cluster_name: ist
+    repositories:
+      - ist-es-snapshots
+      - archival-snapshots
+  es_doc_count:
+    enabled: true
+    is_custom_check: true
+    es_instances:
+      - user: '{{ ist_elastic_creds.user }}'
+        password: '{{ ist_elastic_creds.password }}'
+        host: '{{ ist_elastic_creds.host }}'
+        port: '{{ ist_elastic_creds.port }}'
+        doctypes:
+          ########################################
+          # Follow traptor
+          ########################################
+          -  doc_type: tweet_traptor
+             index: pulse-*
+             metric_name: tweet_traptor.count
+             timestamp_field: system_timestamp
+             query:
+               bool:
+                 must:
+                  - match:
+                      doc.traptor.rule_type: follow
+             tags:
+               - 'traptor_type:follow'
+               - 'traptor_metric:follow'
+               - 'traptor-cluster:ist-traptor'
+
+          ########################################
+          # Locations traptor
+          ########################################
+          -  doc_type: tweet_traptor
+             index: pulse-*
+             metric_name: tweet_traptor.count
+             timestamp_field: system_timestamp
+             query:
+               bool:
+                 must:
+                  - match:
+                      doc.traptor.rule_type: locations
+             tags:
+               - 'traptor_type:locations'
+               - 'traptor_metric:locations'
+               - 'traptor-cluster:ist-traptor'
+
+          ########################################
+          # Track traptor
+          ########################################
+          -  doc_type: tweet_traptor
+             index: pulse-*
+             metric_name: tweet_traptor.count
+             timestamp_field: system_timestamp
+             query:
+               bool:
+                 must:
+                  - match:
+                      doc.traptor.rule_type: track
+             tags:
+               - 'traptor_type:track'
+               - 'traptor_metric:track'
+               - 'traptor-cluster:ist-traptor'
+
+          ########################################
+          # CDR Topology
+          ########################################
+          -  doc_type: crawl-normalizer
+             index: logs-memex-cdr-*
+             metric_name: storm.check.logs.count
+             timestamp_field: timestamp
+             query:
+               bool:
+                 must:
+                  - match:
+                      message: Tuple acked in spout.
+             tags:
+               - 'storm_log:cdr-topology'
+               - 'storm_env:production'
+
+          ########################################
+          # Telegram stream messages
+          ########################################
+          - doc_type: telegram_stream_message
+            index: pulse-*
+            metric_name: telegram_stream_message.count
+            timestamp_field: norm.timestamp
+            tags:
+              - 'telegraptor:ist-prod'

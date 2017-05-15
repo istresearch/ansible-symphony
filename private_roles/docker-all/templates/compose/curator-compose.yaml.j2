@@ -1,0 +1,41 @@
+version: '2'
+
+services:
+  pulse_alias:
+    image: istresearch/gandalf:{{ curator_pulse_tag }}
+    environment:
+      - INTERVAL={{ curator_pulse_interval }}
+      - ES_HOSTS=http{% if curator_es_ssl %}s{% endif %}://{% if curator_es_credentials %}{{ curator_es_user }}:{{ curator_es_pass }}@{% endif %}{{ groups['elasticsearch-nodes'][0] }}:{{ elasticsearch_network_http_port|default(9200) }}
+{% if curator_es_ssl %}
+      - ELASTICSEARCH_SSL=True
+      - ELASTICSEARCH_VERIFY_SSL=True
+{% endif %}
+      - PREFIX={{ curator_pulse_prefix }}
+{% for component in curator_logs %}
+  logs_{{ component }}:
+    image: istresearch/gandalf:{{ curator_logs_tag }}
+    environment:
+      - TEMPLATE=logs-{{ deploy_env}}-{{ component }}-{{ curator_log_suffix }}
+      - RETAIN={{ curator_log_retention }}
+      - INTERVAL={{ curator_log_interval }}
+      - ES_HOSTS=http{% if curator_es_ssl %}s{% endif %}://{% if curator_es_credentials %}{{ curator_es_user }}:{{ curator_es_pass }}@{% endif %}{{ groups['elasticsearch-nodes'][0] }}:{{ elasticsearch_network_http_port|default(9200) }}
+{% if curator_es_ssl %}
+      - ES_SSL=True
+      - ES_VERIFY_SSL=True
+{% endif %}
+{% endfor %}
+{% for component in curator_alias|default([]) %}
+  alias_{{ component.name }}:
+    image: istresearch/gandalf:{{ curator_alias_tag }}
+    environment:
+      - REGEX={{ component.regex }}
+      - ALIAS={{ component.name }}
+      - INTERVAL={{ curator_alias_interval }}
+      - ES_HOSTS=http{% if curator_es_ssl %}s{% endif %}://{% if curator_es_credentials %}{{ curator_es_user }}:{{ curator_es_pass }}@{% endif %}{{ groups['elasticsearch-nodes'][0] }}:{{ elasticsearch_network_http_port|default(9200) }}
+{% if curator_es_ssl %}
+      - ES_SSL=True
+      - ES_VERIFY_SSL=True
+{% endif %}
+    volumes:
+      - {{ docker_configs_dir }}/alias_{{ component.name }}.{{ deploy_env }}.json:/usr/src/app/filter.json
+{% endfor %}

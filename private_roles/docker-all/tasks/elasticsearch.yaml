@@ -1,0 +1,8 @@
+---
+
+- name: Ensure permissions (https://github.com/deviantony/docker-elk/issues/115)
+  file:
+    path: "{{ elasticsearch_data_path }}"
+    state: directory
+    group: 1000
+    owner: 1000

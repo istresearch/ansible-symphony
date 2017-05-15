@@ -1,0 +1,5 @@
+---
+- name: restart cooper rule manager
+  supervisorctl:
+    name={{ cooper_rulemanager_name }}
+    state=restarted

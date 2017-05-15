@@ -1,0 +1,12 @@
+---
+rediskey: indexer-meiguo8
+downloaddelay: 30
+findadregex: \/\w+\/\w+\/[a-zA-Z]+\?[a-zA-Z]+=[a-z0-9-]+
+paginateregex: \/\w+\/\S+pagenumber=\d+
+paginatenum: 50
+urllist:
+ - http://www.meiguo58.com/cis/Recruitment?rc=rj
+ - http://www.meiguo58.com/cis/RestaurantTransfer
+ - http://www.meiguo58.com/cis/RestaurantTransfer?Level2CategoryId=a8af017a-b4c5-40a5-b35b-52d9b072e27d
+ - http://www.meiguo58.com/cis/RestaurantTransfer?Level2CategoryId=15bbf605-6cc3-4065-9524-65cc657bc2d3
+ - http://www.meiguo58.com/cis/Recruitment?rc=oj

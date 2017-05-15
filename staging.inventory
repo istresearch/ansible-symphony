@@ -6,20 +6,69 @@
 
 
 [all:vars]
-repository_host=default
+repository_host=repo.istresearch.com
+slack_report=false
 
 #
 # Infrastructure and software topology
 #
 
+[staging:children]
+zookeeper-nodes
+kafka-nodes
+redis-nodes
+storm-nodes
+spark-nodes
+hadoop-nodes
+hbase-nodes
+elasticsearch-nodes
+kibana-node
+tor-proxy
+scrapy-cluster-nodes
+logstash-nodes
+hue-nodes
+cooper-node
+gnip-monitor-node
+gdelt-monitor-node
+elastalert-nodes
+traptor-nodes
+docker-engine
+googler-nodes
+neo4j-node
+tangelo-node
+apache-node
+mysql-node
+pulse-ui-node
+pulse-mysql-es-host
+phantomjs-nodes
+gandalf-runner-node
+docker-bumblebee-nodes
+docker-es-nodes
+docker-kibana-nodes
+docker-cooper-nodes
+docker-curator-nodes
+docker-grawler-nodes
+docker-rule-manager-nodes
+docker-scrapy-nodes
+docker-telegraptor-nodes
+docker-telegraptor-api-nodes
+docker-traptor-nodes
+docker-gatekeeper-nodes
+docker-youscrape-nodes
+docker-vk-nodes
+portainer-nodes
+
+[rays:children]
+staging
+
 [zookeeper-nodes]
-vagrant-as-01
+vagrant-ist-01
 
 [kafka-nodes]
-vagrant-as-01
+vagrant-ist-01
 
 [redis-master-node]
-vagrant-as-01
+vagrant-ist-01
 
 [redis-slave-nodes]
 #leave empty
@@ -33,14 +82,14 @@ redis-slave-nodes
 redis-sentinel-nodes
 
 [hadoop-namenode-node]
-vagrant-as-01
+vagrant-ist-01
 
 [hadoop-secondary-namenode-node]
-vagrant-as-02
+vagrant-ist-02
 
 [hadoop-datanode-nodes]
-vagrant-as-01
-vagrant-as-02
+vagrant-ist-01
+vagrant-ist-02
 
 [hadoop-nodes:children]
 hadoop-namenode-node
@@ -48,11 +97,11 @@ hadoop-secondary-namenode-node
 hadoop-datanode-nodes
 
 [hbase-master-node]
-vagrant-as-01
+vagrant-ist-01
 
 [hbase-regionserver-nodes]
-vagrant-as-01
-vagrant-as-02
+vagrant-ist-01
+vagrant-ist-02
 
 [hbase-nodes:children]
 hbase-master-node
@@ -62,23 +111,23 @@ hbase-regionserver-nodes
 hadoop-namenode-node
 
 [spark-master-node]
-vagrant-as-01
+vagrant-ist-01
 
 [spark-worker-nodes]
-vagrant-as-01
+vagrant-ist-01
 
 [spark-nodes:children]
 spark-master-node
 spark-worker-nodes
 
 [storm-nimbus-node]
-vagrant-as-01
+vagrant-ist-01
 
 [storm-ui-node]
-vagrant-as-01
+vagrant-ist-01
 
 [storm-supervisor-nodes]
-vagrant-as-01
+vagrant-ist-01
 
 [storm-nodes:children]
 storm-nimbus-node
@@ -89,10 +138,10 @@ storm-supervisor-nodes
 # data node serves as master also
 
 [elasticsearch-data-nodes]
-vagrant-as-01 elasticsearch_is_master=true
+vagrant-ist-01 elasticsearch_is_master=true
 
 [elasticsearch-client-nodes]
-vagrant-as-02
+vagrant-ist-02
 
 [elasticsearch-nodes:children]
 elasticsearch-master-nodes
@@ -100,47 +149,59 @@ elasticsearch-data-nodes
 elasticsearch-client-nodes
 
 [kibana-node]
-vagrant-as-01
+vagrant-ist-01
 
 [tor-proxy]
-vagrant-as-01
+vagrant-ist-01
 
-[scrapy-kafka-monitor-node]
-vagrant-as-01
+[scrapy-cluster-kafka-monitor-node]
+vagrant-ist-01
 
-[scrapy-redis-monitor-node]
-vagrant-as-01
+[scrapy-cluster-redis-monitor-node]
+vagrant-ist-01
+
+[scrapy-cluster-crawler-nodes]
+vagrant-ist-01
+
+[scrapy-cluster-indexer-nodes]
+vagrant-ist-01
+
+[scrapy-cluster-nodes:children]
+scrapy-cluster-kafka-monitor-node
+scrapy-cluster-redis-monitor-node
+scrapy-cluster-crawler-nodes
+scrapy-cluster-indexer-nodes
 
 [logstash-nodes]
-vagrant-as-01
+vagrant-ist-01
 
 [hue-nodes]
-vagrant-as-02
+vagrant-ist-02
 
 #
 # Applications topology
 #
 
-[scrapy-crawler-nodes]
-vagrant-as-02
+[cooper-node]
+vagrant-ist-01
 
 [scrapy-indexer-nodes]
-vagrant-as-02
+vagrant-ist-02
 
 [gnip-monitor-node]
-vagrant-as-02
+vagrant-ist-02
 
 [gdelt-monitor-node]
-vagrant-as-02
+vagrant-ist-02
 
 [elastalert-nodes]
-vagrant-as-01
+vagrant-ist-01
 
 [traptor-follow-nodes]
-vagrant-as-01
+vagrant-ist-01
 
 [traptor-track-nodes]
-vagrant-as-02
+vagrant-ist-02
 
 [traptor-location-nodes]
 
@@ -150,17 +211,94 @@ traptor-track-nodes
 traptor-location-nodes
 
 [docker-engine]
-vagrant-as-01
+vagrant-ist-01
+vagrant-ist-02
+
+[docker-bumblebee-nodes]
+vagrant-ist-02
+
+[docker-cooper-nodes]
+vagrant-ist-02
+
+[docker-curator-nodes]
+vagrant-ist-01
+
+[docker-grawler-nodes]
+vagrant-ist-01
+vagrant-ist-02
+
+[docker-rule-manager-nodes]
+vagrant-ist-01
+
+[docker-scrapy-nodes]
+vagrant-ist-01
+
+[docker-telegraptor-nodes]
+vagrant-ist-02
+
+[docker-telegraptor-api-nodes]
+vagrant-ist-02
+
+[docker-traptor-follow-nodes]
+vagrant-ist-02
+
+[docker-traptor-track-nodes]
+vagrant-ist-02
+
+[docker-traptor-geo-nodes]
+vagrant-ist-02
+
+[docker-traptor-nodes:children]
+docker-traptor-follow-nodes
+docker-traptor-track-nodes
+docker-traptor-geo-nodes
+
+[docker-gatekeeper-nodes]
+vagrant-ist-02
+
+[docker-youscrape-nodes]
+vagrant-ist-02
+
+[docker-vk-nodes]
+vagrant-ist-02
+
+[docker-es-nodes]
+vagrant-ist-01
+
+[docker-kibana-nodes]
+vagrant-ist-01
+
+[portainer-nodes]
+vagrant-ist-01
+vagrant-ist-02
+
+[googler-nodes]
+vagrant-ist-02
 
 [neo4j-node]
-vagrant-as-02
+vagrant-ist-02
 
 [tangelo-node]
-vagrant-as-02
+vagrant-ist-02
+
+[apache-node]
+vagrant-ist-01
 
 [mysql-node]
-vagrant-as-01
+vagrant-ist-01
+
+[pulse-ui-node]
+vagrant-ist-01
+
+[pulse-mysql-es-host]
+vagrant-ist-01
 
 [phantomjs-nodes:children]
-storm-nodes
+storm-supervisor-nodes
 spark-nodes
+
+[gandalf-runner-node]
+vagrant-ist-02
+
+[grawler-nodes]
+vagrant-ist-01

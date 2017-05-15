@@ -1,0 +1,8 @@
+campaignid: memex
+downloaddelay: 30
+engagementid: eng1
+findurlregex:
+- http:.*\/ads\/[^"]+
+rediskey: indexer-tennesseegunexchange
+urllist:
+- http://tennesseegunexchange.com/

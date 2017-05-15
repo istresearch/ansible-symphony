@@ -1,0 +1,6 @@
+---
+elastalert_es1_port: 19200
+elastalert_es2_port: 29200
+elastalert_es3_port: 39200
+elastalert_es4_port: 49200
+elastalert_es5_port: 59200

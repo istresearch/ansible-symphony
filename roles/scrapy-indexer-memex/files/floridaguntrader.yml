@@ -1,0 +1,12 @@
+campaignid: memex
+downloaddelay: 30
+engagementid: eng1
+findurlregex:
+- index.php\?a=2&b=\d+
+rediskey: indexer-floridaguntrader
+urllist:
+- http://floridaguntrader.com/index.php?a=5&b=384
+- http://floridaguntrader.com/index.php?a=5&b=341
+- http://floridaguntrader.com/index.php?a=5&b=340
+- http://floridaguntrader.com/index.php?a=5&b=342
+- http://floridaguntrader.com/index.php?a=5&b=385

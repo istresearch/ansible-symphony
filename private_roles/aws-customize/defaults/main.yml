@@ -1,0 +1,4 @@
+---
+
+aws_customize: false
+data_volume: /dev/xvdb

@@ -1,0 +1,13 @@
+campaignid: memex
+downloaddelay: 10
+engagementid: eng1
+findurlregex:
+- model_page_cast.php\?talent_id=\d+&s=\w+
+rediskey: indexer-sipsap
+urllist:
+- http://sipsap.com/search.php?where_to_start=00&how_many=1000&action=1&zipcode=94608&distance=5000&gender=2&srv_escort=0&srv_striper=0&srv_dbsm_fetish=0&srv_massage=0&srv_date=0&in_call=0&city=&srv_dancer=0&srv_tantra=0&out_call=0&ort=&tb_name=tb1398251418_8801006&last_login2=5
+- http://sipsap.com/search.php?where_to_start=0&how_many=128&action=1&zipcode=94608&distance=5000&gender=3&srv_escort=0&srv_striper=0&srv_dbsm_fetish=0&srv_massage=0&srv_date=0&in_call=0&city=&srv_dancer=0&srv_tantra=0&out_call=0&ort=&tb_name=tb1398251533_6219674&last_login2=5
+- http://sipsap.com/search.php?where_to_start=0&how_many=128&action=1&zipcode=94608&distance=50000&gender=1&srv_escort=1&srv_striper=1&srv_dbsm_fetish=0&srv_massage=1&srv_date=1&in_call=1&city=&srv_dancer=1&srv_tantra=0&out_call=1&ort=&tb_name=tb1398251570_4830946&last_login2=5
+- http://sipsap.com/search_int.php?where_to_start=00&how_many=256&action=1&country=UK&city=&gender=2&srv_escort=1&srv_striper=1&srv_dbsm_fetish=1&srv_massage=1&srv_date=1&in_call=1&srv_dancer=1&srv_tantra=1&out_call=1&ort=&tb_name=tb1398250363_3395510&last_login2=5
+- http://sipsap.com/search_int.php?where_to_start=0&how_many=128&action=1&country=&city=&gender=1&srv_escort=1&srv_striper=1&srv_dbsm_fetish=1&srv_massage=1&srv_date=1&in_call=1&srv_dancer=0&srv_tantra=0&out_call=0&ort=&tb_name=tb1398250375_7487735&last_login2=5
+- http://sipsap.com/search_int.php?action=1&ort=&gender=3&srv_escort=1&srv_striper=1&srv_dbsm_fetish=1&country=&srv_massage=1&srv_date=1&in_call=1&city=&srv_massage=1&srv_date=1&in_call=1&last_login2=5&submit=Search

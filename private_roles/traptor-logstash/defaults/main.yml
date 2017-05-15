@@ -1,0 +1,10 @@
+---
+
+# Logstash config
+# should be the same as kafka_num_partitions
+traptor_consumer_threads: 3
+traptor_doc_type: tweet
+traptor_es_port: 9200
+traptor_es_user: changeme
+traptor_es_password: changeme
+traptor_ssl: "false"

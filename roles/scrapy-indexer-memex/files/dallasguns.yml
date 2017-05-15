@@ -1,0 +1,8 @@
+campaignid: memex
+downloaddelay: 30
+engagementid: eng1
+findurlregex:
+- \/guns_for_sale\/.*/\d+
+rediskey: indexer-dallasguns
+urllist:
+- http://www.dallasguns.com/

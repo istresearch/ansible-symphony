@@ -1,17 +1,47 @@
 ---
-# ------------------------------ Common roles -------------------------------
-
-- hosts: all
+# --------------------------- Slack Integration -----------------------------
+- name: Slack
+  connection: local
+  hosts: all
+  become: no
   tasks:
-    - name: Group Debian hosts
-      group_by: key=all_{{ ansible_os_family }}
-  tags: group
+    - block:
+      - name: get the command
+        shell: ps -o user -o command | grep ansible-playboo[k]
+        register: the_command
+
+      - name: get the current branch
+        shell: git symbolic-ref --short HEAD
+        register: git_branch
+
+      - name: Push to Slack
+        slack:
+          channel: "#monitoring-ansible"
+          username: "Ansible"
+          token: "{{ vault_slackbot_ansible }}"
+          msg: "```(On branch {{ git_branch.stdout }}) {{ the_command['stdout_lines'][0] }}```"
+
+      run_once: true
+      when: (slack_report is not defined or slack_report | bool == true) and not ansible_check_mode
+  tags:
+    - always
+
+# ------------------------------ Common roles -------------------------------
 
 - name: Run common role
   hosts: all
   roles:
     - common
-  tags: site-common
+  tags:
+    - site-common
+
+# ------------------------------ Customize Internap ------------------------
+
+- name: Run Internap customize
+  hosts: internap
+  roles:
+    - internap-customize
+  tags: internap-customize
   strategy: free
 
 - name: Run supervisord role
@@ -20,12 +50,57 @@
     - supervisord
   tags: site-supervisord
 
+# ------------------------------ Customize AWS ------------------------
+
+- name: Run AWS customize
+  hosts: all
+  roles:
+    - aws-customize
+  tags: aws-customize
+  strategy: free
+
+# ----------------------------- Add TechOps Users -----------------------------------
+- name: Add TechOps Users
+  hosts:
+    - all
+  roles:
+    - add-users
+  tags:
+    - site-add-users
+    - site-add-techops-users
+
+# ----------------------------- Add Development Users -----------------------------------
+
+- name: Add Developer Users
+  hosts:
+    - all
+  roles:
+    - add-users
+  tags:
+    - site-add-users
+    - site-add-dev-users
+
+# ----------------------------- Third-Party users -----------------------------------
+
+# - name: Run Third-Party Users
+#   hosts:
+#   roles:
+#     - add-users
+#   tags:
+#     - site-add-users
+#     - site-add-thirdparty-users
+
+# ----------------------------- Virtualenv -----------------------------------
+
 - name: Run virtualenv role
   hosts: all
   roles:
     - virtualenv
   tags:
     - virtual-env
+    - deps-scrapy-cluster
+
+# ----------------------------- Miniconda -----------------------------------
 
 - name: Run miniconda role
   hosts: all
@@ -34,6 +109,7 @@
   tags:
     - miniconda
     - deps-traptor
+    - deps-grawler
 
 - name: Run logrotate role
   hosts: all
@@ -62,7 +138,9 @@
     - deps-hadoop
     - deps-hbase
     - deps-spark
+    - deps-scrapy-cluster
     - deps-traptor
+    - deps-grawler
 
 - name: Run kafka role
   hosts: kafka-nodes
@@ -73,7 +151,9 @@
   tags:
     - site-kafka
     - deps-kafka
+    - deps-scrapy-cluster
     - deps-traptor
+    - deps-grawler
 
 # ------------------------------ ELK stack ------------------------------------
 - name: Run elasticsearch master role
@@ -85,6 +165,7 @@
   tags:
     - site-elasticsearch
     - ELK
+    - deps-pulse
 
 - name: Run elasticsearch data role
   hosts: elasticsearch-data-nodes
@@ -95,6 +176,7 @@
   tags:
     - site-elasticsearch
     - ELK
+    - deps-pulse
 
 - name: Run elasticsearch client role
   hosts: elasticsearch-client-nodes
@@ -105,13 +187,16 @@
   tags:
     - site-elasticsearch
     - ELK
+    - deps-pulse
 
+# ------------------------------ Logstash ------------------------------------
 - name: Run logstash role
   hosts: logstash-nodes
   roles: [ logstash ]
   tags:
     - site-logstash
     - ELK
+    - deps-grawler
 
 - name: Run Kibana4 role
   hosts: kibana-node
@@ -119,6 +204,7 @@
   tags:
     - site-kibana
     - ELK
+    - deps-pulse
 
 # --------------------------- Scraper services -------------------------------
 - name: Run redis role
@@ -126,8 +212,10 @@
   roles: [ redis ]
   tags:
     - site-redis
+    - deps-scrapy-cluster
     - scrapy-services
     - deps-traptor
+    - deps-grawler
 
 - name: Run tor role
   hosts: tor-proxy
@@ -137,33 +225,45 @@
     - scrapy-services
 
 # --------------------------- Scrapy Cluster ---------------------------------
-- name: Run scrapy-crawler role (infrastructure)
-  hosts: scrapy-crawler-nodes
-  roles: [ scrapy-crawler ]
+- name: Run Scrapy Cluster Crawler
+  hosts: scrapy-cluster-crawler-nodes
+  vars:
+    - sc_is_crawler: True
+  roles: [ scrapy-cluster ]
   tags:
-    - site-scrapy-crawler
-    - scrapy-cluster
+    - site-scrapy-cluster-crawler
+    - site-scrapy-cluster
+    - deps-scrapy-cluster
 
-- name: Run scrapy-indexer role (infrastructure)
-  hosts: scrapy-indexer-nodes
-  roles: [ scrapy-indexer ]
+- name: Run Scrapy Cluster Kafka Monitor
+  hosts: scrapy-cluster-kafka-monitor-node
+  vars:
+    - sc_is_kafka_monitor: True
+  roles: [ scrapy-cluster ]
   tags:
-    - site-scrapy-indexer
-    - scrapy-cluster
+    - site-scrapy-cluster-kafka-monitor
+    - site-scrapy-cluster
+    - deps-scrapy-cluster
 
-- name: Run scrapy-kafka role (infrastructure)
-  hosts: scrapy-kafka-monitor-node
-  roles: [ scrapy-kafka-monitor ]
+- name: Run Scrapy Cluster Redis Monitor
+  hosts: scrapy-cluster-redis-monitor-node
+  vars:
+    - sc_is_redis_monitor: True
+  roles: [ scrapy-cluster ]
   tags:
-    - site-scrapy-indexer
-    - scrapy-cluster
+    - site-scrapy-cluster-redis-monitor
+    - site-scrapy-cluster
+    - deps-scrapy-cluster
 
-- name: Run scrapy-redis role (infrastructure)
-  hosts: scrapy-redis-monitor-node
-  roles: [ scrapy-redis-monitor ]
+- name: Run Scrapy Cluster Indexer
+  hosts: scrapy-cluster-indexer-nodes
+  vars:
+    - sc_is_indexer: True
+  roles: [ scrapy-cluster ]
   tags:
-    - site-scrapy-redis-monitor
-    - scrapy-cluster
+    - site-scrapy-cluster-indexer
+    - site-scrapy-cluster
+    - deps-scrapy-cluster
 
 # -------------------------------- Storm -------------------------------------
 
@@ -325,7 +425,8 @@
     - spark_worker_enabled: false
     - dfs_namenode_host: "{{ groups['hadoop-namenode-node'][0] }}"
     - yarn_historyserver_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
-  roles: [ spark ]
+  roles:
+    - spark
   tags:
     - site-spark
     - deps-spark
@@ -337,7 +438,8 @@
     - spark_worker_enabled: true
     - dfs_namenode_host: "{{ groups['hadoop-namenode-node'][0] }}"
     - yarn_historyserver_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
-  roles: [ spark ]
+  roles:
+    - spark
   tags:
     - site-spark
     - deps-spark
@@ -357,6 +459,7 @@
   roles: [ docker-engine ]
   tags:
     - site-docker-engine
+    - deps-pulse-docker
 
 # ---------------------------------- MySQL -----------------------------------
 
@@ -365,6 +468,38 @@
   roles: [ mysql ]
   tags:
     - mysql
+    - deps-pulse
+    - deps-pulse-docker
+
+# --------------------------------- Apache -----------------------------------
+- name: Apache
+  hosts: apache-node
+  roles: [ apache2 ]
+  tags:
+    - apache
+    - deps-pulse
+    - deps-pulse-docker
+
+# ---------------------------------- Pulse -----------------------------------
+
+- name: Pulse UI Node Infrastructure
+  hosts: pulse-ui-node
+  roles: [ pulse-ui ]
+  tags:
+    - site-pulse
+    - deps-pulse
+    - site-pulse-docker
+    - deps-pulse-docker
+
+- name: Pulse Docker Infrastructure
+  hosts: docker-engine
+  vars_files:
+    - roles/elasticsearch/defaults/main.yml
+    - roles/kibana4/defaults/main.yml
+  roles: [ pulse-docker ]
+  tags:
+    - site-pulse-docker
+    - deps-pulse-docker
 
 # ---------------------------------- Neo4j --------------------------------
 
@@ -382,7 +517,14 @@
   tags:
     - site-tangelo
 
-# -------------------------------- Traptor -----------------------------------
+# ---------------------------------- DataDog --------------------------------
+
+- hosts: all
+  roles: [ dd-agent ]
+  tags:
+    - site-dd-agent
+
+# ---------------------------------- Traptor --------------------------------
 # TODO also test traptor-track-nodes and traptor-location-nodes
 
 - name: Run Traptor role
@@ -407,3 +549,127 @@
   roles: [ phantomjs ]
   tags:
     - site-phantomjs
+
+# ---------------------------------- Grawler --------------------------------
+
+- name: Run Grawler role
+  hosts: grawler-nodes
+  roles: [ grawler ]
+  tags:
+    - site-grawler
+    - deps-grawler
+
+# ----------------------------------- Docker Master ---------------------------
+
+# Scrapy --------
+- name: Run Docker Scrapy role
+  hosts: docker-scrapy-nodes
+  roles: [ docker-all ]
+  tags:
+    - site-docker-scrapy-all
+    - site-docker-all
+  vars:
+    component: scrapy-cluster
+
+# Traptor --------
+- name: Run Docker Traptor Follow role
+  hosts: docker-traptor-follow-nodes
+  roles: [ docker-all ]
+  vars:
+    component: traptor-follow
+    logstash_file_final: "logstash-traptor.{{ deploy_env }}.conf"
+    logstash_component_tag: traptor
+    project_name: traptor
+  tags:
+    - site-docker-traptor-all
+    - site-docker-traptor-follow-all
+    - site-docker-all
+
+- name: Run Docker Traptor Track role
+  hosts: docker-traptor-track-nodes
+  roles: [ docker-all ]
+  vars:
+    component: traptor-track
+    logstash_file_final: "logstash-traptor.{{ deploy_env }}.conf"
+    logstash_component_tag: traptor
+    project_name: traptor
+  tags:
+    - site-docker-traptor-all
+    - site-docker-traptor-track-all
+    - site-docker-all
+
+- name: Run Docker Traptor Geo role
+  hosts: docker-traptor-geo-nodes
+  roles: [ docker-all ]
+  vars:
+    component: traptor-geo
+    logstash_file_final: "logstash-traptor.{{ deploy_env }}.conf"
+    logstash_component_tag: traptor
+    project_name: traptor
+  tags:
+    - site-docker-traptor-all
+    - site-docker-traptor-geo-all
+    - site-docker-all
+
+# Cooper --------
+- name: Run Docker Cooper role
+  hosts: docker-cooper-nodes
+  roles: [ docker-all ]
+  tags:
+    - site-docker-cooper-all
+    - site-docker-all
+  vars:
+    component: cooper
+    extra_tasks: true
+
+# Grawler ----------
+- name: Run Grawler role
+  hosts: docker-grawler-nodes
+  roles: [ docker-all ]
+  vars:
+    component: grawler
+    extra_tasks: true
+  tags:
+    - site-docker-grawler-all
+    - site-docker-all
+
+# Telegraptor ----------
+- name: Run Telegraptor role
+  hosts: docker-telegraptor-nodes
+  roles: [ docker-all ]
+  vars:
+    component: telegraptor
+  tags:
+    - site-docker-telegraptor-all
+    - site-docker-all
+
+# Pulse ----------
+- name: Run Pulse role
+  hosts: docker-pulse-nodes
+  roles: [ docker-all ]
+  vars:
+    component: pulse
+  tags:
+    - site-docker-pulse-all
+    - site-docker-all
+
+# Rule Manager ----------
+- name: Run Rule Manager role
+  hosts: docker-rule-manager-nodes
+  roles: [ docker-all ]
+  vars:
+    component: rule-manager
+  tags:
+    - site-docker-rule-manager-all
+    - site-docker-all
+
+# Curator ----------
+- name: Run Curator role
+  hosts: docker-curator-nodes
+  roles: [ docker-all ]
+  vars:
+    component: curator
+    logstash_use: false
+  tags:
+    - site-docker-curator-all
+    - site-docker-all

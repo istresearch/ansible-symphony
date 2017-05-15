@@ -1,0 +1,32 @@
+---
+# The seed urls to index
+urllist:
+# DYNAMICLY GENERATED URLS
+  - https://www.tnaboard.com/forumdisplay.php?f=98
+  - https://www.tnaboard.com/forumdisplay.php?f=116
+  - https://www.tnaboard.com/forumdisplay.php?f=165
+  - https://www.tnaboard.com/forumdisplay.php?f=158
+  - https://www.tnaboard.com/forumdisplay.php?f=151
+  - https://www.tnaboard.com/forumdisplay.php?f=144
+  - https://www.tnaboard.com/forumdisplay.php?f=137
+  - https://www.tnaboard.com/forumdisplay.php?f=130
+
+# The regex to pull pagination links out of the indexed pages
+paginateregex: https://www\.tnaboard\.com/forumdisplay.php\?\d+.+/page\d+
+
+# How many pagination pages to go deep
+paginatenum: 1
+
+# The regex to pull ad links out of the indexed page
+findadregex: https://www\.tnaboard\.com/showthread\.php\?\d+
+
+#prune urls to the desired format
+prunevars: 
+  - regex: showthread\.php\?\d+(-.+)
+    sub: ""
+# Needed or we will get banned (in seconds)
+downloaddelay: 10
+
+# the redis hash key to manage duplicate urls and refresh alerts
+# this should be the same across indexers doing the same site
+rediskey: indexer-tnaboard

@@ -1,0 +1,87 @@
+---
+
+- name: Copy over repo list
+  copy: 
+    src: "sources.list"
+    dest: /etc/apt/sources.list
+  notify: update apt cache
+  tags:
+    - internap
+
+- name: Kill 127.0.1.1 host loopback
+  lineinfile:
+    dest: "/etc/hosts"
+    regexp: '^127\.0\.1\.1.*$'
+    state: absent
+  tags:
+    - internap
+
+- name: make sure volumes have filesystems
+  filesystem:
+    fstype: ext4
+    dev: "{{ item }}"
+  with_items:
+    - /dev/sdb
+    - /dev/sdc
+    - /dev/sdd
+    - /dev/sde
+    - /dev/sdf
+    - /dev/sdg
+  tags:
+    - internap
+  ignore_errors: yes
+
+- name: mount directories to volumes
+  mount:
+    name={{ item.dir }}
+    src={{ item.vol }}
+    fstype=ext4
+    state=mounted
+  with_items:
+    - { dir: '/data/1', vol: '/dev/sdb' }
+    - { dir: '/data/2', vol: '/dev/sdc' }
+    - { dir: '/data/3', vol: '/dev/sdd' }
+    - { dir: '/data/4', vol: '/dev/sde' }
+    - { dir: '/data/5', vol: '/dev/sdf' }
+    - { dir: '/data/6', vol: '/dev/sdg' }
+  tags:
+    - internap
+  ignore_errors: yes
+
+- name: Add all internap hosts with local ips
+  lineinfile:
+    dest=/etc/hosts
+    line="{{ item }}"
+  with_items:
+    - '172.27.43.85 captain01.istresearch.com'
+    - '172.27.43.86 captain02.istresearch.com'
+    - '172.27.43.82 crew01.istresearch.com'
+    - '172.27.43.83 crew02.istresearch.com'
+    - '172.27.43.67 crew03.istresearch.com'
+    - '172.27.43.68 crew04.istresearch.com'
+    - '172.27.43.69 crew05.istresearch.com'
+    - '172.27.43.70 crew06.istresearch.com'
+    - '172.27.43.71 crew07.istresearch.com'
+    - '172.27.43.84 crew08.istresearch.com'
+    - '172.27.43.66 backup01.nj.istresearch.com'
+    - '172.27.43.89 backup02.nj.istresearch.com'
+    - '172.27.43.72 in-namenode01.nj.istresearch.com'
+    - '172.27.43.73 in-namenode02.nj.istresearch.com'
+    - '172.27.43.74 in-slave01.nj.istresearch.com'
+    - '172.27.43.75 in-slave02.nj.istresearch.com'
+    - '172.27.43.76 in-slave03.nj.istresearch.com'
+    - '172.27.43.77 in-slave04.nj.istresearch.com'
+    - '172.27.43.78 in-slave05.nj.istresearch.com'
+    - '172.27.43.79 in-slave06.nj.istresearch.com'
+    - '172.27.43.80 in-slave07.nj.istresearch.com'
+    - '172.27.43.81 in-slave08.nj.istresearch.com'
+  tags:
+    - internap
+
+- name: Set Swappiness to 1
+  sysctl:
+    name=vm.swappiness
+    value=1
+    state=present
+  tags:
+    - internap

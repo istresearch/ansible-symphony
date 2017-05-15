@@ -1,0 +1,108 @@
+---
+
+# generic docker stuff ------------------------
+- name: Check if Docker is running
+  command: service docker status
+  ignore_errors: yes
+  changed_when: false
+  register: service_docker_status
+
+- name: Report status of Docker
+  fail:
+    msg: |
+      Service Docker is not running.
+      Output of `service docker status`:
+      {{ service_docker_status.stdout }}
+      {{ service_docker_status.stderr }}
+  when: service_docker_status | failed
+
+- name: Make sure Compose Directory exists
+  file:
+    path: "{{ docker_compose_dir }}"
+    state: directory
+    mode: 0755
+  tags: docker-all
+
+- name: Make sure scripts directory exists
+  file:
+    path: "{{ docker_scripts_dir }}"
+    state: directory
+    mode: 0755
+  tags: docker-all
+
+- name: Make sure docker_configs directory exists
+  file:
+    path: "{{ docker_configs_dir }}"
+    state: directory
+    mode: 0755
+  tags: docker-all
+# END generic docker stuff ------------------------
+
+# File moving and configuration -------------------
+- name: copy compose file
+  template:
+    src: "compose/{{ compose_file }}"
+    dest: "{{ docker_compose_dir }}/{{ compose_file_final }}"
+    mode: 0644
+  tags: docker-all
+
+- name: copy {{ logstash_file }} file
+  template:
+    src: "docker_configs/{{ logstash_file }}"
+    dest: "{{ docker_configs_dir }}/{{ logstash_file_final }}"
+    mode: 0644
+  tags: docker-all
+  when: logstash_use
+
+- name: copy scripts file
+  template:
+    src: "scripts/{{ script_file }}"
+    dest: "{{ docker_scripts_dir }}/{{ script_file_final }}"
+    mode: 0755
+  tags: docker-all
+
+- name: copy logs template file
+  template:
+    src: "docker_configs/logs-template.json.j2"
+    dest: "{{ docker_configs_dir }}/logs-template.{{ deploy_env }}.json"
+    mode: 0755
+  tags: docker-all
+  when: logstash_use
+
+- name: move extra files
+  template:
+    src: "extras/{{ item.in }}"
+    dest: "{{ item.out }}"
+    mode: 0755
+  tags: docker-all
+  with_items: "{{ extra_templates|default([]) }}"
+# END File moving and configuration -------------------
+
+# Container specific tasking -------------------------
+- include: "{{ component }}.yaml"
+  when: extra_tasks is defined and extra_tasks == true
+  tags:
+    - docker-all
+# END Container specific tasking -------------------------
+
+# Container deployment -----------------------------------
+- name: Stop and Kill any existing Containers
+  command: "{{ docker_scripts_dir }}/{{ script_file_final }} down --remove-orphans"
+  tags: docker-all
+
+- name: Pull new Container images
+  command: "{{ docker_scripts_dir }}/{{ script_file_final }} pull"
+  tags: docker-all
+
+- name: Start the Containers
+  command: "{{ docker_scripts_dir }}/{{ script_file_final }} up --build -d"
+  tags: docker-all
+
+- name: scale components
+  command: "{{ docker_scripts_dir }}/{{ script_file_final }} scale {{ item.1.name }}={{ item.1.scale }}"
+  tags: docker-all
+  when: item.0.component == component
+  with_subelements:
+    - "{{ component_scales|default([]) }}"
+    - containers
+# END Container deployment -------------------------------

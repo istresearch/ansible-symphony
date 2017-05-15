@@ -1,0 +1,40 @@
+---
+cooper_the_dog_version: 0.20.0.107
+
+cooper_the_dog_name: cooper_the_dog
+cooper_the_dog_install_dir: /opt/{{ cooper_the_dog_name }}
+cooper_the_dog_miniconda_path: "{{ miniconda_install_dir|default('/opt/miniconda') }}/lib/python2.7/site-packages/cooper-the-dog"
+cooper_the_dog_virtualenv_path: "{{ cooper_the_dog_install_dir }}/venv"
+cooper_the_dog_repo_location: "http://{{ repository_host }}/pip/prod"
+cooper_the_dog_build_version: 107
+cooper_the_dog_build_branch: master
+cooper_the_dog_install_version: "{{ cooper_the_dog_build_version }}-{{ cooper_the_dog_build_branch }}"
+
+# Logstash config
+# should be the same as kafka_num_partitions
+cooper_the_dog_consumer_threads: 3
+cooper_the_dog_doc_type: cooper
+cooper_the_dog_es_port: 9200
+cooper_the_dog_es_user: changeme
+cooper_the_dog_es_password: changeme
+cooper_the_dog_ssl: "false"
+
+local_settings_dir: /vagrant
+
+cooper_the_dog_kafka_topic: crawled_cooper_dev
+
+cooper_the_dog_logger_name: "{{ cooper_the_dog_name }}"
+cooper_the_dog_log_dir: /var/log
+cooper_the_dog_log_file: "{{ cooper_the_dog_name }}.log"
+cooper_the_dog_log_max_bytes: '50MB'
+cooper_the_dog_log_backups: 5
+cooper_the_dog_log_stdout: True
+cooper_the_dog_log_json: False
+cooper_the_dog_log_level: 'INFO'
+
+# Supervisor config
+cooper_the_dog_num_procs: 1
+cooper_the_dog_start_secs: 5
+cooper_the_dog_start_retries: 100
+cooper_the_dog_stderr_logfile_maxbytes: 50MB
+

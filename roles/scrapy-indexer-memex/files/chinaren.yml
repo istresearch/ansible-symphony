@@ -1,0 +1,22 @@
+campaignid: memex
+downloaddelay: 30
+engagementid: eng1
+findurlregex: (http:\/\/\S+|)\/f\/page_viewtopic\/\S+html
+paginatenum: 150
+paginateregex: \/f\/page_viewforum\/f_29\/start_\d+\.html
+rediskey: indexer-chinaren
+urllist:
+- http://www.chineseinsfbay.com/f/page_viewforum/f_29.html
+- http://www.chicagochinaren.com/f/page_viewforum/f_29.html
+- http://www.chineseinoz.com/f/page_viewforum/f_29.html
+- http://www.chineseinboston.com/f/page_viewforum/f_29.html
+- http://www.chineseinhi.com/f/page_viewforum/f_29.html
+- http://www.seattlechinaren.com/f/page_viewforum/f_29.html
+- http://www.dcchinaren.com/f/page_viewforum/f_29.html
+- http://www.vegaschinaren.com/f/page_viewforum/f_29.html
+- http://www.chineseinla.com/f/page_viewforum/f_29.html
+- http://www.sdchinaren.com/f/page_viewforum/f_29.html
+- http://www.chineseinpa.com/f/page_viewforum/f_29.html
+- http://www.chineseinhouston.com/f/page_viewforum/f_29.html
+- http://www.chineseinvan.com/f/page_viewforum/f_29.html
+- http://www.nychinaren.com/f/page_viewforum/f_29.html

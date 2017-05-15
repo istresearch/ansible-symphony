@@ -1,0 +1,31 @@
+---
+- name: install packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - xvfb
+  tags: xvfb
+
+- name: copy supervisord config
+  template:
+    src: xvfb-supervisord.conf.j2
+    dest: "{{ supervisord_programs_dir|default('/etc/supervisor/conf.d') }}/xvfb-supervisord.conf"
+    mode: 0644
+  notify:
+    - reread supervisord
+    - restart xvfb
+  tags: xvfb
+
+- name: set display environment variable
+  lineinfile:
+    dest: /etc/environment
+    state: present
+    regexp: "^DISPLAY="
+    line: "DISPLAY=:{{ xvfb_display }}"
+  tags:
+    - xvfb
+
+- name: Set fact xvfb_has_run
+  set_fact:
+    xvfb_has_run: true

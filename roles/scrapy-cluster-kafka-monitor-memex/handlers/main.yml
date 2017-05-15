@@ -1,0 +1,3 @@
+---
+- name: restart scrapy-kafka-monitor
+  shell: "supervisorctl restart {{ kafka_monitor_supervisor_name }}-crawling && supervisorctl restart {{ kafka_monitor_supervisor_name }}-actions"

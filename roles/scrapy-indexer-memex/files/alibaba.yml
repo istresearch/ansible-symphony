@@ -1,0 +1,13 @@
+campaignid: memex
+downloaddelay: 10
+engagementid: eng1
+findurlregex:
+- \S*product-detail\S*
+- \S*contactinfo\.html
+- \S*company_profile\.html
+paginatenum: 30
+paginateregex: catalogs\/products\/CID\d+\/\d+
+rediskey: indexer-alibaba
+urllist:
+- http://www.alibaba.com/catalogs/products/CID2813
+- http://www.alibaba.com/catalogs/products/CID2812

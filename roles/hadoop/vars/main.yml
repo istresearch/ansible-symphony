@@ -1,5 +1,5 @@
 ---
-
+java_home: "/usr/lib/jvm/default-java/"
 hdfs_user: hadoop
 hdfs_install_dir: "/opt/hadoop"
 hdfs_exe_dir: "JAVA_HOME={{ java_home }} {{ hdfs_install_dir }}/default/bin"

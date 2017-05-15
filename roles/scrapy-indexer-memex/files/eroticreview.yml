@@ -1,0 +1,8 @@
+campaignid: memex
+downloaddelay: 180
+engagementid: eng1
+findurlregex:
+- \/reviews\/\S*id\=\d+$
+rediskey: indexer-eroticreview
+urllist:
+- http://www.theeroticreview.com/reviews/newreviewsList.asp?Valid=1&mp=0&page=1

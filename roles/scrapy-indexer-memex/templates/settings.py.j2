@@ -1,0 +1,54 @@
+INDEXER_ID = {% for host in groups['scrapy-indexer-nodes'] %}{%- if host == inventory_hostname -%}"{{ loop.index }}"{%- endif -%}{% endfor %}
+
+INDEXER_PRIORITY = {{ indexer_default_priority }}
+
+# Specify the host and port to use when connecting to Redis (optional).
+REDIS_HOST = "{{ groups['redis-master-node'][0] }}"
+REDIS_PORT = {{ redis_port|default(6379) }}
+REDIS_UURL = "{{ indexer_redis_uurl }}"
+REDIS_REFRESH = "{{ indexer_redis_refresh }}"
+
+# Kafka server information
+KAFKA_HOSTS = "{% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}"
+KAFKA_INCOMING_TOPIC = "{{ indexer_incoming_topic }}"
+
+LOGGER_NAME = '{{ indexer_logger_name }}'
+LOG_DIR = '{{ indexer_log_dir }}'
+LOG_FILE = '{{ indexer_log_file }}'
+LOG_MAX_BYTES = {{ indexer_log_max_bytes }}
+LOG_BACKUPS = {{ indexer_log_backups }}
+
+ZOOKEEPER_ASSIGN_PATH = "{{ zookeeper_assign_path }}"
+ZOOKEEPER_HOSTS = "{% for host in groups['zookeeper-nodes'] %}{{ host }}:{{ zookeeper_port|default(2181) }}{% if not loop.last %},{% endif %}{% endfor %}"
+
+# Scrapy Settings
+# ~~~~~~~~~~~~~~~
+
+BOT_NAME = '{{ indexer_bot_name }}'
+
+SPIDER_MODULES = ['{{ indexer_bot_name }}.spiders']
+NEWSPIDER_MODULE = '{{ indexer_bot_name }}.spiders'
+
+# Max idle time to prevent the spider from being closed when distributed crawling.
+# This only works if queue class is SpiderQueue or SpiderStack,
+# and may also block the same time when your spider start at the first
+# time (because the queue is empty).
+SCHEDULER_IDLE_BEFORE_CLOSE = {{ indexer_idle_before_close }}
+
+# Store scraped item in redis for post-processing.
+ITEM_PIPELINES = {
+    #'scrapy_redis.pipelines.RedisPipeline',
+    '{{ indexer_bot_name }}.{{ indexer_pipeline_file }}.KafkaPipeline': {{ indexer_kafka_pipeline_rank }},
+    '{{ indexer_bot_name }}.{{ indexer_pipeline_file }}.LoggingPipeline': {{ indexer_logging_pipeline_rank }},
+    
+}
+
+# So that runserver knows which spiders have been implemented.
+SPIDER_MODULES = ['{{ indexer_bot_name }}.{{ indexer_spider_folder }}', ]
+
+# Disable the built in logging in production
+LOG_ENABLED = {{ indexer_scrapy_logging_enabled }}
+
+# Do not retry failed pages
+# Bug in scrapy-redis
+RETRY_TIMES = {{ indexer_retry_times }}

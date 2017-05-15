@@ -1,0 +1,33 @@
+es_host: {{elastalert_es_host}}
+es_port: {{elastalert_es5_port}}
+
+#use_ssl: True
+#es_username: someusername
+#es_password: somepassword
+
+name: Tweet flatline
+type: flatline
+index: prod-darpa-*
+threshold: 10
+timeframe:
+  minutes: 5
+filter:
+- query:
+    query_string:
+      query: "provider.displayName: Twitter"
+alert:
+# - {{elastalert_slack_alerter}}
+- {{elastalert_pg_alerter}}
+
+# Slack required options
+slack_hook: {{slackbot}}
+slack_channel: {{elastalert_service_monitoring_channel}}
+
+# PagerDuty required options
+incident_key: 'prod-darpa_flatline'
+event_type: 'trigger'
+description: 'Tweets have stopped flowing for the GNIP Prod-darpa stream'
+client: elastalert
+client_url: "http://gnip-kibana.istresearch.com"
+
+use_local_time: {{elastalert_local_time}}

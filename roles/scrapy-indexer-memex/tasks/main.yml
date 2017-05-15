@@ -1,0 +1,86 @@
+---
+- name: Install Miniconda packages
+  shell: "{{ miniconda_install_dir|default('/opt/miniconda') }}/bin/conda install {{ item }} --yes"
+  with_items:
+    - pip
+    - scrapy
+  tags: indexer
+
+- name: Miniconda pip install indexer packages
+  shell: "{{ miniconda_install_dir|default('/opt/miniconda') }}/bin/pip install {{ item }}"
+  with_items:
+    - redis
+    - kafka-python
+    - docopt
+    - scrapy-redis
+    - service_identity
+    - python-json-logger
+    - kazoo
+    - pyyaml
+    - mock
+    - ConcurrentLogHandler
+  tags: indexer
+
+- name: Miniconda pip install scrapy-indexer
+  shell: "{{ miniconda_install_dir|default('/opt/miniconda') }}/bin/pip install --extra-index-url {{ repository_pip }} scrapy-indexer -U"
+  # notify:
+  #   - restart scrapy-indexer
+  tags: indexer
+
+- name: create indexer symlink
+  file:
+    src={{ indexer_miniconda_path }}
+    path={{ indexer_install_dir }}
+    state=link
+    mode=0744
+  tags: indexer
+
+- name: create indexer log directory
+  file:
+    path={{ indexer_log_dir }}/
+    state=directory
+    mode=0755
+  tags: indexer
+
+- name: copy indexer settings
+  template:
+    src=settings.py.j2
+    dest={{ indexer_install_dir }}/{{ indexer_bot_name }}/settings.py
+    mode=0644
+  notify:
+    - restart scrapy-indexer
+  tags: indexer
+
+- name: copy scrapy settings
+  template:
+    src=scrapy.cfg.j2
+    dest={{ indexer_install_dir }}/scrapy.cfg
+    mode=0644
+  tags: indexer
+
+- name: copy crawling config files
+  copy:
+    src={{ item }}
+    dest={{ indexer_install_dir }}/config/
+    mode=0644
+  with_fileglob:
+    - "*.yml"
+  tags: indexer
+
+- name: copy supervisord config
+  template:
+    src={{ indexer_name }}-supervisord.conf.j2
+    dest={{ supervisord_programs_dir|default('/etc/supervisor/conf.d') }}/{{ indexer_name }}-supervisord.conf
+    mode=0644
+  notify:
+    - reread supervisord
+  tags: indexer
+
+- name: copy logstash config
+  template:
+    src={{ indexer_name }}-logstash.conf.j2
+    dest={{ logstash_conf_dir|default('/etc/logstash.d') }}/{{ indexer_name }}-logstash.conf
+    mode=0644
+  notify:
+    - restart logstash
+  tags: indexer

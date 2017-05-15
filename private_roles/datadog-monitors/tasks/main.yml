@@ -1,0 +1,165 @@
+---
+#########################################################
+# Downloads and file setup
+#########################################################
+- block:
+    - name: install requried system-wide python modules
+      pip:
+        name: '{{ item }}'
+      become: yes
+      become_user: root
+      with_items:
+        - jinja2
+        - pyaml
+
+    - name: create datadog monitors install directory
+      file:
+        path={{ datadog_monitor_install_dir }}/
+        state=directory
+        mode=0744
+        owner=dd-agent
+
+    - name: download datadog monitors
+      get_url:
+        url={{ repository_infrastructure }}/ist-sysadmin-master.zip
+        dest=/tmp/ist-sysadmin-master.zip
+        mode=0644
+        validate_certs=no
+
+    - name: extract datadog monitors
+      unarchive:
+        src=/tmp/ist-sysadmin-master.zip
+        dest={{ datadog_monitor_install_dir }}/
+        copy=no
+
+    - name: delete temporary datadog monitors file
+      file:
+        path=/tmp/ist-sysadmin-master.zip
+        state=absent
+      ignore_errors: yes
+
+    - name: create datadog monitors symlink
+      file:
+        path={{ datadog_monitor_install_dir }}/custom_monitors
+        src={{ datadog_monitor_install_dir }}/ist-sysadmin-master/datadog
+        state=link
+        owner=dd-agent
+
+    # Using command here instead of the pip module for the `--target` option.
+    # This is required because the embedded python for the datadog agent does
+    # not read the system-level packages
+    - name: install custom monitor python modules
+      command: pip install -r {{ datadog_monitor_install_dir }}/custom_monitors/requirements.txt --target {{ datadog_embedded_python_lib_dir }}
+  tags:
+    - datadog-monitors
+    - datadog-monitors-install
+
+###########################################################################
+# Datadog check vars creation
+# Note: Standard symlink conventions cannot be employed here because the
+# dd-agent script will choke on symlinks. Real directories and files are
+# required, so we do a lot of moving/copying here.
+###########################################################################
+- block:
+    - name: remove previously generated conf.d files
+      shell: 'rm {{ datadog_monitor_install_dir }}/custom_monitors/dd-agent/conf.d/*'
+      args:
+        executable: /bin/bash # required for glob expansion
+      ignore_errors: yes
+
+    - name: populate datadog monitors var file
+      template:
+        src=datadog-monitor-vars.j2
+        dest={{ datadog_monitor_install_dir }}/custom_monitors/datadog-vars.yml
+
+    ########################################################################
+    # Do this now so we can fail fast if there are errors with variables
+    ########################################################################
+    - name: poulate custom monitor configs from var file
+      command: python {{ datadog_monitor_install_dir }}/custom_monitors/create_configs.py
+
+    - name: ensure checks-enabled directory exists
+      file:
+        path={{ ddagent_dir }}/checks-enabled
+        state=directory
+        owner=dd-agent
+
+    - name: remove checks-enabled symlinks
+      shell: 'rm {{ ddagent_dir }}/checks-enabled/*'
+      args:
+        executable: /bin/bash # required for glob expansion
+      ignore_errors: yes
+
+    - name: create checks-enabled symlinks
+      file:
+        path={{ ddagent_dir }}/checks-enabled/{{ item.key }}.py
+        src={{ datadog_monitor_install_dir }}/custom_monitors/dd-agent/checks-available/{{ item.key }}.py
+        state=link
+        owner=dd-agent
+      with_dict: '{{ datadog_monitors }}'
+      when: item.value.enabled and item.value.is_custom_check
+
+    - name: backup existing conf.d directory
+      command: mv {{ ddagent_dir }}/conf.d {{ ddagent_dir }}/conf.d-backup
+      when: ddagent_confd_dir.stat.isdir is defined and ddagent_confd_dir.stat.isdir
+      ignore_errors: yes
+
+    - name: remove existing conf.d directory
+      file:
+        path={{ ddagent_dir }}/conf.d
+        state=absent
+
+    - name: copy custom_monitor conf.d directory
+      command: cp -r {{ datadog_monitor_install_dir }}/custom_monitors/dd-agent/conf.d {{ ddagent_dir }}/conf.d
+  tags:
+    - datadog-monitors
+    - datadog-monitors-vars
+
+###########################################################################
+# Custom tasks required for certain monitors
+###########################################################################
+- block:
+    - name: execute nginx monitor tasks
+      include: monitor-tasks/nginx.yml
+      when: datadog_monitors.nginx is defined and datadog_monitors.nginx.enabled
+      tags: datadog-monitors-nginx
+
+    - name: execute docker_daemon monitor tasks
+      include: monitor-tasks/docker_daemon.yml
+      when: datadog_monitors.docker_daemon is defined and datadog_monitors.docker_daemon.enabled
+      tags: datadog-monitors-docker
+
+    - name: execute ist_docker_daemon monitor tasks
+      include: monitor-tasks/ist_docker_daemon.yml
+      when: datadog_monitors.ist_docker_daemon is defined and datadog_monitors.ist_docker_daemon.enabled
+      tags: datadog-monitors-ist-docker-daemon
+
+  tags:
+    - datadog-monitors
+    - datadog-monitors-custom-tasks
+
+###########################################################################
+# Datadog dogstream relocation
+###########################################################################
+- block:
+    - name: populate datadog conf with dogstream parsers
+      blockinfile:
+        dest: "{{ ddagent_conf_path }}"
+        marker: "### {mark} ANSIBLE MANAGED ###"
+        content: "dogstreams: {{ datadog_dogstreams|join(',') }}"
+  tags:
+    - datadog-monitors
+    - datadog-monitors-dogstreams
+
+#########################################################
+# Restart Datadog agent
+#########################################################
+- name: restart dd-agent
+  service:
+    name=datadog-agent
+    state=restarted
+  tags:
+    - datadog-monitors
+    - datadog-monitors-install
+    - datadog-monitors-vars
+    - datadog-monitors-custom-tasks

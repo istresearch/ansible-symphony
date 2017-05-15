@@ -1,0 +1,8 @@
+campaignid: memex
+downloaddelay: 30
+engagementid: eng1
+findurlregex:
+- http[^"]+\/listing\/[^"]+
+rediskey: indexer-floridagunclassifieds
+urllist:
+- http://www.floridagunclassifieds.com/

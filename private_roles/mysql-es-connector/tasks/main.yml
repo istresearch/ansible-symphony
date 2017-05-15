@@ -1,0 +1,104 @@
+---
+- name: create mysql-es connector directory
+  file:
+    path={{ mysql_es_dir }}/
+    state=directory
+    mode=0755
+  tags: mysql-es-connector
+
+- name: check for existing mysql-es connector version install
+  stat: path={{ mysql_es_install_dir }}
+  register: mysql_es
+  tags: mysql-es-connector
+
+- name: make mysql-es connector version directory if not exist
+  file:
+    path={{ mysql_es_install_dir }}/
+    state=directory
+    mode=0755
+  when: mysql_es.stat.isdir is not defined
+  tags: mysql-es-connector
+
+- name: download mysql-es-connector
+  get_url:
+    url={{ mysql_es_repo_location }}/mysql_es_v{{ mysql_es_version }}.zip
+    dest=/tmp/mysql_es_v{{ mysql_es_version }}.zip
+    mode=0755
+    validate_certs=no
+    url_username={{ pulse_repo_user }}
+    url_password={{ pulse_repo_password }}
+  when: mysql_es.stat.isdir is not defined
+  tags: mysql-es-connector      
+
+- name: extract mysql-es-connector files
+  unarchive:
+    src=/tmp/mysql_es_v{{ mysql_es_version }}.zip
+    dest={{ mysql_es_install_dir }}/
+    copy=no
+  when: mysql_es.stat.isdir is not defined
+  tags: mysql-es-connector
+
+- name: delete temp mysql-es connector file
+  file:
+    path=/tmp/mysql_es_v{{ mysql_es_version }}.zip
+    state=absent
+  ignore_errors: yes
+  tags: mysql-es-connector
+
+#- name: move mapping over
+#  copy:
+#    src=pulse_mapping_dynamic.json
+#    dest={{ mysql_es_dir }}/pulse_mapping_dynamic.json
+#    mode=0755
+#  tags: mysql-es-connector
+
+- name: check for mysql-es log
+  stat: path={{ mysql_es_log_dir }}
+  register: mysql_es_log
+  tags: mysql-es-connector
+
+- name: make mysql-es log directory if not exist
+  file:
+    path={{ mysql_es_log_dir }}
+    state=directory
+    mode=0755
+  when: mysql_es_log.stat.isdir is not defined
+  tags: mysql-es-connector
+
+- name: install elasticsearch-py from pypi
+  shell: "sudo {{ miniconda_install_dir }}/bin/pip install -i https://pypi.python.org/simple elasticsearch"
+  when: pulse_local_install
+  tags: mysql-es-connector
+
+- name: install elasticsearch-py from hosted repo
+  shell: "sudo {{ miniconda_install_dir }}/bin/pip install elasticsearch"
+  when: not pulse_local_install
+  tags: mysql-es-connector
+
+- name: download mysql-connector-python from MySQL source
+  get_url: url=http://dev.mysql.com/get/Downloads/Connector-Python/mysql-connector-python_2.1.3-1ubuntu15.04_all.deb dest=/tmp/
+
+- name: dpkg mysql-connector-python
+  shell: "sudo dpkg -i /tmp/mysql-connector-python_2.1.3-1ubuntu15.04_all.deb"
+
+- name: install mysql-connector-python
+  shell: "sudo apt-get install -f"
+
+- name: get mysql-connector-python package
+  get_url: url=http://cdn.mysql.com/Downloads/Connector-Python/mysql-connector-python-2.0.4.zip dest=/tmp/
+
+- name: install mysql-connector-python package
+  shell: "sudo {{ miniconda_install_dir }}/bin/pip install /tmp/mysql-connector-python-2.0.4.zip"
+  tags: mysql-es-connector
+
+- name: install MySQL-python
+  shell: "sudo {{ miniconda_install_dir }}/bin/pip install MySQL-python"
+  tags: mysql-es-connector      
+
+- name: build ES index
+  shell: "sudo {{ miniconda_install_dir }}/bin/python2.7 {{ mysql_es_install_dir }}/mysql_es_pulse.py --dbhost={{ mysql_db_host }} --dbuser={{ pulse_db_user_name }} --db={{ pulse_db_name }} --pw={{ pulse_password }} --interval={{ interval }} --es={{ es_host }} --index=pulse-1 --build=all --mapping={{ mysql_es_install_dir }}/pulse_mapping_dynamic.json --logfile={{ mysql_es_log_dir }}/{{ pulse_name | default('pulse') }}.log --db_prefix=pulse_"
+  tags: mysql-es-connector
+
+- cron:
+    name="Pulse MySQL-ES-Connector" minute="{{ cron_freq }}"
+    user="root" job="sudo {{ miniconda_install_dir }}/bin/python2.7 {{ mysql_es_install_dir }}/mysql_es_pulse.py --dbhost={{ mysql_db_host }} --dbuser={{ pulse_db_user_name }} --db={{ pulse_db_name }} --pw={{ pulse_password }} --interval={{ interval }} --es={{ es_host }} --index=pulse-1 --build=incremental --mapping={{ mysql_es_install_dir }}/pulse_mapping_dynamic.json --logfile={{ mysql_es_log_dir }}/{{ pulse_name | default('pulse') }}.log --db_prefix=pulse_"

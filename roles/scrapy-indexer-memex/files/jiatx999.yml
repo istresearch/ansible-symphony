@@ -1,0 +1,14 @@
+campaignid: memex
+downloaddelay: 30
+engagementid: eng1
+findurlregex: bencandy\.php\?fid=\d+&id=\d+
+paginatenum: 50
+paginateregex: list\.php\?fid=\d+&page=\d+
+rediskey: indexer-jiatx999
+urllist:
+- http://www.jiatx999.com/f/list.php?fid=69
+- http://www.jiatx999.com/f/list.php?fid=68
+- http://www.jiatx999.com/f/list.php?fid=7
+- http://www.jiatx999.com/f/list.php?fid=185
+- http://www.jiatx999.com/f/list.php?fid=183
+- http://www.jiatx999.com/f/list.php?fid=252

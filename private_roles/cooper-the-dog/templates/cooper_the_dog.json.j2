@@ -1,0 +1,169 @@
+{
+  "order": 1,
+  "template": "cooper-*",
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "domain_analyzer": {
+          "type": "custom",
+          "filter": [
+            "capture_hostname_filter",
+            "hostname_to_domain_filter"
+          ],
+          "tokenizer": "keyword"
+        },
+        "hostname_analyzer": {
+          "type": "custom",
+          "filter": [
+            "capture_hostname_filter"
+          ],
+          "tokenizer": "keyword"
+        }
+      },
+      "filter": {
+        "hostname_to_domain_filter": {
+          "flags": "CASE_INSENSITIVE",
+          "patterns": [
+            "([a-z0-9\\-]+\\.[a-z0-9\\-]{2,3})$"
+          ],
+          "preserve_original": "false",
+          "type": "pattern_capture"
+        },
+        "capture_hostname_filter": {
+          "flags": "CASE_INSENSITIVE",
+          "patterns": [
+            "https?:\/\/([^:\/]+)"
+          ],
+          "preserve_original": "false",
+          "type": "pattern_capture"
+        }
+      }
+    }
+  },
+  "mappings": {
+    "_default_": {
+      "dynamic_templates": [
+        {
+          "string_fields": {
+            "mapping": {
+              "index": "not_analyzed",
+              "type": "string"
+            },
+            "match": "*",
+            "match_mapping_type": "string"
+          }
+        }
+      ]
+    },
+    "cooper": {
+      "_all": {
+        "enabled": false
+      },
+      "_timestamp": {
+        "enabled": true
+      },
+      "properties": {
+        "_parent": {
+          "type": "string",
+          "analyzer": "keyword"
+        },
+        "version": {
+          "type": "float"
+        },
+        "crawl_data": {
+          "type": "object"
+        },
+        "crawler": {
+          "type": "string",
+          "analyzer": "keyword"
+        },
+        "team": {
+          "type": "string",
+          "analyzer": "keyword"
+        },
+        "timestamp": {
+          "type": "date",
+          "format": "dateOptionalTime"
+        },
+        "raw_content": {
+          "type": "string"
+        },
+        "content_type": {
+          "type": "multi_field",
+          "fields": {
+            "content_type": {
+              "type": "string"
+            },
+            "exact": {
+              "type": "string",
+              "analyzer": "keyword"
+            }
+          }
+        },
+        "url": {
+          "type": "multi_field",
+          "fields": {
+            "url": {
+              "type": "string"
+            },
+            "exact": {
+              "type": "string",
+              "analyzer": "keyword"
+            },
+            "hostname": {
+              "type": "string",
+              "analyzer": "hostname_analyzer"
+            },
+            "domain": {
+              "type": "string",
+              "analyzer": "domain_analyzer"
+            }
+          }
+        },
+        "extracted_text": {
+          "type": "string"
+        },
+        "extracted_metadata": {
+          "type": "object"
+        },
+        "obj_original_url": {
+          "type": "multi_field",
+          "fields": {
+            "url": {
+              "type": "string"
+            },
+            "exact": {
+              "type": "string",
+              "analyzer": "keyword"
+            },
+            "hostname": {
+              "type": "string",
+              "analyzer": "hostname_analyzer"
+            },
+            "domain": {
+              "type": "string",
+              "analyzer": "domain_analyzer"
+            }
+          }
+        },
+        "obj_stored_url": {
+          "type": "string",
+          "analyzer": "keyword"
+        },
+        "annotation1": {
+          "type": "short"
+        },
+        "annotation2": {
+          "type": "short"
+        },
+        "adjudication": {
+          "type": "short"
+        }
+      }
+    },
+  "aliases": {
+    "cooper-crawl": {
+    }
+  }
+ }
+}

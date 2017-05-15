@@ -1,0 +1,5 @@
+---
+dependencies:
+  - { role: logger-app, when: "logger_app_has_run is not defined" }
+  - { role: librdkafka, when: "librdkafka_installed is not defined" }
+  - { role: python }

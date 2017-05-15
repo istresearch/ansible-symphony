@@ -1,0 +1,26 @@
+ANSIBLE_METADATA = {'metadata_version': '1.0',
+                    'status': ['stableinterface'],
+                    'supported_by': 'core'}
+
+
+DOCUMENTATION = '''
+---
+module: nginx_conf
+short_description: quickly enable nginx configurations
+options:
+  src:
+    description:
+      - Path of a Jinja2 formatted template. This can be a relative or absolute path.
+    required: true
+  state:
+    description:
+      - The state of the nginx configuration.
+    choices: [ "absent", "available", "enabled" ]
+    required: true
+'''
+
+EXAMPLES = '''
+- nginx_conf:
+    src: nginx-conf.j2
+    state: enabled
+'''

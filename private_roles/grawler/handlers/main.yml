@@ -1,0 +1,11 @@
+---
+- name: restart grawler
+  supervisorctl:
+    name="{{ grawler_name }}:"
+    state=restarted
+
+- name: restart logstash
+  supervisorctl:
+    name=logstash
+    state=restarted
+

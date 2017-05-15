@@ -1,0 +1,89 @@
+---
+- name: create firefox install directory
+  file:
+    path: "{{ firefox_install_dir }}/"
+    state: directory
+    mode: 0777
+  tags: firefox
+
+- name: check for existing firefox install
+  stat:
+    path: "{{ firefox_install_dir }}/firefox-{{ firefox_version }}"
+  register: firefox
+  tags: firefox
+
+- name: download firefox
+  get_url:
+    url: "{{ repository_infrastructure }}/firefox-{{ firefox_version }}.tar.bz2"
+    dest: "/tmp/firefox-{{ firefox_version }}.tar.bz2"
+    mode: 0777
+    validate_certs: no
+  when: firefox.stat.isdir is not defined
+  tags: firefox
+
+- name: extract firefox
+  unarchive:
+    src: "/tmp/firefox-{{ firefox_version }}.tar.bz2"
+    dest: "{{ firefox_install_dir }}/"
+    copy: no
+  when: firefox.stat.isdir is not defined
+  tags: firefox
+
+- name: Set fact firefox_has_updated
+  set_fact:
+    firefox_has_updated: true
+  when: firefox.stat.isdir is not defined
+  tags: firefox
+
+- name: move folder
+  command: mv {{ firefox_install_dir }}/firefox {{ firefox_install_dir }}/firefox-{{ firefox_version }}
+  when: firefox.stat.isdir is not defined
+  tags: firefox
+
+- name: delete temporary firefox file
+  file:
+    path: "/tmp/firefox-{{ firefox_version }}.tar.bz2"
+    state: absent
+  ignore_errors: yes
+  tags: firefox
+
+- name: create firefox symlink
+  file:
+    path: "{{ firefox_install_dir }}/default"
+    state: link
+    src: "{{ firefox_install_dir }}/firefox-{{ firefox_version }}"
+  tags: firefox
+
+- name: check the current firefox symlink
+  stat:
+    path: /usr/bin/firefox
+  register: the_fox
+  when: firefox.stat.isdir is not defined
+  tags: firefox
+
+- name: remove the link
+  file:
+    path: /usr/bin/firefox
+    state: absent
+  when: firefox.stat.isdir is not defined and the_fox.stat.isdir is defined
+  tags: firefox
+
+- name: setup firefox symlink
+  file:
+    path: /usr/bin/firefox
+    src: "{{ firefox_install_dir }}/default/firefox"
+    state: link
+    force: yes
+  when: firefox.stat.isdir is not defined
+  tags: firefox
+
+- name: Set fact firefox_has_run
+  set_fact:
+    firefox_has_run: true
+  tags: firefox
+
+- name: Set fact firefox_has_updated
+  set_fact:
+    firefox_has_updated: true
+  when: firefox.stat.isdir is not defined
+  tags: firefox

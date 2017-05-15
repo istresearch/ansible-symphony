@@ -1,0 +1,8 @@
+---
+apache_daemon: httpd
+apache_conf_path: /etc/httpd/conf.d
+php_packages:
+  - php
+  - php-mysqlnd
+  - php-curl
+php_ini_path: /etc/

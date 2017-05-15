@@ -1,0 +1,61 @@
+<VirtualHost *:{{ pulse_listen_port | default('80') }}>
+    ServerName {{ pulse_url_host }}
+    {% if pulse_self_signed_ssl==true %}
+    SSLEngine On
+    SSLCertificateFile /etc/apache2/ssl/pulse.crt
+    SSLCertificateKeyFile /etc/apache2/ssl/pulse.key
+    {% else %}
+    SSLEngine Off
+    {% endif %}
+
+  ProxyRequests Off
+  <Proxy *>
+      Order Allow,Deny
+      Allow from all
+      AuthType Basic
+      AuthName "Authenticated proxy"
+      AuthUserFile /etc/apache2/elastic.htpwd
+      Require valid-user
+  </Proxy>
+    ProxyPass /kibana http://127.0.0.1:{{ kibana4_port }}
+    ProxyPassReverse /kibana http://127.0.0.1:{{ kibana4_port }}
+    RewriteEngine on
+    RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_FILENAME} !-f
+    RewriteRule ^/kibana$ https://%{HTTP_HOST}%{REQUEST_URI}/ [R,L]
+          LogLevel warn
+          CustomLog ${APACHE_LOG_DIR}/kibana_access.log combined
+
+  DocumentRoot /var/www
+  <Directory />
+    Options -Indexes +FollowSymLinks
+    AllowOverride None
+  </Directory>
+  <Directory /var/www/>
+    Options -Indexes +FollowSymLinks -MultiViews
+    AllowOverride all
+    Order allow,deny
+    allow from all
+  </Directory>
+
+  ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
+  <Directory "/usr/lib/cgi-bin">
+    AllowOverride None
+    Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+    Order allow,deny
+    Allow from all
+  </Directory>
+
+  ErrorLog ${APACHE_LOG_DIR}/error.log
+
+  # Possible values include: debug, info, notice, warn, error, crit,
+  # alert, emerg.
+  LogLevel warn
+
+  CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+  <IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTP:X-Forwarded-Proto} =http
+    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+  </IfModule>
+</VirtualHost>

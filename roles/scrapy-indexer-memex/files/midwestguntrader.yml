@@ -1,0 +1,26 @@
+campaignid: memex
+downloaddelay: 30
+engagementid: eng1
+findurlregex:
+- viewad.asp[^"]+
+rediskey: indexer-midwestguntrader
+urllist:
+- http://www.midwestguntrader.com/viewlist.asp?cid=10009&sid=59023&sa=1
+- http://www.midwestguntrader.com/viewlist.asp?cid=10017&sid=60023&sa=1
+- http://www.midwestguntrader.com/viewlist.asp?cid=10026&sid=60163&sa=1
+- http://www.midwestguntrader.com/viewlist.asp?cid=10023&sid=60170&sa=1
+- http://www.midwestguntrader.com/viewlist.asp?cid=10007&sid=60171&sa=1
+- http://www.midwestguntrader.com/viewlist.asp?cid=10003&sid=53023&sa=1
+- http://www.midwestguntrader.com/viewlist.asp?cid=10024&sid=60172&sa=1
+- http://www.midwestguntrader.com/viewlist.asp?cid=10006&sid=60173&sa=1
+- http://www.midwestguntrader.com/viewlist.asp?cid=10008&sid=60166&sa=1
+- http://www.midwestguntrader.com/viewlist.asp?cid=10002&sid=60175&sa=1
+- http://www.midwestguntrader.com/viewlist.asp?cid=10000&sid=60176&sa=1
+- http://www.midwestguntrader.com/viewlist.asp?cid=10022&sid=60177&sa=1
+- http://www.midwestguntrader.com/viewlist.asp?cid=10004&sid=60178&sa=1
+- http://www.midwestguntrader.com/viewlist.asp?cid=10001&sid=60179&sa=1
+- http://www.midwestguntrader.com/viewlist.asp?cid=10005&sid=60180&sa=1
+- http://www.midwestguntrader.com/viewlist.asp?cid=10025&sid=60181&sa=1
+- http://www.midwestguntrader.com/viewlist.asp?cid=10018&sid=60040&sa=1
+- http://www.midwestguntrader.com/viewlist.asp?cid=10019&sid=60057&sa=1
+- http://www.midwestguntrader.com/viewlist.asp?cid=10020&sid=60047&sa=1

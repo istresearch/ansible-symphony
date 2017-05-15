@@ -1,0 +1,139 @@
+---
+- name: Configuring group
+  group:
+    name: "{{ sc_group }}"
+  tags:
+    - scrapy-cluster
+
+- name: Configuring user
+  user:
+    name: "{{ sc_user }}"
+    group: "{{ sc_group }}"
+    createhome: no
+  tags:
+    - scrapy-cluster
+
+- name: Add scrapy cluster user to group
+  user:
+    append: yes
+    name: "{{ sc_user }}"
+    groups: "{{ sc_group | default('scrapy-cluster') }}"
+    state: present
+  tags:
+    - scrapy-cluster
+
+- name: create scrapy cluster install directory
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0744
+    owner: "{{ sc_user }}"
+    group: "{{ sc_group }}"
+  with_items:
+    - "{{ sc_install_dir }}"
+  tags: scrapy-cluster
+
+- name: check for existing install
+  stat:
+    path: "{{ sc_install_dir }}/{{ sc_install_version }}"
+  register: sc
+  tags: scrapy-cluster
+
+- name: download scrapy cluster
+  get_url:
+    url: "{{ repository_infrastructure }}/scrapy-cluster/{{ sc_install_version }}.tar.gz"
+    dest: "/tmp/{{ sc_install_version }}.tgz"
+    mode: 0644
+    validate_certs: no
+  when: sc.stat.isdir is not defined
+  tags: scrapy-cluster
+
+- name: extract scrapy cluster
+  unarchive:
+    src: "/tmp/{{ sc_install_version }}.tgz"
+    dest: "{{ sc_install_dir }}"
+    copy: no
+    owner: "{{ sc_user }}"
+    group: "{{ sc_group }}"
+  when: sc.stat.isdir is not defined
+  tags: scrapy-cluster
+
+- name: delete temporary scrapy cluster file
+  file:
+    path: "/tmp/{{ sc_install_version }}.tgz"
+    state: absent
+  ignore_errors: yes
+  tags: scrapy-cluster
+
+- name: create scrapy cluster symlink
+  file:
+    path: "{{ sc_install_dir }}/default"
+    state: link
+    src: "{{ sc_install_dir }}/{{ sc_install_version }}"
+  tags: scrapy-cluster
+
+- name: Install apt-get packages
+  apt:
+    pkg: "{{ item }}"
+    update_cache: yes
+    state: latest
+    cache_valid_time: 600
+  with_items:
+    - python-lxml
+    - build-essential
+    - libssl-dev
+    - libffi-dev
+    - python-dev
+    - libxml2-dev
+    - libxslt1-dev
+  tags: scrapy-cluster
+
+- name: install pip packages
+  pip:
+    requirements: "{{ sc_install_dir }}/{{ sc_install_version }}/requirements.txt"
+    virtualenv: "{{ sc_virtualenv_path }}"
+  become: yes
+  become_user: root
+  tags: scrapy-cluster
+
+- name: install pre-scutils
+  pip:
+    name: "scutils"
+    version: "{{  sc_scutils_version }}"
+    virtualenv: "{{ sc_virtualenv_path }}"
+    extra_args: "--pre"
+  become: yes
+  become_user: root
+  tags: scrapy-cluster
+
+- name: chown venv folder
+  file:
+    path: "{{ sc_virtualenv_path }}"
+    owner: "{{ sc_user }}"
+    group: "{{ sc_group }}"
+  tags:
+    - scrapy-cluster
+
+- include: crawler.yml
+  when: sc_is_crawler
+  tags:
+    - scrapy-cluster
+    - scrapy-cluster-crawler
+
+- include: indexer.yml
+  when: sc_is_indexer
+  tags:
+    - scrapy-cluster
+    - scrapy-cluster-indexer
+
+- include: kafka-monitor.yml
+  when: sc_is_kafka_monitor
+  tags:
+    - scrapy-cluster
+    - scrapy-cluster-kafka-monitor
+
+- include: redis-monitor.yml
+  when: sc_is_redis_monitor
+  tags:
+    - scrapy-cluster
+    - scrapy-cluster-redis-monitor

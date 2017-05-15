@@ -1,0 +1,19 @@
+REDIS_HOST = "{{ groups['redis-master-node'][0] }}"
+REDIS_PORT = {{ redis_port|default(6379) }}
+REDIS_DB = {{ googler_redis_db|default(0) }}
+
+# Kafka server information
+KAFKA_HOSTS = "{% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}"
+KAFKA_TOPIC = "{{ sc_kafka_master_topic_prefix|default('demo') }}.{{ sc_kafka_monitor_topic_main|default('incoming') }}"
+
+QUEUE_NAME = "{{ googler_queue_name }}"
+
+# logging setup
+LOGGER_NAME = '{{ googler_logger_name }}'
+LOG_DIR = '{{ googler_log_dir }}'
+LOG_FILE = '{{ googler_log_file }}'
+LOG_MAX_BYTES = '{{ googler_log_max_bytes }}'
+LOG_BACKUPS = {{ googler_log_backups }}
+LOG_STDOUT = {{ googler_log_stdout }}
+LOG_JSON = {{ googler_log_json }}
+LOG_LEVEL = '{{ googler_log_level }}'

@@ -1,8 +1,17 @@
 .vagrant
-id_rsa.pub
+id_rsa*
 vault.passwd
 *.retry
+local.inventory
 
 # docs
 _build
 _build_html
+
+# vim
+*~
+*.*~
+*.swp
+*.retry
+.idea
+*.iml

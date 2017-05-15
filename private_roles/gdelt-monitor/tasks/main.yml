@@ -1,0 +1,90 @@
+---
+- name: create gdelt monitor install directory
+  file:
+    path={{ gdelt_monitor_install_dir }}/
+    state=directory
+    mode=0744
+  tags: gdelt-monitor
+
+- name: create gdelt monitor log directory
+  file:
+    path={{ gdelt_monitor_log_dir }}/
+    state=directory
+    mode=0755
+  tags: gdelt-monitor
+
+- name: check for existing gdelt monitor install
+  stat: path={{ gdelt_monitor_install_dir }}/{{ gdelt_monitor_name }}-{{ gdelt_monitor_version }}
+  register: gdeltmonitor
+  tags: gdelt-monitor
+
+- name: download gdelt monitor
+  get_url:
+    validate_certs=no
+    url={{ repository_infrastructure }}/{{ gdelt_monitor_name }}-{{ gdelt_monitor_version }}.tgz
+    dest=/tmp/{{ gdelt_monitor_name }}-{{ gdelt_monitor_version }}.tgz
+    mode=0644
+  when: gdeltmonitor.stat.isdir is not defined
+  tags: gdelt-monitor
+
+- name: extract gdelt monitor
+  unarchive:
+    src=/tmp/{{ gdelt_monitor_name }}-{{ gdelt_monitor_version }}.tgz
+    dest={{ gdelt_monitor_install_dir }}/
+    copy=no
+  when: gdeltmonitor.stat.isdir is not defined
+  tags: gdelt-monitor
+
+- name: delete temporary gdelt monitor file
+  file:
+    path=/tmp/{{ gdelt_monitor_name }}-{{ gdelt_monitor_version }}.tgz
+    state=absent
+  ignore_errors: yes
+  tags: gdelt-monitor
+
+- name: create gdelt monitor symlink
+  file:
+    path={{ gdelt_monitor_install_dir }}/default
+    state=link
+    src={{ gdelt_monitor_install_dir }}/{{ gdelt_monitor_name }}-{{ gdelt_monitor_version }}
+  tags: gdelt-monitor
+
+- name: create gdelt data directory
+  file:
+    path={{ gdelt_monitor_data_dir }}
+    state=directory
+    mode=0755
+  tags: gdelt-monitor
+
+- name: Install Miniconda packages
+  shell: "{{ miniconda_install_dir|default('/opt/miniconda') }}/bin/conda install {{ item }} --yes"
+  with_items:
+    - pip
+  tags:
+    - gdelt-monitor
+    - miniconda
+
+- name: Miniconda pip install  packages
+  shell: "{{ miniconda_install_dir|default('/opt/miniconda') }}/bin/pip install {{ item }}"
+  with_items:
+    - kafka-python
+    - elasticsearch
+  tags:
+    - gdelt-monitor
+    - miniconda
+
+- name: copy settings
+  template:
+    src=settings.py.j2
+    dest={{ gdelt_monitor_install_dir }}/{{ gdelt_monitor_name }}-{{ gdelt_monitor_version }}/settings.py
+    mode=0744
+  tags: gdelt-monitor
+
+- name: install cronjob
+  cron:
+    name="{{ gdelt_monitor_name }}"
+    minute="10"
+    hour="13"
+    job="/opt/miniconda/bin/python {{ gdelt_monitor_install_dir }}/default/gdelt_main.py
+    >> {{ gdelt_monitor_log_dir }}/{{ gdelt_monitor_log_file }} 2>&1"
+  tags: gdelt-monitor

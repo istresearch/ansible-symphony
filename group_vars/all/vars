@@ -1,3 +1,43 @@
 ---
+# file: group_vars/all
 
 apache_mirror: http://archive.apache.org/dist
+
+slackbot: "{{ vault_slackbot }}"
+repository_un: "{{ vault_repository_un }}"
+repository_pwd: "{{ vault_repository_pwd }}"
+datadog_api_key: "{{ vault_datadog_api_key }}"
+datadog_aws_access_key_id: "{{ vault_datadog_aws_access_key_id }}"
+datadog_aws_secret_access_key: "{{ vault_datadog_aws_secret_access_key }}"
+
+
+repository_infrastructure: "https://{{ repository_un }}:{{ repository_pwd }}@{{ repository_host }}/infrastructure"
+repository_pip: "https://{{ repository_un }}:{{ repository_pwd }}@{{ repository_host }}/pip/prod/simple"
+repository_pulse: "https://{{ repository_un }}:{{ repository_pwd }}@{{ repository_host }}/pulse"
+
+ntp_server_host: pool.ntp.org
+
+crawling_logstash_template: scrapy_cluster.json
+crawling_logstash_template_name: scrapy-cluster
+crawler_logstash_index_name: crawler-%{+YYYY.MM}
+crawler_es_port: 49200
+logstash_crawler_name:  crawler-*
+
+iptables: false
+es_hadoop_install_dir: /opt/elasticsearch-hadoop
+es_hadoop_version: 2.2.0
+
+exim_mailname: istresearch.com
+exim_amazon_ses_conf:
+  conf_name: 'amazon_ses'
+  region_endpoint: 'email-smtp.us-east-1.amazonaws.com'
+  port: 587
+  username: '{{ vault_ses_smtp_username }}'
+  password: '{{ vault_ses_smtp_password }}'
+
+exim_configs:
+ - "{{ exim_amazon_ses_conf.conf_name }}"
+
+tarsnap_credentials:
+  username: "{{ vault_tarsnap_username }}"
+  password: "{{ vault_tarsnap_password }}"

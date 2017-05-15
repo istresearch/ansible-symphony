@@ -1,0 +1,260 @@
+# Houses docker variables important across many different containers. For easy maniuplation here
+
+docker_compose_dir: /opt/compose
+docker_configs_dir: /opt/docker_configs
+docker_scripts_dir: /data/bin
+
+# creates logs-<env>-* indexes
+deploy_env: prod
+workdir: /tmp/
+virtualenv_path: /tmp/ansible
+
+# PULSE VARIABLES
+pulse_landing_page: 3
+pulse_mysql_host: "{{ inventory.hostname }}"
+pulse_tag: pulse-v3.1.4-release
+pulse_cooper_host: "{{ cooper_elb_host|default(groups['docker-cooper-nodes'][0]) }}"
+pulse_cooper_user: cooper
+pulse_cooper_pass: pass
+pulse_pipeline_type: kafka
+pulse_pipeline_schema: doc.flat
+pulse_cooper_protocol: https://
+pulse_cooper_apipath: cooper/rules
+pulse_mmr_parent_dir: /opt
+# used to configure your pulse ui setups
+pulse_multi_instance:
+  - name: instance1
+    pulse_mysql_database: pulse1
+    pulse_user: user1
+    pulse_email: email1@email.com
+    pulse_user_pwd: password1
+    pulse_mysql_user: u1
+    pulse_mysql_pwd: p2
+    pulse_analysis_user: url.com
+    pulse_analysis_pwd: pw2
+    pulse_admin_analysis_url: localhost:5601
+#   - name: instance2
+#     pulse_mysql_database: pulse12
+#     pulse_user: user12
+#     pulse_email: email1@email.com2
+#     pulse_user_pwd: password12
+#     pulse_mysql_user: u12
+#     pulse_mysql_pwd: p22
+#     pulse_analysis_user: url.com2
+#     pulse_analysis_pwd: pw22
+#     pulse_admin_analysis_url: localhost:56012
+
+# POLLSTER VARIABLES
+pollster_local_dir: /opt/pulse/pollster
+pollster_version: 5.4.4
+
+mysql_pwd: "{{ vault_mysql_pwd }}"
+mysql_root_pwd: "{{ vault_mysql_root_pwd }}"
+phpmyadim_host: "{{ inventory.hostname }}"
+
+# redis db's for services
+gatekeeper_redis_db:      0
+grawler_redis_db:         1
+rulemanager_redis_db:     2 # this may be reclaimed in future as rule manager is covered by telegraptor and traptor
+scrapy_cluster_redis_db:  3
+traptor_redis_db:         4
+telegraptor_redis_db:     5
+youscrape_redis_db:       6
+vk_redis_db:              7
+topologies_redis_db:      8 # note this is a placeholder so the storm processing has a redis db
+
+component: replace-me
+compose_file: "{{ component }}-compose.yaml.j2"
+compose_file_final: "{{ component }}-compose.{{ deploy_env }}.yaml"
+logstash_file: "logstash-component.conf.j2"
+logstash_file_final: "logstash-{{ component }}.{{ deploy_env }}.conf"
+script_file: "dc-component.sh.j2"
+script_file_final: "dc-{{ component }}.{{ deploy_env }}.sh"
+project_name: "{{ component }}"
+
+# Use extra templates to move extra files/configs over
+# extra_templates:
+#  - in: input/file
+#    out: output/file
+
+# Use to scale each compose file on each host
+# this should be a list of dicts with component, name, and scale values like so
+# component_scales:
+#   - component: scrapy-cluster
+#     containers:
+#       - name: crawler
+#         scale: 5
+#       - name: kafka_monitor
+#         scale: 3
+#   - component: rule-manager
+#     containers:
+#       - name: traptor
+#         scale: 2
+
+# logstash setup, for use when needing an ES cluster behind credentials
+logstash_credentials: false
+logstash_shards: 3
+logstash_replicas: 0
+logstash_component_tag: "{{ component }}"
+logstash_use: true
+logstash_tag: latest
+
+# Scrapy Cluster specific vars
+sc_kafka_monitor_tag: kafka-monitor-1.2.1-release
+sc_redis_monitor_tag: redis-monitor-1.2.1-release
+sc_crawler_tag: crawler-1.2.1-release
+sc_googler_tag: googler-0.0.2-master-10
+sc_googler_sleep_query: 60
+
+sc_crawling_kafka_topic_prefix: "{{ sc_kafka_master_topic_prefix }}"
+sc_crawling_queue_hits: 60
+sc_crawling_queue_window: 60
+sc_crawling_queue_moderated: True
+sc_crawling_kafka_base_64: False
+sc_kafka_master_topic_prefix: crawl
+sc_kafka_monitor_topic_main: incoming
+sc_kafka_monitor_kafka_group: sc-kafka-monitor
+sc_kafka_monitor_kafka_topic_prefix: "{{ sc_kafka_master_topic_prefix }}"
+scrapy_redis_host: "{{ groups['redis-master-node'][0] }}"
+sc_dogwhistle_enabled: False
+sc_dogwhistle_local: True
+sc_dogwhistle_statsd_host: 172.17.0.1
+sc_stats_status_codes: False
+sc_stats_plugins: False
+sc_stats_total: False
+
+# Traptor specific vars
+traptor_tag: v1.4.8
+traptor_kafka_topic: traptor.cooper_prod
+traptor_follow_creds: "{{ vault_traptor_follow_apikeys }}"
+traptor_geo_creds: "{{ vault_traptor_location_apikeys }}"
+traptor_track_creds: "{{ vault_traptor_track_apikeys }}"
+traptor_redis_host: "{{ groups['redis-master-node'][0] }}"
+
+# Telegram specific vars
+telegram_number: need_to_specify
+telegram_tgapi_tag: api-dev
+telegram_tgcli_tag: tgcli-latest
+telegram_pycli_tag: pycli-2.0.5
+telegram_stream_tag: stream-2.0.5
+telegram_pubsub_tag: pubsub-2.0.5
+telegram_redis_host: "{{ groups['redis-master-node'][0] }}"
+
+# Facebook Graph specific vars
+graphapi_tag: develop
+grawler_tag: grawler-develop-b61
+grawler_shared_queue: shared_graph_q
+# THE LENGTH OF THIS LIST MUST BE EQUAL TO
+# num grawler hosts * grawler_containers_per_box
+grawler_creds:
+  - app_id: blah
+    app_secret: blah
+  - app_id: blah2
+    app_secret: blah2
+  - app_id: blah3
+    app_secret: blah3
+  - app_id: blah4
+    app_secret: blah4
+grawler_containers_per_box: 1
+grawler_redis_host: "{{ groups['redis-master-node'][0] }}"
+
+# Cooper specific vars
+cooper_tag: 1.7.11
+cooper_mysql_host: "{{ vault_mysql_host|default('localhost') }}"
+cooper_mysql_user: "{{ vault_mysql_user|default('user') }}"
+cooper_mysql_password: "{{ vault_mysql_password|default('password') }}"
+cooper_mysql_database: "{{ vault_mysql_database|default('cooper_db') }}"
+cooper_mysql_root_user: "{{ vault_mysql_root_username|default('root') }}"
+cooper_mysql_root_password: "{{ vault_mysql_root_password|default('root') }}"
+cooper_es_index: cooper-rules
+cooper_graphapi_app_id: "{{ grawler_creds[0].app_id|default('super') }}"
+cooper_graphapi_app_secret: "{{ grawler_creds[0].app_secret|default('secret') }}"
+
+# Curator Script specific vars
+curator_pulse_tag: curator-pulse-0.1
+curator_logs_tag: curator-logs-0.1
+curator_alias_tag: curator-custom-alias-0.1
+curator_logs:
+  # this should list all log indices, that match all 'logstash_component_tag's in the infrastructure playbook
+  - cooper
+  - grawler
+  - topologies
+  - rule-manager
+  - scrapy-cluster
+  - telegraptor
+  - traptor
+curator_log_suffix: "{year}.{month}.{day}"
+curator_log_retention: 7 # days
+curator_log_interval: 3600
+curator_es_credentials: False
+curator_es_ssl: False
+curator_es_user: user
+curator_es_pass: password
+curator_pulse_prefix: pulse
+curator_pulse_interval: 3600
+curator_alias_interval: 60
+# curator_alias:
+#   # custom alias configurations can be defined like so
+#   - name: bracket
+#     regex: pulse-default-default-2016\.1.*|^(?!pulse-default-default-2016)pulse-default-default.*
+#     file: alias_appid.json.j2
+
+# Rule Manager specific vars
+rulemanager_traptor_tag: traptor-3.0.4
+rulemanager_telegram_tag: telegram-3.0.4
+rulemanager_traptor_es_ssl: False
+rulemanager_traptor_es_credentials: False
+rulemanager_traptor_es_user: user
+rulemanager_traptor_es_pass: pass
+rulemanager_traptor_es_index: collection-rules
+rulemanager_traptor_refresh_rate: 600
+rulemanager_telegram_refresh_rate: 60
+rulemanager_telegram_channel: telegram.notify
+rulemanager_cooper_credentials: False
+rulemanager_cooper_user: cooper
+rulemanager_cooper_pass: pass
+rulemanager_cooper_ssl: False
+# `cooper_elb_host` is currently undefined
+# define it to override the final cooper host
+rulemanager_cooper_host: "{{ cooper_elb_host|default(groups['docker-cooper-nodes'][0]) }}"
+
+# Elasticsearch
+elasticsearch_repo: docker.elastic.co/elasticsearch/elasticsearch
+elasticsearch_image_tag: 5.3.0
+elasticsearch_port: 9200
+elasticsearch_transport_port: 9300
+elasticsearch_data_path: /data/elasticsearch
+
+# Kibana specific vars
+kibana_repo: docker.elastic.co/kibana/kibana
+kibana_image_tag: 5.3.0
+kibana_elasticsearch_url: "https://{{ item.name|default('replace_me') }}:{{ item.pulse_analysis_pwd|default('replace_me') }}@{{ kibana_es_url|default('localhost') }}:{{ kibana_es_port|default(9200) }}"
+kibana_verify_ssl: true
+kibana_remote_path: /usr/share/kibana/config
+# List of plugins (http, file, or ES repo name)
+kibana_plugin_list:
+
+# YouScrape specific vars
+youscrape_api_tag: api-1.0.0
+youscrape_redis_host: "{{ groups['redis-master-node'][1] }}"
+youscrape_queue_new: youscrape_q_new
+youscrape_queue_users: youscrape_q_users
+youscrape_queue_videos: youscrape_q_videos
+youscrape_acct_phone: replace_me
+youscrape_api_key: replace_me
+youscrape_scraper_tag: scraper-1.0.0
+youscrape_kafka_topic_prefix: crawl
+youscrape_kafka_topic_main: youtube
+youscrape_project_id: replace_me
+youscrape_private_key_id: replace_me
+youscrape_private_key: replace_me
+youscrape_client_email: replace_me
+youscrape_client_id: replace_me
+youscrape_x509_cert_url: replace_me
+
+# VK specific vars
+vk_redis_host: "{{ groups['redis-master-node'][1] }}"
+vk_api_tag: 1.0.3
+vk_worker_tag: 1.0.3
+vk_kafka_topic_prefix: crawl
+vk_kafka_topic_main: vkollect

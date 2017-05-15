@@ -1,0 +1,5 @@
+KAFKA_HOSTS = "{% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}"
+REDIS_HOST = "{{ groups['redis-master-node'][0] }}"
+
+KAFKA_TOPIC = "{{ cooper_the_dog_kafka_topic }}"
+

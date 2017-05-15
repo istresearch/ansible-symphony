@@ -1,0 +1,12 @@
+[dbopts]
+table_prefix = "{{ pulse_db_table_prefix }}"
+dns_scheme = "ini"
+dns_value = ""
+
+[dbconn]
+driver = "mysql"
+host = "{{ inventory_hostname }}"
+;port = {{ mysql_port|default('3306') }}
+dbname = "{{ pulse_db_name }}"
+username = "{{ pulse_db_user_name }}"
+password = "{{ pulse_db_password }}"

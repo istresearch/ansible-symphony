@@ -1,0 +1,63 @@
+---
+- name: Install Miniconda packages
+  shell: "{{ miniconda_install_dir|default('/opt/miniconda') }}/bin/conda install pip --yes"
+  tags: redis-monitor
+
+- name: Miniconda pip install crawling packages
+  shell: "{{ miniconda_install_dir|default('/opt/miniconda') }}/bin/pip install {{ item }}"
+  with_items:
+    - redis
+    - jsonschema
+    - python-json-logger
+    - mock
+    - ConcurrentLogHandler
+  tags: redis-monitor
+
+- name: Miniconda pip install scrapy-crawler
+  shell: "{{ miniconda_install_dir|default('/opt/miniconda') }}/bin/pip install --extra-index-url {{ repository_pip }} scrapy-redis-monitor -U"
+  notify:
+    - restart scrapy-redis-monitor
+  tags:
+    - redis-monitor
+
+- name: create redis-monitor log directory
+  file:
+    path={{ redis_monitor_log_dir }}/
+    state=directory
+    mode=0755
+  tags: redis-monitor
+
+- name: create redis-monitor symlink
+  file:
+    src={{ redis_monitor_miniconda_path }}
+    path={{ redis_monitor_install_dir }}
+    state=link
+    mode=0744
+  tags: redis-monitor
+
+- name: copy redis monitor settings
+  template:
+    src=settings.py.j2
+    dest={{ redis_monitor_install_dir }}/settings.py
+    mode=0744
+  notify:
+    - restart scrapy-redis-monitor
+  tags: redis-monitor
+
+- name: copy supervisord config
+  template:
+    src={{ redis_monitor_name }}-supervisord.conf.j2
+    dest={{ supervisord_programs_dir|default('/etc/supervisor/conf.d') }}/{{ redis_monitor_name }}-supervisord.conf
+    mode=0644
+  notify:
+    - reread supervisord
+  tags: redis-monitor
+
+- name: copy logstash config
+  template:
+    src={{ redis_monitor_name }}-logstash.conf.j2
+    dest={{ logstash_conf_dir|default('/etc/logstash.d') }}/{{ redis_monitor_name }}-logstash.conf
+    mode=0644
+  notify:
+    - restart logstash
+  tags: redis-monitor

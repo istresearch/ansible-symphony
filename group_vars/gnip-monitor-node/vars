@@ -1,0 +1,17 @@
+---
+# file: group_vars/gnip-monitor-node/vars
+
+gnip_kafka_prefix: "{{vault_gnip_kafka_prefix}}"
+gnip_kafka_prod: "{{vault_gnip_kafka_prod}}"
+gnip_kafka_dev: "{{vault_gnip_kafka_dev}}"
+gnip_monitor_prod_name: "{{vault_gnip_monitor_prod_name}}"
+gnip_monitor_dev_name: "{{vault_gnip_monitor_dev_name}}"
+
+gnip_dev: "{{vault_gnip_dev}}"
+gnip_prod: "{{vault_gnip_prod}}"
+gnip_un: "{{vault_gnip_un}}"
+gnip_pwd: "{{vault_gnip_pwd}}"
+
+# Only for production memex cluster.  For vagrant testing, host_vars is used
+gnip_monitor_data_dir: /scratch/data/gnip
+gnip_monitor_es_port: 59200

@@ -23,11 +23,15 @@
   sysctl:
     name: vm.swappiness
     value: 1
+  tags:
+    - elasticsearch
 
 - name: set max_map_count to optimize virtual memory
   sysctl:
     name: vm.max_map_count
-    value: 262144   
+    value: 262144
+  tags:
+    - elasticsearch
 
 - name: Get Base Node Name from Hostname
   shell: hostname | awk -F . '{print $1}'
@@ -68,11 +72,13 @@
 
 - name: create elasticsearch data directory
   file:
-    path: "{{ elasticsearch_data_dir }}_{{ conf_name }}/"
+    path: "{{ item }}_{{ conf_name }}/"
     state: directory
     mode: 0744
     owner: "{{ elasticsearch_user }}"
     group: "{{ elasticsearch_group }}"
+  with_items:
+    - "{{ elasticsearch_data_dir }}"
   tags: elasticsearch
 
 - name: check for existing elasticsearch install
@@ -223,6 +229,20 @@
   tags:
     - elasticsearch
 
+- name: check for existing cloud-aws plugin
+  stat:
+    path: "{{ elasticsearch_plugin_dir }}/cloud-aws"
+  register: cloud_aws
+  when: elasticsearch_install_cloud_aws
+  tags:
+    - elasticsearch
+
+- name: install cloud-aws plugin
+  shell: "{{ elasticsearch_bin_dir }}/plugin install -b cloud-aws"
+  when: elasticsearch_install_cloud_aws and cloud_aws.stat.isdir is not defined
+  tags:
+    - elasticsearch
+
 - name: check for existing analysis icu plugin install
   stat:
     path: "{{ elasticsearch_plugin_dir }}/analysis-icu"
@@ -234,5 +254,11 @@
   shell: "{{ elasticsearch_bin_dir }}/plugin install analysis-icu"
   when: elasticsearch_install_icu_analysis and elasticsearchicu.stat.isdir is not defined
   notify: "restart elasticsearch {{ conf_name }}"
+  tags:
+    - elasticsearch
+
+- name: include nginx_proxy tasks
+  include: nginx_proxy.yml
+  when: elasticsearch_nginx_proxy_enabled is defined and elasticsearch_nginx_proxy_enabled
   tags:
     - elasticsearch

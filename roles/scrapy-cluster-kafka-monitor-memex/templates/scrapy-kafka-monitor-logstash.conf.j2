@@ -1,0 +1,25 @@
+input {
+  file {
+    path => ['{{ kafka_monitor_log_dir }}/{{ kafka_monitor_log_file }}']
+    codec => json
+    tags => ['{{ kafka_monitor_logstash_tag }}']
+    sincedb_path => "{{ logstash_install_dir|default('/opt/logstash') }}/logstash-{{ logstash_version|default('1.5.0') }}"
+  }
+}
+
+output {
+{% if groups['elasticsearch-nodes'] is defined and (groups['elasticsearch-nodes']|length > 0) %}
+  if '{{ kafka_monitor_logstash_tag }}' in [tags]{
+    elasticsearch {
+      host => "{{ groups['elasticsearch-nodes'][0] }}"
+      port => {{ crawler_es_port }}
+      protocol => http
+      template => "{{ logstash_template_dir|default('/etc/logstash.d/templates') }}/{{ kafka_monitor_logstash_template }}"
+      template_name => "{{ kafka_monitor_logstash_template_name }}"
+      template_overwrite => true
+      index => "{{ crawler_logstash_index_name }}"
+      index_type => "%{[logger]}"
+    }
+  }
+{% endif %}
+}

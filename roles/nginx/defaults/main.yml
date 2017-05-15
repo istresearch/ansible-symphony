@@ -1,0 +1,12 @@
+---
+nginx_base_dir: /etc/nginx
+nginx_conf_path: "{{ nginx_base_dir }}/nginx.conf"
+nginx_access_log_path: "/var/log/nginx/access.log"
+nginx_error_log_path: "/var/log/nginx/error.log"
+nginx_sites_available_dir: "{{ nginx_base_dir }}/sites-available"
+nginx_sites_enabled_dir: "{{ nginx_base_dir }}/sites-enabled"
+nginx_worker_connections: 2048
+nginx_worker_user: "www-data"
+nginx_worker_user_shell: "/bin/false"
+nginx_disable_default_server: true
+nginx_htpasswd_file: '/etc/nginx/.htpasswd'

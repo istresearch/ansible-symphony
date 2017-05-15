@@ -1,0 +1,31 @@
+input {
+  file {
+    path => ['/var/log/container-logs/*.log']
+    codec => json
+    tags => ['{{ logstash_component_tag }}']
+  }
+}
+
+filter {
+    if [level] =~ /^DEBUG/ {
+        drop { }
+    }
+}
+
+output {
+    if '{{ logstash_component_tag }}' in [tags]{
+        elasticsearch {
+            hosts => "{{ groups['elasticsearch-nodes'][0] }}:{{ elasticsearch_network_http_port|default(9200) }}"
+            template => "/etc/logstash/templates/logs-template.json"
+            template_name => "logs-*"
+            template_overwrite => false
+            index => "logs-{{ deploy_env }}-{{ logstash_component_tag }}-%{+YYYY.MM.dd}"
+            document_type => "%{[logger]}"
+{% if logstash_credentials is defined and logstash_credentials == true %}
+            ssl => {{ logstash_es_ssl|default('true')}}
+            user => "{{ logstash_es_user }}"
+            password => "{{ logstash_es_pwd }}"
+{% endif %}
+        }
+    }
+}

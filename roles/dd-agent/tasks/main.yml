@@ -1,0 +1,57 @@
+---
+# file: roles/dd-agent/tasks/main.yml
+# dd-agent install: https://app.datadoghq.com/account/settings#agent/ubuntu
+
+- name: Install dependencies for dd-agent
+  apt:
+    name: apt-transport-https
+    state: present
+    update_cache: yes
+
+- name: Add dd-agent repository to source list
+  apt_repository:
+    repo: 'deb http://apt.datadoghq.com/ stable main'
+    state: present
+
+- name: Import dd-agent apt key
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: C7A7DA52
+
+- name: Install dd-agent
+  apt:
+    name: datadog-agent
+    state: present
+    update_cache: yes
+
+- name: Create additional_checksd directory
+  file:
+    path: "{{ additional_checksd_dir }}"
+    state: directory
+
+- name: Copy dd-agent datadog config
+  template:
+    src=datadog.conf.j2
+    dest="{{ ddagent_conf_path }}"
+    mode=0644
+  notify:
+    - restart dd-agent
+
+- name: Assign correct owner to datadog log directory
+  file:
+    path="/var/log/datadog"
+    state=directory
+    owner="dd-agent"
+    recurse=yes
+  notify:
+    - restart dd-agent
+
+- name: Start datadog-agent service
+  service:
+    name=datadog-agent
+    state=started
+    enabled=yes
+
+- name: Set fact dd_agent_has_run
+  set_fact:
+    dd_agent_has_run: true

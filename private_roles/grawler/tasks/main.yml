@@ -1,0 +1,151 @@
+---
+
+- name: add the logstash template
+  template:
+    src: pulse-logs-template.json
+    dest: "{{ logstash_conf_dir|default('/etc/logstash.d/templates') }}/pulse-logs-template.json"
+    mode: 0644
+  notify:
+    - restart logstash
+  tags:
+    - grawler
+
+- name: add the logstash configuration
+  template:
+    src: grawler-logstash.conf.j2
+    dest: "{{ logstash_conf_dir|default('/etc/logstash.d') }}/grawler-logstash.conf"
+    mode: 0644
+  notify:
+    - restart logstash
+  tags:
+    - grawler
+
+- name: start logstash
+  supervisorctl:
+    name: logstash
+    state: started
+  tags:
+    - grawler
+
+- name: Copy over Kibana4 backup folder
+  unarchive:
+    src=backup.tar
+    dest=/tmp/
+  run_once: true
+  when: restore_kibana_visualization
+  tags:
+    - grawler
+
+- name: Copy over Kibana4 restore script
+  copy:
+    src=restore_kibana_index.sh
+    dest=/tmp/
+    mode=755
+  run_once: true
+  when: restore_kibana_visualization
+  tags:
+    - grawler
+
+- name: restore Kibana4 visualizations
+  shell: "./restore_kibana_index.sh {{ groups['elasticsearch-data-nodes'][0] }} {{ elasticsearch_network_http_port|default(9200) }} backup.tar"
+  args:
+    chdir: "/tmp/"
+  run_once: true
+  when: restore_kibana_visualization
+  tags:
+    - grawler
+
+- name: Remove Kibana tmp files
+  file:
+    path=/tmp/{{ item }}
+    state=absent
+  with_items:
+    - "restore_kibana_index.sh"
+    - "backup.tar"
+  run_once: true
+  when: restore_kibana_visualization
+  tags:
+    - grawler
+
+- name: check if the Grawler conda environment exists
+  stat: path={{ grawler_miniconda_env }}
+  register: t_conda_env
+  tags: grawler
+
+- name: create conda environment for Grawler
+  command: "{{ miniconda_install_dir }}/bin/conda create -y -n grawler python=2.7 anaconda"
+  when: not (t_conda_env.stat.isdir is defined and t_conda_env.stat.isdir)
+  tags: grawler
+
+- name: activate Grawler conda environment
+  shell: "source {{ miniconda_install_dir }}/bin/activate grawler"
+  args:
+    executable: /bin/bash
+  tags: grawler
+
+- name: miniconda pip install Grawler
+  command: "{{ grawler_miniconda_env }}/bin/pip install grawler"
+  tags: grawler
+
+- name: check if the Grawler install folder exists
+  stat: path={{ grawler_install_dir }}
+  register: t_dir
+  tags: grawler
+
+- name: make grawler directory
+  file:
+    path={{ grawler_install_dir }}
+    state=directory
+  when: not (t_dir.stat.isdir is defined and t_dir.stat.isdir)
+  tags: grawler
+
+- name: create grawler symlink
+  file:
+    path={{ grawler_install_dir }}/default
+    src={{ grawler_miniconda_path }}
+    state=link
+  tags: grawler
+
+- name: create grawler log directory
+  file:
+    path={{ grawler_log_dir }}/
+    state=directory
+    mode=0755
+  tags: grawler
+
+- name: copy supervisord config
+  template:
+    src={{ grawler_name }}-supervisord.conf.j2
+    dest={{ supervisord_programs_dir }}/{{ grawler_name }}-supervisord.conf
+    mode=0644
+  notify:
+    - reread supervisord
+  tags: grawler
+
+- name: copy grawler settings
+  template:
+    src=local_settings.py.j2
+    dest={{ grawler_install_dir }}/default/local_settings.py
+    mode=0644
+  notify:
+    - restart grawler
+  tags: grawler
+
+- name: copy grawler configs
+  template:
+    src=local_settings.py.j2
+    dest={{ grawler_install_dir }}/default/local_settings.py
+    mode=0644
+  notify:
+    - restart grawler
+  tags: grawler
+
+
+- name: copy grawling configs
+  template:
+    src={{ item }}
+    dest={{ grawler_install_dir }}/default/config/{{ item | basename }}
+    mode=0644
+  with_fileglob:
+    - "*.yml"
+  tags: grawler

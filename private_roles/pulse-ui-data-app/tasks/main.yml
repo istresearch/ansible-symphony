@@ -1,0 +1,128 @@
+---
+- name: Get Permission Groups
+  uri:
+    url: "https://{{ pulse_url_host }}/{{ pulse_name }}/rights/ajaj_get_matrix"
+    method: GET
+    return_content: yes
+    validate_certs: no
+    timeout: 60
+    force_basic_auth: yes
+    user: "{{ pulse_titan_user }}"
+    password: "{{ pulse_titan_pw }}"
+  register: get_groups_response
+  until: get_groups_response.status == 200
+  retries: 3
+  delay: 5
+  tags: pulse-ui-data-app
+
+- name: Set Groups dictionary
+  set_fact: 
+    pulse_user_groups: "{{ (get_groups_response.content | from_json)['data']['groups'] }}"
+  tags: pulse-ui-data-app
+
+- name: Set Admin group_id
+  set_fact: 
+    admin_group_id: "{{ item['group_id'] }}"
+  when: item['group_name'] == "{{ pulse_admin_group_name }}"
+  with_items: "{{ pulse_user_groups }}"
+  tags: pulse-ui-data-app
+
+- name: Set Permissions Matrix
+  set_fact:
+    group_permissions_matrix: "{{ (get_groups_response.content | from_json)['data']['namespaces'] }}"
+  tags: pulse-ui-data-app
+
+- name: Set Registration Code for Admin group
+  uri:
+    url: "https://{{ pulse_url_host }}/{{ pulse_name }}/rights/ajaj_save_group/{{ admin_group_id }}"
+    method: POST
+    body: "{ {{ group_name_json }}, {{ group_reg_code_json }} }"
+    body_format: json
+    return_content: yes
+    validate_certs: no
+    timeout: 60
+    force_basic_auth: yes
+    user: "{{ pulse_titan_user }}"
+    password: "{{ pulse_titan_pw }}"
+  register: save_groups_response
+  until: save_groups_response.status == 200
+  retries: 3
+  delay: 5
+  tags: pulse-ui-data-app
+
+- name: Grant access to everything for Admin group
+  uri:
+    url: "https://{{ pulse_url_host }}/{{ pulse_name }}/rights/ajaj_set_permission/{{ admin_group_id }}"
+    method: POST
+    body: "{ {{ set_permission_namespace_json }}: \"{{ item.0.namespace }}\", {{ set_permission_permission_json }}: \"{{ item.1.key }}\", {{ set_permission_value_json }} }"
+    body_format: json
+    return_content: yes
+    validate_certs: no
+    timeout: 60
+    force_basic_auth: yes
+    user: "{{ pulse_titan_user }}"
+    password: "{{ pulse_titan_pw }}"
+  register: set_permissions_response
+  until: set_permissions_response.status == 200
+  retries: 3
+  delay: 5
+  with_subelements:
+    - "{{ group_permissions_matrix }}"
+    - permission_list
+  tags: pulse-ui-data-app
+
+- name: Create pulse-test user
+  uri:
+    url: "https://{{ pulse_url_host }}/{{ pulse_name }}/account/registerUsingRegCode"
+    method: POST
+    body: "{ {{ ticketholder_reg_json }}, {{ email_json }}, {{ pwinput_reg_json }}, {{ password_confirm_json }}, {{ reg_code_json }} }"
+    body_format: json
+    return_content: yes
+    validate_certs: no
+    timeout: 60
+  register: register_user_response
+  until: register_user_response.status == 200
+  retries: 3
+  delay: 5
+  tags: pulse-ui-data-app
+
+- name: Create a test campaign
+  uri:
+    url: "https://{{ pulse_url_host }}/{{ pulse_name }}/campaigns/ajajInsertCampaign"
+    method: POST
+    body: "{ {{campaign_title_json }}, {{ campaign_description_json }} }"
+    body_format: json
+    return_content: yes
+    validate_certs: no
+    timeout: 60
+    force_basic_auth: yes
+    user: "{{ pulse_titan_user }}"
+    password: "{{ pulse_titan_pw }}"
+  register: insert_campaign_response
+  until: insert_campaign_response.status == 200
+  retries: 3
+  delay: 5
+  tags: pulse-ui-data-app
+
+- name: Set Campaign Id
+  set_fact: 
+    test_campaign_id: "{{ (insert_campaign_response.content | from_json)['data']['campaign_id'] }}"
+  tags: pulse-ui-data-app
+
+- name: Create a test project
+  uri:
+    url: "https://{{ pulse_url_host }}/{{ pulse_name }}/projects/ajaj_save_project_from_js_plumb"
+    method: POST
+    body: "{ {{ project_campaign_id_json }}: \"{{ test_campaign_id }}\", {{ project_jsplumb_json }} }"
+    body_format: json
+    return_content: yes
+    validate_certs: no
+    timeout: 60
+    force_basic_auth: yes
+    user: "{{ pulse_titan_user }}"
+    password: "{{ pulse_titan_pw }}"
+  register: insert_project_response
+  until: insert_project_response.status == 200
+  retries: 3
+  delay: 5
+  tags: pulse-ui-data-app

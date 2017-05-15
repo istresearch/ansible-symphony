@@ -1,0 +1,92 @@
+---
+
+- name: Create 'sudo' group
+  group: name=sudo state=present
+  tags:
+  - sudo
+  - add-users
+
+- name: Make sure passwordless sudo is enabled for users with sudo
+  sudo: yes
+  lineinfile: "dest=/etc/sudoers state=present regexp='^%sudo' line='%sudo ALL=(ALL) NOPASSWD: ALL'"
+  tags:
+    - sudo
+    - add-users
+
+- name: Adding TechOps User
+  sudo: yes
+  user: name="{{ item.name }}" shell=/bin/bash groups=sudo append=yes
+  with_items: 
+    - "{{ techops }}"
+  when: people == "techops"
+  tags:
+    - add-techops-users
+
+- name: Ensure Proper permissions on Users Home Directory
+  shell: /bin/chown -R {{ item.name }}:{{ item.name }} /home/{{ item.name }}
+  with_items:
+    - "{{ techops }}"
+  when: people == "techops"
+  tags:
+    - add-techops-users
+
+- name: Add TechOps Users Key
+  sudo: yes
+  authorized_key: user="{{ item.name }}" key="{{ item.key }}" exclusive=true
+  with_items: 
+    - "{{ techops }}"
+  when: people == "techops"
+  tags:
+    - add-techops-users
+
+- name: Developers
+  sudo: yes
+  user: name="{{ item.name }}" shell=/bin/bash groups=sudo append=yes
+  with_items: 
+    - "{{ dev }}"
+  when: people == "dev"
+  tags:
+    - add-dev-users
+
+- name: Ensure Proper permissions on Users Home Directory
+  shell: /bin/chown -R {{ item.name }}:{{ item.name }} /home/{{ item.name }}
+  with_items:
+    - "{{ dev }}"
+  when: people == "dev"
+  tags:
+    - add-dev-users
+
+- name: Add Developers Key
+  sudo: yes
+  authorized_key: user="{{ item.name }}" key="{{ item.key }}"
+  with_items: 
+    - "{{ dev }}"
+  when: people == "dev"
+  tags:
+    - add-dev-users
+
+- name: Third Party
+  sudo: yes
+  user: name="{{ item.name }}" shell=/bin/bash groups=sudo append=yes
+  with_items: 
+    - "{{ third_party }}"
+  when: people == "third_party"
+  tags:
+    - add-third-party-users
+
+- name: Ensure Proper permissions on Users Home Directory
+  shell: /bin/chown -R {{ item.name }}:{{ item.name }} /home/{{ item.name }}
+  with_items:
+    - "{{ third_party }}"
+  when: people == "third_party"
+  tags:
+    - add-third-party-users
+
+- name: Add Third Party Users Key
+  sudo: yes
+  authorized_key: user="{{ item.name }}" key="{{ item.key }}"
+  with_items: 
+    - "{{ third_party }}"
+  when: people == "third_party"
+  tags:
+    - add-third-party-users

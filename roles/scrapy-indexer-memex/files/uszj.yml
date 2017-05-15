@@ -1,0 +1,12 @@
+campaignid: memex
+downloaddelay: 30
+engagementid: eng1
+findurlregex: html\/\d+.htm
+paginatenum: 50
+paginateregex: type.asp\?\S+PageType=\d+&Page=\d+
+rediskey: indexer-uszj
+urllist:
+- http://uszj.net/type.asp?t=1&C=0,0,0
+- http://uszj.net/type.asp?t=6&C=0,0,0
+- http://uszj.net/type.asp?t=7&C=0,0,0
+- http://uszj.net/type.asp?t=8&C=0,0,0

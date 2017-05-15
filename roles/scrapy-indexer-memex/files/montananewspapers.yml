@@ -1,0 +1,9 @@
+campaignid: memex
+downloaddelay: 30
+engagementid: eng1
+findurlregex:
+- \/ads/.+\/ad_[a-z0-9-]+.html
+rediskey: indexer-montananewspapers
+urllist:
+- http://missoulian.com/ads/sale/sport/hunting/
+- http://mtstandard.com/ads/sale/sport/hunting/

@@ -1,0 +1,13 @@
+campaignid: memex
+downloaddelay: 10
+engagementid: eng1
+findurlregex:
+- http:\/\/\S+\/t\/\S+\/\S+\/\d+\/
+rediskey: indexer-classivox
+urllist:
+- http://classivox.com/t/women-seeking-men/
+- http://classivox.com/t/escorts/
+- http://classivox.com/t/sex-guide/
+- http://classivox.com/t/show-biz-audition/
+- http://classivox.com/t/beauty-spa/
+- http://classivox.com/t/salon-spa/

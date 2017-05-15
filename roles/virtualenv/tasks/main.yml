@@ -1,7 +1,7 @@
 # Streamparse does not support using conda, it requires virtualenv.
 # Have to compile python from source and manually create a virtualenv.
 # Note that installing both miniconda and virtualenv tends to break things.
-# Guide used to provision is here: 
+# Guide used to provision is here:
 # https://www.digitalocean.com/community/tutorials/how-to-set-up-python-2-7-6-and-3-3-3-on-centos-6-4
 
 ---

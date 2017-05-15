@@ -1,7 +1,7 @@
 ---
 
 logstash_install_dir: /opt/logstash
-logstash_version: 2.3.0
+logstash_version: 2.3.1
 logstash_conf_dir: /etc/logstash.d
 logstash_template_dir: "{{ logstash_conf_dir }}/templates"
 logstash_sincedb_dir: "{{ logstash_install_dir }}/.sincedb"

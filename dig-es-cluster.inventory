@@ -1,0 +1,34 @@
+#   - Comments begin with the '#' character
+#   - Blank lines are ignored
+#   - Groups of hosts are delimited by [header] elements
+#   - You can enter hostnames or ip addresses
+#   - A hostname/ip can be a member of multiple groups
+
+[all:vars]
+repository_host=repo.istresearch.com
+
+[dig-nodes:children]
+elasticsearch-nodes
+
+[dig-data-nodes:children]
+elasticsearch-data-nodes
+
+[dig-master-nodes:children]
+elasticsearch-master-nodes
+
+[aws:children]
+elasticsearch-master-nodes
+elasticsearch-data-nodes
+
+[elasticsearch-master-nodes]
+dig-es-m[01:03].istresearch.com
+
+[elasticsearch-data-nodes]
+dig-es[01:10].istresearch.com
+
+[elasticsearch-client-nodes]
+
+[elasticsearch-nodes:children]
+elasticsearch-master-nodes
+elasticsearch-data-nodes
+elasticsearch-client-nodes

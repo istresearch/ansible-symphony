@@ -1,0 +1,46 @@
+pulse_version: 3.1.1
+pulse_version_update: false
+
+pulse_name: pulse
+pulse_install_dir: /opt/pulse
+pulse_common_dir: "{{ pulse_install_dir }}/common"
+pulse_configs_dir: "{{ pulse_install_dir }}/joka-{{ pulse_version | default('3.0.17') }}/app/configs"
+pulse_mmr_dir: /var/mmr/pulse
+pulse_log_dir: "{{ pulse_mmr_dir }}/logs"
+pulse_docker_dir: /data/bin/pulse_docker
+pulse_docker_data_dir: /data/pulse
+pulse_analysis_iframe_url: "http://{{ inventory_hostname }}:{{ kibana4_port | default('5601') }}"
+pulse_repo_location: "https://{{ repository_host }}/pulse"
+
+pulse_ui_name: pulse-ui
+pulse_ui_version: 3.1.1
+
+pollster_name: appPollsterPrime
+pollster_version: 5.3.17
+pollster_build_types:
+  - { name: post23-release }
+  - { name: pre23-release }
+pollster_symlinks:
+  - { name: Pollster.Prime.apk, build_type: pre23-release }
+  - { name: Pollster.Android5.apk, build_type: pre23-release }
+  - { name: Pollster.Android6.apk, build_type: post23-release }
+
+# logstash config
+pulse_logstash_template: pulse-template.json
+pulse_logstash_template_name: pulse-template
+pulse_logstash_index_name: "{{ pulse_name }}"
+pulse_outgoing_tag: survey-outgoing
+pulse_outgoing_type: outgoing
+pulse_outgoing_log_file: survey_outgoing.log
+pulse_qr_tag: survey-question-responses
+pulse_qr_type: question_responses
+pulse_qr_log_file: survey_question_responses.log
+pulse_deploy_tag: survey-deploy
+pulse_deploy_type: deploy
+pulse_deploy_log_file: deploy_survey.log
+
+pulse_kibana_backup: backup.tar
+
+pulse_self_signed_ssl: false
+
+pulse_timezone: Etc/UTC

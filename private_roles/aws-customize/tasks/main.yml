@@ -1,0 +1,33 @@
+---
+
+- name: Format AWS volume if it isn't formatted
+  filesystem:
+    fstype: ext4
+    dev: "{{ item }}"
+  when: aws_customize
+  with_items:
+    - "{{ data_volume }}"
+  tags:
+    - aws
+
+- name: Mounting attached ec2 volume if deploying in amazon
+  mount:
+    name: /data
+    src: "{{ item }}"
+    fstype: ext4
+    opts: rw
+    state: mounted
+  when: aws_customize
+  with_items:
+    - "{{ data_volume }}"
+  tags:
+    - aws
+
+- name: Change permissions on data partition
+  file:
+    path: /data
+    state: touch
+    mode: 0777
+  when: aws_customize
+  tags:
+    - aws

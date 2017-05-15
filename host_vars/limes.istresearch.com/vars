@@ -1,0 +1,5 @@
+---
+
+## DEVELOPERS ##
+dev:
+   - { name: aklintse, key: "{{ vault_aklintse_key }}" }

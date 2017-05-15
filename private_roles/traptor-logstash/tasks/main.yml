@@ -1,0 +1,25 @@
+---
+
+- name: copy logstash templates
+  template:
+    src="{{item}}.j2"
+    dest="{{logstash_template_dir}}/{{item}}"
+    mode=0644
+  with_items:
+    - "{{ traptor_name }}.json"
+  tags:
+    - traptor
+    - logstash
+
+- name: copy logstash configs
+  template:
+    src="{{ item }}.conf.j2"
+    dest="{{ logstash_conf_dir }}/{{ item }}.conf"
+    mode=0644
+  with_items:
+    - "{{ traptor_name}}-logstash"
+  notify:
+    - restart logstash
+  tags:
+    - traptor
+    - logstash

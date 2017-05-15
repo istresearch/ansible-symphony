@@ -1,0 +1,20 @@
+googler_user: googler
+googler_group: googler
+
+googler_install_dir: /opt/googler
+googler_virtualenv_path: "{{ googler_install_dir }}/venv"
+googler_version: 7
+
+googler_queue_name: "keyword:queue"
+
+googler_logger_name: googler
+googler_log_dir: /var/log/googler
+googler_log_file: googler.log
+googler_log_max_bytes: '10MB'
+googler_log_backups: 5
+googler_log_stdout: False
+googler_log_json: True
+googler_log_level: 'INFO'
+
+googler_redis_db: "{{ sc_redis_master_db|default(0) }}"
+googler_num_procs: 3

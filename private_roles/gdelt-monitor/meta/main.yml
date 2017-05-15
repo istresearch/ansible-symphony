@@ -1,0 +1,5 @@
+---
+dependencies:
+  - { role: pip, when: "pip_has_run is not defined" }
+  - { role: logstash, when: "logstash_has_run is not defined" }
+  - { role: miniconda, when: "miniconda_has_run is not defined"}
