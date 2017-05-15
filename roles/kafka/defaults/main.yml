@@ -1,7 +1,7 @@
 ---
 
 kafka_scala_version: 2.11
-kafka_version: 0.10.1.1
+kafka_version: 0.10.2.1
 
 kafka_install_dir: /opt/kafka
 kafka_config_dir: /opt/kafka/default/config
