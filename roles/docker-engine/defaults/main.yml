@@ -16,8 +16,6 @@ docker_apt_key_url: https://apt.dockerproject.org/gpg
 docker_apt_key_sig: 2C52609D
 docker_apt_repository: deb https://apt.dockerproject.org/repo ubuntu-{{ ansible_distribution_release }} main
 
-docker_opts: "-H tcp://127.0.0.1:4243 -H unix:///var/run/docker.sock --dns 8.8.8.8 --dns 8.8.4.4"
-
 # Versions for the python packages that are installed installed
 docker_py_version: latest
 docker_compose_version: latest
@@ -33,3 +31,19 @@ docker_pid_file: "{{ docker_pidproxy_install_dir }}/docker.pid"
 docker_stop_signal: INT
 
 docker_install_ctop: true
+
+################################
+# Docker daemon configuration
+################################
+docker_config_dir: /etc/docker
+docker_daemon_config_path: "{{ docker_config_dir }}/daemon.json"
+
+###########################################################################################
+# See all options here:
+# https://docs.docker.com/engine/reference/commandline/dockerd/#daemon-configuration-file
+###########################################################################################
+docker_daemon_conf:
+  log-driver: 'json-file'
+  log-opts:
+    max-size: '50m'
+    max-file: '3'

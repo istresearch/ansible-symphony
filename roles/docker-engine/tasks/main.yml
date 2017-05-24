@@ -37,12 +37,31 @@
     - "linux-image-extra-{{ ansible_kernel }}"
     - linux-image-extra-virtual
 
+################################################################################
+# Docker daemon configuration
+################################################################################
+- block:
+  - name: Ensure {{ docker_config_dir }} directory exists
+    file: path={{ docker_config_dir }} state=directory
+
+  - name: Populate docker daemon.json configuration file
+    copy:
+      content="{{ docker_daemon_conf|to_nice_json }}"
+      dest="{{ docker_daemon_config_path }}"
+    notify:
+      - restart docker-engine
+  when: docker_daemon_conf is defined and docker_daemon_conf
+  tags:
+    - docker-engine-conf
+
 - name: Install (or update) docker package
   apt:
     name: "{{ docker_pkg_name }}"
     state: "{{ 'latest' if docker_update_package else 'present' }}"
     update_cache: yes
     cache_valid_time: "{{ docker_apt_cache_valid_time }}"
+  tags:
+    - docker-engine-conf
   notify:
     - restart docker-engine
 
@@ -65,51 +84,3 @@
   when: docker_install_ctop is defined and docker_install_ctop
   tags:
     - docker-engine-ctop
-
-
-#- name: stop docker service
-#  service:
-#    name: docker
-#    state: stopped
-#    enabled: no
-#
-#- name: Set docker daemon options
-#  copy:
-#    content: "DOCKER_OPTS=\"{{ docker_opts.rstrip('\n') }}\""
-#    dest: /etc/default/docker
-#    owner: root
-#    group: root
-#    mode: 0644
-#  notify:
-#    - restart docker-engine
-#  when: docker_opts != ""
-#
-#- name: create pidproxy folder
-#  file:
-#    path: "{{ docker_pidproxy_install_dir }}/"
-#    state: directory
-#    mode: 0744
-#    owner: "{{ docker_user }}"
-#    group: "{{ docker_group }}"
-#
-#- name: copy over new pidproxy.py file
-#  copy:
-#    src: pidproxy.py
-#    dest: "{{ docker_pidproxy_install_dir }}"
-#    owner: "{{ docker_user }}"
-#    group: "{{ docker_group }}"
-#    mode: 0755
-#
-#- name: Check if /etc/updatedb.conf exists
-#  stat:
-#    path: /etc/updatedb.conf
-#  register: updatedb_conf_exists
-#
-#- name: copy supervisord config
-#  template:
-#    src: docker-supervisord.conf.j2
-#    dest: "{{ supervisord_programs_dir }}/docker-supervisord.conf"
-#    mode: 0644
-#  notify:
-#    - reread supervisord
-#    - restart docker-engine
