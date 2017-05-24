@@ -37,12 +37,31 @@
     - "linux-image-extra-{{ ansible_kernel }}"
     - linux-image-extra-virtual
 
+################################################################################
+# Docker daemon configuration
+################################################################################
+- block:
+  - name: Ensure {{ docker_config_dir }} directory exists
+    file: path={{ docker_config_dir }} state=directory
+
+  - name: Populate docker daemon.json configuration file
+    copy:
+      content="{{ docker_daemon_conf|to_nice_json }}"
+      dest="{{ docker_daemon_config_path }}"
+    notify:
+      - restart docker-engine
+  when: docker_daemon_conf is defined and docker_daemon_conf
+  tags:
+    - docker-engine-conf
+
 - name: Install (or update) docker package
   apt:
     name: "{{ docker_pkg_name }}"
     state: "{{ 'latest' if docker_update_package else 'present' }}"
     update_cache: yes
     cache_valid_time: "{{ docker_apt_cache_valid_time }}"
+  tags:
+    - docker-engine-conf
   notify:
     - restart docker-engine
 
