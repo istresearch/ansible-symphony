@@ -38,7 +38,6 @@ env:
   - TAGS='miniconda'
   - TAGS='site-tangelo'
   - TAGS='mysql'
-  - TAGS='deps-traptor'
   - TAGS='site-es-hadoop'
   - TAGS='site-tarsnap'
   - TAGS='site-phantomjs'
