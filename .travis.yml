@@ -44,6 +44,7 @@ env:
   - TAGS='site-supervisord'
   - TAGS='site-oozie'
   - TAGS='site-exim'
+  - TAGS='site-redis'
 
 matrix:
   fast_finish: true
