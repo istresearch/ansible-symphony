@@ -40,3 +40,25 @@
   notify:
     - reread supervisord
   tags: redis
+
+###############################################################################
+# System level configuration optimizations. Configuration recommendations taken
+# from https://redis.io/topics/admin
+###############################################################################
+- block:
+  - name: Enable vm.overcommit_memory=1
+    sysctl:
+      name: vm.overcommit_memory
+      value: 1
+      state: present
+
+  - name: Install sysfsutils package
+    apt:
+      name: sysfsutils
+      state: present
+
+  - name: Disable Transparent HugePage
+    lineinfile:
+      dest: /etc/sysfs.conf
+      line: kernel/mm/transparent_hugepage/enabled = never
+      state: present
