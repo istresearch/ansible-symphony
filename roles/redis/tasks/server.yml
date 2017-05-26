@@ -62,3 +62,4 @@
       dest: /etc/sysfs.conf
       line: kernel/mm/transparent_hugepage/enabled = never
       state: present
+  tags: redis
