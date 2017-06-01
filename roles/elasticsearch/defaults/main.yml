@@ -13,7 +13,7 @@ elasticsearch_heap_size: 1g
 elasticsearch_start_secs: 10
 elasticsearch_start_retries: 3
 
-elasticsearch_install_cerebro: false
+elasticsearch_install_kopf: false
 elasticsearch_install_icu_analysis: false
 
 elasticsearch_install_marvel: false
