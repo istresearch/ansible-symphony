@@ -1,0 +1,284 @@
+# ======================== Elasticsearch Configuration =========================
+#
+# NOTE: Elasticsearch comes with reasonable defaults for most settings.
+#       Before you set out to tweak and tune the configuration, make sure you
+#       understand what are you trying to accomplish and the consequences.
+#
+# The primary way of configuring a node is via this file. This template lists
+# the most important settings you may want to configure for a production cluster.
+#
+# Please see the documentation for further information on configuration options:
+# <http://www.elastic.co/guide/en/elasticsearch/reference/current/setup-configuration.html>
+#
+# ---------------------------------- Cluster -----------------------------------
+#
+# Use a descriptive name for your cluster:
+#
+# cluster.name: my-application
+cluster.name: {{ elasticsearch_cluster_name }}
+#
+# ------------------------------------ Node ------------------------------------
+#
+# Use a descriptive name for the node:
+#
+# node.name: node-1
+
+node.name: {{ elasticsearch_base_node_name.stdout }}-{{ conf_name }}
+
+#
+# Add custom attributes to the node:
+#
+# node.rack: r1
+
+# Every node can be configured to allow or deny being eligible as the master,
+# and to allow or deny to store the data.
+#
+# Allow this node to be eligible as a master node (enabled by default):
+#
+# node.master: true
+node.master: {{ elasticsearch_is_master }}
+
+#
+# Allow this node to store data (enabled by default):
+#
+# node.data: true
+node.data: {{ elasticsearch_is_data }}
+
+#
+# Allow this node be a client only :
+#
+node.client: {{ elasticsearch_is_client }}
+
+# ----------------------------------- Index ------------------------------------
+# Set the number of shards (splits) of an index (5 by default):
+#
+{% if "{{ groups['elasticsearch-nodes'] | length == 1 }}" %}
+index.number_of_shards: 1
+index.number_of_replicas: 0
+{% else %}
+index.number_of_shards: "{{ groups['elasticsearch-nodes'] | length // 2 }}"
+index.number_of_replicas: 1
+{% endif %}
+
+index.mapper.dynamic: {{ elasticsearch_index_mapper_dynamic }}
+
+#
+# ----------------------------------- Paths ------------------------------------
+#
+# path.conf: /path/to/conf
+path.conf: {{ elasticsearch_conf_dir }}
+
+# Path to directory where to store the data (separate multiple locations by comma):
+#
+# path.data: /path/to/data
+path.data: {{ elasticsearch_data_dir }}_{{ conf_name }}
+
+# path.work: /path/to/work
+path.work: {{ elasticsearch_work_dir }}_{{ conf_name }}
+
+#
+# Path to log files:
+#
+# path.logs: /path/to/logs
+path.logs: {{ elasticsearch_log_dir }}_{{ conf_name }}
+
+# Path to where plugins are installed:
+#
+# path.plugins: /path/to/plugins
+path.plugins: {{ elasticsearch_plugin_dir }}
+
+#
+# ----------------------------------- Marvel Monitoring ------------------------
+#
+{% if elasticsearch_install_marvel == "true" %}
+marvel.agent.exporters:
+  id1:
+    type: http
+    host: ["{{ elasticsearch_marvel_cluster }}:9200"]
+{% if elasticsearch_marvel_with_shield == "true" %}
+    auth:
+      username: {{ elasticsearch_marvel_agent_user }}
+      password: {{ elasticsearch_marvel_agent_password }}
+{% endif %}
+{% endif %}
+
+#
+# ----------------------------------- Slow Logs --------------------------------
+#
+{% if elasticsearch_logging_slowlog_mode != "off" %}
+index.indexing.slowlog.level: info
+index.indexing.slowlog.source: 1000
+
+{% if elasticsearch_logging_slowlog_mode == "standard" %}
+index.search.slowlog.threshold.query.warn: 10s
+index.search.slowlog.threshold.query.info: 5s
+index.search.slowlog.threshold.query.debug: 2s
+index.search.slowlog.threshold.query.trace: 500ms
+
+index.search.slowlog.threshold.fetch.warn: 1s
+index.search.slowlog.threshold.fetch.info: 800ms
+index.search.slowlog.threshold.fetch.debug: 500ms
+index.search.slowlog.threshold.fetch.trace: 200ms
+
+index.indexing.slowlog.threshold.index.warn: 10s
+index.indexing.slowlog.threshold.index.info: 5s
+index.indexing.slowlog.threshold.index.debug: 2s
+index.indexing.slowlog.threshold.index.trace: 500ms
+{% elif elasticsearch_logging_slowlog_mode == "showall" %}
+index.search.slowlog.threshold.query.warn: 0s
+index.search.slowlog.threshold.query.info: 0s
+index.search.slowlog.threshold.query.debug: 0s
+index.search.slowlog.threshold.query.trace: 0s
+
+index.search.slowlog.threshold.fetch.warn: 0s
+index.search.slowlog.threshold.fetch.info: 0s
+index.search.slowlog.threshold.fetch.debug: 0s
+index.search.slowlog.threshold.fetch.trace: 0s
+
+index.indexing.slowlog.threshold.index.warn: 0s
+index.indexing.slowlog.threshold.index.info: 0s
+index.indexing.slowlog.threshold.index.debug: 0s
+index.indexing.slowlog.threshold.index.trace: 0s
+{% endif %}
+{% endif %}
+
+# ----------------------------------- Watermarks -----------------------------------
+cluster.routing.allocation.disk.threshold_enabled: {{ elasticsearch_disk_threshold_enabled }}
+cluster.routing.allocation.disk.watermark.low: {{ elasticsearch_watermark_low }}
+cluster.routing.allocation.disk.watermark.high: {{ elasticsearch_watermark_high }}
+cluster.info.update.interval: {{ elasticsearch_update_interval }}
+
+# ----------------------------------- Memory -----------------------------------
+#
+# Lock the memory on startup:
+#
+# bootstrap.mlockall: true
+bootstrap.mlockall: {{ elasticsearch_memory_bootstrap_mlockall }}
+#
+# Make sure that the `ES_HEAP_SIZE` environment variable is set to about half the memory
+# available on the system and that the owner of the process is allowed to use this limit.
+#
+# Elasticsearch performs poorly when the system is swapping the memory.
+#
+# ---------------------------------- Network -----------------------------------
+#
+# network.publish_host: 192.168.0.1
+network.publish_host: {{ inventory_hostname }}
+
+# Set the bind address to a specific IP (IPv4 or IPv6):
+#
+# network.host: 192.168.0.1
+network.host: {{ inventory_hostname }}
+#
+# Set a custom port for the node to node communication (9300 by default):
+#
+# transport.tcp.port: 9300
+transport.tcp.port: {{ elasticsearch_network_transport_tcp_port_min }}-{{ elasticsearch_network_transport_tcp_port_max }}
+
+# Enable compression for all communication between nodes (disabled by default):
+#
+# transport.tcp.compress: true
+transport.tcp.compress: {{ elasticsearch_network_transport_tcp_compress }}
+# Set a custom port for HTTP:
+#
+# http.port: 9200
+http.port: {{ elasticsearch_network_http_port }}
+
+# Set a custom allowed content length:
+#
+# http.max_content_length: 100mb
+http.max_content_length: {{ elasticsearch_network_http_max_content_length }}
+
+# Disable HTTP completely:
+#
+# http.enabled: false
+http.enabled: {{ elasticsearch_network_http_enabled }}
+#
+# For more information, see the documentation at:
+# <http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-network.html>
+#
+# ---------------------------------- Gateway -----------------------------------
+#
+# Block initial recovery after a full cluster restart until N nodes are started:
+#
+# gateway.recover_after_nodes: 3
+gateway.recover_after_nodes: {{ elasticsearch_gateway_recover_after_nodes }}
+#
+# For more information, see the documentation at:
+# <http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-gateway.html>
+
+# --------------------------- Recovery Throttling ------------------------------
+
+# These settings allow to control the process of shards allocation between
+# nodes during initial recovery, replica allocation, rebalancing,
+# or when adding and removing nodes.
+
+# Set the number of concurrent recoveries happening on a node:
+#
+# 1. During the initial recovery
+#
+# cluster.routing.allocation.node_initial_primaries_recoveries: 4
+cluster.routing.allocation.node_initial_primaries_recoveries: {{ elasticsearch_recovery_node_initial_primaries_recoveries }}
+
+#
+# 2. During adding/removing nodes, rebalancing, etc
+#
+# cluster.routing.allocation.node_concurrent_recoveries: 2
+cluster.routing.allocation.node_concurrent_recoveries: {{ elasticsearch_recovery_node_concurrent_recoveries }}
+
+# Set to limit the number of open concurrent streams when
+# recovering a shard from a peer:
+#
+# indices.recovery.concurrent_streams: 5
+indices.recovery.concurrent_streams: {{ elasticsearch_recovery_concurrent_streams }}
+
+#
+# --------------------------------- Discovery ----------------------------------
+#
+# Elasticsearch nodes will find each other via unicast, by default.
+#
+# Pass an initial list of hosts to perform discovery when new node is started:
+# The default list of hosts is ["127.0.0.1", "[::1]"]
+#
+# discovery.zen.ping.unicast.hosts: ["host1", "host2"]
+discovery.zen.ping.unicast.hosts: [{% for host in elasticsearch_host_list %}"{{ host }}"{% if not loop.last %},{% endif %}{% endfor %}]
+#
+# Prevent the "split brain" by configuring the majority of nodes (total number of nodes / 2 + 1):
+#
+# discovery.zen.minimum_master_nodes: 3
+discovery.zen.minimum_master_nodes: {{ elasticsearch_discovery_zen_minimum_master_nodes }}
+#
+# Set the time to wait for ping responses from other nodes when discovering.
+# Set this option to a higher value on a slow or congested network
+# to minimize discovery failures:
+#
+# discovery.zen.ping.timeout: 3s
+discovery.zen.ping.timeout: {{ elasticsearch_discovery_zen_ping_timeout }}
+
+# Unicast discovery allows to explicitly control which nodes will be used
+# to discover the cluster. It can be used when multicast is not present,
+# or to restrict the cluster communication-wise.
+#
+# 1. Disable multicast discovery (enabled by default):
+#
+# discovery.zen.ping.multicast.enabled: false
+discovery.zen.ping.multicast.enabled: {{ elasticsearch_discovery_zen_ping_multicast_enabled }}
+
+discovery.zen.ping.multicast.port: {{ elasticsearch_discovery_zen_ping_multicast_port }}
+
+# For more information, see the documentation at:
+# <http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-discovery.html>
+#
+# ---------------------------------- Various -----------------------------------
+#
+# Disable starting multiple nodes on a single system:
+#
+# node.max_local_storage_nodes: 1
+node.max_local_storage_nodes: {{ elasticsearch_node_max_local_storage_nodes }}
+#
+# Require explicit names when deleting indices:
+#
+# action.destructive_requires_name: true
+action.destructive_requires_name: true
+
+action.auto_create_index: {{ elasticsearch_misc_auto_create_index }}

@@ -3,7 +3,7 @@
 elasticsearch_install_dir: /opt/elasticsearch
 elasticsearch_user: elasticsearch
 elasticsearch_group: elasticsearch
-elasticsearch_version: 2.3.1
+elasticsearch_version: 5.4.0
 elasticsearch_max_open_files: 65535
 elasticsearch_max_locked_memory: 100000
 elasticsearch_max_num_procs: 32000
@@ -13,7 +13,7 @@ elasticsearch_heap_size: 1g
 elasticsearch_start_secs: 10
 elasticsearch_start_retries: 3
 
-elasticsearch_install_kopf: true
+elasticsearch_install_cerebro: false
 elasticsearch_install_icu_analysis: false
 
 elasticsearch_install_marvel: false
@@ -114,7 +114,7 @@ elasticsearch_additivity_indexing: "false"
 elasticsearch_logging_slowlog_mode: "standard" # standard, showall, off
 elasticsearch_logger_type: "dailyRollingFile" # dailyRollingFile, file
 
-repository_infrastructure: "https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/{{ elasticsearch_version }}"
+repository_infrastructure: "https://artifacts.elastic.co/downloads/elasticsearch"
 
 ###########################################
 # Nginx proxy

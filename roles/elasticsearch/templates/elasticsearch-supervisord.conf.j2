@@ -7,4 +7,4 @@ startsecs=10
 startretries=3
 startsecs={{ elasticsearch_start_secs }}
 startretries={{ elasticsearch_start_retries }}
-environment = ES_HEAP_SIZE={{ elasticsearch_heap_size }}
+environment = ES_JAVA_OPTS="-Xms{{ elasticsearch_heap_size }} -Xmx{{ elasticsearch_heap_size }}"
