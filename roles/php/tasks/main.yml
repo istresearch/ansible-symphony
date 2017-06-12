@@ -1,0 +1,50 @@
+---
+- name: Install add-apt-repository dependencies
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+  with_items:
+    - software-properties-common
+    - python-software-properties
+
+- name: Add PHP PPAs
+  apt_repository:
+    repo: "{{ item }}"
+  with_items:
+    - ppa:ondrej/php
+    - ppa:ondrej/php5-compat
+
+- name: Install PHP {{ php_version }}
+  apt:
+    name: php{{ php_version }}
+    update_cache: yes
+
+- name: Install PHP extensions
+  apt:
+    name: php{{ php_version }}-{{ item }}
+  with_items: "{{ php_extensions }}"
+
+#########################################################
+# Apache configurations
+#########################################################
+- block:
+  - name: Install libapache php extension
+    apt:
+      name: libapache2-mod-php{{ php_version }}
+
+  - name: Disable existing php apache extension
+    apache2_module:
+      state: absent
+      name: php5
+    ignore_errors: yes
+
+  - name: Enable new php apache extension
+    apache2_module:
+      state: absent
+      name: php{{ php_version }}
+  when: php_apache_enabled
+
+- name: Use update-alternative to set active php to {{ php_version }}
+  alternatives:
+    name: php
+    path: /usr/bin/php{{ php_version }}

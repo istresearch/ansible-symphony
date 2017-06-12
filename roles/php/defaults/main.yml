@@ -1,0 +1,22 @@
+---
+
+php_version: 5.6
+php_extensions:
+  - mcrypt
+  - mbstring
+  - mysql
+  - gd
+  - intl
+  - xsl
+  - zip
+  - fpm
+  - mysqlnd
+  - mcrypt
+  - imap
+  - curl
+  - cli
+  - common
+  - dev
+  - gd
+  - json
+php_apache_enabled: true

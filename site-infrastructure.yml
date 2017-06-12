@@ -407,3 +407,11 @@
   roles: [ phantomjs ]
   tags:
     - site-phantomjs
+
+# ------------------------------------ PHP ----------------------------------
+
+- name: Run php role
+  hosts: php-nodes
+  roles: [php]
+  tags:
+    - site-php
