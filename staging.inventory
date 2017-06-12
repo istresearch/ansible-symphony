@@ -164,3 +164,6 @@ vagrant-as-01
 [phantomjs-nodes:children]
 storm-nodes
 spark-nodes
+
+[php-nodes]
+vagrant-as-01
