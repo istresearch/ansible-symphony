@@ -162,3 +162,6 @@ travis-trusty
 [phantomjs-nodes:children]
 storm-nodes
 spark-nodes
+
+[php-nodes]
+travis-trusty

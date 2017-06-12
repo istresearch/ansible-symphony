@@ -45,6 +45,7 @@ env:
   - TAGS='site-oozie'
   - TAGS='site-exim'
   - TAGS='site-redis'
+  - TAGS='site-php'
 
 matrix:
   fast_finish: true
