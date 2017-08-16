@@ -90,10 +90,13 @@
 
 - name: update default bash prompt
   lineinfile:
-    dest=/etc/bash.bashrc
+    dest={{ item }}
     regexp="^PS1=.*$"
     line="PS1='${debian_chroot:+($debian_chroot)}\u@\H:\w\$ '"
     state=present
+  with_items:
+    - /etc/bash.bashrc
+    - /etc/skel/.bashrc
   tags: 
     - common
     - bash
