@@ -87,3 +87,13 @@
   command: dpkg-reconfigure --frontend noninteractive tzdata
   tags:
     - common
+
+- name: update default bash prompt
+  lineinfile:
+    dest=/etc/bash.bashrc
+    regexp="^PS1=.*$"
+    line="PS1='${debian_chroot:+($debian_chroot)}\u@\H:\w\$ '"
+    state=present
+  tags: 
+    - common
+    - bash
