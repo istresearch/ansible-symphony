@@ -14,6 +14,41 @@
   tags: site-common
   strategy: free
 
+- name: Run supervisord role
+  hosts: all
+  roles:
+    - supervisord
+  tags: site-supervisord
+
+- name: Run virtualenv role
+  hosts: all
+  roles:
+    - virtualenv
+  tags:
+    - virtual-env
+
+- name: Run miniconda role
+  hosts: all
+  roles:
+    - miniconda
+  tags:
+    - miniconda
+    - deps-traptor
+
+- name: Run logrotate role
+  hosts: all
+  roles:
+    - logrotate
+  tags:
+    - site-logrotate
+
+- name: Run exim role
+  hosts: all
+  roles:
+    - exim
+  tags:
+    - site-exim
+
 # -------------------------- Zookeeper and Kafka -----------------------------
 - name: Run zookeeper role
   hosts: zookeeper-nodes
@@ -27,6 +62,7 @@
     - deps-hadoop
     - deps-hbase
     - deps-spark
+    - deps-traptor
 
 - name: Run kafka role
   hosts: kafka-nodes
@@ -37,6 +73,7 @@
   tags:
     - site-kafka
     - deps-kafka
+    - deps-traptor
 
 # ------------------------------ ELK stack ------------------------------------
 - name: Run elasticsearch master role
@@ -90,6 +127,7 @@
   tags:
     - site-redis
     - scrapy-services
+    - deps-traptor
 
 - name: Run tor role
   hosts: tor-proxy
@@ -147,7 +185,7 @@
     - nimbus_host: "{{ groups['storm-nimbus-node'][0] }}"
     - zookeeper_host_list: "{{ groups['zookeeper-nodes'] }}"
   roles: [ storm ]
-  tags: 
+  tags:
     - site-storm
     - deps-storm
 
@@ -163,13 +201,21 @@
     - site-storm
     - deps-storm
 
+- name: Storm Configuration Changed Fact Reset
+  hosts: storm-nodes
+  tasks:
+    - set_fact: storm_config_changed=false
+  tags:
+    - site-storm
+    - deps-storm
+
 # --------------------------------- Hadoop -----------------------------------
 - name: HDFS Namenode
   hosts: hadoop-namenode-node
   vars:
     - hdfs_namenode_enabled: true
     - yarn_resourcemanager_enabled: true
-    - yarn_historyserver_enabled: true
+    - yarn_historyserver_enabled: false
     - mapreduce_historyserver_enabled: true
     - dfs_namenode_host: "{{ groups['hadoop-namenode-node'][0] }}"
     - yarn_resourcemanager_hostname: "{{ groups['hadoop-namenode-node'][0] }}"
@@ -210,6 +256,23 @@
     - deps-hbase
     - deps-spark
 
+- name: Hadoop Configuration Changed Fact Reset
+  hosts: hadoop-nodes
+  tasks:
+    - set_fact: hadoop_config_changed=false
+  tags:
+    - site-hadoop
+    - deps-hadoop
+    - deps-hbase
+    - deps-spark
+
+# --------------------------------- Oozie ------------------------------------
+- name: Oozie Install
+  hosts: oozie-node
+  roles: [ oozie ]
+  tags:
+    - site-oozie
+
 # --------------------------------- HBase ------------------------------------
 - name: HBase Master Node
   hosts: hbase-master-node
@@ -228,6 +291,7 @@
   hosts: hbase-regionserver-nodes
   vars:
     - hbase_regionserver_enabled: true
+    - hbase_thriftserver_enabled: true
     - hbase_master_host: "{{ groups['hbase-master-node'][0] }}"
     - dfs_namenode_host: "{{ groups['hadoop-namenode-node'][0] }}"
     - zookeeper_host_list: "{{ groups['zookeeper-nodes'] }}"
@@ -235,6 +299,21 @@
   tags:
     - site-hbase
     - deps-hbase
+
+- name: HBase Configuration Changed Fact Reset
+  hosts: hbase-nodes
+  tasks:
+    - set_fact: hbase_config_changed=false
+  tags:
+    - site-hbase
+    - deps-hbase
+
+# --------------------------------- Hue ------------------------------------
+- name: Hue Nodes
+  hosts: hue-nodes
+  roles: [ hue ]
+  tags:
+    - site-hue
 
 # --------------------------------- Spark ------------------------------------
 # Requires Hadoop and HDFS
@@ -263,6 +342,14 @@
     - site-spark
     - deps-spark
 
+- name: Spark Configuration Changed Fact Reset
+  hosts: spark-nodes
+  tasks:
+    - set_fact: spark_config_changed=false
+  tags:
+    - site-spark
+    - deps-spark
+
 # ---------------------------------- Docker Engine ---------------------------
 
 - name: Docker Engine
@@ -270,3 +357,61 @@
   roles: [ docker-engine ]
   tags:
     - site-docker-engine
+
+# ---------------------------------- MySQL -----------------------------------
+
+- name: MySQL
+  hosts: mysql-node
+  roles: [ mysql ]
+  tags:
+    - mysql
+
+# ---------------------------------- Neo4j --------------------------------
+
+- name: Neo4j
+  hosts: neo4j-node
+  roles: [ neo4j ]
+  tags:
+    - site-neo4j
+
+# ---------------------------------- Tangelo --------------------------------
+
+- name: Tangelo
+  hosts: tangelo-node
+  roles: [ tangelo ]
+  tags:
+    - site-tangelo
+
+# -------------------------------- Traptor -----------------------------------
+# TODO also test traptor-track-nodes and traptor-location-nodes
+
+- name: Run Traptor role
+  hosts: traptor-nodes
+  roles: [ traptor ]
+  tags:
+    - site-traptor
+    - deps-traptor
+
+# ---------------------------------- Tarsnap --------------------------------
+
+- name: Tarsnap
+  hosts: tarsnap-nodes
+  roles: [ tarsnap ]
+  tags:
+    - site-tarsnap
+
+# ---------------------------------- PhantomJS --------------------------------
+
+- name: PhantomJS
+  hosts: phantomjs-nodes
+  roles: [ phantomjs ]
+  tags:
+    - site-phantomjs
+
+# ------------------------------------ PHP ----------------------------------
+
+- name: Run php role
+  hosts: php-nodes
+  roles: [php]
+  tags:
+    - site-php

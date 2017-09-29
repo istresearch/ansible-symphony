@@ -58,13 +58,13 @@
   <property>
     <description>List of directories to store localized files in.</description>
     <name>yarn.nodemanager.local-dirs</name>
-    <value>file://{{ yarn_nodemanager_local_dirs }}</value>
+    <value>{% for yarn_nodemanager_dir in yarn_nodemanager_local_dirs %}file://{{ yarn_nodemanager_dir }}{% if not loop.last %},{% endif %}{% endfor %}</value>
   </property>
 
   <property>
     <description>Where to store container logs.</description>
     <name>yarn.nodemanager.log-dirs</name>
-    <value>file://{{ yarn_nodemanager_log_dirs }}</value>
+    <value>{% for yarn_log_dir in yarn_nodemanager_log_dirs %}file://{{ yarn_log_dir }}{% if not loop.last %},{% endif %}{% endfor %}</value>
   </property>
 
   <property>
@@ -121,6 +121,11 @@
   <property>
     <name>yarn.resourcemanager.webapp.https.address</name>
     <value>${yarn.resourcemanager.hostname}:{{ yarn_resourcemanager_webapp_https_address_port|default(8090) }}</value>
+  </property>
+
+  <property>
+    <name>yarn.nodemanager.vmem-check-enabled</name>
+    <value>false</value>
   </property>
 
 </configuration>

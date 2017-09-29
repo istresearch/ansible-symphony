@@ -6,8 +6,8 @@
     mode: 0644
   notify:
     - reread supervisord
-    - restart hbase regionserver
-    - wait for hbase regionserver port
+    - restart hbase region server
+    - wait for hbase region server port
   tags:
     - hbase
     - hbase_regionserver
@@ -23,10 +23,10 @@
     name: hbase-regionserver
     state: started
   notify:
-    - wait for hbase regionserver port
+    - wait for hbase region server port
   tags: hadoop
 
-- name: wait for hbase regionserver port
+- name: wait for hbase region server port
   wait_for:
     port: "{{ hbase_regionserver_info_port }}"
     host: "{{ inventory_hostname }}"

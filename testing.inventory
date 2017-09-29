@@ -4,6 +4,11 @@
 #   - You can enter hostnames or ip addresses
 #   - A hostname/ip can be a member of multiple groups
 
+# ----------------------------
+# This inventory file is for Travis CI testing only. Please
+# do not alter this file unless making updates to the Travis
+# build process.
+# ----------------------------
 
 [all:vars]
 repository_host=default
@@ -11,15 +16,14 @@ repository_host=default
 #
 # Infrastructure and software topology
 #
-
 [zookeeper-nodes]
-vagrant-as-01
+travis-trusty
 
 [kafka-nodes]
-vagrant-as-01
+travis-trusty
 
 [redis-master-node]
-vagrant-as-01
+travis-trusty
 
 [redis-slave-nodes]
 #leave empty
@@ -33,14 +37,13 @@ redis-slave-nodes
 redis-sentinel-nodes
 
 [hadoop-namenode-node]
-vagrant-as-01
+travis-trusty
 
 [hadoop-secondary-namenode-node]
-vagrant-as-02
+# Cannot test this on a single VM
 
 [hadoop-datanode-nodes]
-vagrant-as-01
-vagrant-as-02
+travis-trusty
 
 [hadoop-nodes:children]
 hadoop-namenode-node
@@ -48,34 +51,33 @@ hadoop-secondary-namenode-node
 hadoop-datanode-nodes
 
 [hbase-master-node]
-vagrant-as-01
+travis-trusty
 
 [hbase-regionserver-nodes]
-vagrant-as-01
-vagrant-as-02
+travis-trusty
 
 [hbase-nodes:children]
 hbase-master-node
 hbase-regionserver-nodes
 
 [spark-master-node]
-vagrant-as-01
+travis-trusty
 
 [spark-worker-nodes]
-vagrant-as-01
+travis-trusty
 
 [spark-nodes:children]
 spark-master-node
 spark-worker-nodes
 
 [storm-nimbus-node]
-vagrant-as-01
+travis-trusty
 
 [storm-ui-node]
-vagrant-as-01
+travis-trusty
 
 [storm-supervisor-nodes]
-vagrant-as-01
+travis-trusty
 
 [storm-nodes:children]
 storm-nimbus-node
@@ -83,60 +85,83 @@ storm-ui-node
 storm-supervisor-nodes
 
 [elasticsearch-master-nodes]
-# data node serves as master also
+travis-trusty elasticsearch_is_data="true"
 
 [elasticsearch-data-nodes]
-vagrant-as-01 elasticsearch_is_master=true
 
 [elasticsearch-client-nodes]
-vagrant-as-02
 
 [elasticsearch-nodes:children]
 elasticsearch-master-nodes
 elasticsearch-data-nodes
 elasticsearch-client-nodes
 
+[logstash-nodes]
+travis-trusty
+
 [kibana-node]
-vagrant-as-01
+travis-trusty
 
 [tor-proxy]
-vagrant-as-01
+travis-trusty
 
 [scrapy-kafka-monitor-node]
-vagrant-as-01
+travis-trusty
 
 [scrapy-redis-monitor-node]
-vagrant-as-01
+travis-trusty
 
 #
 # Applications topology
 #
 
 [scrapy-crawler-nodes]
-vagrant-as-02
+travis-trusty
 
 [scrapy-indexer-nodes]
-vagrant-as-02
+travis-trusty
 
 [gnip-monitor-node]
-vagrant-as-02
+travis-trusty
 
 [gdelt-monitor-node]
-vagrant-as-02
+travis-trusty
 
 [elastalert-nodes]
-vagrant-as-01
+travis-trusty
 
 [traptor-follow-nodes]
-vagrant-as-02
+travis-trusty
 
 [traptor-track-nodes]
+travis-trusty
+
+[traptor-location-nodes]
+travis-trusty
 
 [traptor-nodes:children]
 traptor-follow-nodes
 traptor-track-nodes
+traptor-location-nodes
 
 [docker-engine]
-vagrant-as-01
+travis-trusty
 
+[neo4j-node]
+travis-trusty
 
+[tangelo-node]
+travis-trusty
+
+[mysql-node]
+travis-trusty
+
+[tarsnap-nodes]
+travis-trusty
+
+[phantomjs-nodes:children]
+storm-nodes
+spark-nodes
+
+[php-nodes]
+travis-trusty

@@ -1,6 +1,7 @@
 .vagrant
 id_rsa.pub
 vault.passwd
+*.retry
 
 # docs
 _build

@@ -34,7 +34,7 @@ delete.topic.enable=true
 port={{ kafka_port }}
 
 # Hostname the broker will bind to. If not set, the server will bind to all interfaces
-host.name={{ inventory_hostname }}
+# host.name={{ inventory_hostname }}
 
 # Hostname the broker will advertise to producers and consumers. If not set, it uses the
 # value for "host.name" if configured.  Otherwise, it will use the value returned from
@@ -118,7 +118,20 @@ log.retention.check.interval.ms=60000
 
 # By default the log cleaner is disabled and the log retention policy will default to just delete segments after their retention expires.
 # If log.cleaner.enable=true is set the cleaner will be enabled and individual logs can then be marked for log compaction.
-log.cleaner.enable=false
+# Always keep enabled now: https://issues.apache.org/jira/browse/KAFKA-3000
+log.cleaner.enable=true
+
+# The number of partitions for the offset commit topic (should not change after deployment)
+offsets.topic.num.partitions={{ kafka_offsets_topic_num_partitions|default(50) }}
+
+# The replication factor for the offsets topic (set higher to ensure availability). To ensure that the effective replication 
+# factor of the offsets topic is the configured value, the number of alive brokers has to be at least the replication factor 
+# at the time of the first request for the offsets topic. If not, either the offsets topic creation will fail or it will get 
+# a replication factor of min(alive brokers, configured replication factor)
+offsets.topic.replication.factor={{ kafka_offsets_topic_replication_factor|default(3) }}
+
+# The offsets topic segment bytes should be kept relatively small in order to facilitate faster log compaction and cache loads
+offsets.topic.segment.bytes={{ kafka_offsets_topic_segmant_bytes|default(104857600) }}
 
 ############################# Zookeeper #############################
 

@@ -5,7 +5,7 @@
 #hbase_master_host:
 
 # Defaults...
-hbase_version: 1.1.2
+hbase_version: 1.1.3
 hbase_install_dir: /opt/hbase
 hbase_exe_dir: "JAVA_HOME={{ java_home }} {{ hbase_install_dir }}/default/bin"
 hbase_conf_dir: "{{ hbase_install_dir }}/default/conf"
@@ -17,15 +17,16 @@ hbase_stdout_logfile_maxbytes: 50MB
 hbase_stderr_logfile_maxbytes: 50MB
 
 # runtime opts
-hbase_heap_size: 1000
+hbase_heap_size: 1024
 hbase_opts: -XX:+UseConcMarkSweepGC
+hbase_dfs_replication: 3
 
 hbase_master_enabled: false
 hbase_regionserver_enabled: false
 hbase_rest_enabled: false
+hbase_thriftserver_enabled: false
 
 hbase_cluster_name: hbasecluster
-hbase_env_vars: 'CLASSPATH="{{ hbase_install_dir }}/default/conf:/usr/lib/tools.jar:{{ hbase_install_dir }}/default:{{ hbase_install_dir }}/default/lib/*", JAVA_HOME="{{ java_home }}", LD_LIBRARY_PATH={{ hdfs_install_dir|default("/opt/hadoop") }}/default/lib/native'
 
 hbase_root_dir: /hbase
 hbase_tmp_dir: /data/hbase
@@ -36,6 +37,12 @@ hbase_regionserver_port: 60020
 hbase_regionserver_info_port: 60030
 hbase_rest_port: 60050
 hbase_rest_info_port: 8086
+hbase_thriftserver_port: 9090
+hbase_thriftserver_info_port: 9095
 hbase_jmx_remote_port: 10102
 
-repository_infrastructure: "{{ apache_mirror }}/hbase/stable/"
+hbase_snappy_compression: true
+hbase_native_arch: Linux-amd64-64
+hbase_native_arch_dir: "{{ hbase_install_dir }}/default/lib/native/{{ hbase_native_arch }}"
+
+repository_infrastructure: "{{ apache_mirror }}/hbase/{{ hbase_version }}"

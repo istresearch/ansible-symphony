@@ -1,0 +1,64 @@
+---
+# file: roles/tarsnap/defaults/main.yml
+
+###################################################
+# Basic vars
+###################################################
+tarsnap_version: 1.0.37
+
+# Retrieve SHA256 from:
+# https://www.tarsnap.com/download/tarsnap-sigs-1.0.37.asc (replace version number)
+tarsnap_tar_sha256: fa999413651b3bd994547a10ffe3127b4a85a88b1b9a253f2de798888718dbfa
+
+tarsnap_cron:
+  minute: "19"
+  hour: "*/8"
+  day_of_month: "*"
+  month: "*"
+  day_of_week: "*"
+
+tarsnap_num_backups:
+  hourly: 36
+  daily: 30
+  weekly: 8
+  monthly: 24
+
+tarsnap_backup_dirs:
+  - /home
+  - /etc
+  - /var
+  - /opt
+  - /root
+
+###################################################
+# Tarsnap configuration directives
+###################################################
+tarsnap_conf_keyfile_path: "{{ tarsnap_install_dir }}/tarsnap.key"
+tarsnap_conf_cache_dir: "{{ tarsnap_install_dir }}/tarsnap-cache"
+tarsnap_conf_no_dump: true
+tarsnap_conf_stat_print_style: "humanize-numbers"
+tarsnap_conf_checkpoint_bytes: "1G"
+tarsnap_conf_aggressive_networking: false
+tarsnap_conf_exclude_dirs:
+    - scratch/
+    - etc/ssh/certs/
+tarsnap_conf_include_dirs: []
+tarsnap_conf_mem_level: null
+tarsnap_conf_snaptime_file: null
+
+###################################################
+# Installation location vars
+###################################################
+tarsnap_install_dir: /opt/tarsnap
+tarsnap_previous_key_dir: /root
+tarsnap_source_dir: "{{ tarsnap_install_dir }}/tarsnap-autoconf-{{ tarsnap_version }}"
+tarsnap_config_path: "{{ tarsnap_source_dir }}/etc/tarsnap.conf"
+tarsnap_folders_list: "{{ tarsnap_install_dir }}/tarsnap.folders"
+
+tarsnap_default_symlink_path: "{{ tarsnap_install_dir }}/default"
+tarsnap_executable_dir: "{{ tarsnap_default_symlink_path }}/bin"
+tarsnap_executable_symlink_dest: "/usr/bin"
+
+tarsnap_config_dir: "{{ tarsnap_default_symlink_path }}/etc"
+
+tarsnap_config_symlink: /etc/tarsnap

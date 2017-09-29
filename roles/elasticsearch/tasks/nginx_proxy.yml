@@ -1,0 +1,20 @@
+---
+################################################################################
+# Elasticsearch nginx proxy tasks
+################################################################################
+
+- name: Add basic auth credentials to htpasswd file
+  htpasswd:
+    path: "{{ elasticsearch_nginx_proxy_auth.htpasswd_file }}"
+    name: "{{ elasticsearch_nginx_proxy_auth.user }}"
+    password: "{{ elasticsearch_nginx_proxy_auth.password }}"
+
+- name: Enable nginx proxy configuration
+  nginx_conf:
+    src=es-nginx-proxy.j2
+    state=enabled
+
+- name: Reload nginx
+  service:
+    name=nginx
+    state=reloaded

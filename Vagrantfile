@@ -32,7 +32,6 @@ Vagrant.configure(2) do |config|
         end
         node.vm.hostname = h.split(%r{\s+})[1]
         node.vm.network "private_network", ip: h.split(%r{\s+})[0]
-        node.vm.provision "shell", inline: "service supervisord restart || true", run: "always"
       end
     end
   end

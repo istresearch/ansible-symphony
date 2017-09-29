@@ -1,0 +1,8 @@
+---
+
+hue_install_dir: /opt/hue
+hue_start_secs: 10
+hue_start_retries: 3
+hue_stdout_logfile_maxbytes: 50MB
+hue_stderr_logfile_maxbytes: 50MB
+hue_env_vars: 'JAVA_HOME="{{ java_home }}"'

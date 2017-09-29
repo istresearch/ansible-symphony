@@ -1,5 +1,5 @@
 [program:hbase-rest]
-command={{ java_home }}/bin/java -Dproc_rest -XX:OnOutOfMemoryError="kill -9 %%p" -Xmx{{ hbase_heap_size }}m {{ hbase_opts }} -Dhbase.log.dir={{ hbase_install_dir }}/default/logs -Dhbase.log.file=hbase.log -Dhbase.home.dir={{ hbase_install_dir }}/default -Dhbase.id.str= -Dhbase.root.logger=INFO,console -Dhbase.security.logger=INFO,NullAppender org.apache.hadoop.hbase.rest.RESTServer start
+command=/opt/hbase/default/bin/hbase rest start
 autostart=true
 autorestart=true
 user={{ hbase_user }}
@@ -11,4 +11,3 @@ stdout_logfile=AUTO
 stdout_logfile_maxbytes={{ hbase_stdout_logfile_maxbytes }}
 stderr_logfile=AUTO
 stderr_logfile_maxbytes={{ hbase_stderr_logfile_maxbytes }}
-environment = {{ hbase_env_vars }}

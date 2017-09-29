@@ -1,3 +1,16 @@
 ---
 
 ntp_server_host: pool.ntp.org
+common_data_dir: /data
+common_data_user: root
+common_data_group: root
+#################################################################
+# For list of timezones, see
+# https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+#################################################################
+common_timezone: 'UTC'
+
+swap_run: true
+swap_file: /var/swap
+swap_size: 2000000000
+sys_swappiness: 1

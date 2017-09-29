@@ -1,0 +1,64 @@
+---
+- name: check if the Traptor conda environment exists
+  stat: path={{ traptor_miniconda_env }}
+  register: t_conda_env
+  tags: traptor
+
+- name: create conda environment for Traptor
+  command: "{{ miniconda_install_dir }}/bin/conda create -y -n traptor python=2.7 anaconda"
+  when: not (t_conda_env.stat.isdir is defined and t_conda_env.stat.isdir)
+  tags: traptor
+
+- name: activate Traptor conda environment
+  shell: "source {{ miniconda_install_dir }}/bin/activate traptor"
+  args:
+    executable: /bin/bash
+  tags: traptor
+
+- name: miniconda pip install Traptor
+  command: "{{ traptor_miniconda_env }}/bin/pip install traptor"
+  tags: traptor
+
+- name: check if the Traptor install folder exists
+  stat: path={{ traptor_install_dir }}
+  register: t_dir
+  tags: traptor
+
+- name: make traptor directory
+  file:
+    path={{ traptor_install_dir }}
+    state=directory
+  when: not (t_dir.stat.isdir is defined and t_dir.stat.isdir)
+  tags: traptor
+
+- name: create traptor symlink
+  file:
+    path={{ traptor_install_dir }}/default
+    src={{ traptor_miniconda_path }}
+    state=link
+  tags: traptor
+
+- name: create traptor log directory
+  file:
+    path={{ traptor_log_dir }}/
+    state=directory
+    mode=0755
+  tags: traptor
+
+- name: copy supervisord config
+  template:
+    src={{ traptor_name }}-supervisord.conf.j2
+    dest={{ supervisord_programs_dir }}/{{ traptor_name }}-supervisord.conf
+    mode=0644
+  notify:
+    - reread supervisord
+  tags: traptor
+
+- name: copy traptor settings
+  template:
+    src=localsettings.py.j2
+    dest={{ traptor_install_dir }}/default/localsettings.py
+    mode=0644
+  notify:
+    - restart traptor
+  tags: traptor

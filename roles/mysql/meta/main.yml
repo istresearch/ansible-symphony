@@ -1,0 +1,3 @@
+---
+dependencies:
+  - { role: supervisord, when: "supervisord_has_run is not defined" }

@@ -17,7 +17,7 @@
   file:
     path: "{{ item }}"
     state: directory
-    mode: 0754
+    mode: 0755
     owner: "{{ hdfs_user }}"
     group: "{{ hdfs_group }}"
   with_items:
@@ -100,17 +100,28 @@
     - hdfs-site.xml.j2
     - yarn-site.xml.j2
     - mapred-site.xml.j2
+    - hadoop-env.sh.j2
+  register: hadoop_config
+  tags: hadoop
+  
+- name: restart hadoop to apply configuration changes
+  set_fact: hadoop_config_changed={{ hadoop_config.changed or (hadoop_config_changed is defined and hadoop_config_changed) }}
   notify:
     - restart hdfs namenode
     - wait for hdfs namenode port
+    - restart hdfs secondary namenode
+    - wait for hdfs secondary namenode port
     - restart hdfs datanode
     - wait for hdfs datanode port
+    - restart mapreduce history server
+    - wait for mapreduce history server port
     - restart yarn resource manager
     - wait for yarn resource manager port
     - restart yarn node manager
     - wait for yarn node manager port
     - restart yarn history server
     - wait for yarn history server port
+  changed_when: hadoop_config_changed
   tags: hadoop
 
 - include: hdfs-namenode.yml

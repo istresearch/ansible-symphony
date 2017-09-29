@@ -8,21 +8,18 @@
 [all:vars]
 repository_host=default
 
-[inventory-name:children]
-ansible-symphony
-
 #
 # Infrastructure and software topology
 #
 
 [zookeeper-nodes]
-prod-as-01
+vagrant-as-01
 
 [kafka-nodes]
-prod-as-01
+vagrant-as-01
 
 [redis-master-node]
-prod-as-01
+vagrant-as-01
 
 [redis-slave-nodes]
 #leave empty
@@ -36,111 +33,137 @@ redis-slave-nodes
 redis-sentinel-nodes
 
 [hadoop-namenode-node]
-prod-as-01
+vagrant-as-01
 
 [hadoop-secondary-namenode-node]
-prod-as-02
+vagrant-as-02
 
 [hadoop-datanode-nodes]
-prod-as-01
-prod-as-02
+vagrant-as-01
+vagrant-as-02
 
 [hadoop-nodes:children]
 hadoop-namenode-node
+hadoop-secondary-namenode-node
 hadoop-datanode-nodes
 
-[hbase-master-node:children]
+[hbase-master-node]
+vagrant-as-01
 
-[hbase-regionserver-nodes:children]
+[hbase-regionserver-nodes]
+vagrant-as-01
+vagrant-as-02
 
 [hbase-nodes:children]
 hbase-master-node
 hbase-regionserver-nodes
 
+[oozie-node:children]
+hadoop-namenode-node
+
 [spark-master-node]
-prod-as-01
+vagrant-as-01
 
 [spark-worker-nodes]
-prod-as-01
+vagrant-as-01
 
 [spark-nodes:children]
 spark-master-node
 spark-worker-nodes
 
 [storm-nimbus-node]
-prod-as-01
+vagrant-as-01
 
 [storm-ui-node]
-prod-as-01
+vagrant-as-01
 
 [storm-supervisor-nodes]
-prod-as-01
+vagrant-as-01
 
 [storm-nodes:children]
 storm-nimbus-node
 storm-ui-node
 storm-supervisor-nodes
 
-[elasticsearch-nodes]
-prod-as-01
+[elasticsearch-master-nodes]
+# data node serves as master also
+
+[elasticsearch-data-nodes]
+vagrant-as-01 elasticsearch_is_master=true
+
+[elasticsearch-client-nodes]
+vagrant-as-02
+
+[elasticsearch-nodes:children]
+elasticsearch-master-nodes
+elasticsearch-data-nodes
+elasticsearch-client-nodes
 
 [kibana-node]
-prod-as-01
+vagrant-as-01
 
 [tor-proxy]
-prod-as-01
+vagrant-as-01
 
 [scrapy-kafka-monitor-node]
-prod-as-01
+vagrant-as-01
 
 [scrapy-redis-monitor-node]
-prod-as-01
+vagrant-as-01
+
+[logstash-nodes]
+vagrant-as-01
+
+[hue-nodes]
+vagrant-as-02
 
 #
 # Applications topology
 #
 
 [scrapy-crawler-nodes]
-prod-as-02
+vagrant-as-02
 
 [scrapy-indexer-nodes]
-prod-as-02
+vagrant-as-02
 
 [gnip-monitor-node]
-prod-as-02
+vagrant-as-02
 
 [gdelt-monitor-node]
-prod-as-02
+vagrant-as-02
 
 [elastalert-nodes]
-prod-as-01
+vagrant-as-01
 
 [traptor-follow-nodes]
-prod-as-02
+vagrant-as-01
 
 [traptor-track-nodes]
+vagrant-as-02
+
+[traptor-location-nodes]
 
 [traptor-nodes:children]
 traptor-follow-nodes
 traptor-track-nodes
+traptor-location-nodes
 
-[ansible-symphony:children]
-zookeeper-nodes
-kafka-nodes
-redis-nodes
-hadoop-nodes
-hbase-nodes
-spark-nodes
-storm-nodes
-scrapy-kafka-monitor-node
-scrapy-redis-monitor-node
-scrapy-crawler-nodes
-scrapy-indexer-nodes
-elasticsearch-nodes
-kibana-node
+[docker-engine]
+vagrant-as-01
+
+[neo4j-node]
+vagrant-as-02
 
 [tangelo-node]
+vagrant-as-02
 
-[titan-node]
+[mysql-node]
+vagrant-as-01
 
-[other]
+[phantomjs-nodes:children]
+storm-nodes
+spark-nodes
+
+[php-nodes]
+vagrant-as-01

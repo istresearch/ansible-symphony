@@ -1,0 +1,12 @@
+---
+- name: Install tarsnap required packages via apt
+  apt:
+    name={{ item }}
+    state=latest
+  with_items:
+    - gcc
+    - libc6-dev
+    - make
+    - libssl-dev
+    - zlib1g-dev
+    - e2fslibs-dev

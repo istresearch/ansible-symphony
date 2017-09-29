@@ -1,24 +1,38 @@
 ---
 
+- name: Configuring group
+  group:
+    name: "{{ kafka_group }}"
+  tags: kafka
+
+- name: create kafka user and group
+  user:
+    name={{ kafka_user }}
+    group={{ kafka_group }}
+    shell=/bin/bash
+    createhome=yes
+  tags: kafka
+
 - name: create kafka directories
   file:
     path={{ item }}
     state=directory
-    mode=0744
+    mode=0755
   with_items:
     - "{{ kafka_install_dir }}"
     - "{{ kafka_data_log_dir }}"
+    - "{{ kafka_log_dir }}"
   tags: kafka
 
 - name: check for existing install
-  stat: path={{ kafka_install_dir }}/kafka_{{ kafka_version }}
+  stat: path={{ kafka_install_dir }}/kafka_{{ kafka_scala_version }}-{{ kafka_version }}
   register: kafka
   tags: kafka
 
 - name: download kafka
   get_url:
-    url="{{ repository_infrastructure }}/kafka_{{ kafka_scala_version}}-{{ kafka_version }}.tgz"
-    dest="/tmp/kafka_{{ kafka_scala_version}}-{{ kafka_version }}.tgz"
+    url="{{ repository_infrastructure }}/kafka_{{ kafka_scala_version }}-{{ kafka_version }}.tgz"
+    dest="/tmp/kafka_{{ kafka_scala_version }}-{{ kafka_version }}.tgz"
     mode=0644
     validate_certs=no
   when: kafka.stat.isdir is not defined
@@ -26,7 +40,7 @@
 
 - name: extract kafka
   unarchive:
-    src="/tmp/kafka_{{ kafka_scala_version}}-{{ kafka_version }}.tgz"
+    src="/tmp/kafka_{{ kafka_scala_version }}-{{ kafka_version }}.tgz"
     dest={{ kafka_install_dir }}
     copy=no
   when: kafka.stat.isdir is not defined
@@ -34,7 +48,7 @@
 
 - name: delete temporary kafka file
   file:
-    path="/tmp/kafka_{{ kafka_scala_version}}-{{ kafka_version }}.tgz"
+    path="/tmp/kafka_{{ kafka_scala_version }}-{{ kafka_version }}.tgz"
     state=absent
   ignore_errors: yes
   tags: kafka
@@ -43,7 +57,7 @@
   file:
     path="{{ kafka_install_dir }}/default"
     state=link
-    src="{{ kafka_install_dir }}/kafka_{{ kafka_scala_version}}-{{ kafka_version }}"
+    src="{{ kafka_install_dir }}/kafka_{{ kafka_scala_version }}-{{ kafka_version }}"
   tags: kafka
 
 - name: configure kafka brokers
@@ -87,5 +101,18 @@
     dest: "/root/.bashrc"
     line: "export KAFKA={{ kafka_install_dir }}/default"
   tags: env
+
+- name: set owner and group of kafka directory and files
+  file:
+    path={{ item }}
+    state=directory
+    recurse=yes
+    owner={{ kafka_user }}
+    group={{ kafka_group }}
+  with_items:
+    - "{{ kafka_install_dir }}"
+    - "{{ kafka_data_dir }}"
+    - "{{ kafka_log_dir }}"
+  tags: kafka
 
 # - cron: name="clear old kafka app logs" job="find /opt/kafka/default/logs -mtime +7 -exec rm {} \; > /dev/null" minute="0"

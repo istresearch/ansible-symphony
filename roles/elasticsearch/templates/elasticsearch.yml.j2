@@ -23,9 +23,7 @@ cluster.name: {{ elasticsearch_cluster_name }}
 #
 # node.name: node-1
 
-{% for host in elasticsearch_host_list %}
-{%- if host == inventory_hostname -%}node.name: {{ elasticsearch_base_node_name }}-{{ loop.index }}-{{ conf_name }}{%- endif -%}
-{% endfor %}
+node.name: {{ elasticsearch_base_node_name.stdout }}-{{ conf_name }}
 
 #
 # Add custom attributes to the node:
@@ -88,7 +86,68 @@ path.logs: {{ elasticsearch_log_dir }}_{{ conf_name }}
 #
 # path.plugins: /path/to/plugins
 path.plugins: {{ elasticsearch_plugin_dir }}
+
 #
+# ----------------------------------- Marvel Monitoring ------------------------
+#
+{% if elasticsearch_install_marvel == "true" %}
+marvel.agent.exporters:
+  id1:
+    type: http
+    host: ["{{ elasticsearch_marvel_cluster }}:9200"]
+{% if elasticsearch_marvel_with_shield == "true" %}
+    auth:
+      username: {{ elasticsearch_marvel_agent_user }}
+      password: {{ elasticsearch_marvel_agent_password }}
+{% endif %}
+{% endif %}
+
+#
+# ----------------------------------- Slow Logs --------------------------------
+#
+{% if elasticsearch_logging_slowlog_mode != "off" %}
+index.indexing.slowlog.level: info
+index.indexing.slowlog.source: 1000
+
+{% if elasticsearch_logging_slowlog_mode == "standard" %}
+index.search.slowlog.threshold.query.warn: 10s
+index.search.slowlog.threshold.query.info: 5s
+index.search.slowlog.threshold.query.debug: 2s
+index.search.slowlog.threshold.query.trace: 500ms
+
+index.search.slowlog.threshold.fetch.warn: 1s
+index.search.slowlog.threshold.fetch.info: 800ms
+index.search.slowlog.threshold.fetch.debug: 500ms
+index.search.slowlog.threshold.fetch.trace: 200ms
+
+index.indexing.slowlog.threshold.index.warn: 10s
+index.indexing.slowlog.threshold.index.info: 5s
+index.indexing.slowlog.threshold.index.debug: 2s
+index.indexing.slowlog.threshold.index.trace: 500ms
+{% elif elasticsearch_logging_slowlog_mode == "showall" %}
+index.search.slowlog.threshold.query.warn: 0s
+index.search.slowlog.threshold.query.info: 0s
+index.search.slowlog.threshold.query.debug: 0s
+index.search.slowlog.threshold.query.trace: 0s
+
+index.search.slowlog.threshold.fetch.warn: 0s
+index.search.slowlog.threshold.fetch.info: 0s
+index.search.slowlog.threshold.fetch.debug: 0s
+index.search.slowlog.threshold.fetch.trace: 0s
+
+index.indexing.slowlog.threshold.index.warn: 0s
+index.indexing.slowlog.threshold.index.info: 0s
+index.indexing.slowlog.threshold.index.debug: 0s
+index.indexing.slowlog.threshold.index.trace: 0s
+{% endif %}
+{% endif %}
+
+# ----------------------------------- Watermarks -----------------------------------
+cluster.routing.allocation.disk.threshold_enabled: {{ elasticsearch_disk_threshold_enabled }}
+cluster.routing.allocation.disk.watermark.low: {{ elasticsearch_watermark_low }}
+cluster.routing.allocation.disk.watermark.high: {{ elasticsearch_watermark_high }}
+cluster.info.update.interval: {{ elasticsearch_update_interval }}
+
 # ----------------------------------- Memory -----------------------------------
 #
 # Lock the memory on startup:

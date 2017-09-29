@@ -1,0 +1,4 @@
+- name: restart oozie
+  supervisorctl:
+    name=oozie
+    state=restarted

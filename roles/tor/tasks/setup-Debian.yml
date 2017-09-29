@@ -39,3 +39,9 @@
   apt:
     name: polipo
     state: present
+
+- name: Create Polipo run directory
+  file:
+    path: "/var/run/polipo"
+    state: directory
+  tags: tor

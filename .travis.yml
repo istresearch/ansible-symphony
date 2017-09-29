@@ -8,6 +8,17 @@ python: '2.7'
 before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -qq python-apt
+  # Uninstall the default mysql 5.6 installation from the trusty image
+  - sudo service mysql stop
+  - sudo apt-get remove --purge mysql-server mysql-client mysql-common
+  - sudo apt-get autoremove
+  - sudo apt-get autoclean
+  - sudo deluser mysql
+  - sudo rm -rf /var/lib/mysql
+  - sudo apt-get purge mysql-server-core-5.6
+  - sudo apt-get purge mysql-client-core-5.6
+  - sudo rm -rf /var/log/mysql
+  - sudo rm -rf /etc/mysql
 install:
   - pip install ansible
 env:
@@ -19,18 +30,30 @@ env:
   - TAGS='scrapy-cluster'
   - TAGS='deps-storm'
   - TAGS='deps-hadoop'
-  # Hbase and Spark not working with Travis VM
-  # See https://github.com/istresearch/ansible-symphony/issues/1
-  # - TAGS='site-hbase'
-  # - TAGS='site-spark'
+  - TAGS='deps-hbase'
+  - TAGS='deps-spark'
   - TAGS='site-docker-engine'
+  - TAGS='site-neo4j'
+  - TAGS='virtualenv'
+  - TAGS='miniconda'
+  - TAGS='site-tangelo'
+  - TAGS='mysql'
+  - TAGS='site-es-hadoop'
+  - TAGS='site-tarsnap'
+  - TAGS='site-phantomjs'
+  - TAGS='site-supervisord'
+  - TAGS='site-oozie'
+  - TAGS='site-exim'
+  - TAGS='site-redis'
+  - TAGS='site-php'
 
 matrix:
   fast_finish: true
 script:
-  - ansible-playbook -i testing site-infrastructure.yml --tags $TAGS --syntax-check
-  - ansible-playbook -i testing site-infrastructure.yml --tags $TAGS --connection=local --become
-
+  - ansible-playbook -i testing.inventory site-infrastructure.yml --tags $TAGS --syntax-check
+  - ansible-playbook -i testing.inventory site-infrastructure.yml --tags $TAGS --connection=local --become
+after_failure:
+  - sudo cat /var/log/supervisor/*
 notifications:
   slack:
     rooms:

@@ -1,0 +1,29 @@
+---
+- name: RedHat - Update postfix to the latest version (if extra repositories enabled).
+  yum: "name=postfix state=latest enablerepo={{ mysql_enablerepo }}"
+  when: mysql_enablerepo != ""
+  tags:
+    - mysql
+
+- name: RedHat - Ensure MySQL Python libraries are installed.
+  yum: "name=MySQL-python state=installed enablerepo={{ mysql_enablerepo }}"
+  tags:
+    - mysql
+
+- name: RedHat - Ensure MySQL packages are installed.
+  yum: "name={{ item }} state=installed enablerepo={{ mysql_enablerepo }}"
+  with_items: "{{ mysql_packages }}"
+  tags:
+    - mysql
+
+- name: RedHat - Copy my.cnf global MySQL configuration.
+  template:
+    src: my.cnf.j2
+    dest: "{{ mysql_config_file }}"
+    owner: root
+    group: root
+    mode: 0644
+    force: "{{ overwrite_global_mycnf }}"
+  notify: restart mysql redhat
+  tags:
+    - mysql

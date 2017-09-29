@@ -1,0 +1,4 @@
+ses_login:
+driver = plaintext
+public_name = LOGIN
+client_send = : {{ exim_amazon_ses_conf.username }} : {{ exim_amazon_ses_conf.password }}

@@ -1,0 +1,12 @@
+---
+mysql_daemon: mysql
+mysql_packages:
+  - mysql-common
+  - mysql-client-core-5.5
+  - mysql-server-5.5
+  - mysql-server
+  - mysql-server-core-5.5
+#  - mysql-python
+mysql_slow_query_log_file: /var/log/mysql/mysql-slow.log
+mysql_config_file: /etc/mysql/my.cnf
+mysql_socket: /var/run/mysqld/mysqld.sock

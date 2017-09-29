@@ -9,11 +9,44 @@
     name={{ item }}
     state=latest
   with_items:
-   - bash
-   - openssh-server
-   - wget
-   - zip
-   - unzip
+    - bash
+    - openssh-server
+    - wget
+    - zip
+    - unzip
+    - checkinstall
+    # used for scrapy, gandalf, and general python work
+    - python-lxml
+    - build-essential
+    - libssl-dev
+    - libffi-dev
+    - python-dev
+    - libxml2-dev
+    - libxslt1-dev
+    - byobu
+    - mosh
+    - mtr-tiny
+    - vim
+    - git
+    - python
+    - vim-scripts
+    - etckeeper
+    - htop
+    - iotop
+    - sudo
+    - rcconf
+    - logwatch
+    - telnet
+    - dnsutils
+    - unattended-upgrades
+    - gcc
+    - libc6-dev
+    - make
+    - zlib1g-dev
+    - e2fslibs-dev
+    - resolvconf
+    - ntpdate
+    #- awscli
   tags: common
 
 - name: remove hostname loopback
@@ -22,4 +55,35 @@
     regexp="^127\.0\.1\.1\s+{{ inventory_hostname }}.*$"
     state=absent
   tags: common
-  when: remove_hostname_loopback
+  when: remove_hostname_loopback is defined and remove_hostname_loopback
+
+- name: Template out auto upgrade .conf
+  template:
+    src: 20auto-upgrades
+    dest: /etc/apt/apt.conf.d/20auto-upgrades
+    group: root
+    owner: root
+
+- name: Template out unattended upgrades .conf
+  template:
+    src: 50unattended-upgrades
+    dest: /etc/apt/apt.conf.d/50unattended-upgrades
+    group: root
+    owner: root
+  tags:
+    - common
+
+- name: Set Time Zone
+  copy: content={{ common_timezone }}
+        dest=/etc/timezone
+        owner=root
+        group=root
+        mode=0644
+        backup=yes
+  tags:
+    - common
+
+- name: Update timezone via dpkg
+  command: dpkg-reconfigure --frontend noninteractive tzdata
+  tags:
+    - common

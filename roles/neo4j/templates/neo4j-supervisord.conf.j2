@@ -1,0 +1,17 @@
+[program:neo4j]
+command={{ neo4j_install_dir }}/default/bin/neo4j console
+autostart=true
+autorestart=true
+user={{ neo4j_user }}
+startsecs=10
+startretries=5
+startsecs=10
+numprocs=1
+stopsignal=KILL
+redirect_stderr=true
+stdout_logfile=AUTO
+stdout_logfile_maxbytes={{ neo4j_stdout_logfile_maxbytes }}
+stderr_logfile=AUTO
+stderr_logfile_maxbytes={{ neo4j_stderr_logfile_maxbytes }}
+stopasgroup=true
+killasgroup=true

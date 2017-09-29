@@ -1,0 +1,59 @@
+---
+- name: setup group
+  group:
+    name: "{{ tangelo_group }}"
+  tags: tangelo
+
+- name: setup user
+  user:
+    name: "{{ tangelo_user }}"
+    group: "{{ tangelo_group }}"
+  tags: tangelo
+
+- name: pip install tangelo
+  pip:
+    name: "{{ item }}"
+    version: "{{ tangleo_version }}"
+  with_items:
+    - tangelo
+  tags: tangelo
+
+- name: create conf directory
+  file:
+    path: "{{ tangelo_conf_dir }}/"
+    state: directory
+    mode: 0755
+  tags: tangelo
+
+- name: create webroot directory
+  file:
+    path: "{{ tangelo_webroot }}/"
+    state: directory
+    mode: 0755
+  tags: tangelo
+
+- name: move over index.html
+  copy:
+    src: index.html
+    dest: "{{ tangelo_webroot }}/"
+    mode: 0755
+  tags: tangelo
+
+- name: copy tangelo settings
+  template:
+    src: settings.yml.j2
+    dest: "{{ tangelo_conf_dir }}/settings.yml"
+    mode: 0644
+  notify:
+    - restart tangelo
+  tags: tangelo
+
+- name: copy supervisord config
+  template:
+    src: tangelo-supervisord.conf.j2
+    dest: "{{ supervisord_programs_dir|default('/etc/supervisor/conf.d') }}/tangelo-supervisord.conf"
+    mode: 0644
+  notify:
+    - reread supervisord
+    - restart tangelo
+  tags: tangelo

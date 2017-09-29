@@ -6,8 +6,27 @@ This section explains the different roles within Ansible Symphony
 .. toctree::
    :hidden:
 
+   apache2
+   diskbot
+   docker_engine
+   elasticsearch
    hadoop
    hbase
+   javakafka
+   kafka
+   kibana4
+   logstash
+   miniconda
+   mysql
+   neo4j
+   pip
+   redis
+   spark
+   storm
+   supervisord
+   tangelo
+   tor
+   virtualenv
    zookeeper
 
 :doc:`apache2`
@@ -46,6 +65,12 @@ This section explains the different roles within Ansible Symphony
 :doc:`miniconda`
     Miniconda
 
+:doc:`mysql`
+    MySQL
+
+:doc:`neo4j`
+    Neo4j
+
 :doc:`pip`
     Pip
 
@@ -60,6 +85,9 @@ This section explains the different roles within Ansible Symphony
 
 :doc:`supervisord`
     Supervisord
+
+:doc:`tangelo`
+    Tangelo Web Framework
 
 :doc:`tor`
     Tor

@@ -1,0 +1,50 @@
+SENTRY_SECRET = "{{ traptor_sentry_secret }}"
+LOG_LEVEL = "{{ traptor_log_level }}"
+KAFKA_HOSTS = "{% for host in groups['kafka-nodes'] %}{{ host }}:{{ kafka_port|default(9092) }}{% if not loop.last %},{% endif %}{% endfor %}"
+REDIS_HOST = "{{ groups['redis-master-node'][0] }}"
+REDIS_PORT = {{ traptor_redis_port }}
+REDIS_DB = {{ traptor_redis_db }}
+
+KAFKA_TOPIC = "{{ traptor_kafka_topic }}"
+
+# Twitter API Keys
+{% if inventory_hostname in groups['traptor-track-nodes'] %}
+APIKEYS = (
+{% for key in traptor_track_apikeys %}
+    {
+        'CONSUMER_KEY': "{{ traptor_track_apikeys[loop.index - 1]['consumer_key'] }}",
+        'CONSUMER_SECRET': "{{ traptor_track_apikeys[loop.index - 1]['consumer_secret'] }}",
+        'ACCESS_TOKEN': "{{ traptor_track_apikeys[loop.index - 1]['access_token'] }}",
+        'ACCESS_TOKEN_SECRET': "{{ traptor_track_apikeys[loop.index - 1]['access_token_secret'] }}"
+    },
+{% endfor %}
+)
+{% endif %}
+
+
+{% if inventory_hostname in groups['traptor-follow-nodes'] %}
+APIKEYS = (
+{% for key in traptor_follow_apikeys %}
+    {
+        'CONSUMER_KEY': "{{ traptor_follow_apikeys[loop.index - 1]['consumer_key'] }}",
+        'CONSUMER_SECRET': "{{ traptor_follow_apikeys[loop.index - 1]['consumer_secret'] }}",
+        'ACCESS_TOKEN': "{{ traptor_follow_apikeys[loop.index - 1]['access_token'] }}",
+        'ACCESS_TOKEN_SECRET': "{{ traptor_follow_apikeys[loop.index - 1]['access_token_secret'] }}"
+    },
+{% endfor %}
+)
+{% endif %}
+
+
+{% if inventory_hostname in groups['traptor-location-nodes'] %}
+APIKEYS = (
+{% for key in traptor_location_apikeys %}
+    {
+        'CONSUMER_KEY': "{{ traptor_location_apikeys[loop.index - 1]['consumer_key'] }}",
+        'CONSUMER_SECRET': "{{ traptor_location_apikeys[loop.index - 1]['consumer_secret'] }}",
+        'ACCESS_TOKEN': "{{ traptor_location_apikeys[loop.index - 1]['access_token'] }}",
+        'ACCESS_TOKEN_SECRET': "{{ traptor_location_apikeys[loop.index - 1]['access_token_secret'] }}"
+    },
+{% endfor %}
+)
+{% endif %}

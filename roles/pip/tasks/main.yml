@@ -1,31 +1,23 @@
 ---
 # file: roles/pip/tasks/main.yml
 
-- name: yum install python-pip 
-  yum:
-    name=python-pip
-    state=present
+- name: download get-pip.py
+  get_url:
+    url=https://bootstrap.pypa.io/get-pip.py
+    dest=/tmp/get-pip.py
+    mode=0755
   tags: pip
-  when: ansible_os_family == "RedHat"
 
-- name: apt install python-pip 
-  apt:
-    name=python-pip
-    state=present
+- name: python install pip
+  shell: python /tmp/get-pip.py
   tags: pip
-  when: ansible_os_family == "Debian"
 
-# - name: create pip configuration directory
-#   file:
-#     state=directory
-#     dest=~/.pip
-#     mode=0755
-
-# - name: configure pip to use the local repository
-#   template:
-#     src=pip.conf.j2
-#     dest=~/.pip/pip.conf
-#   tags: pip
+- name: delete temporary pip file
+  file:
+    path: /tmp/get-pip.py
+    state: absent
+  ignore_errors: yes
+  tags: pip
 
 - name: Set fact pip_has_run
   set_fact:

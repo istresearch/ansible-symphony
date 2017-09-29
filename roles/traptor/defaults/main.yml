@@ -1,0 +1,55 @@
+---
+# Installation config
+traptor_name: traptor
+traptor_version: 1.1.7
+traptor_install_dir: "/opt/{{ traptor_name }}"
+traptor_miniconda_env: "/opt/miniconda/envs/{{ traptor_name }}"
+traptor_miniconda_path: "/opt/miniconda/envs/traptor/lib/python2.7/site-packages/{{ traptor_name }}"
+miniconda_install_dir: "/opt/miniconda"
+
+# Supervisor config
+traptor_start_secs: 5
+traptor_start_retries: 100
+traptor_stderr_logfile_maxbytes: 50MB
+
+traptor_logger_name: "{{ traptor_name }}"
+traptor_log_dir: /var/log
+traptor_log_file: "{{ traptor_name }}.log"
+traptor_log_max_bytes: 25000000
+traptor_log_backups: 5
+
+traptor_track_count: 2
+traptor_follow_count: 1
+traptor_location_count: 1
+
+traptor_redis_pubsub: "traptor-notify"
+
+# Traptor localsettings.py
+traptor_kafka_topic: "traptor"
+
+traptor_track_apikeys:
+  - consumer_key: 'a'
+    consumer_secret: 'a'
+    access_token: 'a'
+    access_token_secret: 'a'
+  - consumer_key: 'b'
+    consumer_secret: 'b'
+    access_token: 'b'
+    access_token_secret: 'b'
+
+traptor_follow_apikeys:
+  - consumer_key: ''
+    consumer_secret: ''
+    access_token: ''
+    access_token_secret: ''
+
+traptor_location_apikeys:
+  - consumer_key: ''
+    consumer_secret: ''
+    access_token: ''
+    access_token_secret: ''
+
+traptor_log_level: "INFO"
+traptor_redis_port: 6379
+traptor_redis_db: 0
+traptor_sentry_secret: ''

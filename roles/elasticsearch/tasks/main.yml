@@ -19,6 +19,21 @@
   when: (elasticsearch_is_data=="true" and elasticsearch_is_master=="true")
   tags: elasticsearch
 
+- name: set vm.swappiness to 1 for performance
+  sysctl:
+    name: vm.swappiness
+    value: 1
+
+- name: set max_map_count to optimize virtual memory
+  sysctl:
+    name: vm.max_map_count
+    value: 262144   
+
+- name: Get Base Node Name from Hostname
+  shell: hostname | awk -F . '{print $1}'
+  register: elasticsearch_base_node_name
+  tags: elasticsearch
+
 - name: Configuring group
   group:
     name: "{{ elasticsearch_group }}"
@@ -162,6 +177,7 @@
     mode: 0644
   notify:
     - reread supervisord
+    - "restart elasticsearch {{ conf_name }}"
   tags:
     - elasticsearch
 
@@ -179,6 +195,34 @@
     - elasticsearch
     - kopf
 
+- name: check for existing marvel plugin
+  stat:
+    path: "{{ elasticsearch_plugin_dir }}/marvel-agent"
+  register: elasticsearchmarvel
+  when: elasticsearch_install_marvel
+  tags:
+    - elasticsearch
+
+- name: install marvel plugin
+  shell: "{{ elasticsearch_bin_dir }}/plugin install -b marvel-agent"
+  when: elasticsearch_install_marvel and elasticsearchmarvel.stat.isdir is not defined
+  tags:
+    - elasticsearch
+
+- name: check for existing license plugin
+  stat:
+    path: "{{ elasticsearch_plugin_dir }}/license"
+  register: elasticsearchlicense
+  when: elasticsearch_install_marvel
+  tags:
+    - elasticsearch
+
+- name: install license plugin
+  shell: "{{ elasticsearch_bin_dir }}/plugin install -b license"
+  when: elasticsearch_install_marvel and elasticsearchlicense.stat.isdir is not defined
+  tags:
+    - elasticsearch
+
 - name: check for existing analysis icu plugin install
   stat:
     path: "{{ elasticsearch_plugin_dir }}/analysis-icu"
@@ -190,5 +234,11 @@
   shell: "{{ elasticsearch_bin_dir }}/plugin install analysis-icu"
   when: elasticsearch_install_icu_analysis and elasticsearchicu.stat.isdir is not defined
   notify: "restart elasticsearch {{ conf_name }}"
+  tags:
+    - elasticsearch
+
+- name: include nginx_proxy tasks
+  include: nginx_proxy.yml
+  when: elasticsearch_nginx_proxy_enabled is defined and elasticsearch_nginx_proxy_enabled
   tags:
     - elasticsearch

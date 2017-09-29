@@ -3,7 +3,7 @@
 elasticsearch_install_dir: /opt/elasticsearch
 elasticsearch_user: elasticsearch
 elasticsearch_group: elasticsearch
-elasticsearch_version: 2.1.1
+elasticsearch_version: 2.3.1
 elasticsearch_max_open_files: 65535
 elasticsearch_max_locked_memory: 100000
 elasticsearch_max_num_procs: 32000
@@ -15,6 +15,12 @@ elasticsearch_start_retries: 3
 
 elasticsearch_install_kopf: true
 elasticsearch_install_icu_analysis: false
+
+elasticsearch_install_marvel: false
+elasticsearch_marvel_with_shield: false
+elasticsearch_marvel_cluster:  "http://{{ inventory_hostname }}"
+elasticsearch_marvel_agent_user: none
+elasticsearch_marvel_agent_password: none
 
 elasticsearch_plugin_dir: "{{ elasticsearch_install_dir }}/elasticsearch-{{ elasticsearch_version }}/plugins"
 elasticsearch_bin_dir: "{{ elasticsearch_install_dir }}/elasticsearch-{{ elasticsearch_version }}/bin"
@@ -31,6 +37,11 @@ elasticsearch_index_mapper_dynamic: true
 elasticsearch_misc_query_bool_max_clause_count: 4096
 elasticsearch_memory_bootstrap_mlockall: "true"
 elasticsearch_base_node_name: esnode
+
+elasticsearch_disk_threshold_enabled: True
+elasticsearch_watermark_low: 85%
+elasticsearch_watermark_high: 90%
+elasticsearch_update_interval: 30s
 
 elasticsearch_gateway_type: local
 elasticsearch_gateway_recover_after_nodes: 1
@@ -100,4 +111,19 @@ elasticsearch_logger_indexing: "{{ elasticsearch_log_trace }}"
 elasticsearch_additivity_search: "false"
 elasticsearch_additivity_indexing: "false"
 
+elasticsearch_logging_slowlog_mode: "standard" # standard, showall, off
+elasticsearch_logger_type: "dailyRollingFile" # dailyRollingFile, file
+
 repository_infrastructure: "https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/{{ elasticsearch_version }}"
+
+###########################################
+# Nginx proxy
+###########################################
+elasticsearch_nginx_proxy_enabled: false
+elasticsearch_nginx_proxy_conf:
+  listen_port: 9201
+  upstream_port: "{{ elasticsearch_network_http_port|default(9200) }}"
+elasticsearch_nginx_proxy_auth:
+  user: 'user'
+  password: 'password'
+  htpasswd_file: "{{ nginx_htpasswd_file|default('/etc/nginx/.htpasswd') }}"
