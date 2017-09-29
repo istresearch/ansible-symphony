@@ -33,7 +33,11 @@ supervisor.slots.ports:
 {% endif %}
 
 ### nimbus.* configs are for the master
+# Up to Storm 0.10.x
 nimbus.host: "{{ nimbus_host }}"
+# For Storm 1.x+
+nimbus.seeds:
+  - "{{ nimbus_host }}"
 nimbus.thrift.port: {{ nimbus_thrift_port }}
 {% if storm_nimbus_extra_config.items is defined %}
 {% for key, value in storm_nimbus_extra_config|dictsort %}
@@ -84,4 +88,16 @@ transactional.zookeeper.port: {{ zookeeper_client_port|default(2181) }}
 {% for key, value in storm_topology_extra_config|dictsort %}
 {{ key }}: {{ value }}
 {% endfor %}
+{% endif %}
+{% if storm_metrics %}
+topology.metrics.consumer.register:
+  - class: "com.endgame.storm.metrics.statsd.StatsdMetricConsumer"
+    parallelism.hint: 1
+    argument:
+      metrics.statsd.host: "{{ storm_metrics_statsd_host }}"
+      metrics.statsd.port: {{ storm_metrics_statsd_port }}
+      metrics.statsd.prefix: "{{ storm_metrics_statsd_prefix }}"
+{% if not storm_version.startswith('0.10.') %}
+      metrics.statsd.usehostname: false
+{% endif %}
 {% endif %}

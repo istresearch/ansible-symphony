@@ -3,6 +3,7 @@ storm_install_dir: /opt/storm
 storm_user: storm
 storm_group: storm
 storm_version: 0.10.0
+storm_lib_dir: "{{ storm_install_dir }}/apache-storm-{{ storm_version }}/lib"
 
 nimbus_thrift_port: 6627
 storm_drpc_port: 3772
@@ -22,6 +23,7 @@ storm_supervisor_extra_config:
 storm_topology_extra_config:
     topology.acker.executors: 1
     topology.debug: false
+    topology.builtin.metrics.bucket.size.secs: 30
 storm_transactional_extra_config:
     transactional.zookeeper.root: "/storm-transactional"
 storm_ui_enabled: false
@@ -36,5 +38,14 @@ storm_zookeeper_extra_config:
     storm.zookeeper.retry.times: 60
     storm.zookeeper.root: "/storm"
     storm.zookeeper.session.timeout: 3000
+
+storm_metrics: False
+storm_metrics_jars:
+    - java-statsd-client-{% if storm_version.startswith('0.10') %}2.0.0{% else %}3.1.0{% endif %}.jar
+    - storm-metrics-statsd-{% if storm_version.startswith('0.10') %}1.1.0{% else %}1.6.0{% endif %}.jar
+
+storm_metrics_statsd_host: "{{ inventory_hostname }}"
+storm_metrics_statsd_port: 8125
+storm_metrics_statsd_prefix: storm.metrics.
 
 repository_infrastructure: "{{ apache_mirror }}/storm/apache-storm-{{ storm_version }}"

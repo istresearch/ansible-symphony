@@ -5,3 +5,7 @@ vault.passwd
 # docs
 _build
 _build_html
+
+# Intellij
+/.idea
+*.iml
