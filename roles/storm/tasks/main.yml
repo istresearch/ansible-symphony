@@ -52,6 +52,16 @@
   ignore_errors: yes
   tags: storm
 
+- name: download jar files required for statsd metrics logging
+  get_url:
+    url="{{ repository_infrastructure }}/storm-metrics/{{ item }}"
+    dest="{{ storm_lib_dir }}"
+    mode=775
+    validate_certs=no
+  with_items: "{{ storm_metrics_jars }}"
+  when: storm_metrics
+  tags: storm
+
 - name: create symlink
   file:
     path={{ storm_install_dir }}/default
