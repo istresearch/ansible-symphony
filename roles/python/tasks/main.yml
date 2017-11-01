@@ -61,7 +61,7 @@
     args:
       chdir: "/tmp/Python-{{ python_version }}"
     with_items:
-      - "./configure --prefix {{ python_install_dir }}"
+      - "./configure --prefix {{ python_install_dir }} --enable-unicode=ucs4"
       - "make"
       - "make altinstall"
 
