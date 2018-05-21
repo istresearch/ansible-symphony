@@ -122,7 +122,7 @@
 
 # --------------------------- Scraper services -------------------------------
 - name: configure the master redis server
-  hosts: redis-master
+  hosts: redis-master-node
   roles: [ redis ]
   tags:
     - site-redis
@@ -130,9 +130,9 @@
     - deps-traptor
 
 - name: configure redis slaves
-  hosts: redis-slave
+  hosts: redis-slave-nodes
   vars:
-    - redis_slaveof: "{{ groups['redis-master'][0] }} {{ redis_port }}"
+    - redis_slaveof: "{{ groups['redis-master-node'][0] }} {{ redis_port }}"
   roles: [ redis ]
   tags:
     - site-redis
@@ -140,11 +140,11 @@
     - deps-traptor
 
 - name: configure redis sentinel nodes
-  hosts: redis-sentinel
+  hosts: redis-sentinel-nodes
   vars:
     - redis_sentinel_monitors:
       - name: redis-symphony
-        host: "{{ groups['redis-master'][0] }}"
+        host: "{{ groups['redis-master-node'][0] }}"
         port: "{{ redis_port }}"
   roles: [ redis ]
   tags:
