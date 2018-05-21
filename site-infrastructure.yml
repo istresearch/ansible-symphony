@@ -121,25 +121,32 @@
     - ELK
 
 # --------------------------- Scraper services -------------------------------
-- block:
-	- name: configure the master redis server
-	  hosts: redis-master
-	  roles: [ redis ]
+- name: configure the master redis server
+  hosts: redis-master
+  roles: [ redis ]
+  tags:
+    - site-redis
+    - scrapy-services
+    - deps-traptor
 
-	- name: configure redis slaves
-	  hosts: redis-slave
-	  vars:
-		- redis_slaveof: "{{ groups['redis-master'][0] }} {{ redis_port }}"
-	  roles: [ redis ]
+- name: configure redis slaves
+  hosts: redis-slave
+  vars:
+    - redis_slaveof: "{{ groups['redis-master'][0] }} {{ redis_port }}"
+  roles: [ redis ]
+  tags:
+    - site-redis
+    - scrapy-services
+    - deps-traptor
 
-	- name: configure redis sentinel nodes
-	  hosts: redis-sentinel
-	  vars:
-		- redis_sentinel_monitors:
-		  - name: master01
-			host: "{{ groups['redis-master'][0] }}"
-			port: "{{ redis_port }}"
-	  roles: [ redis ]
+- name: configure redis sentinel nodes
+  hosts: redis-sentinel
+  vars:
+    - redis_sentinel_monitors:
+      - name: redis-symphony
+        host: "{{ groups['redis-master'][0] }}"
+        port: "{{ redis_port }}"
+  roles: [ redis ]
   tags:
     - site-redis
     - scrapy-services
