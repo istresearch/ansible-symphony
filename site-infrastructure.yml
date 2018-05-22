@@ -146,6 +146,7 @@
       - name: redis-symphony
         host: "{{ groups['redis-master-node'][0] }}"
         port: "{{ redis_port }}"
+    - redis_sentinel: True
   roles: [ redis ]
   tags:
     - site-redis
