@@ -1,6 +1,6 @@
 ---
 - name: install dependencies
-  yum: 
+  yum:
     name={{ item }}
     state=present
   with_items:
@@ -33,44 +33,49 @@
     system=yes
   tags: redis
 
-- name: download redis
-  get_url: 
-    url={{ repository_infrastructure }}/redis-{{ redis_version }}.tar.gz
-    dest=/usr/local/src/redis-{{ redis_version }}.tar.gz
-    validate_certs=no
+- name: Download and build redis
+  block:
+    - name: download redis
+      get_url:
+        url={{ repository_infrastructure }}/redis-{{ redis_version }}.tar.gz
+        dest=/usr/local/src/redis-{{ redis_version }}.tar.gz
+        validate_certs=no
+
+    - name: extract redis tarball
+      shell: tar xf /usr/local/src/redis-{{ redis_version }}.tar.gz -C /usr/local/src
+        creates=/usr/local/src/redis-{{ redis_version }}
+
+    - name: build dependencies
+      make:
+        target: '{{ item }}'
+        chdir: /usr/local/src/redis-{{ redis_version }}/deps
+      with_items:
+        - hiredis
+        - lua
+        - jemalloc
+        - linenoise
+
+    - name: build redis
+      make:
+        chdir: /usr/local/src/redis-{{ redis_version }}
+
+    - name: create /var/run/redis
+      file:
+        path=/var/run/redis
+        state=directory
+        owner={{ redis_user }}
+
+    - name: install redis
+      command: make PREFIX={{ redis_install_dir }}/redis-{{ redis_version }} install clean
+        chdir=/usr/local/src/redis-{{ redis_version }}
+        creates={{ redis_install_dir }}/redis-{{ redis_version }}/bin/redis-server
+
+    - name: create redis symlink
+      file:
+        path={{ redis_install_dir }}/default
+        state=link
+        src={{ redis_install_dir }}/redis-{{ redis_version }}
   when: redis.stat.isdir is not defined
   tags: redis
 
-- name: extract redis tarball
-  shell: tar xf /usr/local/src/redis-{{ redis_version }}.tar.gz -C /usr/local/src
-    creates=/usr/local/src/redis-{{ redis_version }}
-  when: redis.stat.isdir is not defined
-  tags: redis
 
-- name: compile redis
-  command: make -j5
-    chdir=/usr/local/src/redis-{{ redis_version }}
-    creates=/usr/local/src/redis-{{ redis_version }}/src/redis-server
-  when: redis.stat.isdir is not defined
-  tags: redis
-
-- name: create /var/run/redis
-  file: 
-    path=/var/run/redis
-    state=directory
-    owner={{ redis_user }}
-  tags: redis
-
-- name: install redis
-  command: make PREFIX={{ redis_install_dir }}/redis-{{ redis_version }} install clean
-    chdir=/usr/local/src/redis-{{ redis_version }}
-    creates={{ redis_install_dir }}/redis-{{ redis_version }}/bin/redis-server
-  when: redis.stat.isdir is not defined
-  tags: redis
-
-- name: create redis symlink
-  file:
-    path={{ redis_install_dir }}/default
-    state=link
-    src={{ redis_install_dir }}/redis-{{ redis_version }}
-  tags: redis
