@@ -46,6 +46,7 @@ env:
   - TAGS='site-exim'
   - TAGS='site-redis'
   - TAGS='site-php'
+  - TAGS='site-nodejs'
 
 matrix:
   fast_finish: true

@@ -165,3 +165,6 @@ spark-nodes
 
 [php-nodes]
 travis-trusty
+
+[nodejs-nodes]
+travis-trusty
