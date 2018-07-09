@@ -167,3 +167,6 @@ spark-nodes
 
 [php-nodes]
 vagrant-as-01
+
+[nodejs-nodes]
+vagrant-as-01

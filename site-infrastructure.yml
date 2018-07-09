@@ -440,3 +440,11 @@
   roles: [php]
   tags:
     - site-php
+
+# ---------------------------------- NodeJS --------------------------------
+
+- name: Run nodejs role
+  hosts: nodejs-nodes
+  roles: [nodejs]
+  tags:
+    - site-nodejs
