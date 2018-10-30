@@ -19,6 +19,17 @@
   ignore_errors: yes
   tags: pip
 
+- name: configure pip to use the local repository
+  template:
+    src: pip.conf.j2
+    dest: /etc/pip.conf
+    mode: 0775
+  tags: pip
+
+- name: install specific pip version
+  shell: pip install --upgrade --force-reinstall pip=={{ pip_version }}
+  tags: pip
+
 - name: Set fact pip_has_run
   set_fact:
     pip_has_run: true
