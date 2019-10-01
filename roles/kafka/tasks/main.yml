@@ -83,8 +83,6 @@
     src=consumer.properties.j2
     dest={{ kafka_config_dir }}/consumer.properties
     mode=0644
-  notify:
-    - restart kafka
   tags: kafka
 
 - name: copy supervisord config
@@ -114,5 +112,3 @@
     - "{{ kafka_data_dir }}"
     - "{{ kafka_log_dir }}"
   tags: kafka
-
-# - cron: name="clear old kafka app logs" job="find /opt/kafka/default/logs -mtime +7 -exec rm {} \; > /dev/null" minute="0"
